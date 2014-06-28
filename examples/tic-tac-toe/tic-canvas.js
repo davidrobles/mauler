@@ -9,8 +9,8 @@ Tic.CanvasView = function(options) {
     this.squareSize = this.canvas.width / 3;
     this.cellPer = 0.8;
     this.colors = {
-        bg: "rgb(240, 203, 141)",
-        border: "rgb(165, 195, 210)",
+        bg: "#EECD74",
+        border: "#CEB26A",
         cross: "rgb(80, 94, 147)",
         nought: "rgb(182, 40, 65)"
     };

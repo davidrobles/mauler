@@ -51,6 +51,7 @@ match = new MatchController(game, players);
 game.move(randPlayer(game));
 game.move(randPlayer(game));
 game.move(randPlayer(game));
+game.move(randPlayer(game));
 
 console.log(game.toString());
 
