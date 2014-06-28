@@ -8,6 +8,8 @@ var TicTacToe = function() {
     this.noughts = 0;
 };
 
+TicTacToe.letters = ['A', 'B', 'C'];
+
 TicTacToe.prototype = {
 
     constructor: TicTacToe,
@@ -64,12 +66,11 @@ TicTacToe.prototype = {
 
     moves: function() {
         var mvs = [],
-            legal = this.legalMoves()
-        letters = ['A', 'B', 'C'];
+            legal = this.legalMoves();
         for (var i = 0; i < legal.length; i++) {
             var row = Math.floor(i / 3);
             var col = (i % 3) + 1;
-            mvs.push(letters[row] + col.toString());
+            mvs.push(TicTacToe.letters[row] + col.toString());
         }
         return mvs
     },
