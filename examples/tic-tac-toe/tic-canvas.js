@@ -9,10 +9,10 @@ Tic.CanvasView = function(options) {
     this.squareSize = this.canvas.width / 3;
     this.cellPer = 0.8;
     this.colors = {
-        bg: "#EECD74",
-        border: "#CEB26A",
-        cross: "rgb(80, 94, 147)",
-        nought: "rgb(182, 40, 65)"
+        bg: "rgb(255, 219, 122)",
+        border: "rgb(229, 197, 110)",
+        cross: "rgb(255, 73, 77)",
+        nought: "rgb(85, 119, 254)"
     };
 };
 
@@ -23,6 +23,7 @@ Tic.CanvasView.prototype = {
     render: function() {
         this.renderBackground();
         this.renderBorder();
+        this.renderLines();
         this.renderSquares();
         return this.canvas;
     },
@@ -33,8 +34,27 @@ Tic.CanvasView.prototype = {
     },
 
     renderBorder: function() {
-        var borderSize = Math.round(this.canvas.width * 0.02);
+        var borderSize = Math.round(this.canvas.width * 0.02); // TODO refactor this
         this.canvas.style.border = borderSize + "px solid " + this.colors.border;
+    },
+
+    renderLines: function() {
+        var ctx = this.ctx;
+        ctx.lineWidth = Math.round(this.canvas.width * 0.02)
+        var ss = this.canvas.width / this.model.size;
+        for (var row = 1; row < this.model.size; row++) {
+            // vertical
+            ctx.strokeStyle = this.colors.border;
+            ctx.beginPath();
+            ctx.moveTo(row * ss, 0);
+            ctx.lineTo(row * ss, this.canvas.height);
+            this.ctx.stroke();
+            // horizontal
+            ctx.beginPath();
+            ctx.moveTo(0, row * ss);
+            ctx.lineTo(this.canvas.width, row * ss);
+            this.ctx.stroke();
+        }
     },
 
     renderSquares: function() {
