@@ -14,6 +14,7 @@ Tic.CanvasView = function(options) {
         cross: "rgb(255, 73, 77)",
         nought: "rgb(85, 119, 254)"
     };
+    this.borderSize = 0.02; // percentage
 };
 
 Tic.CanvasView.prototype = {
@@ -34,12 +35,12 @@ Tic.CanvasView.prototype = {
     },
 
     renderBorder: function() {
-        var borderSize = Math.round(this.canvas.width * 0.02); // TODO refactor this
+        var borderSize = Math.round(this.canvas.width * this.borderSize); // TODO refactor this
         this.canvas.style.border = borderSize + "px solid " + this.colors.border;
     },
 
     renderLines: function() {
-        this.ctx.lineWidth = Math.round(this.canvas.width * 0.02)
+        this.ctx.lineWidth = Math.round(this.canvas.width * this.borderSize);
         for (var i = 1; i < this.model.size; i++) {
             this.drawVerticalLine(i);
             this.drawHorizontalLine(i);
