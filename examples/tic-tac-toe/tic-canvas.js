@@ -39,21 +39,10 @@ Tic.CanvasView.prototype = {
     },
 
     renderLines: function() {
-        var ctx = this.ctx;
-        ctx.lineWidth = Math.round(this.canvas.width * 0.02)
-        for (var row = 1; row < this.model.size; row++) {
-            // vertical
-            ctx.strokeStyle = this.colors.border;
-            ctx.beginPath();
-            ctx.moveTo(row * this.squareSize, 0);
-            ctx.lineTo(row * this.squareSize, this.canvas.height);
-            this.ctx.stroke();
-            // horizontal
-            ctx.beginPath();
-            ctx.moveTo(0, row * this.squareSize);
-            ctx.lineTo(this.canvas.width, row * this.squareSize);
-            ctx.lineTo(this.canvas.width, row * this.squareSize);
-            this.ctx.stroke();
+        this.ctx.lineWidth = Math.round(this.canvas.width * 0.02)
+        for (var i = 1; i < this.model.size; i++) {
+            this.drawVerticalLine(i);
+            this.drawHorizontalLine(i);
         }
     },
 
@@ -68,6 +57,22 @@ Tic.CanvasView.prototype = {
                 }
             }
         }
+    },
+
+    drawHorizontalLine: function (row) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, row * this.squareSize);
+        this.ctx.lineTo(this.canvas.width, row * this.squareSize);
+        this.ctx.lineTo(this.canvas.width, row * this.squareSize);
+        this.ctx.stroke();
+    },
+
+    drawVerticalLine: function (row) {
+        this.ctx.strokeStyle = this.colors.border;
+        this.ctx.beginPath();
+        this.ctx.moveTo(row * this.squareSize, 0);
+        this.ctx.lineTo(row * this.squareSize, this.canvas.height);
+        this.ctx.stroke();
     },
 
     drawCross: function (row, col) {
