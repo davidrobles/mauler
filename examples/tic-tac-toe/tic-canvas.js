@@ -57,7 +57,6 @@ Tic.CanvasView.prototype = {
             pieceHeight = this.squareSize * this.cellPer;
         this.ctx.fillStyle = this.colors.cross;
         this.ctx.fillRect(x, y, pieceWidth, pieceHeight);
-        return {x: x, y: y, pieceWidth: pieceWidth, pieceHeight: pieceHeight};
     },
 
     drawNought: function (row, col) {
@@ -71,7 +70,6 @@ Tic.CanvasView.prototype = {
         this.ctx.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
         this.ctx.fillStyle = this.colors.nought;
         this.ctx.fill();
-        return {centerX: centerX, centerY: centerY, radius: radius, startAngle: startAngle, endAngle: endAngle, counterClockwise: counterClockwise};
     }
 
 };
