@@ -1,18 +1,17 @@
+var Tic = Tic || {};
 
-//var TicTacToe = TicTacToe || {};
-
-var TicTacToe = function() {
+Tic.Model = function() {
     this.size = 3;
     this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
     this.crosses = 0;
     this.noughts = 0;
 };
 
-TicTacToe.letters = ['A', 'B', 'C'];
+Tic.letters = ['A', 'B', 'C'];
 
-TicTacToe.prototype = {
+Tic.Model.prototype = {
 
-    constructor: TicTacToe,
+    constructor: Tic.Model,
 
     equals: function(other) {
         return this.crosses === other.crosses && this.noughts === other.noughts;
@@ -35,7 +34,7 @@ TicTacToe.prototype = {
     // Turn-Based Game API methods
 
     copy: function() {
-        var tic = new TicTacToe();
+        var tic = new Tic.Model(); // TODO refactor
         tic.crosses = this.crosses;
         tic.noughts = this.noughts;
         return tic;
@@ -70,13 +69,13 @@ TicTacToe.prototype = {
         for (var i = 0; i < legal.length; i++) {
             var row = Math.floor(i / 3);
             var col = (i % 3) + 1;
-            mvs.push(TicTacToe.letters[row] + col.toString());
+            mvs.push(Tic.letters[row] + col.toString());
         }
         return mvs
     },
 
     newGame: function() {
-        return new TicTacToe();
+        return new Tic.Model();
     },
 
     numMoves: function() {

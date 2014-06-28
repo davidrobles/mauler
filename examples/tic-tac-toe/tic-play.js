@@ -12,7 +12,7 @@ var randPlayer = function(game) {
 
 var players = [randPlayer, randPlayer];
 
-game = new TicTacToe();
+game = new Tic.Model();
 match = new MatchController(game, players);
 
 // playRandomGame(game);
