@@ -58,8 +58,8 @@ Tic.CanvasView.prototype = {
     },
 
     renderSquares: function() {
-        for (var row = 0; row < 3; row++) {
-            for (var col = 0; col < 3; col++) {
+        for (var row = 0; row < this.model.size; row++) {
+            for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
                 if (cellType === 'CROSS') {
                     this.drawCross(row, col);
