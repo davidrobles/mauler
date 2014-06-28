@@ -6,8 +6,8 @@ Tic.CanvasView = function(options) {
     this.canvas.width = options.width || 100;
     this.canvas.height = options.height || 100;
     this.ctx = this.canvas.getContext("2d");
-    this.squareSize = this.canvas.width / 3;
-    this.cellPer = 0.8;
+    this.squareSize = this.canvas.width / this.model.size;
+    this.cellPer = 0.7;
     this.colors = {
         bg: "rgb(255, 219, 122)",
         border: "rgb(229, 197, 110)",
