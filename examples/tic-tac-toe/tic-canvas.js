@@ -9,10 +9,10 @@ Tic.CanvasView = function(options) {
     this.squareSize = this.canvas.width / 3;
     this.cellPer = 0.8;
     this.colors = {
-        bg: "rgb(255, 204, 6)",
-        border: "rgb(115, 206, 226)",
-        cross: "rgb(3, 78, 162)",
-        nought: "rgb(198, 29, 35)"
+        bg: "rgb(240, 203, 141)",
+        border: "rgb(165, 195, 210)",
+        cross: "rgb(80, 94, 147)",
+        nought: "rgb(182, 40, 65)"
     };
 };
 
@@ -69,8 +69,8 @@ Tic.CanvasView.prototype = {
             endAngle = 2 * Math.PI,
             counterClockwise = false;
         this.ctx.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
-        this.ctx.StrokeStyle = this.colors.nought;
-        this.ctx.stroke();
+        this.ctx.fillStyle = this.colors.nought;
+        this.ctx.fill();
         return {centerX: centerX, centerY: centerY, radius: radius, startAngle: startAngle, endAngle: endAngle, counterClockwise: counterClockwise};
     }
 
