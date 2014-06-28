@@ -8,6 +8,12 @@ Tic.CanvasView = function(options) {
     this.ctx = this.canvas.getContext("2d");
     this.squareSize = this.canvas.width / 3;
     this.cellPer = 0.8;
+    this.colors = {
+        bg: "rgb(255, 204, 6)",
+        border: "rgb(115, 206, 226)",
+        cross: "rgb(3, 78, 162)",
+        nought: "rgb(198, 29, 35)"
+    };
 };
 
 Tic.CanvasView.prototype = {
@@ -22,13 +28,13 @@ Tic.CanvasView.prototype = {
     },
 
     renderBackground: function() {
-        this.ctx.fillStyle = 'rgb(255, 203, 5)';
+        this.ctx.fillStyle = this.colors.bg;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     },
 
     renderBorder: function() {
-        this.ctx.strokeStyle = 'rgb(0, 0, 0)';
-        this.ctx.strokeRect(0, 0, this.width, this.height);
+        var borderSize = Math.round(this.canvas.width * 0.02);
+        this.canvas.style.border = borderSize + "px solid " + this.colors.border;
     },
 
     renderSquares: function() {
@@ -49,7 +55,7 @@ Tic.CanvasView.prototype = {
             y = row * this.squareSize + (this.squareSize * ((1 - this.cellPer) / 2)),
             pieceWidth = this.squareSize * this.cellPer,
             pieceHeight = this.squareSize * this.cellPer;
-        this.ctx.fillStyle = 'rgb(0, 0, 255';
+        this.ctx.fillStyle = this.colors.cross;
         this.ctx.fillRect(x, y, pieceWidth, pieceHeight);
         return {x: x, y: y, pieceWidth: pieceWidth, pieceHeight: pieceHeight};
     },
@@ -63,7 +69,7 @@ Tic.CanvasView.prototype = {
             endAngle = 2 * Math.PI,
             counterClockwise = false;
         this.ctx.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
-        this.ctx.StrokeStyle = 'green';
+        this.ctx.StrokeStyle = this.colors.nought;
         this.ctx.stroke();
         return {centerX: centerX, centerY: centerY, radius: radius, startAngle: startAngle, endAngle: endAngle, counterClockwise: counterClockwise};
     }
