@@ -41,18 +41,18 @@ Tic.CanvasView.prototype = {
     renderLines: function() {
         var ctx = this.ctx;
         ctx.lineWidth = Math.round(this.canvas.width * 0.02)
-        var ss = this.canvas.width / this.model.size;
         for (var row = 1; row < this.model.size; row++) {
             // vertical
             ctx.strokeStyle = this.colors.border;
             ctx.beginPath();
-            ctx.moveTo(row * ss, 0);
-            ctx.lineTo(row * ss, this.canvas.height);
+            ctx.moveTo(row * this.squareSize, 0);
+            ctx.lineTo(row * this.squareSize, this.canvas.height);
             this.ctx.stroke();
             // horizontal
             ctx.beginPath();
-            ctx.moveTo(0, row * ss);
-            ctx.lineTo(this.canvas.width, row * ss);
+            ctx.moveTo(0, row * this.squareSize);
+            ctx.lineTo(this.canvas.width, row * this.squareSize);
+            ctx.lineTo(this.canvas.width, row * this.squareSize);
             this.ctx.stroke();
         }
     },
