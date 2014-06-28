@@ -1,4 +1,4 @@
-minotauro
+Minotauro
 =========
 
-A multi-language library for turn-based games
+A JavaScript library for turn-based games.
