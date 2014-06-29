@@ -13,7 +13,6 @@ canvasView.render();
 
 var match = new MatchController(game, players);
 match.registerObserver(canvasView);
-match.playToEnd();
 
 var controlsView = new Minotauro.ControlsView({
     controller: match
@@ -22,4 +21,8 @@ document.body.appendChild(controlsView.render());
 
 //match.registerObserver(robles);
 //match.notifyObservers();
+//match.playToEnd();
+
+match.registerObserver(controlsView);
+
 //match.playToEnd();

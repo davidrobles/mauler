@@ -114,6 +114,7 @@ MatchController.prototype = {
 
     registerObserver: function(observer) {
         this.observers.push(observer);
+        observer.update(this.curGame());
     },
 
     removeObserver: function(observer) {

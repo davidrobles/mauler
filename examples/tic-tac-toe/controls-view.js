@@ -34,13 +34,13 @@ Minotauro.ControlsView.prototype = {
         this.buttons.start.addEventListener("click", function() {
             this.controller.start();
         }.bind(this));
-        this.buttons.start.addEventListener("click", function() {
+        this.buttons.prev.addEventListener("click", function() {
             this.controller.prev();
         }.bind(this));
-        this.buttons.start.addEventListener("click", function() {
+        this.buttons.next.addEventListener("click", function() {
             this.controller.next();
         }.bind(this));
-        this.buttons.start.addEventListener("click", function() {
+        this.buttons.end.addEventListener("click", function() {
             this.controller.end();
         }.bind(this));
     },
@@ -50,7 +50,10 @@ Minotauro.ControlsView.prototype = {
     },
 
     update: function() {
-
+        this.buttons.start.disabled = !this.controller.isStart();
+        this.buttons.prev.disabled = !this.controller.isPrev();
+        this.buttons.next.disabled = !this.controller.isNext();
+        this.buttons.end.disabled = !this.controller.isEnd();
     }
 
 };
