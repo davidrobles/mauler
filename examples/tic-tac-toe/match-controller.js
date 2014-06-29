@@ -1,4 +1,6 @@
-var MatchController = function(game, players) {
+var Minotauro = Minotauro || {};
+
+Minotauro.Controller = function(game, players) {
     this.game = game;
     this.players = players;
     this.currentBoardIndex = 0;
@@ -6,9 +8,9 @@ var MatchController = function(game, players) {
     this.reset();
 };
 
-MatchController.prototype = {
+Minotauro.Controller.prototype = {
 
-    constructor: MatchController,
+    constructor: Minotauro.Controller,
 
     playToEnd: function() {
         while (this.isNext()) {
@@ -124,6 +126,7 @@ MatchController.prototype = {
     notifyObservers: function() {
         for (var i = 0; i < this.observers.length; i++) {
             this.observers[i].update(this.curGame());
+            console.log(this.curGame().moves());
         }
     },
 

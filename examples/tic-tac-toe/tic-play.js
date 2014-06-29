@@ -11,7 +11,7 @@ var canvasView = new Tic.CanvasView({
 
 canvasView.render();
 
-var match = new MatchController(game, players);
+var match = new Minotauro.Controller(game, players);
 match.registerObserver(canvasView);
 
 var controlsView = new Minotauro.ControlsView({
@@ -27,7 +27,7 @@ match.registerObserver(controlsView);
 
 //match.playToEnd();
 
-console.time('robles');
-var stats = Minotauro.Util.playNGames(game, players, 100000);
-console.timeEnd('robles');
-console.log(stats);
+//console.time('robles');
+//var stats = Minotauro.Util.playNGames(game, players, 100000);
+//console.timeEnd('robles');
+//console.log(stats);
