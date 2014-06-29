@@ -2,7 +2,6 @@ var Minotauro = Minotauro || {};
 
 Minotauro.ControlsView = function(options) {
     this.controller = options.controller;
-    this.div = document.createElement("div");
     this.initButtons();
     this.addListeners();
 };
@@ -12,18 +11,17 @@ Minotauro.ControlsView.prototype = {
     constructor: Minotauro.ControlsView,
 
     initButtons: function() {
+        this.div = document.createElement("div");
         this.buttons = {
             start: document.createElement("button"),
             prev: document.createElement("button"),
             next: document.createElement("button"),
             end: document.createElement("button")
         };
-
         this.buttons.start.innerHTML = "|&#60;";
         this.buttons.prev.innerHTML = "&#60;";
         this.buttons.next.innerHTML = "&#62;";
         this.buttons.end.innerHTML = "&#62;|";
-
         this.div.appendChild(this.buttons.start);
         this.div.appendChild(this.buttons.prev);
         this.div.appendChild(this.buttons.next);
