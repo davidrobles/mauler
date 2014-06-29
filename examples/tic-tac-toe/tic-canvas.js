@@ -101,7 +101,7 @@ Tic.CanvasView.prototype = {
         this.ctx.beginPath();
         var centerX = col * this.squareSize + (this.squareSize / 2),
             centerY = row * this.squareSize + (this.squareSize / 2),
-            radius = this.squareSize / 2 * this.cellPer, // 80% of the square size
+            radius = this.squareSize / 2 * this.cellPer,
             startAngle = 0,
             endAngle = 2 * Math.PI,
             counterClockwise = false;
