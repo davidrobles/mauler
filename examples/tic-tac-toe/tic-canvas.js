@@ -22,24 +22,24 @@ Tic.CanvasView.prototype = {
     constructor: Tic.CanvasView,
 
     render: function() {
-        this.renderBackground();
-        this.renderBorder();
-        this.renderLines();
-        this.renderSquares();
+        this.drawBackground();
+        this.drawBorder();
+        this.drawLines();
+        this.drawSquares();
         return this.canvas;
     },
 
-    renderBackground: function() {
+    drawBackground: function() {
         this.ctx.fillStyle = this.colors.bg;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     },
 
-    renderBorder: function() {
+    drawBorder: function() {
         var borderSize = Math.round(this.canvas.width * this.borderSize); // TODO refactor this
         this.canvas.style.border = borderSize + "px solid " + this.colors.border;
     },
 
-    renderLines: function() {
+    drawLines: function() {
         this.ctx.lineWidth = Math.round(this.canvas.width * this.borderSize);
         for (var i = 1; i < this.model.size; i++) {
             this.drawVerticalLine(i);
@@ -47,7 +47,7 @@ Tic.CanvasView.prototype = {
         }
     },
 
-    renderSquares: function() {
+    drawSquares: function() {
         for (var row = 0; row < this.model.size; row++) {
             for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
@@ -63,7 +63,6 @@ Tic.CanvasView.prototype = {
     drawHorizontalLine: function (row) {
         this.ctx.beginPath();
         this.ctx.moveTo(0, row * this.squareSize);
-        this.ctx.lineTo(this.canvas.width, row * this.squareSize);
         this.ctx.lineTo(this.canvas.width, row * this.squareSize);
         this.ctx.stroke();
     },
