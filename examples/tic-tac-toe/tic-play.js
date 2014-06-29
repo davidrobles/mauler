@@ -3,8 +3,6 @@ var players = [Minotauro.Players.random, Minotauro.Players.random];
 game = new Tic.Model();
 match = new MatchController(game, players);
 
-// playRandomGame(game);
-
 //var startButton = document.getElementById('startButton'),
 //    prevButton = document.getElementById('prevButton'),
 //    playButton = document.getElementById('playButton'),
@@ -37,8 +35,6 @@ match = new MatchController(game, players);
 //match.playToEnd();
 
 Minotauro.Util.playRandomGame(game);
-
-console.log(game.toString());
 
 var canvasView = new Tic.CanvasView({
     model: game,
