@@ -77,12 +77,28 @@ Tic.CanvasView.prototype = {
     },
 
     drawCross: function (row, col) {
-        var x = col * this.squareSize + (this.squareSize * ((1 - this.cellPer) / 2)),
-            y = row * this.squareSize + (this.squareSize * ((1 - this.cellPer) / 2)),
-            pieceWidth = this.squareSize * this.cellPer,
-            pieceHeight = this.squareSize * this.cellPer;
+
+        var space = this.squareSize * ((1 - this.cellPer) / 1.2),
+            x = col * this.squareSize,
+            y = row * this.squareSize;
+
+        this.ctx.lineWidth = 14;
+
+        // Top Left to Bottom Right
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = this.colors.cross;
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(x + space, y + space);
+        this.ctx.lineTo(x + this.squareSize - space, y + this.squareSize - space);
+        this.ctx.stroke();
+
+        // Bottom Left to Top Right
+        this.ctx.beginPath();
         this.ctx.fillStyle = this.colors.cross;
-        this.ctx.fillRect(x, y, pieceWidth, pieceHeight);
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(x + space, y + this.squareSize - space);
+        this.ctx.lineTo(x + this.squareSize - space, y + space);
+        this.ctx.stroke();
     },
 
     drawNought: function (row, col) {
