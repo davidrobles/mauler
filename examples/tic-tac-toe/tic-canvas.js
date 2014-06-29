@@ -67,11 +67,11 @@ Tic.CanvasView.prototype = {
         this.ctx.stroke();
     },
 
-    drawVerticalLine: function (row) {
+    drawVerticalLine: function (col) {
         this.ctx.strokeStyle = this.colors.border;
         this.ctx.beginPath();
-        this.ctx.moveTo(row * this.squareSize, 0);
-        this.ctx.lineTo(row * this.squareSize, this.canvas.height);
+        this.ctx.moveTo(col * this.squareSize, 0);
+        this.ctx.lineTo(col * this.squareSize, this.canvas.height);
         this.ctx.stroke();
     },
 
