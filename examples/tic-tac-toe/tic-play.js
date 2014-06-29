@@ -1,16 +1,4 @@
-var playRandomGame = function(game) {
-    console.log(game.toString());
-    while (!game.isOver()) {
-        game.move();
-        console.log(game.toString());
-    }
-};
-
-var randPlayer = function(game) {
-    return Math.floor(Math.random() * game.numMoves());
-};
-
-var players = [randPlayer, randPlayer];
+var players = [Minotauro.Players.random, Minotauro.Players.random];
 
 game = new Tic.Model();
 match = new MatchController(game, players);
@@ -48,15 +36,7 @@ match = new MatchController(game, players);
 //match.notifyObservers();
 //match.playToEnd();
 
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
-game.move(randPlayer(game));
+Minotauro.Util.playRandomGame(game);
 
 console.log(game.toString());
 
