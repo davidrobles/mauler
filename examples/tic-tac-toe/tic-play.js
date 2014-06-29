@@ -26,3 +26,8 @@ document.body.appendChild(controlsView.render());
 match.registerObserver(controlsView);
 
 //match.playToEnd();
+
+console.time('robles');
+var stats = Minotauro.Util.playNGames(game, players, 100000);
+console.timeEnd('robles');
+console.log(stats);
