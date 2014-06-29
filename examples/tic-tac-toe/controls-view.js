@@ -4,6 +4,7 @@ Minotauro.ControlsView = function(options) {
     this.controller = options.controller;
     this.div = document.createElement("div");
     this.initButtons();
+    this.addListeners();
 };
 
 Minotauro.ControlsView.prototype = {
@@ -29,20 +30,30 @@ Minotauro.ControlsView.prototype = {
         this.div.appendChild(this.buttons.end);
     },
 
+    addListeners: function () {
+        this.buttons.start.addEventListener("click", function() {
+            this.controller.start();
+        }.bind(this));
+        this.buttons.start.addEventListener("click", function() {
+            this.controller.prev();
+        }.bind(this));
+        this.buttons.start.addEventListener("click", function() {
+            this.controller.next();
+        }.bind(this));
+        this.buttons.start.addEventListener("click", function() {
+            this.controller.end();
+        }.bind(this));
+    },
+
     render: function() {
         return this.div;
+    },
+
+    update: function() {
+
     }
 
 };
-
-//var startButton = document.getElementById('startButton'),
-//    prevButton = document.getElementById('prevButton'),
-//    playButton = document.getElementById('playButton'),
-//    nextButton = document.getElementById('nextButton'),
-//    endButton = document.getElementById('endButton'),
-//    resetButton = document.getElementById('resetButton'),
-//    curPlayerDiv = document.getElementById('curPlayer'),
-//    index = document.getElementById('index');
 
 //startButton.addEventListener('click', match.start);
 //prevButton.addEventListener('click', match.prev);
