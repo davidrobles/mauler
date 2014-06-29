@@ -57,21 +57,3 @@ Minotauro.ControlsView.prototype = {
     }
 
 };
-
-//startButton.addEventListener('click', match.start);
-//prevButton.addEventListener('click', match.prev);
-//playButton.addEventListener('click', match.play);
-//nextButton.addEventListener('click', match.next);
-//endButton.addEventListener('click', match.end);
-//curPlayerDiv.addEventListener('click', match.curPlayerDiv);
-//resetButton.addEventListener('click', match.reset);
-
-//var robles = function(matchController) {
-//    startButton.disabled = !matchController.isStart();
-//    prevButton.disabled = !matchController.isPrev();
-//    nextButton.disabled = !matchController.isNext();
-//    endButton.disabled = !matchController.isEnd();
-//    index.innerHTML = (matchController.getCurrentIndex() + 1) + ' / ' + matchController.getSize();
-//    curPlayerDiv.innerHTML = matchController.getGame().curPlayer() + 1;
-//    drawTicTacToe(ctx, matchController.getGame());
-//};
