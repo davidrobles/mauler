@@ -17,6 +17,10 @@ MatchController.prototype = {
         }
     },
 
+    curGame: function() {
+        return this.gameHistory[this.currentBoardIndex];
+    },
+
     setChange: function(index) {
         this.currentBoardIndex = index;
         this.notifyObservers();
@@ -116,9 +120,9 @@ MatchController.prototype = {
         // this.observers.remove(observer);
     },
 
-    notifyObservers: function(observer) {
+    notifyObservers: function() {
         for (var i = 0; i < this.observers.length; i++) {
-            this.observers[i](this, this);
+            this.observers[i].update(this.curGame());
         }
     },
 

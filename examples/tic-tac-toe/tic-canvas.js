@@ -108,6 +108,13 @@ Tic.CanvasView.prototype = {
         this.ctx.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
         this.ctx.fillStyle = this.colors.nought;
         this.ctx.fill();
+    },
+
+    // Callbacks
+
+    update: function(model) {
+        this.model = model;
+        this.render();
     }
 
 };

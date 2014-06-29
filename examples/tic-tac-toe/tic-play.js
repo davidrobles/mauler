@@ -1,7 +1,19 @@
 var players = [Minotauro.Players.random, Minotauro.Players.random];
+var game = new Tic.Model();
+//Minotauro.Util.playRandomGame(game);
 
-game = new Tic.Model();
-match = new MatchController(game, players);
+var canvasView = new Tic.CanvasView({
+    model: game,
+    width: 400,
+    height: 400,
+    canvas: document.getElementById("canvas")
+});
+
+canvasView.render();
+
+var match = new MatchController(game, players);
+match.registerObserver(canvasView);
+match.playToEnd();
 
 //var startButton = document.getElementById('startButton'),
 //    prevButton = document.getElementById('prevButton'),
@@ -34,13 +46,3 @@ match = new MatchController(game, players);
 //match.notifyObservers();
 //match.playToEnd();
 
-Minotauro.Util.playRandomGame(game);
-
-var canvasView = new Tic.CanvasView({
-    model: game,
-    width: 400,
-    height: 400,
-    canvas: document.getElementById("canvas")
-});
-
-canvasView.render();
