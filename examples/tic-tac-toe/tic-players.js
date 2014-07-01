@@ -6,22 +6,54 @@ Minotauro.Players.random = function(game) {
     return Math.floor(Math.random() * game.numMoves());
 };
 
+var argMax = function(outcomes) {
+    var maxArg = 0,
+        maxValue = outcomes[0];
+    for (var i = 1; i < outcomes.length; i++) {
+        if (outcomes[i] > maxValue) {
+            maxArg = i;
+            maxValue = outcomes[i];
+        }
+    }
+    return maxArg;
+};
+
+var utilFunc = function(game, player) {
+    var winValue = 1.0,
+        lossValue = -1.0,
+        drawValue = 0.0;
+    if (game.isOver()) {
+        var outcomes = game.outcomes();
+        switch (outcomes[player]) {
+            case "WIN":
+                return winValue;
+            case "LOSS":
+                return lossValue;
+            case "DRAW":
+                return drawValue;
+        }
+    }
+};
+
 Minotauro.Players.monteCarlo = function(game) {
+    var nSims = 1000;
     var numMoves = game.numMoves();
     if (numMoves === 1) {
         return 0;
     }
-    var outcomes = [];
-
+    var outcomes = [0, 0, 0];
     for (var i = 0; i < nSims; i++) {
-        while (game.isOver()) {
-            var move = Minotauro.Players.random(game);
-            game.move(move);
+        var newGame = game.copy(); // TODO refactor copy method
+        var move = i % numMoves;
+        newGame.move(move);
+        while (!newGame.isOver()) {
+            var randMove = Minotauro.Players.random(newGame);
+            newGame.move(randMove);
         }
-
+        outcomes[move] += utilFunc(newGame, game.curPlayer());
     }
 
-    return null;
+    return argMax(outcomes);
 };
 
 Minotauro.Players.minimax = function(game) {

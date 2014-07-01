@@ -11,7 +11,7 @@ Minotauro.Util.playRandomGame = function(game) {
 };
 
 Minotauro.Util.playNGames = function(game, players, numGames) {
-    var game = game.newGame();
+    game = game.newGame();
     var stats = {
         oneWins: 0,
         twoWins: 0,
@@ -24,9 +24,9 @@ Minotauro.Util.playNGames = function(game, players, numGames) {
             game.move(move);
         }
         var outcomes = game.outcomes();
-        if (outcomes['1'] === 'WIN') {
+        if (outcomes[0] === 'WIN') {
             stats.oneWins++;
-        } else if (outcomes['2'] === 'WIN') {
+        } else if (outcomes[1] === 'WIN') {
             stats.twoWins++;
         } else {
             stats.draws++;

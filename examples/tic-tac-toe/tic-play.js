@@ -1,4 +1,4 @@
-var players = [Minotauro.Players.random, Minotauro.Players.random];
+var players = [Minotauro.Players.monteCarlo, Minotauro.Players.random];
 var game = new Tic.Model();
 //Minotauro.Util.playRandomGame(game);
 
@@ -27,7 +27,7 @@ match.registerObserver(controlsView);
 
 //match.playToEnd();
 
-//console.time('robles');
-//var stats = Minotauro.Util.playNGames(game, players, 100000);
-//console.timeEnd('robles');
-//console.log(stats);
+console.time('robles');
+var stats = Minotauro.Util.playNGames(game, players, 100);
+console.timeEnd('robles');
+console.log(stats);

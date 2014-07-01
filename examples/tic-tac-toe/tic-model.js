@@ -88,15 +88,15 @@ Tic.Model.prototype = {
 
     outcomes: function() {
         if (!this.isOver()) {
-            return { '1': 'NA', '2': 'NA' };
+            return ['NA', 'NA'];
         }
         if (this.checkWin(this.crosses)) {
-            return { '1': 'WIN', '2': 'LOSS' };
+            return ['WIN', 'LOSS'];
         }
         if (this.checkWin(this.noughts)) {
-            return { '1': 'LOSS', '2': 'WIN' };
+            return ['LOSS', 'WIN'];
         }
-        return { '1': 'DRAW', '2': 'DRAW' };
+        return ['DRAW', 'DRAW'];
     },
 
     reset: function() {
