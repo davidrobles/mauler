@@ -61,5 +61,26 @@ Minotauro.Players.minimax = function(game) {
 };
 
 Minotauro.Players.alphaBeta = function(game) {
-
+    var ab = function(game, maxDepth, curDepth, alpha, beta) {
+        if (game.isOver() || curDepth === maxDepth) {
+            return { move: utilFunc(game, game.curPlayer()), score: -1 }
+        }
+        var bestMove = -1,
+            bestScore = -10000;
+        for (var move = 0; move < game.numMoves(); move++) {
+            var newGame = game.copy();
+            newGame.move(move);
+            var curMoveScore = ab(newGame, maxDepth, curDepth + 1, -beta, -Math.max(alpha, bestScore)),
+                curScore = -curMoveScore.score;
+            if (curScore > bestScore) {
+                bestScore = curScore;
+                bestMove = move;
+                if (bestScore >= beta) {
+                    return { move: bestMove, score: bestScore };
+                }
+            }
+        }
+        return { move: bestMove, score: bestScore };
+    };
+    return ab(game, 10000, 0, -100000, 1000000).move;
 };
