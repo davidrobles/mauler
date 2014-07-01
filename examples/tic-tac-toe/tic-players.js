@@ -52,7 +52,6 @@ Minotauro.Players.monteCarlo = function(game) {
         }
         outcomes[move] += utilFunc(newGame, game.curPlayer());
     }
-
     return argMax(outcomes);
 };
 
