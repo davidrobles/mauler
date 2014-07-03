@@ -36,12 +36,12 @@ var utilFunc = function(game, player) {
 };
 
 Minotauro.Players.monteCarlo = function(game) {
-    var nSims = 1000;
+    var nSims = 10000;
     var numMoves = game.numMoves();
     if (numMoves === 1) {
         return 0;
     }
-    var outcomes = Array.apply(null, new Array(numMoves)).map(Number.prototype.valueOf,0);
+    var outcomes = Array.apply(null, new Array(numMoves)).map(Number.prototype.valueOf, 0);
     for (var i = 0; i < nSims; i++) {
         var newGame = game.copy(); // TODO refactor copy method
         var move = i % numMoves;
@@ -52,7 +52,7 @@ Minotauro.Players.monteCarlo = function(game) {
         }
         outcomes[move] += utilFunc(newGame, game.curPlayer());
     }
-    return argMax(outcomes);
+    return  argMax(outcomes);
 };
 
 Minotauro.Players.minimax = function(game) {

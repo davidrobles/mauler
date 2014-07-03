@@ -1,5 +1,8 @@
-//var players = [Minotauro.Players.monteCarlo, Minotauro.Players.random];
-var players = [Minotauro.Players.random, Minotauro.Players.monteCarlo];
+//var players = [Minotauro.Players.random, Minotauro.Players.monteCarlo];
+
+var players = [Minotauro.Players.monteCarlo, Minotauro.Players.random];
+
+//var players = [Minotauro.Players.random, Minotauro.Players.monteCarlo];
 //var players = [Minotauro.Players.random, Minotauro.Players.random];
 //var players = [Minotauro.Players.random, Minotauro.Players.alphaBeta];
 var game = new Tic.Model();
@@ -26,6 +29,6 @@ document.body.appendChild(controlsView.render());
 match.registerObserver(controlsView);
 
 console.time('robles');
-var stats = Minotauro.Util.playNGames(game, players, 1000);
+var stats = Minotauro.Util.playNGames(game, players, 100);
 console.timeEnd('robles');
 console.log(stats);

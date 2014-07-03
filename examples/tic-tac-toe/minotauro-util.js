@@ -16,9 +16,8 @@ Minotauro.Util.playNGames = function(game, players, numGames) {
         twoWins: 0,
         draws: 0
     };
-    var newGame = game.copy();
     for (var i = 0; i < numGames; i++) {
-        newGame.reset();
+        var newGame = game.copy();
         while (!newGame.isOver()) {
             var curPlayer = players[newGame.curPlayer()];
             var move = curPlayer(newGame);

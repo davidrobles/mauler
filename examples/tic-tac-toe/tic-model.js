@@ -5,6 +5,8 @@ Tic.Model = function() {
     this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
     this.crosses = 0;
     this.noughts = 0;
+//    this.crosses = parseInt("1100001", 2);
+//    this.noughts = parseInt("10010", 2);
 };
 
 Tic.letters = ['A', 'B', 'C'];
