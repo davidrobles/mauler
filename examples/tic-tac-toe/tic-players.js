@@ -87,7 +87,7 @@ Minotauro.Players.alphaBeta = function(game) {
             return { move: -1, score: utilFunc(game, game.curPlayer()) } // TODO remove move? or change to null?
         }
         var bestMove = -1,
-            bestScore = -10000;
+            bestScore = -Number.MAX_VALUE;
         for (var move = 0; move < game.numMoves(); move++) {
             var newGame = game.copy();
             newGame.move(move);
@@ -103,5 +103,5 @@ Minotauro.Players.alphaBeta = function(game) {
         }
         return { move: bestMove, score: bestScore };
     };
-    return ab(game.copy(), 1000000, 0, -1000000, 1000000).move;
+    return ab(game.copy(), Number.MAX_VALUE, 0, -Number.MAX_VALUE, Number.MAX_VALUE).move;
 };
