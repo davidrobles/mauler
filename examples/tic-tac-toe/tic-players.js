@@ -61,7 +61,7 @@ Minotauro.Players.minimax = function(game) {
             return { move: -1, score: utilFunc(game, player) }
         }
         var bestMove = -1,
-            bestScore = game.curPlayer() === player ? -1000000 : 1000000; // TODO change max and min values
+            bestScore = game.curPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE; // TODO change max and min values
         for (var move = 0; move < game.numMoves(); move++) { // TODO use 'n' variable
             var newGame = game.copy();
             newGame.move(move);
@@ -78,7 +78,7 @@ Minotauro.Players.minimax = function(game) {
         }
         return { move: bestMove, score: bestScore };
     };
-    return minmax(game.copy(), game.curPlayer(), 0, 100000).move;
+    return minmax(game.copy(), game.curPlayer(), 0, Number.MAX_VALUE).move;
 };
 
 Minotauro.Players.alphaBeta = function(game) {
