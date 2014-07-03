@@ -84,7 +84,7 @@ Minotauro.Players.minimax = function(game) {
 Minotauro.Players.alphaBeta = function(game) {
     var ab = function(game, maxDepth, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === maxDepth) {
-            return { move: -1, score: utilFunc(game, game.curPlayer()) } // TODO remove move? or change to null?
+            return { move: -1, score: utilFunc(game, game.curPlayer()) }; // TODO remove move? or change to null?
         }
         var bestMove = -1,
             bestScore = -Number.MAX_VALUE;
