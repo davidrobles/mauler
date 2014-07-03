@@ -56,13 +56,35 @@ Minotauro.Players.monteCarlo = function(game) {
 };
 
 Minotauro.Players.minimax = function(game) {
-
+    var minmax = function(game, player, curDepth, maxDepth) {
+        if (game.isOver() || curDepth === maxDepth) {
+            return { move: -1, score: utilFunc(game, player) }
+        }
+        var bestMove = -1,
+            bestScore = game.curPlayer() === player ? -1000000 : 1000000; // TODO change max and min values
+        for (var move = 0; move < game.numMoves(); move++) { // TODO use 'n' variable
+            var newGame = game.copy();
+            newGame.move(move);
+            var curMoveScore = minmax(newGame, player, curDepth + 1, maxDepth);
+            if (game.curPlayer() === player) {
+                if (curMoveScore.score > bestScore) {
+                    bestMove = move;
+                    bestScore = curMoveScore.score;
+                }
+            } else if (curMoveScore.score < bestScore) {
+                bestMove = move;
+                bestScore = curMoveScore.score;
+            }
+        }
+        return { move: bestMove, score: bestScore };
+    };
+    return minmax(game.copy(), game.curPlayer(), 0, 100000).move;
 };
 
 Minotauro.Players.alphaBeta = function(game) {
     var ab = function(game, maxDepth, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === maxDepth) {
-            return { move: -1, score: utilFunc(game, game.curPlayer()) }
+            return { move: -1, score: utilFunc(game, game.curPlayer()) } // TODO remove move? or change to null?
         }
         var bestMove = -1,
             bestScore = -10000;
