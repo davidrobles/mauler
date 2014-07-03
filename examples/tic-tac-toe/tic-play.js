@@ -4,7 +4,7 @@ var players = [Minotauro.Players.monteCarlo, Minotauro.Players.random];
 
 //var players = [Minotauro.Players.random, Minotauro.Players.monteCarlo];
 //var players = [Minotauro.Players.random, Minotauro.Players.random];
-//var players = [Minotauro.Players.random, Minotauro.Players.alphaBeta];
+var players = [Minotauro.Players.alphaBeta, Minotauro.Players.random];
 var game = new Tic.Model();
 //game.move(3);
 
