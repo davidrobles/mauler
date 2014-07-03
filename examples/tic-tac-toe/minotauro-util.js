@@ -11,19 +11,20 @@ Minotauro.Util.playRandomGame = function(game) {
 };
 
 Minotauro.Util.playNGames = function(game, players, numGames) {
-    game = game.newGame();
     var stats = {
         oneWins: 0,
         twoWins: 0,
         draws: 0
     };
+    var newGame = game.copy();
     for (var i = 0; i < numGames; i++) {
-        while (!game.isOver()) {
-            var curPlayer = players[game.curPlayer()];
-            var move = curPlayer(game);
-            game.move(move);
+        newGame.reset();
+        while (!newGame.isOver()) {
+            var curPlayer = players[newGame.curPlayer()];
+            var move = curPlayer(newGame);
+            newGame.move(move);
         }
-        var outcomes = game.outcomes();
+        var outcomes = newGame.outcomes();
         if (outcomes[0] === 'WIN') {
             stats.oneWins++;
         } else if (outcomes[1] === 'WIN') {
@@ -31,7 +32,6 @@ Minotauro.Util.playNGames = function(game, players, numGames) {
         } else {
             stats.draws++;
         }
-        game.reset();
     }
     return stats;
 };

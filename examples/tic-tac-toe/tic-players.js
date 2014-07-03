@@ -41,7 +41,7 @@ Minotauro.Players.monteCarlo = function(game) {
     if (numMoves === 1) {
         return 0;
     }
-    var outcomes = [0, 0, 0];
+    var outcomes = Array.apply(null, new Array(numMoves)).map(Number.prototype.valueOf,0);
     for (var i = 0; i < nSims; i++) {
         var newGame = game.copy(); // TODO refactor copy method
         var move = i % numMoves;
@@ -72,8 +72,8 @@ Minotauro.Players.alphaBeta = function(game) {
             var curMoveScore = ab(newGame, maxDepth, curDepth + 1, -beta, -Math.max(alpha, bestScore)),
                 curScore = -curMoveScore.score;
             if (curScore > bestScore) {
-                bestScore = curScore;
                 bestMove = move;
+                bestScore = curScore;
                 if (bestScore >= beta) {
                     return { move: bestMove, score: bestScore };
                 }
@@ -81,5 +81,5 @@ Minotauro.Players.alphaBeta = function(game) {
         }
         return { move: bestMove, score: bestScore };
     };
-    return ab(game, 10000, 0, -100000, 1000000).move;
+    return ab(game.copy(), 10000, 0, -100000, 1000000).move;
 };

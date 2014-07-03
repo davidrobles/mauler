@@ -45,7 +45,7 @@ Tic.Model.prototype = {
     },
 
     isOver: function() {
-        return this.numMoves() == 0;
+        return this.numMoves() === 0;
     },
 
     move: function(move) {
@@ -58,6 +58,7 @@ Tic.Model.prototype = {
             move = Math.floor(Math.random() * this.numMoves());
         }
         if (move < 0 || move >= this.numMoves()) {
+            debugger;
             throw new RangeError("Illegal move");
         }
         this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
