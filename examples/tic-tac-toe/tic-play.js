@@ -1,4 +1,4 @@
-var players = [Minotauro.Players.random, Minotauro.Players.negamax];
+var players = [Minotauro.Players.alphaBeta, Minotauro.Players.random];
 
 var game = new Tic.Model();
 //game.move(3);
@@ -23,7 +23,7 @@ document.body.appendChild(controlsView.render());
 
 match.registerObserver(controlsView);
 
-console.time('robles');
-var stats = Minotauro.Util.playNGames(game, players, 100);
-console.timeEnd('robles');
-console.log(stats);
+//console.time('robles');
+//var stats = Minotauro.Util.playNGames(game, players, 100);
+//console.timeEnd('robles');
+//console.log(stats);
