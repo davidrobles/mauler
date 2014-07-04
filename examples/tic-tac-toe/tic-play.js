@@ -14,13 +14,11 @@ var canvasEl = canvasView.render();
 
 canvasEl.addEventListener("click", function(event) {
     var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
-    console.log("x: " + loc.x + ", y: " + loc.y);
 });
 
 canvasEl.addEventListener("mousemove", function(event) {
     var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
     var square = canvasView.coordToSquare(loc.x, loc.y);
-    console.log("Row: " + square.row + ", Col: " + square.col);
     canvasView.mouse.over.row = square.row;
     canvasView.mouse.over.col = square.col;
     canvasView.render();
