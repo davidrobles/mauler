@@ -1,4 +1,4 @@
-var players = [Mauler.Players.alphaBeta, Mauler.Players.random];
+var players = [new Mauler.Players.Random(), new Mauler.Players.Random()];
 
 var game = new Tic.Model();
 //game.move(3);

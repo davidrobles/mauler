@@ -92,7 +92,7 @@ Mauler.Controller.prototype = {
         }
         var gameCopy = this.gameHistory[this.gameHistory.length - 1].copy();
         if (this.currentBoardIndex === this.gameHistory.length - 1) {
-            var moveIndex = this.players[gameCopy.curPlayer()].call(this, gameCopy);
+            var moveIndex = this.players[gameCopy.curPlayer()].move(gameCopy);
             var moveString = gameCopy.moves()[moveIndex];
             gameCopy.move(moveIndex);
             if (!this.gameHistory[this.gameHistory.length - 1].equals(gameCopy)) {
