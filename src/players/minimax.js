@@ -4,7 +4,7 @@ Mauler.Players = Mauler.Players || {};
 Mauler.Players.Minimax = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
-    this.utilFunc = new Mauler.Util.UtilFunc();
+    this.utilFunc = options.utilFunc || new Mauler.Util.UtilFunc();
 };
 
 Mauler.Players.Minimax.prototype = {
