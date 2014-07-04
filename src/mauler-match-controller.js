@@ -1,6 +1,6 @@
-var Minotauro = Mauler || {};
+var Mauler = Mauler || {};
 
-Minotauro.Controller = function(game, players) {
+Mauler.Controller = function(game, players) {
     this.game = game;
     this.players = players;
     this.currentBoardIndex = 0;
@@ -8,9 +8,9 @@ Minotauro.Controller = function(game, players) {
     this.reset();
 };
 
-Minotauro.Controller.prototype = {
+Mauler.Controller.prototype = {
 
-    constructor: Minotauro.Controller,
+    constructor: Mauler.Controller,
 
     playToEnd: function() {
         while (this.isNext()) {
