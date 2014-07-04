@@ -1,4 +1,4 @@
-var players = [new Mauler.Players.Minimax(), new Mauler.Players.Random()];
+var players = [new Mauler.Players.Random(), new Mauler.Players.Negamax()];
 
 var game = new Tic.Model();
 //game.move(3);
