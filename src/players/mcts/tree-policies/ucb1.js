@@ -22,7 +22,7 @@ Mauler.Players.UCB1.prototype = {
             var value = 0;
 
             // ensures that each arm is selected once before further exploration
-            if (node.actionCount(move) == 0)
+            if (node.actionCount(move) === 0)
             {
                 var bias = (Math.random() * 1000) + 10;
                 value = max ? (100000000 - bias) : (-100000000 + bias); // TODO: refactor

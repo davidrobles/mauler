@@ -4,7 +4,9 @@ var mcts = new Mauler.Players.MCTS({
     numSims: 1000
 });
 
-var players = [mcts, new Mauler.Players.Random()];
+var rand = new Mauler.Players.Random();
+
+var players = [mcts, rand];
 
 var game = new Tic.Model();
 //game.move(3);
@@ -48,6 +50,6 @@ document.body.appendChild(controlsView.render());
 match.registerObserver(controlsView);
 
 console.time('robles');
-var stats = Mauler.Util.playNGames(game, players, 10);
+var stats = Mauler.Util.playNGames(game, players, 100);
 console.timeEnd('robles');
 console.log(stats);
