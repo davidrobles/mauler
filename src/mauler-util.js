@@ -2,6 +2,18 @@ var Mauler = Mauler || {};
 
 Mauler.Util = {};
 
+Mauler.Util.argMax = function(outcomes) {
+    var maxArg = 0,
+        maxValue = outcomes[0];
+    for (var i = 1; i < outcomes.length; i++) {
+        if (outcomes[i] > maxValue) {
+            maxArg = i;
+            maxValue = outcomes[i];
+        }
+    }
+    return maxArg;
+};
+
 Mauler.Util.playRandomGame = function(game) {
     console.log(game.toString());
     while (!game.isOver()) {
