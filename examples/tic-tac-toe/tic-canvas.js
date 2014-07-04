@@ -11,8 +11,8 @@ Tic.CanvasView = function(options) {
     this.colors = {
         bg: "rgb(255, 219, 122)",
         border: "rgb(229, 197, 110)",
-        cross: "rgba(192, 57, 43, 1.0)",
-        crossLight: "rgba(192, 57, 43, 0.5)",
+        cross: "rgba(231, 76, 60, 1.0)",
+        crossLight: "rgba(231, 76, 60, 0.5)",
         nought: "rgba(41, 128, 185,1.0)",
         noughtLight: "rgba(41, 128, 185, 0.5)"
     };
