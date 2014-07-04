@@ -5,6 +5,7 @@ Mauler.Players.MCTS = function(options) {
     options = options || {};
     this.treePolicy = options.treePolicy;
     this.defaultPolicy = options.defaultPolicy;
+    this.numSims = options.numSims;
     this.utilFunc = options.utilFunc || new Mauler.Util.UtilFunc();
 };
 
@@ -26,7 +27,7 @@ Mauler.Players.MCTS.prototype = {
         var nodes = [],
             curNode = curPos;
         while (!curNode.game.isOver()) {
-            nodes.add(curNode);
+            nodes.push(curNode);
             var lastNode = nodes[nodes.length - 1];
             if (lastNode.count === 0) {
                 this.newNode(lastNode, player);
@@ -35,7 +36,7 @@ Mauler.Players.MCTS.prototype = {
             var move = this.treePolicy.move(nodes[nodes.length - 1], player); // TODO refactor
             curNode = curNode.children[move];
         }
-        nodes.add(curNode);
+        nodes.push(curNode);
         return nodes;
     },
 
@@ -86,7 +87,7 @@ Mauler.Players.MCTSNode.prototype = {
         for (var move = 0; move < this.game.numMoves(); move++) {
             var newGame = game.copy();
             newGame.move(move);
-            this.children.add(new Mauler.Players.MCTSNode(newGame));
+            this.children.push(new Mauler.Players.MCTSNode(newGame));
         }
     },
 
