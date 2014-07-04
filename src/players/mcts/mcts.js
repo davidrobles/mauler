@@ -19,8 +19,9 @@ Mauler.Players.MCTS.prototype = {
 
     simulate: function (curPos, player) {
         var visitedNodes = this.simTree(curPos, player),
-            lastNode = visitedNodes[visitedNodes.length - 1];
-        this.backup(visitedNodes, this.simDefault(lastNode, player))
+            lastNode = visitedNodes[visitedNodes.length - 1],
+            outcome = this.simDefault(lastNode, player);
+        this.backup(visitedNodes, outcome)
     },
 
     simTree: function (curPos, player) {
