@@ -11,8 +11,16 @@ Tic.CanvasView = function(options) {
     this.colors = {
         bg: "rgb(255, 219, 122)",
         border: "rgb(229, 197, 110)",
-        cross: "rgb(255, 73, 77)",
-        nought: "rgb(85, 119, 254)"
+        cross: "rgba(192, 57, 43, 1.0)",
+        crossLight: "rgba(192, 57, 43, 0.5)",
+        nought: "rgba(41, 128, 185,1.0)",
+        noughtLight: "rgba(41, 128, 185, 0.5)"
+    };
+    this.mouse = {
+        over: {
+            row: null,
+            col: null
+        }
     };
     this.borderSize = 0.02; // percentage
     this.linesWidth = Math.round(this.canvas.width * this.borderSize);
@@ -28,6 +36,10 @@ Tic.CanvasView.prototype = {
         this.drawBorder();
         this.drawSquares();
         return this.canvas;
+    },
+
+    getCurPlayerColor: function() {
+        return this.model.curPlayer() === 0 ? this.colors.crossLight : this.colors.noughtLight;
     },
 
     drawBackground: function() {
@@ -58,9 +70,16 @@ Tic.CanvasView.prototype = {
             for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
                 if (cellType === 'CROSS') {
-                    this.drawCross(row, col);
+                    this.drawCross(row, col, this.colors.cross);
                 } else if (cellType === 'NOUGHT') {
-                    this.drawNought(row, col);
+                    this.drawNought(row, col, this.colors.nought);
+                } else if (this.mouse.over !== null && this.mouse.over.row === row && this.mouse.over.col === col) {
+                    var color = this.getCurPlayerColor();
+                    if (this.model.curPlayer() === 0) {
+                        this.drawCross(row, col, color);
+                    } else if (this.model.curPlayer() === 1) {
+                        this.drawNought(row, col, color);
+                    }
                 }
             }
         }
@@ -81,29 +100,29 @@ Tic.CanvasView.prototype = {
         this.ctx.stroke();
     },
 
-    drawCross: function (row, col) {
-
+    drawCross: function (row, col, color) {
         var space = this.squareSize * ((1 - this.cellPer)),
             x = col * this.squareSize,
             y = row * this.squareSize;
 
         this.ctx.lineWidth = 14; // TODO make it relative to size
-        this.ctx.strokeStyle = this.colors.cross;
+        this.ctx.strokeStyle = color;
         this.ctx.lineCap = 'round';
+
         this.ctx.beginPath();
 
         // Top Left to Bottom Right
         this.ctx.moveTo(x + space, y + space);
         this.ctx.lineTo(x + this.squareSize - space, y + this.squareSize - space);
-        this.ctx.stroke();
 
         // Bottom Left to Top Right
         this.ctx.moveTo(x + space, y + this.squareSize - space);
         this.ctx.lineTo(x + this.squareSize - space, y + space);
+
         this.ctx.stroke();
     },
 
-    drawNought: function (row, col) {
+    drawNought: function (row, col, color) {
         this.ctx.beginPath();
         var centerX = col * this.squareSize + (this.squareSize / 2),
             centerY = row * this.squareSize + (this.squareSize / 2),
@@ -112,7 +131,7 @@ Tic.CanvasView.prototype = {
             endAngle = 2 * Math.PI,
             counterClockwise = false;
         this.ctx.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
-        this.ctx.fillStyle = this.colors.nought;
+        this.ctx.fillStyle = color;
         this.ctx.fill();
     },
 
@@ -127,8 +146,8 @@ Tic.CanvasView.prototype = {
 
     coordToSquare: function(x, y) {
         return {
-            row: Math.floor(x / this.squareSize),
-            col: Math.floor(y / this.squareSize)
+            row: Math.floor(y / this.squareSize),
+            col: Math.floor(x / this.squareSize)
         };
     }
 

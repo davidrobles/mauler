@@ -21,6 +21,15 @@ canvasEl.addEventListener("mousemove", function(event) {
     var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
     var square = canvasView.coordToSquare(loc.x, loc.y);
     console.log("Row: " + square.row + ", Col: " + square.col);
+    canvasView.mouse.over.row = square.row;
+    canvasView.mouse.over.col = square.col;
+    canvasView.render();
+});
+
+canvasEl.addEventListener("mouseout", function(event) {
+    canvasView.mouse.over.row = null;
+    canvasView.mouse.over.col = null;
+    canvasView.render()
 });
 
 var match = new Mauler.Controller(game, players);
