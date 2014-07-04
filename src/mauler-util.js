@@ -32,7 +32,7 @@ Mauler.Util.playNGames = function(game, players, numGames) {
         var newGame = game.copy();
         while (!newGame.isOver()) {
             var curPlayer = players[newGame.curPlayer()];
-            var move = curPlayer(newGame);
+            var move = curPlayer.move(newGame);
             newGame.move(move);
         }
         var outcomes = newGame.outcomes();
