@@ -1,4 +1,4 @@
-var Minotauro = Minotauro || {};
+var Minotauro = Mauler || {};
 
 Minotauro.MoveHistoryModel = function() {
 

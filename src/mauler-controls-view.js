@@ -1,14 +1,14 @@
-var Minotauro = Minotauro || {};
+var Mauler = Mauler || {};
 
-Minotauro.ControlsView = function(options) {
+Mauler.ControlsView = function(options) {
     this.controller = options.controller;
     this.initButtons();
     this.addListeners();
 };
 
-Minotauro.ControlsView.prototype = {
+Mauler.ControlsView.prototype = {
 
-    constructor: Minotauro.ControlsView,
+    constructor: Mauler.ControlsView,
 
     initButtons: function() {
         this.div = document.createElement("div");

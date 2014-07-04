@@ -1,8 +1,8 @@
-var Minotauro = Minotauro || {};
+var Mauler = Mauler || {};
 
-Minotauro.Players = {};
+Mauler.Players = {};
 
-Minotauro.Players.random = function(game) {
+Mauler.Players.random = function(game) {
     return Math.floor(Math.random() * game.numMoves());
 };
 
@@ -35,7 +35,7 @@ var utilFunc = function(game, player) {
     }
 };
 
-Minotauro.Players.monteCarlo = function(game) {
+Mauler.Players.monteCarlo = function(game) {
     var nSims = 10000;
     var numMoves = game.numMoves();
     if (numMoves === 1) {
@@ -47,7 +47,7 @@ Minotauro.Players.monteCarlo = function(game) {
         var move = i % numMoves;
         newGame.move(move);
         while (!newGame.isOver()) {
-            var randMove = Minotauro.Players.random(newGame);
+            var randMove = Mauler.Players.random(newGame);
             newGame.move(randMove);
         }
         outcomes[move] += utilFunc(newGame, game.curPlayer());
@@ -55,7 +55,7 @@ Minotauro.Players.monteCarlo = function(game) {
     return  argMax(outcomes);
 };
 
-Minotauro.Players.minimax = function(game) {
+Mauler.Players.minimax = function(game) {
     var minmax = function(game, player, curDepth, maxDepth) {
         if (game.isOver() || curDepth === maxDepth) {
             return { move: -1, score: utilFunc(game, player) }
@@ -81,7 +81,7 @@ Minotauro.Players.minimax = function(game) {
     return minmax(game.copy(), game.curPlayer(), 0, Number.MAX_VALUE).move;
 };
 
-Minotauro.Players.negamax = function(game) {
+Mauler.Players.negamax = function(game) {
     var negmax = function(game, curDepth, maxDepth) {
         if (game.isOver() || curDepth === maxDepth) {
             return { move: -1, score: utilFunc(game, game.curPlayer()) }
@@ -103,7 +103,7 @@ Minotauro.Players.negamax = function(game) {
     return negmax(game.copy(), 0, Number.MAX_VALUE).move;
 };
 
-Minotauro.Players.alphaBeta = function(game) {
+Mauler.Players.alphaBeta = function(game) {
     var ab = function(game, maxDepth, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === maxDepth) {
             return { move: -1, score: utilFunc(game, game.curPlayer()) }; // TODO remove move? or change to null?

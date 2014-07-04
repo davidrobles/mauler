@@ -1,4 +1,4 @@
-var Minotauro = Minotauro || {};
+var Minotauro = Mauler || {};
 
 Minotauro.Controller = function(game, players) {
     this.game = game;

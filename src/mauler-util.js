@@ -1,8 +1,8 @@
-var Minotauro = Minotauro || {};
+var Mauler = Mauler || {};
 
-Minotauro.Util = {};
+Mauler.Util = {};
 
-Minotauro.Util.playRandomGame = function(game) {
+Mauler.Util.playRandomGame = function(game) {
     console.log(game.toString());
     while (!game.isOver()) {
         game.move();
@@ -10,7 +10,7 @@ Minotauro.Util.playRandomGame = function(game) {
     }
 };
 
-Minotauro.Util.playNGames = function(game, players, numGames) {
+Mauler.Util.playNGames = function(game, players, numGames) {
     var stats = {
         oneWins: 0,
         twoWins: 0,
