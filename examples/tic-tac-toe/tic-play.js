@@ -10,7 +10,13 @@ var canvasView = new Tic.CanvasView({
     canvas: document.getElementById("canvas")
 });
 
-canvasView.render();
+var canvasEl = canvasView.render();
+
+canvasEl.addEventListener("click", function(event) {
+    var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
+    console.log("x: " + loc.x + ", y: " + loc.y);
+});
+
 
 var match = new Mauler.Controller(game, players);
 match.registerObserver(canvasView);
