@@ -1,4 +1,10 @@
-var players = [new Mauler.Players.AlphaBeta(), new Mauler.Players.AlphaBeta()];
+var mcts = new Mauler.Players.MCTS({
+    treePolicy: new Mauler.Players.UCB1({ c: 0.5 }),
+    defaultPolicy: new Mauler.Players.Random(),
+    numSims: 1000
+});
+
+var players = [mcts, new Mauler.Players.Random()];
 
 var game = new Tic.Model();
 //game.move(3);
@@ -42,6 +48,6 @@ document.body.appendChild(controlsView.render());
 match.registerObserver(controlsView);
 
 console.time('robles');
-var stats = Mauler.Util.playNGames(game, players, 100);
+var stats = Mauler.Util.playNGames(game, players, 10);
 console.timeEnd('robles');
 console.log(stats);
