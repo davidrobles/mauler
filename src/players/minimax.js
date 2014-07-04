@@ -4,6 +4,7 @@ Mauler.Players = Mauler.Players || {};
 Mauler.Players.Minimax = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
+    this.utilFunc = new Mauler.Util.UtilFunc();
 };
 
 Mauler.Players.Minimax.prototype = {
@@ -12,7 +13,7 @@ Mauler.Players.Minimax.prototype = {
 
     minimax: function(game, player, curDepth) {
         if (game.isOver() || curDepth === this.maxDepth) {
-            return { move: -1, score: utilFunc(game, player) }
+            return { move: -1, score: this.utilFunc.eval(game, player) }
         }
         var bestMove = -1,
             bestScore = game.curPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE; // TODO change max and min values
