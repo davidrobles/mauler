@@ -20,8 +20,8 @@ Mauler.Players.Negamax.prototype = {
         for (var move = 0; move < game.numMoves(); move++) { // TODO use 'n' variable
             var newGame = game.copy();
             newGame.move(move);
-            var curMoveScore = this.negamax(newGame, curDepth + 1);
-            var curScore = -curMoveScore.score;
+            var curMoveScore = this.negamax(newGame, curDepth + 1),
+                curScore = -curMoveScore.score;
             if (curScore > bestScore) {
                 bestMove = move;
                 bestScore = curScore;
