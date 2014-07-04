@@ -54,3 +54,24 @@ Mauler.Util.windowToCanvas = function(canvas, x, y) {
         y: y - bbox.top * (canvas.height / bbox.height)
     };
 };
+
+Mauler.Util.UtilFunc = function(options) {
+    options = options || {};
+    this.win  = options.win  ||  1.0;
+    this.draw = options.draw ||  0.0;
+    this.loss = options.loss || -1.0;
+};
+
+Mauler.Util.UtilFunc.prototype.eval = function(game, player) {
+    if (game.isOver()) {
+        var outcomes = game.outcomes();
+        switch (outcomes[player]) {
+            case "WIN":
+                return this.win;
+            case "DRAW":
+                return this.draw;
+            case "LOSS":
+                return this.loss;
+        }
+    }
+};
