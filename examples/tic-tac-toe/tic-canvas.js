@@ -121,6 +121,15 @@ Tic.CanvasView.prototype = {
     update: function(model) {
         this.model = model;
         this.render();
+    },
+
+    // Clickable
+
+    coordToSquare: function(x, y) {
+        return {
+            row: Math.floor(x / this.squareSize),
+            col: Math.floor(y / this.squareSize)
+        };
     }
 
 };

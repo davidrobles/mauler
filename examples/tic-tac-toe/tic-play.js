@@ -17,6 +17,11 @@ canvasEl.addEventListener("click", function(event) {
     console.log("x: " + loc.x + ", y: " + loc.y);
 });
 
+canvasEl.addEventListener("mousemove", function(event) {
+    var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
+    var square = canvasView.coordToSquare(loc.x, loc.y);
+    console.log("Row: " + square.row + ", Col: " + square.col);
+});
 
 var match = new Mauler.Controller(game, players);
 match.registerObserver(canvasView);
