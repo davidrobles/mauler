@@ -15,6 +15,7 @@ Tic.CanvasView = function(options) {
         nought: "rgb(85, 119, 254)"
     };
     this.borderSize = 0.02; // percentage
+    this.linesWidth = Math.round(this.canvas.width * this.borderSize);
 };
 
 Tic.CanvasView.prototype = {
@@ -23,8 +24,8 @@ Tic.CanvasView.prototype = {
 
     render: function() {
         this.drawBackground();
-        this.drawBorder();
         this.drawLines();
+        this.drawBorder();
         this.drawSquares();
         return this.canvas;
     },
@@ -35,8 +36,13 @@ Tic.CanvasView.prototype = {
     },
 
     drawBorder: function() {
-        var borderSize = Math.round(this.canvas.width * this.borderSize); // TODO refactor this
-        this.canvas.style.border = borderSize + "px solid " + this.colors.border;
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = this.colors.border;
+        this.ctx.lineWidth = this.linesWidth;
+        this.ctx.strokeRect(this.linesWidth / 2,
+                            this.linesWidth / 2,
+                            this.canvas.width - this.linesWidth,
+                            this.canvas.height - this.linesWidth);
     },
 
     drawLines: function() {
