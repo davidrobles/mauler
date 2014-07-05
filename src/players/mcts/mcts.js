@@ -86,7 +86,7 @@ Mauler.Players.MCTSNode.prototype = {
 
     init: function() {
         for (var move = 0; move < this.game.numMoves(); move++) {
-            var newGame = game.copy();
+            var newGame = this.game.copy();
             newGame.move(move);
             this.children.push(new Mauler.Players.MCTSNode(newGame));
         }
