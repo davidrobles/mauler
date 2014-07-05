@@ -17,14 +17,14 @@ Mauler.Players.MCTS.prototype = {
         return new Mauler.MCTS(this.treePolicy, this.defaultPolicy, this.numSims);
     },
 
-    simulate: function (curPos, player) {
+    simulate: function(curPos, player) {
         var visitedNodes = this.simTree(curPos, player),
             lastNode = visitedNodes[visitedNodes.length - 1],
             outcome = this.simDefault(lastNode, player);
         this.backup(visitedNodes, outcome)
     },
 
-    simTree: function (curPos, player) {
+    simTree: function(curPos, player) {
         var nodes = [],
             curNode = curPos;
         while (!curNode.game.isOver()) {
@@ -41,7 +41,7 @@ Mauler.Players.MCTS.prototype = {
         return nodes;
     },
 
-    simDefault: function (node, player) {
+    simDefault: function(node, player) {
         var copy = node.game.copy();
         while (!copy.isOver()) {
             copy.move(this.defaultPolicy.move(copy));
@@ -55,7 +55,7 @@ Mauler.Players.MCTS.prototype = {
         });
     },
 
-    newNode: function(node, player) {
+    newNode: function(node, player) { // todo remove this?
         node.init();
     },
 

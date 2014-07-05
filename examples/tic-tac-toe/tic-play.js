@@ -6,10 +6,11 @@ var mcts = new Mauler.Players.MCTS({
 
 var rand = new Mauler.Players.Random();
 
+var alphaBeta = new Mauler.Players.AlphaBeta();
+
 var players = [mcts, rand];
 
 var game = new Tic.Model();
-//game.move(3);
 
 var canvasView = new Tic.CanvasView({
     model: game,
@@ -50,6 +51,6 @@ document.body.appendChild(controlsView.render());
 match.registerObserver(controlsView);
 
 console.time('robles');
-var stats = Mauler.Util.playNGames(game, players, 100);
+var stats = Mauler.Util.playNGames(game, players, 10);
 console.timeEnd('robles');
 console.log(stats);
