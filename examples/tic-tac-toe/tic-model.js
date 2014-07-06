@@ -7,7 +7,7 @@ Tic.Model = function() {
     this.noughts = 0;
 };
 
-Tic.letters = ['A', 'B', 'C'];
+Tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
 
 Tic.Model.prototype = {
 
@@ -48,6 +48,8 @@ Tic.Model.prototype = {
         return this.numMoves() === 0;
     },
 
+    // string moves
+
     move: function(move) {
         // game is over
         if (this.isOver()) {
@@ -57,11 +59,38 @@ Tic.Model.prototype = {
         if (arguments.length === 0) {
             move = Math.floor(Math.random() * this.numMoves());
         }
+        if (typeof move === "string") {
+            var theMoves = this.moves();
+            var nMoves = theMoves.length;
+            for (var i = 0; i < nMoves; i++) {
+                if (move === theMoves[i]) {
+                    move = i;
+                    break;
+                }
+            }
+        }
         if (move < 0 || move >= this.numMoves()) {
             throw new RangeError("Illegal move");
         }
         this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
     },
+
+    // original
+
+//    move: function(move) {
+//        // game is over
+//        if (this.isOver()) {
+//            throw new RangeError("Can't make more moves, game is over.");
+//        }
+//        // make random move if no move given
+//        if (arguments.length === 0) {
+//            move = Math.floor(Math.random() * this.numMoves());
+//        }
+//        if (move < 0 || move >= this.numMoves()) {
+//            throw new RangeError("Illegal move");
+//        }
+//        this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
+//    },
 
     moves: function() {
         var mvs = [],
@@ -78,6 +107,7 @@ Tic.Model.prototype = {
         return new Tic.Model();
     },
 
+    // TODO no need for having this method... moves().length should be enough
     numMoves: function() {
         return this.isWin() ? 0 : this.emptyCells();
     },

@@ -27,10 +27,12 @@ Mauler.Players.CanvasPlayer.prototype = {
     addListeners: function() {
         this.canvas.addEventListener("click", function(event) {
             var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
-            var square = this.coordToSquare(loc.x, loc.y);
+            var square = this.canvasView.coordToSquare(loc.x, loc.y);
             var str = Tic.letters[square.row] + (square.col + 1);
+            this.desiredMove = str;
             this.controller.next();
             // write square to
+            this.canvasView.render(); // TODO Move somewhere else?
         }.bind(this));
 
         this.canvas.addEventListener("mousemove", function(event) {
@@ -38,11 +40,13 @@ Mauler.Players.CanvasPlayer.prototype = {
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
             this.canvasView.mouse.over.row = square.row;
             this.canvasView.mouse.over.col = square.col;
+            this.canvasView.render();
         }.bind(this));
 
         this.canvas.addEventListener("mouseout", function() {
             this.canvasView.mouse.over.row = null;
             this.canvasView.mouse.over.col = null;
+            this.canvasView.render();
         }.bind(this));
     }
 

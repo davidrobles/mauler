@@ -28,14 +28,14 @@ var mcts = new Mauler.Players.MCTS({
 
 var rand = new Mauler.Players.Random();
 
-var canvasplayer = new Mauler.Players.CanvasPlayer({
+var canvasPlayer = new Mauler.Players.CanvasPlayer({
     controller: controller,
     canvasView: canvasView
 });
 
 var alphaBeta = new Mauler.Players.AlphaBeta();
 
-var players = [rand, rand];
+var players = [canvasPlayer, canvasPlayer];
 controller.players = players;
 
 
