@@ -68,8 +68,8 @@ Tic.Model.prototype = {
         var mvs = [],
             legal = this.legalMoves();
         for (var i = 0; i < legal.length; i++) {
-            var row = Math.floor(i / 3);
-            var col = (i % 3) + 1;
+            var row = Math.floor(legal[i] / 3);
+            var col = (legal[i] % 3) + 1;
             mvs.push(Tic.letters[row] + col.toString());
         }
         return mvs

@@ -157,7 +157,13 @@ Tic.CanvasView.prototype = {
 
     addListeners: function() {
         this.canvas.addEventListener("click", function(event) {
-            var loc = Mauler.Util.windowToCanvas(this, event.clientX, event.clientY);
+            var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
+            var square = this.coordToSquare(loc.x, loc.y);
+            var moves = this.model.moves();
+            debugger;
+            var str = Tic.letters[square.row] + (square.col + 1);
+            alert(str);
+            // write square to
         }.bind(this));
 
         this.canvas.addEventListener("mousemove", function(event) {
