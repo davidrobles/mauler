@@ -1,16 +1,8 @@
-var mcts = new Mauler.Players.MCTS({
-    treePolicy: new Mauler.Players.UCB1({ c: 0.5 }),
-    defaultPolicy: new Mauler.Players.Random(),
-    numSims: 50000
-});
-
-var rand = new Mauler.Players.Random();
-
-var alphaBeta = new Mauler.Players.AlphaBeta();
-
-var players = [rand, rand];
+// Game
 
 var game = new Tic.Model();
+
+// View
 
 var canvasView = new Tic.CanvasView({
     model: game,
@@ -19,16 +11,40 @@ var canvasView = new Tic.CanvasView({
     canvas: document.getElementById("canvas")
 });
 
-var match = new Mauler.Controller(game, players);
-match.registerObserver(canvasView);
+// Controller
+
+var controller = new Mauler.Controller({
+    game: game
+});
+controller.registerObserver(canvasView);
+
+// Players
+
+var mcts = new Mauler.Players.MCTS({
+    treePolicy: new Mauler.Players.UCB1({ c: 0.5 }),
+    defaultPolicy: new Mauler.Players.Random(),
+    numSims: 50000
+});
+
+var rand = new Mauler.Players.Random();
+
+var canvasplayer = new Mauler.Players.CanvasPlayer({
+    controller: controller,
+    canvasView: canvasView
+});
+
+var alphaBeta = new Mauler.Players.AlphaBeta();
+
+var players = [rand, rand];
+controller.players = players;
+
 
 var controlsView = new Mauler.ControlsView({
-    controller: match
+    controller: controller
 });
 document.body.appendChild(controlsView.render());
 
-
-match.registerObserver(controlsView);
+controller.registerObserver(controlsView);
 
 //console.time('robles');
 //var stats = Mauler.Util.playNGames(game, players, 200);

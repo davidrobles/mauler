@@ -1,8 +1,8 @@
 var Mauler = Mauler || {};
 
-Mauler.Controller = function(game, players) {
-    this.game = game;
-    this.players = players;
+Mauler.Controller = function(options) {
+    this.game = options.game;
+    this.players = options.players;
     this.currentBoardIndex = 0;
     this.observers = [];
     this.reset();

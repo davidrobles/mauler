@@ -25,7 +25,6 @@ Tic.CanvasView = function(options) {
     this.borderSize = 0.02; // percentage
     this.linesWidth = Math.round(this.canvas.width * this.borderSize);
     this.render();
-    this.addListeners();
 };
 
 Tic.CanvasView.prototype = {
@@ -151,34 +150,6 @@ Tic.CanvasView.prototype = {
             row: Math.floor(y / this.squareSize),
             col: Math.floor(x / this.squareSize)
         };
-    },
-
-    // Listeners
-
-    addListeners: function() {
-        this.canvas.addEventListener("click", function(event) {
-            var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
-            var square = this.coordToSquare(loc.x, loc.y);
-            var moves = this.model.moves();
-            debugger;
-            var str = Tic.letters[square.row] + (square.col + 1);
-            alert(str);
-            // write square to
-        }.bind(this));
-
-        this.canvas.addEventListener("mousemove", function(event) {
-            var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
-            var square = this.coordToSquare(loc.x, loc.y);
-            this.mouse.over.row = square.row;
-            this.mouse.over.col = square.col;
-            this.render();
-        }.bind(this));
-
-        this.canvas.addEventListener("mouseout", function() {
-            this.mouse.over.row = null;
-            this.mouse.over.col = null;
-            this.render()
-        }.bind(this));
     }
 
 };
