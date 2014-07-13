@@ -22,6 +22,7 @@ Tic.CanvasView = function(options) {
             col: null
         }
     };
+    // create a highlightedMoves list
     this.borderSize = 0.02; // percentage
     this.linesWidth = Math.round(this.canvas.width * this.borderSize);
     this.render();
@@ -74,7 +75,7 @@ Tic.CanvasView.prototype = {
                     this.drawCross(row, col, this.colors.cross);
                 } else if (cellType === 'NOUGHT') {
                     this.drawNought(row, col, this.colors.nought);
-                } else if (this.mouse.over !== null && this.mouse.over.row === row && this.mouse.over.col === col) {
+                } else if (!this.model.frozen && !this.model.isOver() && this.mouse.over !== null && this.mouse.over.row === row && this.mouse.over.col === col) {
                     var color = this.getCurPlayerColor();
                     if (this.model.curPlayer() === 0) {
                         this.drawCross(row, col, color);
