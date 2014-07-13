@@ -1,0 +1,33 @@
+{
+    "name": "Mauler.js",
+    "version": "0.0.1",
+    "description": "A JavaScript framework for abstract strategy games",
+    "main": "mauler.js",
+    "directories": {
+        "example": "examples",
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/davidrobles/mauler.js.git"
+    },
+    "author": {
+        "name": "David Robles",
+        "email": "drobles@gmail.com",
+        "url": "http://davidrobles.net"
+    },
+    "bugs": {
+        "url": "https://github.com/davidrobles/mauler.js/issues"
+    },
+    "dependencies": {
+        "underscore": ">=1.5.0"
+    },
+    "devDependencies": {
+        "grunt": "^0.4.5",
+        "grunt-contrib-jasmine": "^0.6.5",
+        "mocha": "1.16.2"
+    }
+}
