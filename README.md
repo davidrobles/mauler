@@ -4,7 +4,8 @@ Mauler
 A JavaScript library for turn-based games.
 
 Building Mauler
--------------------------------------------------------------------------------
+---------------
+
 To build your own version of Mauler you will need to install:
 
 - the [Node.js](http://nodejs.org/) JavaScript runtime and [npm](https://npmjs.org/) package manager
