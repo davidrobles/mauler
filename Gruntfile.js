@@ -1,18 +1,17 @@
 module.exports = function(grunt) {
 
-    "use strict";
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.initConfig({
-
-        jasmine: {
-            src: "src/**/*.js",
-            specs: "test/**/*spec.js",
-            helpers: "test/helpers/*.js"
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true
+            },
+            target1: ['Gruntfile.js', 'src/**/*.js']
         }
-
     });
 
-    grunt.loadNpmTasks("grunt-contrib-jasmine");
-    grunt.registerTask("default", "jasmine");
+    grunt.registerTask('default', ['jshint']);
 
-}
+};
