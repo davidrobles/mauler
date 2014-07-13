@@ -1,17 +1,52 @@
 module.exports = function(grunt) {
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    "use strict";
+
+    var sourceFiles = grunt.file.readJSON("sourceFiles.json");
+    console.log(JSON.stringify(sourceFiles));
 
     grunt.initConfig({
-        jshint: {
-            options: {
-                curly: true,
-                eqeqeq: true
+
+        pkg : grunt.file.readJSON("package.json"),
+
+        path : {
+            main : "build/<%= pkg.name %>-<%= pkg.version %>.js",
+            min : "build/<%= pkg.name %>-<%= pkg.version %>-min.js"
+        },
+
+        concat : {
+            dist : {
+                src : sourceFiles,
+                dest : "<%= path.main %>"
+            }
+        },
+
+        clean : {
+            dist : [
+                "<%= path.main %>",
+                "<%= path.min %>"
+            ]
+        },
+
+        uglify : {
+            options : {
+                report : "min",
+                preserveComments : "some"
             },
-            target1: ['Gruntfile.js', 'src/**/*.js']
+            dist : {
+                files : {
+                    "<%= path.min %>" : [
+                        "<%= path.main %>"
+                    ]
+                }
+            }
         }
     });
 
-    grunt.registerTask('default', ['jshint']);
+    grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-clean");
+
+    grunt.registerTask("build", [ "concat" ]);
 
 };

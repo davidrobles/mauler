@@ -1,0 +1,6 @@
+[
+    "src/mauler.js",
+    "src/utils.js",
+    "src/controls-view.js",
+    "src/match-controller.js"
+]
