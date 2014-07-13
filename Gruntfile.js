@@ -3,39 +3,41 @@ module.exports = function(grunt) {
     "use strict";
 
     var sourceFiles = grunt.file.readJSON("sourceFiles.json");
-    console.log(JSON.stringify(sourceFiles));
 
     grunt.initConfig({
 
-        pkg : grunt.file.readJSON("package.json"),
+        pkg: grunt.file.readJSON("package.json"),
 
-        path : {
-            main : "build/<%= pkg.name %>-<%= pkg.version %>.js",
-            min : "build/<%= pkg.name %>-<%= pkg.version %>-min.js"
+        path: {
+            main: "build/<%= pkg.name %>-<%= pkg.version %>.js",
+            min: "build/<%= pkg.name %>-<%= pkg.version %>-min.js"
         },
 
-        concat : {
-            dist : {
-                src : sourceFiles,
-                dest : "<%= path.main %>"
+        concat: {
+            options: {
+
+            },
+            dist: {
+                src: sourceFiles,
+                dest: "<%= path.main %>"
             }
         },
 
-        clean : {
-            dist : [
+        clean: {
+            dist: [
                 "<%= path.main %>",
                 "<%= path.min %>"
             ]
         },
 
-        uglify : {
-            options : {
-                report : "min",
-                preserveComments : "some"
+        uglify: {
+            options: {
+                report: "min",
+                preserveComments: "some"
             },
-            dist : {
-                files : {
-                    "<%= path.min %>" : [
+            dist: {
+                files: {
+                    "<%= path.min %>": [
                         "<%= path.main %>"
                     ]
                 }
@@ -48,5 +50,4 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
 
     grunt.registerTask("build", [ "concat" ]);
-
 };
