@@ -11,14 +11,15 @@ To build your own version of Mauler you will need to install:
 - the [Grunt](http://gruntjs.com/) task manager
 
 Once the Node.js package manager has been installed (using the installer from their website),
-we need to install Grunt and the Grunt CLI (Command Line Interface), by doing the following :
+we need to install Grunt and the Grunt CLI (Command Line Interface).
 
-Open a [Terminal](http://www.apple.com/osx/apps/all.html#terminal) or a [Commmand Prompt](http://en.wikipedia.org/wiki/Command_Prompt) and
-type the following :
+Open a [Terminal](http://www.apple.com/osx/apps/all.html#terminal) or
+a [Commmand Prompt](http://en.wikipedia.org/wiki/Command_Prompt) and
+type:
 
     $ npm install -g grunt-cli
 
-then we can install the Mauler required dependencies, by typing :
+then install the Mauler required dependencies:
 
     $ cd mauler
     $ npm install
