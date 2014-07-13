@@ -18,7 +18,7 @@ Mauler.Players.UCB1.prototype = {
         for (var move = 0; move < node.game.numMoves(); move++) {
             nb += node.actionCount(move);
         }
-        for (var move = 0; move < node.game.numMoves(); move++) {
+        for (move = 0; move < node.game.numMoves(); move++) {
             var value = 0;
 
             // ensures that each arm is selected once before further exploration
