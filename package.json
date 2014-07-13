@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/davidrobles/mauler.js.git"
+        "url": "git://github.com/davidrobles/mauler.git"
     },
     "author": {
         "name": "David Robles",
@@ -20,7 +20,7 @@
         "url": "http://davidrobles.net"
     },
     "bugs": {
-        "url": "https://github.com/davidrobles/mauler.js/issues"
+        "url": "https://github.com/davidrobles/mauler/issues"
     },
     "devDependencies": {
         "grunt": "^0.4.5",
