@@ -1,6 +1,3 @@
-var mauler = mauler || {};
-mauler.players = mauler.players || {};
-
 mauler.players.MCTS = function(options) {
     options = options || {};
     this.treePolicy = options.treePolicy;

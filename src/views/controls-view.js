@@ -1,5 +1,3 @@
-var mauler = mauler || {};
-
 mauler.ControlsView = function(options) {
     this.controller = options.controller;
     this.initElements();

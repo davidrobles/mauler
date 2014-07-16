@@ -1,6 +1,3 @@
-var mauler = mauler || {};
-mauler.players = mauler.players || {};
-
 mauler.players.CanvasPlayer = function(options) {
     this.desiredMove = 0;
     this.controller = options.controller;

@@ -1,4 +1,4 @@
-/**
- * Mauler
- */
-
+var mauler = {
+    players: {},
+    utils: {}
+};

@@ -16,7 +16,7 @@ module.exports = function(grunt) {
                 separator: grunt.util.linefeed + grunt.util.linefeed
             },
             dist: {
-                src: "src/**/*.js",
+                src: ["src/mauler.js", "src/**/*.js"],
                 dest: "<%= path.main %>"
             }
         },

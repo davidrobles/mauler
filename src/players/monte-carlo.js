@@ -1,6 +1,3 @@
-var mauler = mauler || {};
-mauler.players = mauler.players || {};
-
 mauler.players.MonteCarlo = function(options) {
     options = options || {};
     this.numSims = options.numSims || 100;

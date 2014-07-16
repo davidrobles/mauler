@@ -1,7 +1,3 @@
-var mauler = mauler || {};
-
-mauler.utils = {};
-
 mauler.utils.argMax = function(outcomes) {
     var maxArg = 0,
         maxValue = outcomes[0];

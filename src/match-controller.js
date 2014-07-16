@@ -1,5 +1,3 @@
-var mauler = mauler || {};
-
 mauler.Controller = function(options) {
     this.game = options.game;
     this.players = options.players;

@@ -1,6 +1,3 @@
-var mauler = mauler || {};
-mauler.players = mauler.players || {};
-
 mauler.players.Minimax = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
