@@ -11,7 +11,7 @@ Mauler.ControlsView.prototype = {
     constructor: Mauler.ControlsView,
 
     initButtons: function() {
-        this.div = document.createElement("div");
+        this.el = document.createElement("div");
         this.buttons = {
             start: document.createElement("button"),
             prev: document.createElement("button"),
@@ -22,10 +22,10 @@ Mauler.ControlsView.prototype = {
         this.buttons.prev.innerHTML = "&#60;";
         this.buttons.next.innerHTML = "&#62;";
         this.buttons.end.innerHTML = "&#62;|";
-        this.div.appendChild(this.buttons.start);
-        this.div.appendChild(this.buttons.prev);
-        this.div.appendChild(this.buttons.next);
-        this.div.appendChild(this.buttons.end);
+        this.el.appendChild(this.buttons.start);
+        this.el.appendChild(this.buttons.prev);
+        this.el.appendChild(this.buttons.next);
+        this.el.appendChild(this.buttons.end);
     },
 
     addListeners: function () {
@@ -44,7 +44,7 @@ Mauler.ControlsView.prototype = {
     },
 
     render: function() {
-        return this.div;
+        return this.el;
     },
 
     update: function() {
