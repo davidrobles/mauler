@@ -12,6 +12,11 @@ Algorithms
 - Alpha-beta pruning
 - Monte-Carlo tree search (MCTS)
 
+Games
+-----
+
+- [Tic-Tac-Toe](https://github.com/davidrobles/mauler-tic-tac-toe)
+
 Building Mauler
 ---------------
 
