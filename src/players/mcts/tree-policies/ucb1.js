@@ -1,14 +1,14 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.UCB1 = function(options) {
+mauler.players.UCB1 = function(options) {
     options = options || {};
     this.c = options.c; // TODO add random number generator
 };
 
-Mauler.Players.UCB1.prototype = {
+mauler.players.UCB1.prototype = {
 
-    constructor: Mauler.Players.UCB1,
+    constructor: mauler.players.UCB1,
 
     move: function(node, player) {
         var bestMove = -1,

@@ -1,8 +1,8 @@
-var Mauler = Mauler || {};
+var mauler = mauler || {};
 
-Mauler.Util = {};
+mauler.utils = {};
 
-Mauler.Util.argMax = function(outcomes) {
+mauler.utils.argMax = function(outcomes) {
     var maxArg = 0,
         maxValue = outcomes[0];
     for (var i = 1; i < outcomes.length; i++) {
@@ -14,7 +14,7 @@ Mauler.Util.argMax = function(outcomes) {
     return maxArg;
 };
 
-Mauler.Util.playRandomGame = function(game) {
+mauler.utils.playRandomGame = function(game) {
     console.log(game.toString());
     while (!game.isOver()) {
         game.move();
@@ -22,7 +22,7 @@ Mauler.Util.playRandomGame = function(game) {
     }
 };
 
-Mauler.Util.playNGames = function(game, players, numGames) {
+mauler.utils.playNGames = function(game, players, numGames) {
     var stats = {
         oneWins: 0,
         twoWins: 0,
@@ -47,7 +47,7 @@ Mauler.Util.playNGames = function(game, players, numGames) {
     return stats;
 };
 
-Mauler.Util.windowToCanvas = function(canvas, x, y) {
+mauler.utils.windowToCanvas = function(canvas, x, y) {
     var bbox = canvas.getBoundingClientRect();
     return {
         x: x - bbox.left * (canvas.width / bbox.width),
@@ -55,14 +55,14 @@ Mauler.Util.windowToCanvas = function(canvas, x, y) {
     };
 };
 
-Mauler.Util.UtilFunc = function(options) {
+mauler.utils.UtilFunc = function(options) {
     options = options || {};
     this.win  = options.win  ||  1.0;
     this.draw = options.draw ||  0.0;
     this.loss = options.loss || -1.0;
 };
 
-Mauler.Util.UtilFunc.prototype.eval = function(game, player) {
+mauler.utils.UtilFunc.prototype.eval = function(game, player) {
     if (game.isOver()) {
         var outcomes = game.outcomes();
         switch (outcomes[player]) {

@@ -1,13 +1,13 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.Random = function() {
+mauler.players.Random = function() {
 
 };
 
-Mauler.Players.Random.prototype = {
+mauler.players.Random.prototype = {
 
-    constructor: Mauler.Players.Random,
+    constructor: mauler.players.Random,
 
     move: function(game) {
         return Math.floor(Math.random() * game.numMoves());

@@ -1,15 +1,15 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.AlphaBeta = function(options) {
+mauler.players.AlphaBeta = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
-    this.utilFunc = options.utilFunc || new Mauler.Util.UtilFunc();
+    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
 };
 
-Mauler.Players.AlphaBeta.prototype = {
+mauler.players.AlphaBeta.prototype = {
 
-    constructor: Mauler.Players.AlphaBeta,
+    constructor: mauler.players.AlphaBeta,
 
     ab: function(game, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === this.maxDepth) {

@@ -13,33 +13,33 @@ var canvasView = new Tic.CanvasView({
 
 // Controller
 
-var controller = new Mauler.Controller({
+var controller = new mauler.Controller({
     game: game
 });
 controller.registerObserver(canvasView);
 
 // Players
 
-var mcts = new Mauler.Players.MCTS({
-    treePolicy: new Mauler.Players.UCB1({ c: 0.5 }),
-    defaultPolicy: new Mauler.Players.Random(),
+var mcts = new mauler.players.MCTS({
+    treePolicy: new mauler.players.UCB1({ c: 0.5 }),
+    defaultPolicy: new mauler.players.Random(),
     numSims: 50000
 });
 
-var rand = new Mauler.Players.Random();
+var rand = new mauler.players.Random();
 
-var canvasPlayer = new Mauler.Players.CanvasPlayer({
+var canvasPlayer = new mauler.players.CanvasPlayer({
     controller: controller,
     canvasView: canvasView
 });
 
-var alphaBeta = new Mauler.Players.AlphaBeta();
+var alphaBeta = new mauler.players.AlphaBeta();
 
 var players = [canvasPlayer, canvasPlayer];
 controller.players = players;
 
 
-var controlsView = new Mauler.ControlsView({
+var controlsView = new mauler.ControlsView({
     controller: controller
 });
 document.body.appendChild(controlsView.render());
@@ -47,6 +47,6 @@ document.body.appendChild(controlsView.render());
 controller.registerObserver(controlsView);
 
 //console.time('robles');
-//var stats = Mauler.Util.playNGames(game, players, 200);
+//var stats = mauler.Util.playNGames(game, players, 200);
 //console.timeEnd('robles');
 //console.log(stats);

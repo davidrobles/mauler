@@ -1,20 +1,20 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.MCTS = function(options) {
+mauler.players.MCTS = function(options) {
     options = options || {};
     this.treePolicy = options.treePolicy;
     this.defaultPolicy = options.defaultPolicy;
     this.numSims = options.numSims;
-    this.utilFunc = options.utilFunc || new Mauler.Util.UtilFunc();
+    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
 };
 
-Mauler.Players.MCTS.prototype = {
+mauler.players.MCTS.prototype = {
 
-    constructor: Mauler.Players.MCTS,
+    constructor: mauler.players.MCTS,
 
     copy: function() {
-        return new Mauler.MCTS(this.treePolicy, this.defaultPolicy, this.numSims);
+        return new mauler.MCTS(this.treePolicy, this.defaultPolicy, this.numSims);
     },
 
     simulate: function(curPos, player) {
@@ -63,7 +63,7 @@ Mauler.Players.MCTS.prototype = {
 
     move: function(game) {
         game = game.copy();
-        var root = new Mauler.Players.MCTSNode(game);
+        var root = new mauler.players.MCTSNode(game);
         var curPlayer = game.curPlayer();
         for (var i = 0; i < this.numSims; i++) {
             this.simulate(root, curPlayer);
@@ -73,22 +73,22 @@ Mauler.Players.MCTS.prototype = {
 
 };
 
-Mauler.Players.MCTSNode = function(game) {
+mauler.players.MCTSNode = function(game) {
     this.game = game;
     this.count = 0;
     this.value = 0.0;
     this.children = [];
 };
 
-Mauler.Players.MCTSNode.prototype = {
+mauler.players.MCTSNode.prototype = {
 
-    constructor: Mauler.Players.MCTSNode,
+    constructor: mauler.players.MCTSNode,
 
     init: function() {
         for (var move = 0; move < this.game.numMoves(); move++) {
             var newGame = this.game.copy();
             newGame.move(move);
-            this.children.push(new Mauler.Players.MCTSNode(newGame));
+            this.children.push(new mauler.players.MCTSNode(newGame));
         }
     },
 

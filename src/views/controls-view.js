@@ -1,14 +1,14 @@
-var Mauler = Mauler || {};
+var mauler = mauler || {};
 
-Mauler.ControlsView = function(options) {
+mauler.ControlsView = function(options) {
     this.controller = options.controller;
     this.initElements();
     this.addListeners();
 };
 
-Mauler.ControlsView.prototype = {
+mauler.ControlsView.prototype = {
 
-    constructor: Mauler.ControlsView,
+    constructor: mauler.ControlsView,
 
     initElements: function() {
         this.el = document.createElement("div");

@@ -1,7 +1,7 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.CanvasPlayer = function(options) {
+mauler.players.CanvasPlayer = function(options) {
     this.desiredMove = 0;
     this.controller = options.controller;
     this.canvasView = options.canvasView;
@@ -9,9 +9,9 @@ Mauler.Players.CanvasPlayer = function(options) {
     this.addListeners();
 };
 
-Mauler.Players.CanvasPlayer.prototype = {
+mauler.players.CanvasPlayer.prototype = {
 
-    constructor: Mauler.Players.Random,
+    constructor: mauler.players.Random,
 
     move: function() {
         if (!this.desiredMove) {
@@ -26,7 +26,7 @@ Mauler.Players.CanvasPlayer.prototype = {
 
     addListeners: function() {
         this.canvas.addEventListener("click", function(event) {
-            var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
+            var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
             var str = Tic.letters[square.row] + (square.col + 1);
             this.desiredMove = str;
@@ -36,7 +36,7 @@ Mauler.Players.CanvasPlayer.prototype = {
         }.bind(this));
 
         this.canvas.addEventListener("mousemove", function(event) {
-            var loc = Mauler.Util.windowToCanvas(this.canvas, event.clientX, event.clientY);
+            var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
             this.canvasView.mouse.over.row = square.row;
             this.canvasView.mouse.over.col = square.col;

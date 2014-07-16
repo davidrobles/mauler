@@ -1,15 +1,15 @@
-var Mauler = Mauler || {};
-Mauler.Players = Mauler.Players || {};
+var mauler = mauler || {};
+mauler.players = mauler.players || {};
 
-Mauler.Players.MonteCarlo = function(options) {
+mauler.players.MonteCarlo = function(options) {
     options = options || {};
     this.numSims = options.numSims || 100;
-    this.utilFunc = options.utilFunc || new Mauler.Util.UtilFunc();
+    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
 };
 
-Mauler.Players.MonteCarlo.prototype = {
+mauler.players.MonteCarlo.prototype = {
 
-    constructor: Mauler.Players.MonteCarlo,
+    constructor: mauler.players.MonteCarlo,
 
     move: function(game) {
         var numMoves = game.numMoves();
@@ -27,7 +27,7 @@ Mauler.Players.MonteCarlo.prototype = {
             }
             outcomes[move] += this.utilFunc.eval(newGame, game.curPlayer());
         }
-        return Mauler.Util.argMax(outcomes);
+        return mauler.utils.argMax(outcomes);
     }
 
 };

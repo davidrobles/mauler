@@ -1,6 +1,6 @@
-var Mauler = Mauler || {};
+var mauler = mauler || {};
 
-Mauler.Controller = function(options) {
+mauler.Controller = function(options) {
     this.game = options.game;
     this.players = options.players;
     this.currentBoardIndex = 0;
@@ -8,9 +8,9 @@ Mauler.Controller = function(options) {
     this.reset();
 };
 
-Mauler.Controller.prototype = {
+mauler.Controller.prototype = {
 
-    constructor: Mauler.Controller,
+    constructor: mauler.Controller,
 
     playToEnd: function() {
         while (this.isNext()) {
