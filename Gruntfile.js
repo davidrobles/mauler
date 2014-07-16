@@ -2,8 +2,6 @@ module.exports = function(grunt) {
 
     "use strict";
 
-    var sourceFiles = grunt.file.readJSON("sourceFiles.json");
-
     grunt.initConfig({
 
         pkg: grunt.file.readJSON("package.json"),
@@ -18,7 +16,7 @@ module.exports = function(grunt) {
                 separator: grunt.util.linefeed + grunt.util.linefeed
             },
             dist: {
-                src: sourceFiles,
+                src: "src/**/*.js",
                 dest: "<%= path.main %>"
             }
         },
