@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
         concat: {
             options: {
-
+                separator: grunt.util.linefeed + grunt.util.linefeed
             },
             dist: {
                 src: sourceFiles,
