@@ -3,6 +3,15 @@ Mauler
 
 A JavaScript library for turn-based games.
 
+Algorithms
+----------
+
+- Random
+- Minimax
+- Negamax
+- Alpha-beta pruning
+- Monte-Carlo tree search (MCTS)
+
 Building Mauler
 ---------------
 
