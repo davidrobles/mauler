@@ -1,7 +1,7 @@
 Mauler
 ======
 
-A JavaScript library for abstract strategy games.
+A JavaScript framework for abstract strategy games.
 
 Algorithms
 ----------
