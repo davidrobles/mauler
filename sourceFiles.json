@@ -2,5 +2,10 @@
     "src/mauler.js",
     "src/utils.js",
     "src/controls-view.js",
-    "src/match-controller.js"
+    "src/match-controller.js",
+    "src/players/minimax.js",
+    "src/players/monte-carlo.js",
+    "src/players/negamax.js",
+    "src/players/random.js",
+    "src/players/real.js"
 ]
