@@ -1,7 +1,7 @@
 Mauler
 ======
 
-A JavaScript library for turn-based games.
+A JavaScript library for abstract strategy games.
 
 Algorithms
 ----------
