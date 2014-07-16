@@ -2,7 +2,7 @@ var Mauler = Mauler || {};
 
 Mauler.ControlsView = function(options) {
     this.controller = options.controller;
-    this.initButtons();
+    this.initElements();
     this.addListeners();
 };
 
@@ -10,7 +10,7 @@ Mauler.ControlsView.prototype = {
 
     constructor: Mauler.ControlsView,
 
-    initButtons: function() {
+    initElements: function() {
         this.el = document.createElement("div");
         this.buttons = {
             start: document.createElement("button"),
