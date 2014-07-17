@@ -15,7 +15,12 @@ mauler.ResetView.prototype = {
     },
 
     update: function() {
-//        this.el.disabled = this.controller.isStart();
+        if (!this.controller.isStart()) {
+            this.el.style.display = "none";
+        } else {
+            this.el.style.display = "block";
+        }
+
     }
 
 };
