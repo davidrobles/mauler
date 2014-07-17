@@ -8,7 +8,7 @@ var canvasView = new Tic.CanvasView({
     model: game,
     width: 400,
     height: 400,
-    canvas: document.getElementById("canvas")
+    canvas: document.getElementById("tic-canvas")
 });
 
 var infoView = new Tic.InfoView({
