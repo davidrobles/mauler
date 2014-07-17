@@ -1,4 +1,3 @@
 var mauler = {
-    players: {},
-    utils: {}
+    players: {}
 };
