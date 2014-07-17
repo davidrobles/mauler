@@ -24,7 +24,7 @@ var infoView = new Tic.InfoView({
 
 var resetView = new mauler.ResetView({
     controller: controller,
-    el: document.getElementById("reset-button")
+    el: document.getElementById("restart-button")
 });
 
 // Observers

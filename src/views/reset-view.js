@@ -14,15 +14,8 @@ mauler.ResetView.prototype = {
         }.bind(this));
     },
 
-    render: function() {
-        return this.el;
-    },
-
     update: function() {
-//        this.buttons.start.disabled = !this.controller.isStart();
-//        this.buttons.prev.disabled = !this.controller.isPrev();
-//        this.buttons.next.disabled = !this.controller.isNext();
-//        this.buttons.end.disabled = !this.controller.isEnd();
+//        this.el.disabled = this.controller.isStart();
     }
 
 };
