@@ -19,7 +19,7 @@ var canvasView = new Tic.CanvasView({
 
 var infoView = new Tic.InfoView({
     model: game,
-    el: document.getElementById("infoView")
+    el: document.getElementById("info-view")
 });
 
 var resetView = new mauler.ResetView({

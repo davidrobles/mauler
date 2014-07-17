@@ -1,3 +1,18 @@
-canvas#tic {
-    border: 4px solid #ff0000;
+body {
+    background-color: #cecece;
+    font-size: 16px;
+}
+
+div#info-view {
+    text-align: center;
+}
+
+canvas#tic-canvas {
+    display: block;
+    margin: 10px auto;
+}
+
+button#reset-button {
+    display: block;
+    margin: 10px auto;
 }
