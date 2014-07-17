@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Title of the document</title>
-  </head>
-  <body>
-  <canvas id="canvas" width="150" height="150">
-  Your browser does not support the canvas element.
-  </canvas>
+<head>
+    <title>Play Tic-Tac-Toe</title>
+</head>
+<body>
+<canvas id="canvas" width="150" height="150">
+    Your browser does not support the canvas element.
+</canvas>
 
-  <script src="../../build/mauler-0.0.1.js"></script>
+<!-- Mauler -->
 
-  <!-- Tic-Tac-Toe -->
+<script src="../../src/mauler.js"></script>
 
-  <script src="tic-canvas.js"></script>
-  <script src="tic-model.js"></script>
-  <script src="tic-play.js"></script>
+<script src="../../src/views/controls-view.js"></script>
+<script src="../../src/match-controller.js"></script>
+<script src="../../src/utils.js"></script>
 
-  </body>
+<!-- Players -->
+
+<script src="../../src/players/random.js"></script>
+<script src="../../src/players/alpha-beta.js"></script>
+<script src="../../src/players/monte-carlo.js"></script>
+<script src="../../src/players/minimax.js"></script>
+<script src="../../src/players/negamax.js"></script>
+<script src="../../src/players/real.js"></script>
+
+<script src="../../src/players/mcts.js"></script>
+
+<!-- Tic-Tac-Toe -->
+
+<script src="tic-canvas.js"></script>
+<script src="tic-model.js"></script>
+<script src="tic-play.js"></script>
+
+</body>
 </html>
