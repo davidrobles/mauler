@@ -22,7 +22,7 @@ var infoView = new Tic.InfoView({
     el: document.getElementById("info-view")
 });
 
-var resetView = new mauler.ResetView({
+var restartView = new mauler.RestartView({
     controller: controller,
     el: document.getElementById("restart-button")
 });
@@ -31,7 +31,7 @@ var resetView = new mauler.ResetView({
 
 controller.registerObserver(canvasView);
 controller.registerObserver(infoView);
-controller.registerObserver(resetView);
+controller.registerObserver(restartView);
 
 // Players
 

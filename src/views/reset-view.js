@@ -1,12 +1,12 @@
-mauler.ResetView = function(options) {
+mauler.RestartView = function(options) {
     this.controller = options.controller;
     this.el = options.el;
     this.addListener();
 };
 
-mauler.ResetView.prototype = {
+mauler.RestartView.prototype = {
 
-    constructor: mauler.ResetView,
+    constructor: mauler.RestartView,
 
     addListener: function () {
         this.el.addEventListener("click", function() {
