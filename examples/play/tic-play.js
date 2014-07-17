@@ -1,6 +1,12 @@
-// Game
+// Model
 
 var game = new Tic.Model();
+
+// Controller
+
+var controller = new mauler.Controller({
+    game: game
+});
 
 // View
 
@@ -16,14 +22,16 @@ var infoView = new Tic.InfoView({
     el: document.getElementById("infoView")
 });
 
-// Controller
-
-var controller = new mauler.Controller({
-    game: game
+var resetView = new mauler.ResetView({
+    controller: controller,
+    el: document.getElementById("reset-button")
 });
+
+// Observers
 
 controller.registerObserver(canvasView);
 controller.registerObserver(infoView);
+controller.registerObserver(resetView);
 
 // Players
 
