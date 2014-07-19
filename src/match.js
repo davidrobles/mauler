@@ -1,7 +1,7 @@
 mauler.Match = function(options) {
     this.game = options.game;
     this.players = options.players;
-    this.currentBoardIndex = 0;
+    this.currentGameIndex = 0;
     this.reset();
 };
 
@@ -17,11 +17,11 @@ mauler.Match.prototype = {
     },
 
     curGame: function() {
-        return this.gameHistory[this.currentBoardIndex];
+        return this.gameHistory[this.currentGameIndex];
     },
 
     setChange: function(index) {
-        this.currentBoardIndex = index;
+        this.currentGameIndex = index;
         this.trigger("change", this.curGame());
     },
 
@@ -30,12 +30,12 @@ mauler.Match.prototype = {
     },
 
     getCurrentIndex: function() {
-        return this.currentBoardIndex;
+        return this.currentGameIndex;
     },
 
     getGame: function(ply) {
         if (!ply) {
-            return this.gameHistory[this.currentBoardIndex];
+            return this.gameHistory[this.currentGameIndex];
         }
         return this.gameHistory[ply];
     },
@@ -45,11 +45,11 @@ mauler.Match.prototype = {
     },
 
     isStart: function() {
-        return this.currentBoardIndex > 0;
+        return this.currentGameIndex > 0;
     },
 
     isEnd: function() {
-        return this.currentBoardIndex < this.gameHistory.length - 1;
+        return this.currentGameIndex < this.gameHistory.length - 1;
     },
 
     isOver: function() {
@@ -57,24 +57,24 @@ mauler.Match.prototype = {
     },
 
     isNext: function() {
-        return (this.currentBoardIndex !== this.gameHistory.length - 1) ||
+        return (this.currentGameIndex !== this.gameHistory.length - 1) ||
                (!this.gameHistory[this.gameHistory.length - 1].isOver());
     },
 
     isPrev: function() {
-        return this.currentBoardIndex > 0;
+        return this.currentGameIndex > 0;
     },
 
     start: function() {
         if (this.isStart()) {
-            this.currentBoardIndex = 0;
+            this.currentGameIndex = 0;
             this.trigger("start", this.curGame());
         }
     },
 
     prev: function() {
         if (this.isPrev()) {
-            this.currentBoardIndex--;
+            this.currentGameIndex--;
             this.trigger("previous", this.curGame());
         }
     },
@@ -88,31 +88,31 @@ mauler.Match.prototype = {
             return;
         }
         var gameCopy = this.gameHistory[this.gameHistory.length - 1].copy();
-        if (this.currentBoardIndex === this.gameHistory.length - 1) {
+        if (this.currentGameIndex === this.gameHistory.length - 1) {
             var moveIndex = this.players[gameCopy.curPlayer()].move(gameCopy);
             var moveString = gameCopy.moves()[moveIndex];
             gameCopy.move(moveIndex);
             if (!this.gameHistory[this.gameHistory.length - 1].equals(gameCopy)) {
                 this.gameHistory.push(gameCopy);
                 this.moveHistory.push(moveString);
-                this.currentBoardIndex++;
+                this.currentGameIndex++;
                 this.trigger("fix", this.curGame());
             }
         } else {
-            this.currentBoardIndex++;
+            this.currentGameIndex++;
             this.trigger("fix", this.curGame());
         }
     },
 
     end: function() {
         if (this.isEnd()) {
-            this.currentBoardIndex = this.gameHistory.length - 1;
+            this.currentGameIndex = this.gameHistory.length - 1;
             this.trigger("end", this.curGame());
         }
     },
 
     reset: function() {
-        this.currentBoardIndex = 0;
+        this.currentGameIndex = 0;
         this.moveHistory = [];
         this.gameHistory = [this.game.newGame()];
         this.trigger("reset", this.curGame());
