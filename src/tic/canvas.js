@@ -16,12 +16,13 @@ mauler.tic.CanvasView = function(options) {
         nought: "rgba(41, 128, 185,1.0)",
         noughtLight: "rgba(41, 128, 185, 0.5)"
     };
-    this.mouse = {
-        over: {
-            row: null,
-            col: null
-        }
-    };
+//    this.mouse = {
+//        over: {
+//            row: null,
+//            col: null
+//        }
+//    };
+    this.highlightedMoves = [];
     // create a highlightedMoves list
     this.borderSize = 0.02; // percentage
     this.linesWidth = Math.round(this.canvas.width * this.borderSize);
@@ -71,11 +72,12 @@ mauler.tic.CanvasView.prototype = {
         for (var row = 0; row < this.model.size; row++) {
             for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
+                var hello = this.squareToMove(row, col);
                 if (cellType === 'CROSS') {
                     this.drawCross(row, col, this.colors.cross);
                 } else if (cellType === 'NOUGHT') {
                     this.drawNought(row, col, this.colors.nought);
-                } else if (!this.model.frozen && !this.model.isOver() && this.mouse.over !== null && this.mouse.over.row === row && this.mouse.over.col === col) {
+                } else if (!this.model.frozen && !this.model.isOver() && _.contains(this.highlightedMoves, hello)) {
                     var color = this.getCurPlayerColor();
                     if (this.model.curPlayer() === 0) {
                         this.drawCross(row, col, color);
@@ -155,7 +157,11 @@ mauler.tic.CanvasView.prototype = {
 
     canvasLocationToMove: function(loc) {
         var square = this.coordToSquare(loc.x, loc.y);
-        return mauler.tic.letters[square.row] + (square.col + 1);
+        return this.squareToMove(square.row, square.col);
+    },
+
+    squareToMove: function(row, col) {
+        return mauler.tic.letters[row] + (col + 1);
     }
 
 };
@@ -207,16 +213,14 @@ mauler.tic.CanvasPlayer.prototype = {
         this.canvas.addEventListener("mousemove", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            this.canvasView.mouse.over.row = square.row;
-            this.canvasView.mouse.over.col = square.col;
+            this.canvasView.highlightedMoves = [this.canvasView.squareToMove(square.row, square.col)];
             this.canvasView.render();
         }.bind(this));
     },
 
     addMouseOutListener: function () {
         this.canvas.addEventListener("mouseout", function() {
-            this.canvasView.mouse.over.row = null;
-            this.canvasView.mouse.over.col = null;
+            this.canvasView.highlightedMoves = [];
             this.canvasView.render();
         }.bind(this));
     }
