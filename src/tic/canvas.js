@@ -151,6 +151,11 @@ mauler.tic.CanvasView.prototype = {
             row: Math.floor(y / this.squareSize),
             col: Math.floor(x / this.squareSize)
         };
+    },
+
+    canvasLocationToMove: function(loc) {
+        var square = this.coordToSquare(loc.x, loc.y);
+        return mauler.tic.letters[square.row] + (square.col + 1);
     }
 
 };
@@ -186,14 +191,12 @@ mauler.tic.CanvasPlayer.prototype = {
 
     addClickListener: function () {
         this.canvas.addEventListener("click", function(event) {
-            var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
-            var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            var moveStr = mauler.tic.letters[square.row] + (square.col + 1);
+            var canvasLoc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
+            var move = this.canvasView.canvasLocationToMove(canvasLoc);
             var moves = this.match.curGame().moves();
-            if (_.contains(moves, moveStr)) {
-                this.moveChosen = moveStr;
+            if (_.contains(moves, move)) {
+                this.moveChosen = move;
                 this.match.next();
-                // write square to
                 this.canvasView.render(); // TODO Move somewhere else?
                 // TODO add trigger()?
             }
