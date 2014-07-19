@@ -15,7 +15,7 @@ var canvasView = new mauler.tic.CanvasView({
     canvas: document.getElementById("tic-canvas")
 });
 
-var infoView = new mauler.tic.InfoView({
+var infoView = new mauler.views.InfoView({
     model: game,
     el: document.getElementById("info-view")
 });
