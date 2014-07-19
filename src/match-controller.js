@@ -2,7 +2,7 @@ mauler.Controller = function(options) {
     this.game = options.game;
     this.players = options.players;
     this.currentBoardIndex = 0;
-    this.observers = [];
+    _.extend(this, Backbone.Events);
     this.reset();
 };
 
@@ -13,7 +13,7 @@ mauler.Controller.prototype = {
     playToEnd: function() {
         while (this.isNext()) {
             this.next();
-            this.notifyObservers();
+            this.trigger("fix", this.curGame());
         }
     },
 
@@ -23,7 +23,7 @@ mauler.Controller.prototype = {
 
     setChange: function(index) {
         this.currentBoardIndex = index;
-        this.notifyObservers();
+        this.trigger("change", this.curGame());
     },
 
     getSize: function() {
@@ -69,14 +69,14 @@ mauler.Controller.prototype = {
     start: function() {
         if (this.isStart()) {
             this.currentBoardIndex = 0;
-            this.notifyObservers();
+            this.trigger("start", this.curGame());
         }
     },
 
     prev: function() {
         if (this.isPrev()) {
             this.currentBoardIndex--;
-            this.notifyObservers();
+            this.trigger("previous", this.curGame());
         }
     },
 
@@ -97,34 +97,18 @@ mauler.Controller.prototype = {
                 this.gameHistory.push(gameCopy);
                 this.moveHistory.push(moveString);
                 this.currentBoardIndex++;
-                this.notifyObservers();
+                this.trigger("fix", this.curGame());
             }
         } else {
             this.currentBoardIndex++;
-            this.notifyObservers();
+            this.trigger("fix", this.curGame());
         }
     },
 
     end: function() {
         if (this.isEnd()) {
             this.currentBoardIndex = this.gameHistory.length - 1;
-            this.notifyObservers();
-        }
-    },
-
-    registerObserver: function(observer) {
-        this.observers.push(observer);
-        observer.update(this.curGame());
-    },
-
-    removeObserver: function(observer) {
-        // this.observers.remove(observer);
-    },
-
-    notifyObservers: function() {
-        for (var i = 0; i < this.observers.length; i++) {
-            this.observers[i].update(this.curGame());
-            console.log(this.curGame().moves());
+            this.trigger("end", this.curGame());
         }
     },
 
@@ -132,7 +116,7 @@ mauler.Controller.prototype = {
         this.currentBoardIndex = 0;
         this.moveHistory = [];
         this.gameHistory = [this.game.newGame()];
-        this.notifyObservers();
+        this.trigger("reset", this.curGame());
     }
 
 };

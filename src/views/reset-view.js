@@ -14,13 +14,14 @@ mauler.RestartView.prototype = {
         }.bind(this));
     },
 
+    // Match Controller Events
+
     update: function() {
         if (!this.controller.isStart()) {
             this.el.style.display = "none";
         } else {
             this.el.style.display = "block";
         }
-
     }
 
 };

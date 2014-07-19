@@ -29,9 +29,9 @@ var restartView = new mauler.RestartView({
 
 // Observers
 
-controller.registerObserver(canvasView);
-controller.registerObserver(infoView);
-controller.registerObserver(restartView);
+controller.on("all", canvasView.update, canvasView);
+controller.on("all", infoView.update, infoView);
+controller.on("all", restartView.update, restartView);
 
 // Players
 

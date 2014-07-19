@@ -9,9 +9,8 @@ Tic.InfoView.prototype = {
 
     constructor: Tic.InfoView,
 
-    update: function(model) {
+    update: function(event, model) {
         this.model = model;
-
         if (this.model.isOver()) {
             var outcomes = this.model.outcomes();
             if (outcomes[0] === "WIN") {
@@ -21,7 +20,6 @@ Tic.InfoView.prototype = {
             } else {
                 this.el.innerHTML = "Draw!";
             }
-
         } else {
             var curPlayer = this.model.curPlayer() + 1;
             this.el.innerHTML = "Turn: Player " + curPlayer;
