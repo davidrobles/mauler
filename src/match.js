@@ -1,17 +1,15 @@
 (function() {
 
-    mauler.Match = mauler.Match || {};
-
-    mauler.Match = function(options) {
+    Match = function(options) {
         this.game = options.game;
         this.players = options.players;
         this.currentGameIndex = 0;
         this.reset();
     };
 
-    mauler.Match.prototype = {
+    Match.prototype = {
 
-        constructor: mauler.Match,
+        constructor: Match,
 
         playToEnd: function() {
             while (this.isNext()) {
@@ -124,6 +122,7 @@
 
     };
 
-    _.extend(mauler.Match.prototype, Backbone.Events);
+    _.extend(Match.prototype, Backbone.Events);
+    mauler.Match = Match;
 
 }());
