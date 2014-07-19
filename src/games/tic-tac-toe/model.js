@@ -2,10 +2,11 @@
 
     var TicTacToe = function() {
         this.size = 3;
-        this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
         this.crosses = 0;
         this.noughts = 0;
     };
+
+    TicTacToe.PATTERNS = [7, 56, 448, 73, 146, 292, 273, 84];
 
     TicTacToe.prototype = {
 
@@ -170,8 +171,8 @@
         },
 
         checkWin: function(board) {
-            for (var i = 0; i < this.winPatterns.length; i++) {
-                if ((board & this.winPatterns[i]) === this.winPatterns[i]) {
+            for (var i = 0; i < TicTacToe.PATTERNS.length; i++) {
+                if ((board & TicTacToe.PATTERNS[i]) === TicTacToe.PATTERNS[i]) {
                     return true;
                 }
             }
