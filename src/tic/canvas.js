@@ -156,7 +156,7 @@ mauler.tic.CanvasView.prototype = {
 };
 
 mauler.tic.CanvasPlayer = function(options) {
-    this.desiredMove = 0;
+    this.moveChosen = null;
     this.match = options.match;
     this.canvasView = options.canvasView;
     this.canvas = options.canvasView.canvas;
@@ -168,12 +168,12 @@ mauler.tic.CanvasPlayer.prototype = {
     constructor: mauler.tic.CanvasPlayer,
 
     move: function() {
-        if (!this.desiredMove) {
+        if (!this.moveChosen) {
             throw new Error("No move chosen!");
         }
-        var chosenMove = this.desiredMove;
-        this.desiredMove = null;
-        return chosenMove;
+        var selMove = this.moveChosen;
+        this.moveChosen = null;
+        return selMove;
     },
 
     // Listeners
@@ -191,11 +191,12 @@ mauler.tic.CanvasPlayer.prototype = {
             var moveStr = mauler.tic.letters[square.row] + (square.col + 1);
             var moves = this.match.curGame().moves();
             if (_.contains(moves, moveStr)) {
-                this.desiredMove = moveStr;
+                this.moveChosen = moveStr;
+                this.match.next();
+                // write square to
+                this.canvasView.render(); // TODO Move somewhere else?
+                // TODO add trigger()?
             }
-            this.match.next();
-            // write square to
-            this.canvasView.render(); // TODO Move somewhere else?
         }.bind(this));
     },
 
