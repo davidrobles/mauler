@@ -188,8 +188,11 @@ mauler.tic.CanvasPlayer.prototype = {
         this.canvas.addEventListener("click", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            var str = mauler.tic.letters[square.row] + (square.col + 1);
-            this.desiredMove = str;
+            var moveStr = mauler.tic.letters[square.row] + (square.col + 1);
+            var moves = this.match.curGame().moves();
+            if (_.contains(moves, moveStr)) {
+                this.desiredMove = moveStr;
+            }
             this.match.next();
             // write square to
             this.canvasView.render(); // TODO Move somewhere else?
