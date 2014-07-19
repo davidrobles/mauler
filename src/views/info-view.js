@@ -1,15 +1,13 @@
 (function() {
 
-    mauler.views = mauler.views || {};
-
-    mauler.views.InfoView = function(options) {
+    var InfoView = function(options) {
         this.model = options.model;
         this.el = options.el;
     };
 
-    mauler.views.InfoView.prototype = {
+    InfoView.prototype = {
 
-        constructor: mauler.views.InfoView,
+        constructor: InfoView,
 
         update: function(event, model) {
             this.model = model;
@@ -29,5 +27,7 @@
         }
 
     };
+
+    mauler.views.InfoView = InfoView;
 
 }());
