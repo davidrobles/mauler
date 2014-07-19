@@ -2,7 +2,6 @@ mauler.Match = function(options) {
     this.game = options.game;
     this.players = options.players;
     this.currentBoardIndex = 0;
-    _.extend(this, Backbone.Events);
     this.reset();
 };
 
@@ -120,3 +119,5 @@ mauler.Match.prototype = {
     }
 
 };
+
+_.extend(mauler.Match.prototype, Backbone.Events);
