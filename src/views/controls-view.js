@@ -1,6 +1,6 @@
 (function() {
 
-    ControlsView = function(options) {
+    var ControlsView = function(options) {
         this.match = options.match;
         this.initElements();
         this.addListeners();
