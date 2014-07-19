@@ -1,123 +1,129 @@
-mauler.Match = function(options) {
-    this.game = options.game;
-    this.players = options.players;
-    this.currentGameIndex = 0;
-    this.reset();
-};
+(function() {
 
-mauler.Match.prototype = {
+    mauler.Match = mauler.Match || {};
 
-    constructor: mauler.Match,
+    mauler.Match = function(options) {
+        this.game = options.game;
+        this.players = options.players;
+        this.currentGameIndex = 0;
+        this.reset();
+    };
 
-    playToEnd: function() {
-        while (this.isNext()) {
-            this.next();
-            this.trigger("fix", this.curGame());
-        }
-    },
+    mauler.Match.prototype = {
 
-    curGame: function() {
-        return this.gameHistory[this.currentGameIndex];
-    },
+        constructor: mauler.Match,
 
-    setChange: function(index) {
-        this.currentGameIndex = index;
-        this.trigger("change", this.curGame());
-    },
+        playToEnd: function() {
+            while (this.isNext()) {
+                this.next();
+                this.trigger("fix", this.curGame());
+            }
+        },
 
-    getSize: function() {
-        return this.gameHistory.length;
-    },
-
-    getCurrentIndex: function() {
-        return this.currentGameIndex;
-    },
-
-    getGame: function(ply) {
-        if (!ply) {
+        curGame: function() {
             return this.gameHistory[this.currentGameIndex];
-        }
-        return this.gameHistory[ply];
-    },
+        },
 
-    getMove: function(gameIndex) {
-        return this.moveHistory[gameIndex];
-    },
+        setChange: function(index) {
+            this.currentGameIndex = index;
+            this.trigger("change", this.curGame());
+        },
 
-    isStart: function() {
-        return this.currentGameIndex > 0;
-    },
+        getSize: function() {
+            return this.gameHistory.length;
+        },
 
-    isEnd: function() {
-        return this.currentGameIndex < this.gameHistory.length - 1;
-    },
+        getCurrentIndex: function() {
+            return this.currentGameIndex;
+        },
 
-    isOver: function() {
-        return this.gameHistory[this.gameHistory.length - 1].isOver();
-    },
+        getGame: function(ply) {
+            if (!ply) {
+                return this.gameHistory[this.currentGameIndex];
+            }
+            return this.gameHistory[ply];
+        },
 
-    isNext: function() {
-        return (this.currentGameIndex !== this.gameHistory.length - 1) ||
-               (!this.gameHistory[this.gameHistory.length - 1].isOver());
-    },
+        getMove: function(gameIndex) {
+            return this.moveHistory[gameIndex];
+        },
 
-    isPrev: function() {
-        return this.currentGameIndex > 0;
-    },
+        isStart: function() {
+            return this.currentGameIndex > 0;
+        },
 
-    start: function() {
-        if (this.isStart()) {
-            this.currentGameIndex = 0;
-            this.trigger("start", this.curGame());
-        }
-    },
+        isEnd: function() {
+            return this.currentGameIndex < this.gameHistory.length - 1;
+        },
 
-    prev: function() {
-        if (this.isPrev()) {
-            this.currentGameIndex--;
-            this.trigger("previous", this.curGame());
-        }
-    },
+        isOver: function() {
+            return this.gameHistory[this.gameHistory.length - 1].isOver();
+        },
 
-    copy: function() {
+        isNext: function() {
+            return (this.currentGameIndex !== this.gameHistory.length - 1) ||
+                (!this.gameHistory[this.gameHistory.length - 1].isOver());
+        },
 
-    },
+        isPrev: function() {
+            return this.currentGameIndex > 0;
+        },
 
-    next: function() {
-        if (!this.isNext()) {
-            return;
-        }
-        var gameCopy = this.gameHistory[this.gameHistory.length - 1].copy();
-        if (this.currentGameIndex === this.gameHistory.length - 1) {
-            var moveIndex = this.players[gameCopy.curPlayer()].move(gameCopy);
-            var moveString = gameCopy.moves()[moveIndex];
-            gameCopy.move(moveIndex);
-            if (!this.gameHistory[this.gameHistory.length - 1].equals(gameCopy)) {
-                this.gameHistory.push(gameCopy);
-                this.moveHistory.push(moveString);
+        start: function() {
+            if (this.isStart()) {
+                this.currentGameIndex = 0;
+                this.trigger("start", this.curGame());
+            }
+        },
+
+        prev: function() {
+            if (this.isPrev()) {
+                this.currentGameIndex--;
+                this.trigger("previous", this.curGame());
+            }
+        },
+
+        copy: function() {
+
+        },
+
+        next: function() {
+            if (!this.isNext()) {
+                return;
+            }
+            var gameCopy = this.gameHistory[this.gameHistory.length - 1].copy();
+            if (this.currentGameIndex === this.gameHistory.length - 1) {
+                var moveIndex = this.players[gameCopy.curPlayer()].move(gameCopy);
+                var moveString = gameCopy.moves()[moveIndex];
+                gameCopy.move(moveIndex);
+                if (!this.gameHistory[this.gameHistory.length - 1].equals(gameCopy)) {
+                    this.gameHistory.push(gameCopy);
+                    this.moveHistory.push(moveString);
+                    this.currentGameIndex++;
+                    this.trigger("fix", this.curGame());
+                }
+            } else {
                 this.currentGameIndex++;
                 this.trigger("fix", this.curGame());
             }
-        } else {
-            this.currentGameIndex++;
-            this.trigger("fix", this.curGame());
+        },
+
+        end: function() {
+            if (this.isEnd()) {
+                this.currentGameIndex = this.gameHistory.length - 1;
+                this.trigger("end", this.curGame());
+            }
+        },
+
+        reset: function() {
+            this.currentGameIndex = 0;
+            this.moveHistory = [];
+            this.gameHistory = [this.game.newGame()];
+            this.trigger("reset", this.curGame());
         }
-    },
 
-    end: function() {
-        if (this.isEnd()) {
-            this.currentGameIndex = this.gameHistory.length - 1;
-            this.trigger("end", this.curGame());
-        }
-    },
+    };
 
-    reset: function() {
-        this.currentGameIndex = 0;
-        this.moveHistory = [];
-        this.gameHistory = [this.game.newGame()];
-        this.trigger("reset", this.curGame());
-    }
+    _.extend(mauler.Match.prototype, Backbone.Events);
 
-};
-
-_.extend(mauler.Match.prototype, Backbone.Events);
+}());
