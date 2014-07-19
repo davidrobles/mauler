@@ -25,7 +25,7 @@ mauler.players.CanvasPlayer.prototype = {
         this.canvas.addEventListener("click", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            var str = Tic.letters[square.row] + (square.col + 1);
+            var str = mauler.Tic.letters[square.row] + (square.col + 1);
             this.desiredMove = str;
             this.match.next();
             // write square to

@@ -1,13 +1,13 @@
-var Tic = Tic || {};
+mauler.Tic = mauler.Tic || {};
 
-Tic.InfoView = function(options) {
+mauler.Tic.InfoView = function(options) {
     this.model = options.model;
     this.el = options.el;
 };
 
-Tic.InfoView.prototype = {
+mauler.Tic.InfoView.prototype = {
 
-    constructor: Tic.InfoView,
+    constructor: mauler.Tic.InfoView,
 
     update: function(event, model) {
         this.model = model;

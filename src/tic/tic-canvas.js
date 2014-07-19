@@ -1,6 +1,6 @@
-var Tic = Tic || {};
+mauler.Tic = mauler.Tic || {};
 
-Tic.CanvasView = function(options) {
+mauler.Tic.CanvasView = function(options) {
     this.model = options.model;
     this.canvas = options.canvas || document.createElement("canvas");
     this.canvas.width = options.width || 100;
@@ -28,9 +28,9 @@ Tic.CanvasView = function(options) {
     this.render();
 };
 
-Tic.CanvasView.prototype = {
+mauler.Tic.CanvasView.prototype = {
 
-    constructor: Tic.CanvasView,
+    constructor: mauler.Tic.CanvasView,
 
     render: function() {
         this.drawBackground();
@@ -155,7 +155,7 @@ Tic.CanvasView.prototype = {
 
 };
 
-Tic.CanvasViewPlayer = function(options) {
+mauler.Tic.CanvasViewPlayer = function(options) {
     this.desiredMove = 0;
     this.match = options.match;
     this.canvasView = options.canvasView;
@@ -163,9 +163,9 @@ Tic.CanvasViewPlayer = function(options) {
     this.addListeners();
 };
 
-Tic.CanvasViewPlayer.prototype = {
+mauler.Tic.CanvasViewPlayer.prototype = {
 
-    constructor: Tic.CanvasViewPlayer,
+    constructor: mauler.Tic.CanvasViewPlayer,
 
     move: function() {
         if (!this.desiredMove) {

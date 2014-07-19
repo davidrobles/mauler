@@ -1,6 +1,6 @@
 // Model
 
-var game = new Tic.Model();
+var game = new mauler.Tic.Model();
 
 var match = new mauler.Match({
     game: game
@@ -8,14 +8,14 @@ var match = new mauler.Match({
 
 // View
 
-var canvasView = new Tic.CanvasView({
+var canvasView = new mauler.Tic.CanvasView({
     model: game,
     width: 400,
     height: 400,
     canvas: document.getElementById("tic-canvas")
 });
 
-var infoView = new Tic.InfoView({
+var infoView = new mauler.Tic.InfoView({
     model: game,
     el: document.getElementById("info-view")
 });
