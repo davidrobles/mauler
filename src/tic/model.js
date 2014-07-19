@@ -71,7 +71,7 @@
                     }
                 }
             }
-            if (move < 0 || move >= this.numMoves()) {
+            if (move < 0 || move >= this.numMoves()) { // TODO refactor, use move length
                 throw new RangeError("Illegal move");
             }
             this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
