@@ -1,81 +1,83 @@
-mauler.tic = mauler.tic || {};
+(function() {
 
-mauler.tic.Model = function() {
-    this.size = 3;
-    this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
-    this.crosses = 0;
-    this.noughts = 0;
-};
+    mauler.tic = mauler.tic || {};
 
-mauler.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
+    mauler.tic.Model = function() {
+        this.size = 3;
+        this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
+        this.crosses = 0;
+        this.noughts = 0;
+    };
 
-mauler.tic.Model.prototype = {
+    mauler.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
 
-    constructor: mauler.tic.Model,
+    mauler.tic.Model.prototype = {
 
-    equals: function(other) {
-        return this.crosses === other.crosses && this.noughts === other.noughts;
-    },
+        constructor: mauler.tic.Model,
 
-    cellIndex: function(cellIndex) {
-        if ((this.crosses & (1 << cellIndex)) !== 0) {
-            return "CROSS";
-        }
-        if ((this.noughts & (1 << cellIndex)) !== 0) {
-            return "NOUGHT";
-        }
-        return "EMPTY";
-    },
+        equals: function(other) {
+            return this.crosses === other.crosses && this.noughts === other.noughts;
+        },
 
-    cell: function(row, col) {
-        return this.cellIndex(this.size * row + col);
-    },
+        cellIndex: function(cellIndex) {
+            if ((this.crosses & (1 << cellIndex)) !== 0) {
+                return "CROSS";
+            }
+            if ((this.noughts & (1 << cellIndex)) !== 0) {
+                return "NOUGHT";
+            }
+            return "EMPTY";
+        },
 
-    // Turn-Based Game API methods
+        cell: function(row, col) {
+            return this.cellIndex(this.size * row + col);
+        },
 
-    copy: function() {
-        var tic = new mauler.tic.Model(); // TODO refactor
-        tic.crosses = this.crosses;
-        tic.noughts = this.noughts;
-        return tic;
-    },
+        // Turn-Based Game API methods
 
-    curPlayer: function() {
-        return (this.emptyCells() + 1) % 2;
-    },
+        copy: function() {
+            var tic = new mauler.tic.Model(); // TODO refactor
+            tic.crosses = this.crosses;
+            tic.noughts = this.noughts;
+            return tic;
+        },
 
-    isOver: function() {
-        return this.numMoves() === 0;
-    },
+        curPlayer: function() {
+            return (this.emptyCells() + 1) % 2;
+        },
 
-    // string moves
+        isOver: function() {
+            return this.numMoves() === 0;
+        },
 
-    move: function(move) {
-        // game is over
-        if (this.isOver()) {
-            throw new RangeError("Can't make more moves, game is over.");
-        }
-        // make random move if no move given
-        if (arguments.length === 0) {
-            move = Math.floor(Math.random() * this.numMoves());
-        }
-        if (typeof move === "string") {
-            var theMoves = this.moves();
-            var nMoves = theMoves.length;
-            for (var i = 0; i < nMoves; i++) {
-                if (move === theMoves[i]) {
-                    move = i;
-                    break;
+        // string moves
+
+        move: function(move) {
+            // game is over
+            if (this.isOver()) {
+                throw new RangeError("Can't make more moves, game is over.");
+            }
+            // make random move if no move given
+            if (arguments.length === 0) {
+                move = Math.floor(Math.random() * this.numMoves());
+            }
+            if (typeof move === "string") {
+                var theMoves = this.moves();
+                var nMoves = theMoves.length;
+                for (var i = 0; i < nMoves; i++) {
+                    if (move === theMoves[i]) {
+                        move = i;
+                        break;
+                    }
                 }
             }
-        }
-        if (move < 0 || move >= this.numMoves()) {
-            throw new RangeError("Illegal move");
-        }
-        this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
-    },
+            if (move < 0 || move >= this.numMoves()) {
+                throw new RangeError("Illegal move");
+            }
+            this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
+        },
 
-    // original
+        // original
 
 //    move: function(move) {
 //        // game is over
@@ -92,123 +94,125 @@ mauler.tic.Model.prototype = {
 //        this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
 //    },
 
-    moves: function() {
-        var mvs = [],
-            legal = this.legalMoves();
-        for (var i = 0; i < legal.length; i++) {
-            var row = Math.floor(legal[i] / 3);
-            var col = (legal[i] % 3) + 1;
-            mvs.push(mauler.tic.letters[row] + col.toString());
-        }
-        return mvs
-    },
+        moves: function() {
+            var mvs = [],
+                legal = this.legalMoves();
+            for (var i = 0; i < legal.length; i++) {
+                var row = Math.floor(legal[i] / 3);
+                var col = (legal[i] % 3) + 1;
+                mvs.push(mauler.tic.letters[row] + col.toString());
+            }
+            return mvs
+        },
 
-    newGame: function() {
-        return new mauler.tic.Model();
-    },
+        newGame: function() {
+            return new mauler.tic.Model();
+        },
 
-    // TODO no need for having this method... moves().length should be enough
-    numMoves: function() {
-        return this.isWin() ? 0 : this.emptyCells();
-    },
+        // TODO no need for having this method... moves().length should be enough
+        numMoves: function() {
+            return this.isWin() ? 0 : this.emptyCells();
+        },
 
-    numPlayers: function() {
-        return 2;
-    },
+        numPlayers: function() {
+            return 2;
+        },
 
-    outcomes: function() {
-        if (!this.isOver()) {
-            return ['NA', 'NA'];
-        }
-        if (this.checkWin(this.crosses)) {
-            return ['WIN', 'LOSS'];
-        }
-        if (this.checkWin(this.noughts)) {
-            return ['LOSS', 'WIN'];
-        }
-        return ['DRAW', 'DRAW'];
-    },
+        outcomes: function() {
+            if (!this.isOver()) {
+                return ['NA', 'NA'];
+            }
+            if (this.checkWin(this.crosses)) {
+                return ['WIN', 'LOSS'];
+            }
+            if (this.checkWin(this.noughts)) {
+                return ['LOSS', 'WIN'];
+            }
+            return ['DRAW', 'DRAW'];
+        },
 
-    reset: function() {
-        this.crosses = 0;
-        this.noughts = 0;
-    },
+        reset: function() {
+            this.crosses = 0;
+            this.noughts = 0;
+        },
 
-    toString: function() {
-        var builder = "";
-        if (!this.isOver()) {
-            builder += "Player: " + this.curPlayer() + "\n";
-            builder += "Moves: " + this.moves() + "\n";
-        } else {
-            builder += "Game Over!\n";
-        }
-        builder += "\n";
-        for (var i = 0; i < 9; i++) {
-            if ((this.crosses & (1 << i)) !== 0) {
-                builder += " X ";
-            } else if ((this.noughts & (1 << i)) !== 0) {
-                builder += " O ";
+        toString: function() {
+            var builder = "";
+            if (!this.isOver()) {
+                builder += "Player: " + this.curPlayer() + "\n";
+                builder += "Moves: " + this.moves() + "\n";
             } else {
-                builder += " - ";
+                builder += "Game Over!\n";
             }
-            if (i % 3 === 2) {
-                builder += "\n";
-            }
-        }
-        return builder;
-    },
-
-    // Tic-Tac-Toe methods
-    isWin: function() {
-        return this.checkWin(this.crosses) || this.checkWin(this.noughts);
-    },
-
-    emptyCells: function() {
-        return 9 - this.bitCount(this.crosses | this.noughts);
-    },
-
-    bitCount: function(num) {
-        var count = 0;
-        for (var i = 0; i < 9; i++) {
-            if ((num & (1 << i)) > 0) {
-                count++;
-            }
-        }
-        return count;
-    },
-
-    legalMoves: function() {
-        var moves = [];
-        if (this.numMoves() > 0) {
-            var legal = ~(this.crosses | this.noughts);
+            builder += "\n";
             for (var i = 0; i < 9; i++) {
-                if ((legal & (1 << i)) !== 0) {
-                    moves.push(i);
+                if ((this.crosses & (1 << i)) !== 0) {
+                    builder += " X ";
+                } else if ((this.noughts & (1 << i)) !== 0) {
+                    builder += " O ";
+                } else {
+                    builder += " - ";
+                }
+                if (i % 3 === 2) {
+                    builder += "\n";
                 }
             }
-        }
-        return moves;
-    },
+            return builder;
+        },
 
-    checkWin: function(board) {
-        for (var i = 0; i < this.winPatterns.length; i++) {
-            if ((board & this.winPatterns[i]) === this.winPatterns[i]) {
-                return true;
+        // Tic-Tac-Toe methods
+        isWin: function() {
+            return this.checkWin(this.crosses) || this.checkWin(this.noughts);
+        },
+
+        emptyCells: function() {
+            return 9 - this.bitCount(this.crosses | this.noughts);
+        },
+
+        bitCount: function(num) {
+            var count = 0;
+            for (var i = 0; i < 9; i++) {
+                if ((num & (1 << i)) > 0) {
+                    count++;
+                }
+            }
+            return count;
+        },
+
+        legalMoves: function() {
+            var moves = [];
+            if (this.numMoves() > 0) {
+                var legal = ~(this.crosses | this.noughts);
+                for (var i = 0; i < 9; i++) {
+                    if ((legal & (1 << i)) !== 0) {
+                        moves.push(i);
+                    }
+                }
+            }
+            return moves;
+        },
+
+        checkWin: function(board) {
+            for (var i = 0; i < this.winPatterns.length; i++) {
+                if ((board & this.winPatterns[i]) === this.winPatterns[i]) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        getCurBitboard: function() {
+            return this.curPlayer() === 0 ? this.crosses : this.noughts;
+        },
+
+        setCurBitboard: function(bitboard) {
+            if (this.curPlayer() === 0) {
+                this.crosses = bitboard;
+            } else {
+                this.noughts = bitboard;
             }
         }
-        return false;
-    },
 
-    getCurBitboard: function() {
-        return this.curPlayer() === 0 ? this.crosses : this.noughts;
-    },
+    };
 
-    setCurBitboard: function(bitboard) {
-        if (this.curPlayer() === 0) {
-            this.crosses = bitboard;
-        } else {
-            this.noughts = bitboard;
-        }
-    }
-
-};
+}());
