@@ -22,6 +22,10 @@ mauler.tic.CanvasView = function(options) {
     this.render();
 };
 
+mauler.tic.CanvasView.squareToMove = function(row, col) {
+    return mauler.tic.letters[row] + (col + 1);
+};
+
 mauler.tic.CanvasView.prototype = {
 
     constructor: mauler.tic.CanvasView,
@@ -65,7 +69,7 @@ mauler.tic.CanvasView.prototype = {
         for (var row = 0; row < this.model.size; row++) {
             for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
-                var hello = this.squareToMove(row, col);
+                var hello = mauler.tic.CanvasView.squareToMove(row, col);
                 if (cellType === 'CROSS') {
                     this.drawCross(row, col, this.colors.cross);
                 } else if (cellType === 'NOUGHT') {
@@ -150,11 +154,7 @@ mauler.tic.CanvasView.prototype = {
 
     canvasLocationToMove: function(loc) {
         var square = this.coordToSquare(loc.x, loc.y);
-        return this.squareToMove(square.row, square.col);
-    },
-
-    squareToMove: function(row, col) {
-        return mauler.tic.letters[row] + (col + 1);
+        return mauler.tic.CanvasView.squareToMove(square.row, square.col);
     }
 
 };
