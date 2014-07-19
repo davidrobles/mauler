@@ -1,4 +1,4 @@
-mauler.Controller = function(options) {
+mauler.Match = function(options) {
     this.game = options.game;
     this.players = options.players;
     this.currentBoardIndex = 0;
@@ -6,9 +6,9 @@ mauler.Controller = function(options) {
     this.reset();
 };
 
-mauler.Controller.prototype = {
+mauler.Match.prototype = {
 
-    constructor: mauler.Controller,
+    constructor: mauler.Match,
 
     playToEnd: function() {
         while (this.isNext()) {

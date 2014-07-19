@@ -18,11 +18,11 @@ var infoView = new Tic.InfoView({
 
 // Controller
 
-var controller = new mauler.Controller({
+var controller = new mauler.Match({
     game: game
 });
-controller.registerObserver(canvasView);
-controller.registerObserver(infoView);
+//controller.registerObserver(canvasView);
+//controller.registerObserver(infoView);
 
 // Players
 

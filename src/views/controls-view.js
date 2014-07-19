@@ -1,5 +1,5 @@
 mauler.ControlsView = function(options) {
-    this.controller = options.controller;
+    this.match = options.match;
     this.initElements();
     this.addListeners();
 };
@@ -28,16 +28,16 @@ mauler.ControlsView.prototype = {
 
     addListeners: function () {
         this.buttons.start.addEventListener("click", function() {
-            this.controller.start();
+            this.match.start();
         }.bind(this));
         this.buttons.prev.addEventListener("click", function() {
-            this.controller.prev();
+            this.match.prev();
         }.bind(this));
         this.buttons.next.addEventListener("click", function() {
-            this.controller.next();
+            this.match.next();
         }.bind(this));
         this.buttons.end.addEventListener("click", function() {
-            this.controller.end();
+            this.match.end();
         }.bind(this));
     },
 
@@ -46,10 +46,10 @@ mauler.ControlsView.prototype = {
     },
 
     update: function() {
-        this.buttons.start.disabled = !this.controller.isStart();
-        this.buttons.prev.disabled = !this.controller.isPrev();
-        this.buttons.next.disabled = !this.controller.isNext();
-        this.buttons.end.disabled = !this.controller.isEnd();
+        this.buttons.start.disabled = !this.match.isStart();
+        this.buttons.prev.disabled = !this.match.isPrev();
+        this.buttons.next.disabled = !this.match.isNext();
+        this.buttons.end.disabled = !this.match.isEnd();
     }
 
 };

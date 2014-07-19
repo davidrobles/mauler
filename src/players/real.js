@@ -1,6 +1,6 @@
 mauler.players.CanvasPlayer = function(options) {
     this.desiredMove = 0;
-    this.controller = options.controller;
+    this.match = options.match;
     this.canvasView = options.canvasView;
     this.canvas = options.canvasView.canvas;
     this.addListeners();
@@ -27,7 +27,7 @@ mauler.players.CanvasPlayer.prototype = {
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
             var str = Tic.letters[square.row] + (square.col + 1);
             this.desiredMove = str;
-            this.controller.next();
+            this.match.next();
             // write square to
             this.canvasView.render(); // TODO Move somewhere else?
         }.bind(this));

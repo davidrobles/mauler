@@ -1,5 +1,5 @@
 mauler.RestartView = function(options) {
-    this.controller = options.controller;
+    this.match = options.match;
     this.el = options.el;
     this.addListener();
 };
@@ -10,14 +10,14 @@ mauler.RestartView.prototype = {
 
     addListener: function () {
         this.el.addEventListener("click", function() {
-            this.controller.reset();
+            this.match.reset();
         }.bind(this));
     },
 
-    // Match Controller Events
+    // Match Events
 
     update: function() {
-        if (!this.controller.isStart()) {
+        if (!this.match.isStart()) {
             this.el.style.display = "none";
         } else {
             this.el.style.display = "block";

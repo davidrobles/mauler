@@ -2,9 +2,7 @@
 
 var game = new Tic.Model();
 
-// Controller
-
-var controller = new mauler.Controller({
+var match = new mauler.Match({
     game: game
 });
 
@@ -23,22 +21,22 @@ var infoView = new Tic.InfoView({
 });
 
 var restartView = new mauler.RestartView({
-    controller: controller,
+    match: match,
     el: document.getElementById("restart-button")
 });
 
 // Observers
 
-controller.on("all", canvasView.update, canvasView);
-controller.on("all", infoView.update, infoView);
-controller.on("all", restartView.update, restartView);
+match.on("all", canvasView.update, canvasView);
+match.on("all", infoView.update, infoView);
+match.on("all", restartView.update, restartView);
 
 // Players
 
 var canvasPlayer = new mauler.players.CanvasPlayer({
-    controller: controller,
+    match: match,
     canvasView: canvasView
 });
 
 var players = [canvasPlayer, canvasPlayer];
-controller.players = players;
+match.players = players;

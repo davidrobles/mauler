@@ -2,7 +2,7 @@
     "src/mauler.js",
     "src/utils.js",
     "src/views/controls-view.js",
-    "src/match-controller.js",
+    "src/match.js",
     "src/players/minimax.js",
     "src/players/monte-carlo.js",
     "src/players/negamax.js",
