@@ -1,6 +1,6 @@
-mauler.Tic = mauler.Tic || {};
+mauler.tic = mauler.tic || {};
 
-mauler.Tic.CanvasView = function(options) {
+mauler.tic.CanvasView = function(options) {
     this.model = options.model;
     this.canvas = options.canvas || document.createElement("canvas");
     this.canvas.width = options.width || 100;
@@ -28,9 +28,9 @@ mauler.Tic.CanvasView = function(options) {
     this.render();
 };
 
-mauler.Tic.CanvasView.prototype = {
+mauler.tic.CanvasView.prototype = {
 
-    constructor: mauler.Tic.CanvasView,
+    constructor: mauler.tic.CanvasView,
 
     render: function() {
         this.drawBackground();
@@ -155,7 +155,7 @@ mauler.Tic.CanvasView.prototype = {
 
 };
 
-mauler.Tic.CanvasViewPlayer = function(options) {
+mauler.tic.CanvasPlayer = function(options) {
     this.desiredMove = 0;
     this.match = options.match;
     this.canvasView = options.canvasView;
@@ -163,9 +163,9 @@ mauler.Tic.CanvasViewPlayer = function(options) {
     this.addListeners();
 };
 
-mauler.Tic.CanvasViewPlayer.prototype = {
+mauler.tic.CanvasPlayer.prototype = {
 
-    constructor: mauler.Tic.CanvasViewPlayer,
+    constructor: mauler.tic.CanvasPlayer,
 
     move: function() {
         if (!this.desiredMove) {
@@ -182,7 +182,7 @@ mauler.Tic.CanvasViewPlayer.prototype = {
         this.canvas.addEventListener("click", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            var str = Tic.letters[square.row] + (square.col + 1);
+            var str = mauler.tic.letters[square.row] + (square.col + 1);
             this.desiredMove = str;
             this.match.next();
             // write square to

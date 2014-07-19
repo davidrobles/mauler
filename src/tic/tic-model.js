@@ -1,17 +1,17 @@
-mauler.Tic = mauler.Tic || {};
+mauler.tic = mauler.tic || {};
 
-mauler.Tic.Model = function() {
+mauler.tic.Model = function() {
     this.size = 3;
     this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
     this.crosses = 0;
     this.noughts = 0;
 };
 
-mauler.Tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
+mauler.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
 
-mauler.Tic.Model.prototype = {
+mauler.tic.Model.prototype = {
 
-    constructor: mauler.Tic.Model,
+    constructor: mauler.tic.Model,
 
     equals: function(other) {
         return this.crosses === other.crosses && this.noughts === other.noughts;
@@ -34,7 +34,7 @@ mauler.Tic.Model.prototype = {
     // Turn-Based Game API methods
 
     copy: function() {
-        var tic = new mauler.Tic.Model(); // TODO refactor
+        var tic = new mauler.tic.Model(); // TODO refactor
         tic.crosses = this.crosses;
         tic.noughts = this.noughts;
         return tic;
@@ -98,13 +98,13 @@ mauler.Tic.Model.prototype = {
         for (var i = 0; i < legal.length; i++) {
             var row = Math.floor(legal[i] / 3);
             var col = (legal[i] % 3) + 1;
-            mvs.push(mauler.Tic.letters[row] + col.toString());
+            mvs.push(mauler.tic.letters[row] + col.toString());
         }
         return mvs
     },
 
     newGame: function() {
-        return new mauler.Tic.Model();
+        return new mauler.tic.Model();
     },
 
     // TODO no need for having this method... moves().length should be enough

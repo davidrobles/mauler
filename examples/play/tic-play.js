@@ -1,6 +1,6 @@
 // Model
 
-var game = new mauler.Tic.Model();
+var game = new mauler.tic.Model();
 
 var match = new mauler.Match({
     game: game
@@ -8,14 +8,14 @@ var match = new mauler.Match({
 
 // View
 
-var canvasView = new mauler.Tic.CanvasView({
+var canvasView = new mauler.tic.CanvasView({
     model: game,
     width: 400,
     height: 400,
     canvas: document.getElementById("tic-canvas")
 });
 
-var infoView = new mauler.Tic.InfoView({
+var infoView = new mauler.tic.InfoView({
     model: game,
     el: document.getElementById("info-view")
 });
@@ -33,7 +33,7 @@ match.on("all", restartView.update, restartView);
 
 // Players
 
-var canvasPlayer = new mauler.players.CanvasPlayer({
+var canvasPlayer = new mauler.tic.CanvasPlayer({
     match: match,
     canvasView: canvasView
 });
