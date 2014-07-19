@@ -1,5 +1,4 @@
 (function() {
-    mauler.views = mauler.views || {};
 
     mauler.views.RestartView = function(options) {
         this.match = options.match;
@@ -7,9 +6,11 @@
         this.addListener();
     };
 
-    mauler.views.RestartView.prototype = {
+    var RestartView = mauler.views.RestartView;
 
-        constructor: mauler.views.RestartView,
+    RestartView.prototype = {
+
+        constructor: RestartView,
 
         addListener: function () {
             this.el.addEventListener("click", function() {
@@ -28,4 +29,5 @@
         }
 
     };
+
 }());

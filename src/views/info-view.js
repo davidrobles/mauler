@@ -1,4 +1,5 @@
 (function() {
+
     mauler.views = mauler.views || {};
 
     mauler.views.InfoView = function(options) {
@@ -28,4 +29,5 @@
         }
 
     };
+
 }());
