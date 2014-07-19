@@ -1,7 +1,7 @@
 (function() {
-    mauler.tic = mauler.tic || {};
+    mauler.games.tic = mauler.tic || {};
 
-    mauler.tic.CanvasView = function(options) {
+    mauler.games.tic.CanvasView = function(options) {
         this.model = options.model;
         this.canvas = options.canvas || document.createElement("canvas");
         this.canvas.width = options.width || 100;
@@ -23,10 +23,10 @@
         this.render();
     };
 
-    var CanvasView = mauler.tic.CanvasView;
+    var CanvasView = mauler.games.tic.CanvasView;
 
     CanvasView.squareToMove = function(row, col) {
-        return mauler.tic.letters[row] + (col + 1);
+        return mauler.games.tic.letters[row] + (col + 1);
     };
 
     CanvasView.prototype = {
@@ -162,7 +162,7 @@
 
     };
 
-    mauler.tic.CanvasPlayer = function(options) {
+    mauler.games.tic.CanvasPlayer = function(options) {
         this.moveChosen = null;
         this.match = options.match;
         this.canvasView = options.canvasView;
@@ -170,7 +170,7 @@
         this.addListeners();
     };
 
-    var CanvasPlayer = mauler.tic.CanvasPlayer;
+    var CanvasPlayer = mauler.games.tic.CanvasPlayer;
 
     CanvasPlayer.prototype = {
 
