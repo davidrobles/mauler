@@ -1,14 +1,10 @@
 (function() {
 
-    mauler.views = mauler.views || {};
-
-    mauler.views.ControlsView = function(options) {
+    ControlsView = function(options) {
         this.match = options.match;
         this.initElements();
         this.addListeners();
     };
-
-    var ControlsView = mauler.views.ControlsView;
 
     ControlsView.prototype = {
 
@@ -59,5 +55,7 @@
         }
 
     };
+
+    mauler.views.ControlsView = ControlsView;
 
 }());
