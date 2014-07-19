@@ -1,16 +1,12 @@
 (function() {
 
-    mauler.games.tic = mauler.games.tic || {};
-
-    mauler.games.tic.CanvasPlayer = function(options) {
+    var CanvasPlayer = function(options) {
         this.moveChosen = null;
         this.match = options.match;
         this.canvasView = options.canvasView;
         this.canvas = options.canvasView.canvas;
         this.addListeners();
     };
-
-    var CanvasPlayer = mauler.games.tic.CanvasPlayer;
 
     CanvasPlayer.prototype = {
 
@@ -67,5 +63,8 @@
         }
 
     };
+
+    mauler.games.tic = mauler.games.tic || {};
+    mauler.games.tic.CanvasPlayer = CanvasPlayer;
 
 }());
