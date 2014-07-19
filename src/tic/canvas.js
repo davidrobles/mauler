@@ -16,14 +16,7 @@ mauler.tic.CanvasView = function(options) {
         nought: "rgba(41, 128, 185,1.0)",
         noughtLight: "rgba(41, 128, 185, 0.5)"
     };
-//    this.mouse = {
-//        over: {
-//            row: null,
-//            col: null
-//        }
-//    };
     this.highlightedMoves = [];
-    // create a highlightedMoves list
     this.borderSize = 0.02; // percentage
     this.linesWidth = Math.round(this.canvas.width * this.borderSize);
     this.render();
@@ -211,10 +204,13 @@ mauler.tic.CanvasPlayer.prototype = {
 
     addMouseMoveListener: function () {
         this.canvas.addEventListener("mousemove", function(event) {
-            var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
-            var square = this.canvasView.coordToSquare(loc.x, loc.y);
-            this.canvasView.highlightedMoves = [this.canvasView.squareToMove(square.row, square.col)];
-            this.canvasView.render();
+            var canvasLoc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
+            var move = this.canvasView.canvasLocationToMove(canvasLoc);
+            var moves = this.match.curGame().moves();
+            if (_.contains(moves, move)) {
+                this.canvasView.highlightedMoves = [move];
+                this.canvasView.render();
+            }
         }.bind(this));
     },
 
