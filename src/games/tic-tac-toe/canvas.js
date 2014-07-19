@@ -106,7 +106,7 @@
                 x = col * this.squareSize,
                 y = row * this.squareSize;
 
-            this.ctx.lineWidth = 14; // TODO make it relative to size
+            this.ctx.lineWidth = this.linesWidth * 2; // TODO make it relative to size
             this.ctx.strokeStyle = color;
             this.ctx.lineCap = 'round';
 

@@ -7,8 +7,8 @@
         tic.move();
         var view = new mauler.games.tic.CanvasView({
             model: tic,
-            width: 80,
-            height: 80
+            width: 140,
+            height: 140
         });
         document.body.appendChild(view.render());
     }
