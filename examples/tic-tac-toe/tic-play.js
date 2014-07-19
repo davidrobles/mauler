@@ -53,6 +53,6 @@ document.body.appendChild(controlsView.render());
 controller.registerObserver(controlsView);
 
 //console.time('robles');
-//var stats = mauler.Util.playNGames(game, players, 200);
+//var stats = mauler.Util.playNGames(tic, players, 200);
 //console.timeEnd('robles');
 //console.log(stats);

@@ -1,38 +1,41 @@
-var game = new mauler.games.tic.TicTacToe();
+(function() {
 
-var match = new mauler.Match({
-    game: game
-});
+    var tic = new mauler.games.tic.TicTacToe();
 
-var canvasView = new mauler.games.tic.CanvasView({
-    model: game,
-    width: 400,
-    height: 400,
-    canvas: document.getElementById("tic-canvas")
-});
+    var match = new mauler.Match({
+        game: tic
+    });
 
-var infoView = new mauler.views.InfoView({
-    model: game,
-    el: document.getElementById("info-view")
-});
+    var canvasView = new mauler.games.tic.CanvasView({
+        model: tic,
+        width: 400,
+        height: 400,
+        canvas: document.getElementById("tic-canvas")
+    });
 
-var restartView = new mauler.views.RestartView({
-    match: match,
-    el: document.getElementById("restart-button")
-});
+    var infoView = new mauler.views.InfoView({
+        model: tic,
+        el: document.getElementById("info-view")
+    });
 
-// Events
+    var restartView = new mauler.views.RestartView({
+        match: match,
+        el: document.getElementById("restart-button")
+    });
 
-match.on("all", canvasView.update, canvasView);
-match.on("all", infoView.update, infoView);
-match.on("all", restartView.update, restartView);
+    // Events
 
-// Players
+    match.on("all", canvasView.update, canvasView);
+    match.on("all", infoView.update, infoView);
+    match.on("all", restartView.update, restartView);
 
-var canvasPlayer = new mauler.games.tic.CanvasPlayer({
-    match: match,
-    canvasView: canvasView
-});
+    // Players
 
-var players = [canvasPlayer, canvasPlayer];
-match.players = players;
+    var canvasPlayer = new mauler.games.tic.CanvasPlayer({
+        match: match,
+        canvasView: canvasView
+    });
+
+    match.players = [canvasPlayer, canvasPlayer];
+
+}());

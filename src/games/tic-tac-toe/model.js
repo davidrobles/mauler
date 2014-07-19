@@ -49,9 +49,9 @@
         // string moves
 
         move: function(move) {
-            // game is over
+            // tic is over
             if (this.isOver()) {
-                throw new RangeError("Can't make more moves, game is over.");
+                throw new RangeError("Can't make more moves, tic is over.");
             }
             // make random move if no move given
             if (arguments.length === 0) {
@@ -76,9 +76,9 @@
         // original
 
 //    move: function(move) {
-//        // game is over
+//        // tic is over
 //        if (this.isOver()) {
-//            throw new RangeError("Can't make more moves, game is over.");
+//            throw new RangeError("Can't make more moves, tic is over.");
 //        }
 //        // make random move if no move given
 //        if (arguments.length === 0) {
