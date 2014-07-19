@@ -1,7 +1,6 @@
 (function() {
-    mauler.games.tic = mauler.games.tic || {};
 
-    mauler.games.tic.CanvasView = function(options) {
+    var CanvasView = function(options) {
         this.model = options.model;
         this.canvas = options.canvas || document.createElement("canvas");
         this.canvas.width = options.width || 100;
@@ -22,8 +21,6 @@
         this.linesWidth = Math.round(this.canvas.width * this.borderSize);
         this.render();
     };
-
-    var CanvasView = mauler.games.tic.CanvasView;
 
     CanvasView.squareToMove = function(row, col) {
         return mauler.games.tic.letters[row] + (col + 1);
@@ -161,5 +158,8 @@
         }
 
     };
+
+    mauler.games.tic = mauler.games.tic || {};
+    mauler.games.tic.CanvasView = CanvasView;
 
 }());
