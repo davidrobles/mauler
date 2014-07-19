@@ -1,12 +1,10 @@
 (function() {
 
-    mauler.views.RestartView = function(options) {
+    var RestartView = function(options) {
         this.match = options.match;
         this.el = options.el;
         this.addListener();
     };
-
-    var RestartView = mauler.views.RestartView;
 
     RestartView.prototype = {
 
@@ -29,5 +27,7 @@
         }
 
     };
+
+    mauler.views.RestartView = RestartView;
 
 }());
