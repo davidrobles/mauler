@@ -46,8 +46,6 @@
             return this.numMoves() === 0;
         },
 
-        // string moves
-
         move: function(move) {
             // tic is over
             if (this.isOver()) {
@@ -72,23 +70,6 @@
             }
             this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
         },
-
-        // original
-
-//    move: function(move) {
-//        // tic is over
-//        if (this.isOver()) {
-//            throw new RangeError("Can't make more moves, tic is over.");
-//        }
-//        // make random move if no move given
-//        if (arguments.length === 0) {
-//            move = Math.floor(Math.random() * this.numMoves());
-//        }
-//        if (move < 0 || move >= this.numMoves()) {
-//            throw new RangeError("Illegal move");
-//        }
-//        this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
-//    },
 
         moves: function() {
             var mvs = [],
