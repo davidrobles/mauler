@@ -12,28 +12,10 @@
 
         constructor: TicTacToe,
 
-        equals: function(other) {
-            return this.crosses === other.crosses && this.noughts === other.noughts;
-        },
-
-        cellIndex: function(cellIndex) {
-            if ((this.crosses & (1 << cellIndex)) !== 0) {
-                return "CROSS";
-            }
-            if ((this.noughts & (1 << cellIndex)) !== 0) {
-                return "NOUGHT";
-            }
-            return "EMPTY";
-        },
-
-        cell: function(row, col) {
-            return this.cellIndex(this.size * row + col);
-        },
-
-        // Turn-Based Game API methods
+        // Mauler Game Interface methods
 
         copy: function() {
-            var tic = new TicTacToe(); // TODO refactor
+            var tic = new TicTacToe();
             tic.crosses = this.crosses;
             tic.noughts = this.noughts;
             return tic;
@@ -138,7 +120,26 @@
             return builder;
         },
 
-        // Tic-Tac-Toe methods
+        // Tic Tac Toe specific methods
+
+        equals: function(other) {
+            return this.crosses === other.crosses && this.noughts === other.noughts;
+        },
+
+        cellIndex: function(cellIndex) {
+            if ((this.crosses & (1 << cellIndex)) !== 0) {
+                return "CROSS";
+            }
+            if ((this.noughts & (1 << cellIndex)) !== 0) {
+                return "NOUGHT";
+            }
+            return "EMPTY";
+        },
+
+        cell: function(row, col) {
+            return this.cellIndex(this.size * row + col);
+        },
+
         isWin: function() {
             return this.checkWin(this.crosses) || this.checkWin(this.noughts);
         },
