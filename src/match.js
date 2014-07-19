@@ -1,6 +1,6 @@
 (function() {
 
-    Match = function(options) {
+    var Match = function(options) {
         this.game = options.game;
         this.players = options.players;
         this.currentGameIndex = 0;
