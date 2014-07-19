@@ -1,27 +1,31 @@
-mauler.RestartView = function(options) {
-    this.match = options.match;
-    this.el = options.el;
-    this.addListener();
-};
+(function() {
+    mauler.views = mauler.views || {};
 
-mauler.RestartView.prototype = {
+    mauler.views.RestartView = function(options) {
+        this.match = options.match;
+        this.el = options.el;
+        this.addListener();
+    };
 
-    constructor: mauler.RestartView,
+    mauler.views.RestartView.prototype = {
 
-    addListener: function () {
-        this.el.addEventListener("click", function() {
-            this.match.reset();
-        }.bind(this));
-    },
+        constructor: mauler.views.RestartView,
 
-    // Match Events
+        addListener: function () {
+            this.el.addEventListener("click", function() {
+                this.match.reset();
+            }.bind(this));
+        },
 
-    update: function() {
-        if (!this.match.isStart()) {
-            this.el.style.display = "none";
-        } else {
-            this.el.style.display = "block";
+        // Match Events
+
+        update: function() {
+            if (!this.match.isStart()) {
+                this.el.style.display = "none";
+            } else {
+                this.el.style.display = "block";
+            }
         }
-    }
 
-};
+    };
+}());

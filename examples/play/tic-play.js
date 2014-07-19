@@ -20,7 +20,7 @@ var infoView = new mauler.views.InfoView({
     el: document.getElementById("info-view")
 });
 
-var restartView = new mauler.RestartView({
+var restartView = new mauler.views.RestartView({
     match: match,
     el: document.getElementById("restart-button")
 });
