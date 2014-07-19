@@ -1,12 +1,8 @@
-// Model
-
-var game = new mauler.games.tic.Model();
+var game = new mauler.games.tic.TicTacToe();
 
 var match = new mauler.Match({
     game: game
 });
-
-// View
 
 var canvasView = new mauler.games.tic.CanvasView({
     model: game,
@@ -25,7 +21,7 @@ var restartView = new mauler.views.RestartView({
     el: document.getElementById("restart-button")
 });
 
-// Observers
+// Events
 
 match.on("all", canvasView.update, canvasView);
 match.on("all", infoView.update, infoView);

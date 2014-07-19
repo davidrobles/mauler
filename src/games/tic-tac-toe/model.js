@@ -1,21 +1,15 @@
 (function() {
 
-    mauler.games.tic = mauler.games.tic || {};
-
-    mauler.games.tic.Model = function() {
+    var TicTacToe = function() {
         this.size = 3;
         this.winPatterns = [7, 56, 448, 73, 146, 292, 273, 84];
         this.crosses = 0;
         this.noughts = 0;
     };
 
-    mauler.games.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
+    TicTacToe.prototype = {
 
-    var Model = mauler.games.tic.Model;
-
-    Model.prototype = {
-
-        constructor: Model,
+        constructor: TicTacToe,
 
         equals: function(other) {
             return this.crosses === other.crosses && this.noughts === other.noughts;
@@ -38,7 +32,7 @@
         // Turn-Based Game API methods
 
         copy: function() {
-            var tic = new mauler.games.tic.Model(); // TODO refactor
+            var tic = new TicTacToe(); // TODO refactor
             tic.crosses = this.crosses;
             tic.noughts = this.noughts;
             return tic;
@@ -108,7 +102,7 @@
         },
 
         newGame: function() {
-            return new Model();
+            return new TicTacToe();
         },
 
         // TODO no need for having this method... moves().length should be enough
@@ -216,5 +210,9 @@
         }
 
     };
+
+    mauler.games.tic = mauler.games.tic || {};
+    mauler.games.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
+    mauler.games.tic.TicTacToe = TicTacToe;
 
 }());
