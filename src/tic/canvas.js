@@ -179,6 +179,12 @@ mauler.tic.CanvasPlayer.prototype = {
     // Listeners
 
     addListeners: function() {
+        this.addClickListener();
+        this.addMouseMoveListener();
+        this.addMouseOutListener();
+    },
+
+    addClickListener: function () {
         this.canvas.addEventListener("click", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
@@ -188,7 +194,9 @@ mauler.tic.CanvasPlayer.prototype = {
             // write square to
             this.canvasView.render(); // TODO Move somewhere else?
         }.bind(this));
+    },
 
+    addMouseMoveListener: function () {
         this.canvas.addEventListener("mousemove", function(event) {
             var loc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
             var square = this.canvasView.coordToSquare(loc.x, loc.y);
@@ -196,7 +204,9 @@ mauler.tic.CanvasPlayer.prototype = {
             this.canvasView.mouse.over.col = square.col;
             this.canvasView.render();
         }.bind(this));
+    },
 
+    addMouseOutListener: function () {
         this.canvas.addEventListener("mouseout", function() {
             this.canvasView.mouse.over.row = null;
             this.canvasView.mouse.over.col = null;
