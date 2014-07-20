@@ -1,9 +1,13 @@
 (function() {
 
-    var TicTacToe = function() {
+    var TicTacToe = function(options) {
         this.size = 3;
         this.crosses = 0;
         this.noughts = 0;
+        options = options || {};
+        if (options.board) {
+            this.setBoard(options.board);
+        }
     };
 
     TicTacToe.PATTERNS = [7, 56, 448, 73, 146, 292, 273, 84];
@@ -191,6 +195,19 @@
                 this.crosses = bitboard;
             } else {
                 this.noughts = bitboard;
+            }
+        },
+
+        setBoard: function(board) {
+            for (var row = 0; row < board.length; row++) {
+                for (var col = 0; col < board[row].length; col++) {
+                    var value = board[row][col];
+                    if (value === 'X') {
+                        this.crosses |= (1 << ((row * this.size) + col));
+                    } else if (value === 'O') {
+                        this.noughts |= (1 << ((row * this.size) + col));
+                    }
+                }
             }
         }
 

@@ -1,6 +1,10 @@
 (function() {
 
-    var tic = new mauler.games.tic.TicTacToe();
+    var tic = new mauler.games.tic.TicTacToe({
+        board: [['X', ' ', 'O'],
+                ['O', 'X', 'O'],
+                [' ', ' ', ' ']]
+    });
 
     var match = new mauler.Match({
         game: tic
