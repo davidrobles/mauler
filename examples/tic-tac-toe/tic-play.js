@@ -1,8 +1,8 @@
 (function() {
     var tic = new mauler.games.tic.TicTacToe();
     var rand = new mauler.players.Random();
-    var minimax = new mauler.players.MonteCarlo();
-    var players = [minimax, minimax];
+    var alphaBeta = new mauler.players.AlphaBeta();
+    var players = [alphaBeta, alphaBeta];
     console.time('robles');
     var stats = mauler.utils.playNGames(tic, players, 100);
     console.timeEnd('robles');
