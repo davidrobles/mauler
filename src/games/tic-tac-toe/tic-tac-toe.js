@@ -30,15 +30,13 @@
         },
 
         move: function(move) {
-            // tic is over
             if (this.isOver()) {
-                throw new RangeError("Can't make more moves, tic is over.");
+                throw new Error("Can't make more moves, the game is over!");
             }
-            // make random move if no move given
+            // Make random move if no move given
             if (arguments.length === 0) {
                 move = Math.floor(Math.random() * this.numMoves());
-            }
-            if (typeof move === "string") {
+            } else if (typeof move === 'string') {
                 var theMoves = this.moves();
                 var nMoves = theMoves.length;
                 for (var i = 0; i < nMoves; i++) {
@@ -49,7 +47,7 @@
                 }
             }
             if (move < 0 || move >= this.numMoves()) { // TODO refactor, use move length
-                throw new RangeError("Illegal move");
+                throw new RangeError('Illegal move');
             }
             this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
         },
@@ -97,24 +95,24 @@
         },
 
         toString: function() {
-            var builder = "";
+            var builder = '';
             if (!this.isOver()) {
-                builder += "Player: " + this.curPlayer() + "\n";
-                builder += "Moves: " + this.moves() + "\n";
+                builder += 'Player: ' + this.curPlayer() + '\n';
+                builder += 'Moves: ' + this.moves() + '\n';
             } else {
-                builder += "Game Over!\n";
+                builder += 'Game Over!\n';
             }
-            builder += "\n";
+            builder += '\n';
             for (var i = 0; i < 9; i++) {
                 if ((this.crosses & (1 << i)) !== 0) {
-                    builder += " X ";
+                    builder += ' X ';
                 } else if ((this.noughts & (1 << i)) !== 0) {
-                    builder += " O ";
+                    builder += ' O ';
                 } else {
-                    builder += " - ";
+                    builder += ' - ';
                 }
                 if (i % 3 === 2) {
-                    builder += "\n";
+                    builder += '\n';
                 }
             }
             return builder;
@@ -128,12 +126,12 @@
 
         cellIndex: function(cellIndex) {
             if ((this.crosses & (1 << cellIndex)) !== 0) {
-                return "CROSS";
+                return 'CROSS';
             }
             if ((this.noughts & (1 << cellIndex)) !== 0) {
-                return "NOUGHT";
+                return 'NOUGHT';
             }
-            return "EMPTY";
+            return 'EMPTY';
         },
 
         cell: function(row, col) {
