@@ -197,7 +197,7 @@
     };
 
     mauler.games.tic = mauler.games.tic || {};
-    mauler.games.tic.letters = ['A', 'B', 'C']; // TODO is this needed? move out?
+    mauler.games.tic.letters = ['A', 'B', 'C'];
     mauler.games.tic.TicTacToe = TicTacToe;
 
 }());
