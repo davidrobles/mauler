@@ -21,7 +21,7 @@
                     this.el.innerHTML = "Draw!";
                 }
             } else {
-                var curPlayer = this.model.curPlayer() + 1;
+                var curPlayer = this.model.currentPlayer() + 1;
                 this.el.innerHTML = "Turn: Player " + curPlayer;
             }
         }

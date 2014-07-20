@@ -22,7 +22,7 @@ mauler.players.MonteCarlo.prototype = {
                 var randMove = Math.floor(Math.random() * newGame.numMoves());
                 newGame.move(randMove);
             }
-            outcomes[move] += this.utilFunc(newGame, game.curPlayer());
+            outcomes[move] += this.utilFunc(newGame, game.currentPlayer());
         }
         return mauler.utils.argMax(outcomes);
     }

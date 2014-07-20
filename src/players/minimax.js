@@ -13,12 +13,12 @@ mauler.players.Minimax.prototype = {
             return { move: -1, score: this.utilFunc(game, player) };
         }
         var bestMove = -1,
-            bestScore = game.curPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE;
+            bestScore = game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE;
         for (var move = 0; move < game.numMoves(); move++) { // TODO use 'n' variable
             var newGame = game.copy();
             newGame.move(move);
             var curMoveScore = this.minimax(newGame, player, curDepth + 1);
-            if (game.curPlayer() === player) {
+            if (game.currentPlayer() === player) {
                 if (curMoveScore.score > bestScore) {
                     bestMove = move;
                     bestScore = curMoveScore.score;
@@ -32,7 +32,7 @@ mauler.players.Minimax.prototype = {
     },
 
     move: function(game) {
-        return this.minimax(game.copy(), game.curPlayer(), 0).move;
+        return this.minimax(game.copy(), game.currentPlayer(), 0).move;
     }
 
 };

@@ -33,7 +33,7 @@
             for (var i = 0; i < numGames; i++) {
                 var newGame = game.copy();
                 while (!newGame.isOver()) {
-                    var curPlayer = players[newGame.curPlayer()];
+                    var curPlayer = players[newGame.currentPlayer()];
                     var move = curPlayer.move(newGame);
                     newGame.move(move);
                 }

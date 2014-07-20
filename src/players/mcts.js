@@ -61,7 +61,7 @@ mauler.players.MCTS.prototype = {
     move: function(game) {
         game = game.copy();
         var root = new mauler.players.MCTSNode(game);
-        var curPlayer = game.curPlayer();
+        var curPlayer = game.currentPlayer();
         for (var i = 0; i < this.numSims; i++) {
             this.simulate(root, curPlayer);
         }
@@ -119,7 +119,7 @@ mauler.players.UCB1.prototype = {
 
     move: function(node, player) {
         var bestMove = -1,
-            max = node.game.curPlayer() === player,
+            max = node.game.currentPlayer() === player,
             bestValue = max ? -Number.MAX_VALUE : Number.MAX_VALUE,
             nb = 0;
         for (var move = 0; move < node.game.numMoves(); move++) {

@@ -10,7 +10,7 @@ mauler.players.Negamax.prototype = {
 
     negamax: function(game, curDepth) {
         if (game.isOver() || curDepth === this.maxDepth) {
-            return { move: -1, score: this.utilFunc(game, game.curPlayer()) };
+            return { move: -1, score: this.utilFunc(game, game.currentPlayer()) };
         }
         var bestMove = -1,
             bestScore = -Number.MAX_VALUE;

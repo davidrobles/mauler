@@ -39,7 +39,7 @@
         },
 
         getCurPlayerColor: function() {
-            return this.model.curPlayer() === 0 ? this.colors.crossLight : this.colors.noughtLight;
+            return this.model.currentPlayer() === 0 ? this.colors.crossLight : this.colors.noughtLight;
         },
 
         drawBackground: function() {
@@ -76,9 +76,9 @@
                         this.drawNought(row, col, this.colors.nought);
                     } else if (!this.model.frozen && !this.model.isOver() && _.contains(this.highlightedMoves, hello)) {
                         var color = this.getCurPlayerColor();
-                        if (this.model.curPlayer() === 0) {
+                        if (this.model.currentPlayer() === 0) {
                             this.drawCross(row, col, color);
-                        } else if (this.model.curPlayer() === 1) {
+                        } else if (this.model.currentPlayer() === 1) {
                             this.drawNought(row, col, color);
                         }
                     }

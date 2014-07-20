@@ -10,7 +10,7 @@ mauler.players.AlphaBeta.prototype = {
 
     ab: function(game, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === this.maxDepth) {
-            return { move: -1, score: this.utilFunc(game, game.curPlayer()) }; // TODO remove move? or change to null?
+            return { move: -1, score: this.utilFunc(game, game.currentPlayer()) }; // TODO remove move? or change to null?
         }
         var bestMove = -1,
             bestScore = -Number.MAX_VALUE;

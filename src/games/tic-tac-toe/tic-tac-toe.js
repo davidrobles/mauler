@@ -23,7 +23,7 @@
             return tic;
         },
 
-        curPlayer: function() {
+        currentPlayer: function() {
             return (this.emptyCells() + 1) % 2;
         },
 
@@ -99,7 +99,7 @@
         toString: function() {
             var builder = '';
             if (!this.isOver()) {
-                builder += 'Player: ' + this.curPlayer() + '\n';
+                builder += 'Player: ' + this.currentPlayer() + '\n';
                 builder += 'Moves: ' + this.moves() + '\n';
             } else {
                 builder += 'Game Over!\n';
@@ -183,11 +183,11 @@
         },
 
         getCurBitboard: function() {
-            return this.curPlayer() === 0 ? this.crosses : this.noughts;
+            return this.currentPlayer() === 0 ? this.crosses : this.noughts;
         },
 
         setCurBitboard: function(bitboard) {
-            if (this.curPlayer() === 0) {
+            if (this.currentPlayer() === 0) {
                 this.crosses = bitboard;
             } else {
                 this.noughts = bitboard;
