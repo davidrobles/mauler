@@ -3,7 +3,7 @@ mauler.players.MCTS = function(options) {
     this.treePolicy = options.treePolicy;
     this.defaultPolicy = options.defaultPolicy;
     this.numSims = options.numSims;
-    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
+    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
 };
 
 mauler.players.MCTS.prototype = {
@@ -43,7 +43,7 @@ mauler.players.MCTS.prototype = {
         while (!copy.isOver()) {
             copy.move(this.defaultPolicy.move(copy));
         }
-        return this.utilFunc.eval(copy, player);
+        return this.utilFunc(copy, player);
     },
 
     backup: function (visitedNodes, outcome) {

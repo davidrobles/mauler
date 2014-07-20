@@ -1,7 +1,7 @@
 mauler.players.Negamax = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
-    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
+    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
 };
 
 mauler.players.Negamax.prototype = {
@@ -10,7 +10,7 @@ mauler.players.Negamax.prototype = {
 
     negamax: function(game, curDepth) {
         if (game.isOver() || curDepth === this.maxDepth) {
-            return { move: -1, score: this.utilFunc.eval(game, game.curPlayer()) };
+            return { move: -1, score: this.utilFunc(game, game.curPlayer()) };
         }
         var bestMove = -1,
             bestScore = -Number.MAX_VALUE;

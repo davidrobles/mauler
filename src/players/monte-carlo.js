@@ -1,7 +1,7 @@
 mauler.players.MonteCarlo = function(options) {
     options = options || {};
-    this.numSims = options.numSims || 100;
-    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
+    this.numSims = options.numSims || 5000;
+    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
 };
 
 mauler.players.MonteCarlo.prototype = {
@@ -22,7 +22,7 @@ mauler.players.MonteCarlo.prototype = {
                 var randMove = Math.floor(Math.random() * newGame.numMoves());
                 newGame.move(randMove);
             }
-            outcomes[move] += this.utilFunc.eval(newGame, game.curPlayer());
+            outcomes[move] += this.utilFunc(newGame, game.curPlayer());
         }
         return mauler.utils.argMax(outcomes);
     }

@@ -57,27 +57,20 @@
             };
         },
 
-        UtilFunc: function(options) {
-            options = options || {};
-            this.win  = options.win  ||  1.0;
-            this.draw = options.draw ||  0.0;
-            this.loss = options.loss || -1.0;
-        }
-
-    };
-
-    mauler.utils.UtilFunc.prototype.eval = function(game, player) {
-        if (game.isOver()) {
-            var outcomes = game.outcomes();
-            switch (outcomes[player]) {
-                case "WIN":
-                    return this.win;
-                case "DRAW":
-                    return this.draw;
-                case "LOSS":
-                    return this.loss;
+        utilFunc: function(game, player) {
+            if (game.isOver()) {
+                var outcomes = game.outcomes();
+                switch (outcomes[player]) {
+                    case "WIN":
+                        return 1.0;
+                    case "DRAW":
+                        return 0.0;
+                    case "LOSS":
+                        return -1.0;
+                }
             }
         }
+
     };
 
 }());

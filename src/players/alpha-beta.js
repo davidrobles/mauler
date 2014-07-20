@@ -1,7 +1,7 @@
 mauler.players.AlphaBeta = function(options) {
     options = options || {};
     this.maxDepth = options.maxDepth || Number.MAX_VALUE;
-    this.utilFunc = options.utilFunc || new mauler.utils.UtilFunc();
+    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
 };
 
 mauler.players.AlphaBeta.prototype = {
@@ -10,7 +10,7 @@ mauler.players.AlphaBeta.prototype = {
 
     ab: function(game, curDepth, alpha, beta) {
         if (game.isOver() || curDepth === this.maxDepth) {
-            return { move: -1, score: this.utilFunc.eval(game, game.curPlayer()) }; // TODO remove move? or change to null?
+            return { move: -1, score: this.utilFunc(game, game.curPlayer()) }; // TODO remove move? or change to null?
         }
         var bestMove = -1,
             bestScore = -Number.MAX_VALUE;
