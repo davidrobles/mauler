@@ -12,7 +12,9 @@
 
         constructor: TicTacToe,
 
-        // Mauler Game Interface methods
+        ////////////////////////////
+        // Mauler Game Interface  //
+        ////////////////////////////
 
         copy: function() {
             var tic = new TicTacToe();
@@ -118,7 +120,9 @@
             return builder;
         },
 
-        // Tic Tac Toe specific methods
+        //////////////////////////
+        // Tic Tac Toe specific //
+        //////////////////////////
 
         equals: function(other) {
             return this.crosses === other.crosses && this.noughts === other.noughts;
