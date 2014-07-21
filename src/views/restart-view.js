@@ -3,6 +3,7 @@
     var RestartView = function(options) {
         this.match = options.match;
         this.el = options.el;
+        this.update();
         this.addListener();
     };
 
