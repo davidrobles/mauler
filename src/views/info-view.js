@@ -3,6 +3,7 @@
     var InfoView = function(options) {
         this.model = options.model;
         this.el = options.el;
+        this.update(null, this.model);
     };
 
     InfoView.prototype = {
