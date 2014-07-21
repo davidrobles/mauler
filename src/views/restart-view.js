@@ -20,11 +20,7 @@
         // Match Events
 
         update: function() {
-            if (!this.match.isStart()) {
-                this.el.style.display = "none";
-            } else {
-                this.el.style.display = "block";
-            }
+            this.el.disabled = !this.match.isStart();
         }
 
     };
