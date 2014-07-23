@@ -6,7 +6,7 @@ mauler.players.Minimax = function(options) {
 
 mauler.players.Minimax.prototype = {
 
-    constructor: mauler.players.AlphaBeta,
+    constructor: mauler.players.Minimax,
 
     minimax: function(game, player, curDepth) {
         if (game.isOver() || curDepth === this.maxDepth) {
