@@ -31,11 +31,13 @@
 
     // Players
 
+    var alphaBeta = new mauler.players.AlphaBeta();
+
     var canvasPlayer = new mauler.games.tic.CanvasPlayer({
         match: match,
         canvasView: canvasView
     });
 
-    match.players = [canvasPlayer, canvasPlayer];
+    match.players = [canvasPlayer, alphaBeta];
 
 }());
