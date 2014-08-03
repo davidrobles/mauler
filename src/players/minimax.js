@@ -9,7 +9,7 @@ mauler.players.Minimax.prototype = {
     constructor: mauler.players.Minimax,
 
     minimax: function(game, player, curDepth) {
-        if (game.isOver() || curDepth === this.maxDepth) {
+        if (game.isGameOver() || curDepth === this.maxDepth) {
             return { move: -1, score: this.utilFunc(game, player) };
         }
         var bestMove = -1,

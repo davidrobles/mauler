@@ -12,7 +12,7 @@
 
         update: function(event, model) {
             this.model = model;
-            if (this.model.isOver()) {
+            if (this.model.isGameOver()) {
                 var outcomes = this.model.outcomes();
                 if (outcomes[0] === "WIN") {
                     this.el.innerHTML = "Player 1 Wins!";

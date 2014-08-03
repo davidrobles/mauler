@@ -55,12 +55,12 @@
         },
 
         isOver: function() {
-            return this.gameHistory[this.gameHistory.length - 1].isOver();
+            return this.gameHistory[this.gameHistory.length - 1].isGameOver();
         },
 
         isNext: function() {
             return (this.currentGameIndex !== this.gameHistory.length - 1) ||
-                (!this.gameHistory[this.gameHistory.length - 1].isOver());
+                (!this.gameHistory[this.gameHistory.length - 1].isGameOver());
         },
 
         isPrev: function() {

@@ -31,12 +31,12 @@
             return (this.emptyCells() + 1) % 2;
         },
 
-        isOver: function() {
+        isGameOver: function() {
             return this.numMoves() === 0;
         },
 
         move: function(move) {
-            if (this.isOver()) {
+            if (this.isGameOver()) {
                 throw new Error("Can't make more moves, the game is over!");
             }
             // Make random move if no move given
@@ -83,7 +83,7 @@
         },
 
         outcomes: function() {
-            if (!this.isOver()) {
+            if (!this.isGameOver()) {
                 return ['NA', 'NA'];
             }
             if (this.checkWin(this.crosses)) {
@@ -102,7 +102,7 @@
 
         toString: function() {
             var builder = '';
-            if (!this.isOver()) {
+            if (!this.isGameOver()) {
                 builder += 'Player: ' + this.currentPlayer() + '\n';
                 builder += 'Moves: ' + this.moves() + '\n';
             } else {

@@ -74,7 +74,7 @@
                         this.drawCross(row, col, this.colors.cross);
                     } else if (cellType === 'NOUGHT') {
                         this.drawNought(row, col, this.colors.nought);
-                    } else if (!this.model.frozen && !this.model.isOver() && _.contains(this.highlightedMoves, hello)) {
+                    } else if (!this.model.frozen && !this.model.isGameOver() && _.contains(this.highlightedMoves, hello)) {
                         var color = this.getCurPlayerColor();
                         if (this.model.currentPlayer() === 0) {
                             this.drawCross(row, col, color);

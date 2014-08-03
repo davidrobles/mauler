@@ -18,7 +18,7 @@
 
         playRandomGame: function(game) {
             console.log(game.toString());
-            while (!game.isOver()) {
+            while (!game.isGameOver()) {
                 game.move();
                 console.log(game.toString());
             }
@@ -32,7 +32,7 @@
             };
             for (var i = 0; i < numGames; i++) {
                 var newGame = game.copy();
-                while (!newGame.isOver()) {
+                while (!newGame.isGameOver()) {
                     var curPlayer = players[newGame.currentPlayer()];
                     var move = curPlayer.move(newGame);
                     newGame.move(move);
@@ -58,7 +58,7 @@
         },
 
         utilFunc: function(game, player) {
-            if (game.isOver()) {
+            if (game.isGameOver()) {
                 var outcomes = game.outcomes();
                 switch (outcomes[player]) {
                     case "WIN":

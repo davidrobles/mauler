@@ -18,7 +18,7 @@ mauler.players.MonteCarlo.prototype = {
             var newGame = game.copy(); // TODO refactor copy method
             var move = i % numMoves;
             newGame.move(move);
-            while (!newGame.isOver()) {
+            while (!newGame.isGameOver()) {
                 var randMove = Math.floor(Math.random() * newGame.numMoves());
                 newGame.move(randMove);
             }

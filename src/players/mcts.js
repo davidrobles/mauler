@@ -24,7 +24,7 @@ mauler.players.MCTS.prototype = {
     simTree: function(curPos, player) {
         var nodes = [],
             curNode = curPos;
-        while (!curNode.game.isOver()) {
+        while (!curNode.game.isGameOver()) {
             nodes.push(curNode);
             var lastNode = nodes[nodes.length - 1];
             if (lastNode.count === 0) {
@@ -40,7 +40,7 @@ mauler.players.MCTS.prototype = {
 
     simDefault: function(node, player) {
         var copy = node.game.copy();
-        while (!copy.isOver()) {
+        while (!copy.isGameOver()) {
             copy.move(this.defaultPolicy.move(copy));
         }
         return this.utilFunc(copy, player);
