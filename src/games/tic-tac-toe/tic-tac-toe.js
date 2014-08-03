@@ -4,7 +4,7 @@
         this.size = 3;
         this.crosses = 0;
         this.noughts = 0;
-        options = options || {};
+        options || (options = {});
         if (options.board) {
             this.setBoard(options.board);
         }
