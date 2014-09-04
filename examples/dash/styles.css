@@ -1,0 +1,30 @@
+body {
+
+}
+
+.dashboard {
+    background-color: #cecece;
+    padding: 10px;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.game {
+    background-color: #82f079;
+    width: 400px;
+    height: 400px;
+}
+
+.game-history {
+    float: right;
+    background-color: #d14233;
+    width: 300px;
+}
+
+.game-history tr {
+    background: #ffffff;
+}
+
+.controls {
+    background: #91c2ce;
+}
