@@ -10,6 +10,7 @@ Algorithms
 - Minimax
 - Negamax
 - Alpha-beta pruning
+- Monte-Carlo
 - Monte-Carlo tree search (MCTS)
 
 Games
