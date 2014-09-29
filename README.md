@@ -46,3 +46,4 @@ Once all the above done, we are ready to build Mauler:
     $ grunt
 
 Both plain and minified library will be available under the "build" directory.
+
