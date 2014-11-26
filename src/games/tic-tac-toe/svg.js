@@ -27,6 +27,10 @@
         return mauler.games.tic.letters[row] + (col + 1);
     };
 
+    TicTacToeSVGView.prototype.hack = function() {
+
+    };
+
     TicTacToeSVGView.prototype.render = function() {
 
         d3.select(this.svg)
@@ -37,7 +41,10 @@
         this.drawBorder();
         this.drawLines();
         this.drawSquares();
+        return this;
     };
+
+
 
     TicTacToeSVGView.prototype.drawBorder = function() {
         d3.select(this.svg)
