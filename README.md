@@ -1,7 +1,7 @@
 Mauler
 ======
 
-A JavaScript framework for abstract strategy games.
+Mauler is a JavaScript framework for playing abstract strategy games.
 
 Algorithms
 ----------
@@ -11,7 +11,7 @@ Algorithms
 - Negamax
 - Alpha-beta pruning
 - Monte-Carlo
-- Monte-Carlo tree search (MCTS)
+- Monte-Carlo Tree Search (MCTS)
 
 Games
 -----
@@ -29,9 +29,7 @@ To build your own version of Mauler you will need to install:
 Once the Node.js package manager has been installed (using the installer from their website),
 we need to install Grunt and the Grunt CLI (Command Line Interface).
 
-Open a [Terminal](http://www.apple.com/osx/apps/all.html#terminal) or
-a [Commmand Prompt](http://en.wikipedia.org/wiki/Command_Prompt) and
-type:
+Open the terminal and enter:
 
     $ npm install -g grunt-cli
 
@@ -46,4 +44,3 @@ Once all the above done, we are ready to build Mauler:
     $ grunt
 
 Both plain and minified library will be available under the "build" directory.
-
