@@ -125,4 +125,4 @@
     _.extend(Match.prototype, Backbone.Events);
     mauler.Match = Match;
 
-}());
+})();
