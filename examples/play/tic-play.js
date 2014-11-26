@@ -8,9 +8,16 @@
 
     var canvasView = new mauler.games.tic.CanvasView({
         model: tic,
-        width: 400,
-        height: 400,
+        width: 200,
+        height: 200,
         canvas: document.getElementById("tic-canvas")
+    });
+
+    var svgView = new mauler.games.tic.TicTacToeSVGView({
+        model: tic,
+        width: 200,
+        height: 200,
+        svg: document.getElementById("tic-svg")
     });
 
     var infoView = new mauler.views.InfoView({
@@ -26,6 +33,7 @@
     // Events
 
     match.on("all", canvasView.update, canvasView);
+    match.on("all", svgView.update, svgView);
     match.on("all", infoView.update, infoView);
     match.on("all", restartView.update, restartView);
 

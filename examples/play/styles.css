@@ -12,6 +12,11 @@ canvas#tic-canvas {
     margin: 10px auto;
 }
 
+svg {
+    display: block;
+    margin: 10px auto;
+}
+
 button#restart-button {
     font-size: 18px;
     display: block;
