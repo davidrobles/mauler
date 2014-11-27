@@ -11,8 +11,6 @@ tic.move(1);
 tic.move(1);
 tic.move(1);
 
-console.log()
-
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic
     //svg: document.getElementById("tic-svg")
@@ -40,46 +38,6 @@ document.getElementById("button").addEventListener("click", function() {
     opti.children = [{"name": "David", "size": 5000}];
     drawNodes();
 });
-
-var opti = {
-    "name": "AspectRatioBanker",
-    "size": 7074
-};
-
-var root = {
-    "name": "flare",
-    "children": [
-        {
-            "name": "analytics",
-            "children": [
-                {
-                    "name": "cluster",
-                    "children": [
-                        {"name": "AgglomerativeCluster", "size": 3938},
-                        {"name": "CommunityStructure", "size": 3812},
-                        {"name": "HierarchicalCluster", "size": 6714},
-                        {"name": "MergeEdge", "size": 743}
-                    ]
-                },
-                {
-                    "name": "graph",
-                    "children": [
-                        {"name": "BetweennessCentrality", "size": 3534},
-                        {"name": "LinkDistance", "size": 5731},
-                        {"name": "MaxFlowMinCut", "size": 7840},
-                        {"name": "ShortestPaths", "size": 5914},
-                        {"name": "SpanningTree", "size": 3416}
-                    ]
-                },
-                {
-                    "name": "optimization",
-                    "children": [
-                        opti
-                    ]
-                }
-            ]
-        }]
-};
 
 var width = 600,
     height = 600;
