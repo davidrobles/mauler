@@ -17,15 +17,16 @@ var svgView = new mauler.games.tic.TicTacToeSVGView({
 });
 
 var depthFirstTreeGenerator = function(node) {
-    if (node.game.numMoves() > 0) {
+    var numMoves = node.game.numMoves();
+    if (numMoves > 0) {
         node.children = [];
-    }
-    for (var i = 0; i < node.game.numMoves(); i++) {
-        var newTic = node.game.copy();
-        newTic.move(i);
-        var newGameNode = { game: newTic };
-        node.children.push(newGameNode);
-        depthFirstTreeGenerator(newGameNode);
+        for (var i = 0; i < numMoves; i++) {
+            var newTic = node.game.copy();
+            newTic.move(i);
+            var newGameNode = { game: newTic };
+            node.children.push(newGameNode);
+            depthFirstTreeGenerator(newGameNode);
+        }
     }
 };
 
@@ -37,8 +38,8 @@ depthFirstTreeGenerator(root);
 // Non Tic Tac Toe stuff //
 ///////////////////////////
 
-var width = 600,
-    height = 600;
+var width = 500,
+    height = 500;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
