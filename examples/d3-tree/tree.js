@@ -6,13 +6,30 @@ var tic = new mauler.games.tic.TicTacToe();
 
 tic.move(0);
 tic.move(2);
+tic.move(3);
+tic.move(1);
+tic.move(1);
+
+console.log()
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
-    width: 200,
-    height: 200,
     svg: document.getElementById("tic-svg")
 });
+
+var generator = function(node) {
+    for (var i = 0; i < node.game.numMoves(); i++) {
+        var newTic = node.game.copy();
+        newTic.move(i);
+        var newGameNode = { children: [], game: newTic };
+        node.children.push(newGameNode);
+        generator(newGameNode);
+    }
+};
+
+var gameNode = { name: "root", children: [], game: tic };
+
+generator(gameNode);
 
 ///////////////////////////
 // Non Tic Tac Toe stuff //
@@ -28,7 +45,7 @@ var opti = {
     "size": 7074
 };
 
-var root ={
+var root = {
     "name": "flare",
     "children": [
         {
@@ -63,8 +80,8 @@ var root ={
         }]
 };
 
-var width = 600,
-    height = 600;
+var width = 1800,
+    height = 900;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
@@ -72,12 +89,12 @@ var diagonal = d3.svg.diagonal()
 
 var svg = d3.select("body")
     .append("svg")
-    .attr("width", "800")
-    .attr("height", "800")
+    .attr("width", this.width)
+    .attr("height", this.height)
     .attr("style", "background-color: wheat");
 
 var tree = d3.layout.tree().size([width, height]);
-var nodes = tree(root);
+var nodes = tree(gameNode);
 
 var drawNodes = function() {
     svg.selectAll("path")
@@ -92,17 +109,17 @@ var drawNodes = function() {
         .enter()
         .append("g")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - 15) + ", " + d.y + ")"
+            return "translate(" + (d.x - 15) + ", " + (d.y - 30) + ")"
         })
         .attr("class", "here");
 
     svg.selectAll(".here")
-        .each(function() {
+        .each(function(d) {
             var tic = new mauler.games.tic.TicTacToe();
             tic.move(Math.floor(Math.random() * 4));
             tic.move(Math.floor(Math.random() * 4));
             tic.move(Math.floor(Math.random() * 4));
-            svgView.model = tic;
+            svgView.model = d.game;
             svgView.svg = d3.select(this);
             svgView.render();
         });
