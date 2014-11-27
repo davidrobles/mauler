@@ -54,6 +54,7 @@ var tree = d3.layout.tree().size([width, height]);
 var nodes = tree(root);
 
 var drawNodes = function() {
+    // Draw edges
     svg.selectAll("path")
         .data(tree.links(nodes))
         .enter().append("path")
@@ -71,13 +72,10 @@ var drawNodes = function() {
         })
         .attr("class", "here");
 
+    // Draw nodes
     svg.selectAll(".here")
-        .each(function(d) {
-            var tic = new mauler.games.tic.TicTacToe();
-            tic.move(Math.floor(Math.random() * 4));
-            tic.move(Math.floor(Math.random() * 4));
-            tic.move(Math.floor(Math.random() * 4));
-            svgView.model = d.game;
+        .each(function(node) {
+            svgView.model = node.game;
             svgView.svg = d3.select(this);
             svgView.render();
         });
