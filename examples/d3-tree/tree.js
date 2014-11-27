@@ -92,12 +92,17 @@ var drawNodes = function() {
         .enter()
         .append("g")
         .attr("transform", function(d) {
-            return "translate(" + d.x + ", " + d.y + ")"
+            return "translate(" + (d.x - 15) + ", " + d.y + ")"
         })
         .attr("class", "here");
 
     svg.selectAll(".here")
         .each(function() {
+            var tic = new mauler.games.tic.TicTacToe();
+            tic.move(Math.floor(Math.random() * 4));
+            tic.move(Math.floor(Math.random() * 4));
+            tic.move(Math.floor(Math.random() * 4));
+            svgView.model = tic;
             svgView.svg = d3.select(this);
             svgView.render();
         });

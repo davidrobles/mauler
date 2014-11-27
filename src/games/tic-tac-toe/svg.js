@@ -6,7 +6,7 @@
         this.svg = options.svg || document.createElement("svg");
         //this.sideLength = parseInt(this.svg.getAttribute("width"));
 
-        this.sideLength = 50;
+        this.sideLength = 30;
 
         d3.select(this.svg)
             .attr("width", this.sideLength)
