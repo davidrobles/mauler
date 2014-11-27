@@ -90,8 +90,8 @@ var diagonal = d3.svg.diagonal()
 
 var svg = d3.select("body")
     .append("svg")
-    .attr("width", this.width + 50)
-    .attr("height", this.height + 50)
+    .attr("width", this.width + 80)
+    .attr("height", this.height + 80)
     .attr("style", "background-color: wheat");
 
 var tree = d3.layout.tree().size([width, height]);
@@ -110,7 +110,7 @@ var drawNodes = function() {
         .enter()
         .append("g")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - 15) + ", " + d.y + ")"
+            return "translate(" + (d.x - 30) + ", " + d.y + ")"
         })
         .attr("class", "here");
 

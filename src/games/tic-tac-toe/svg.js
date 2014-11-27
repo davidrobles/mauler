@@ -3,10 +3,12 @@
     // Base size used for drawing is 1000 pixels
     var TicTacToeSVGView = function(options) {
         this.model = options.model;
+        // provide either a SVG or a G element
+        // if nothing is provided, create a SVG
         this.svg = options.svg || document.createElement("svg");
         //this.sideLength = parseInt(this.svg.getAttribute("width"));
 
-        this.sideLength = 30;
+        this.sideLength = 60;
 
         d3.select(this.svg)
             .attr("width", this.sideLength)
