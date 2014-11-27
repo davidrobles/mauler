@@ -104,7 +104,7 @@ var drawNodes = function() {
     svg.selectAll("svg")
         .data(nodes)
         .enter()
-        .append("svg")
+        .append("g")
         .attr("x", function(d) {
             return d.x - 10;
         })
