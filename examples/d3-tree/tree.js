@@ -37,11 +37,6 @@ depthFirstTreeGenerator(root);
 // Non Tic Tac Toe stuff //
 ///////////////////////////
 
-document.getElementById("button").addEventListener("click", function() {
-    opti.children = [{"name": "David", "size": 5000}];
-    drawNodes();
-});
-
 var width = 600,
     height = 600;
 
