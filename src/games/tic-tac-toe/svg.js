@@ -4,7 +4,9 @@
     var TicTacToeSVGView = function(options) {
         this.model = options.model;
         this.svg = options.svg || document.createElement("svg");
-        this.sideLength = parseInt(this.svg.getAttribute("width"));
+        //this.sideLength = parseInt(this.svg.getAttribute("width"));
+
+        this.sideLength = 50;
 
         d3.select(this.svg)
             .attr("width", this.sideLength)

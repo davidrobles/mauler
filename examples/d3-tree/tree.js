@@ -87,78 +87,20 @@ var drawNodes = function() {
         .attr("fill", "none")
         .attr("stroke", "blue");
 
-    //svg.selectAll("circle")
-    //    .data(nodes)
-    //    .enter()
-    //    .append("circle")
-    //    .attr("stroke", "white")
-    //    .attr("fill", "red")
-    //    .attr("cx", function(d) {
-    //        return d.x;
-    //    })
-    //    .attr("cy", function(d) {
-    //        return d.y;
-    //    })
-    //    .attr("r", 10);
-
-    svg.selectAll("svg")
+    svg.selectAll("g")
         .data(nodes)
         .enter()
         .append("g")
-        .attr("x", function(d) {
-            return d.x - 10;
+        .attr("transform", function(d) {
+            return "translate(" + d.x + ", " + d.y + ")"
         })
-        .attr("y", function(d) {
-            return d.y;
-        })
-        .attr("width", 20)
-        .attr("height", 20)
-        .style("background-color", "red")
         .attr("class", "here");
 
     svg.selectAll(".here")
         .each(function() {
-            svgView.svg = this;
+            svgView.svg = d3.select(this);
             svgView.render();
         });
-
-    //svg.selectAll("svg")
-    //    .data(nodes)
-    //    .enter()
-    //    .append("svg")
-    //    .attr("x", function(d) {
-    //        return d.x - 10;
-    //    })
-    //    .attr("y", function(d) {
-    //        return d.y;
-    //    })
-    //    .attr("width", 20)
-    //    .attr("height", 20)
-    //    .style("background-color", "red")
-    //    .append("rect")
-    //    .attr("x", 0)
-    //    .attr("y", 0)
-    //    .attr("width", 20)
-    //    .attr("height", 20)
-    //    .attr("background-color", "blue");
-
-    //var test = svgView.render();
-    //debugger;
-    //
-    //svg.selectAll("svg")
-    //    .data(nodes)
-    //    .enter()
-    //    .append("svg")
-    //    .attr("stroke", "white")
-    //    .attr("fill", "red")
-    //    .attr("cx", function(d) {
-    //        return d.x;
-    //    })
-    //    .attr("cy", function(d) {
-    //        return d.y;
-    //    })
-    //    .attr("r", 10);
-
 };
 
 drawNodes();
