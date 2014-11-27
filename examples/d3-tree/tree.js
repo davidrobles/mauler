@@ -103,7 +103,8 @@ var drawNodes = function() {
         .enter().append("path")
         .attr("d", diagonal)
         .attr("fill", "none")
-        .attr("stroke", "blue");
+        .attr("stroke", "#666666")
+        .attr("stroke-width", 2);
 
     svg.selectAll("g")
         .data(nodes)
