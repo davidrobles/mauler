@@ -56,6 +56,7 @@
                 throw new RangeError('Illegal move');
             }
             this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
+            return this;
         },
 
         moves: function() {
