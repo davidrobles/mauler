@@ -4,12 +4,7 @@
 
 var tic = new mauler.games.tic.TicTacToe();
 
-tic.move(0);
-tic.move(2);
-tic.move(3);
-tic.move(1);
-tic.move(1);
-tic.move(1);
+tic.move(0).move(2).move(3).move(1).move(1).move(1);
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic
