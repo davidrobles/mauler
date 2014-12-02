@@ -47,6 +47,11 @@ var svg = d3.select("body")
     .attr("style", "background-color: wheat");
 
 var tree = d3.layout.tree().size([width, height]);
+
+tree.separation(function(a, b) {
+    return a.parent == b.parent ? 1.5 : 2;
+});
+
 var nodes = tree(root);
 
 var drawNodes = function() {
