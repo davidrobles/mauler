@@ -36,22 +36,23 @@
     };
 
     TicTacToeSVGView.prototype.render = function() {
-        this.drawBackgroundAndBorder();
+        this.drawBackground();
         this.drawLines();
+        this.drawBorder();
         this.drawSquares();
         return this;
     };
 
-    TicTacToeSVGView.prototype.drawBackgroundAndBorder = function() {
+    TicTacToeSVGView.prototype.drawBackground = function() {
         this.svg.append("rect")
             .attr({
-               "x": 0,
-               "y": 0,
-               "width": this.sideLength,
-               "height": this.sideLength,
-               "fill": this.colors.bg,
-               "stroke": this.colors.border,
-               "stroke-width": this.borderWidth
+                "class": "bg",
+                "x": 0,
+                "y": 0,
+                "width": this.sideLength,
+                "height": this.sideLength,
+                "fill": this.colors.bg,
+                "stroke": "none"
             });
     };
 
@@ -60,6 +61,20 @@
             this.drawVerticalLine(i);
             this.drawHorizontalLine(i);
         }
+    };
+
+    TicTacToeSVGView.prototype.drawBorder = function() {
+        this.svg.append("rect")
+            .attr({
+                "class": "border",
+                "x": 0,
+                "y": 0,
+                "width": this.sideLength,
+                "height": this.sideLength,
+                "fill": "none",
+                "stroke": this.colors.border,
+                "stroke-width": this.borderWidth
+            });
     };
 
     TicTacToeSVGView.prototype.drawHorizontalLine = function (row) {

@@ -80,6 +80,14 @@ var drawNodes = function() {
             svgView.svg = d3.select(this);
             svgView.render();
         });
+
+    svg.selectAll(".here")
+        .selectAll("rect.border")
+        .filter(function(d) {
+            return d.game.isGameOver();
+        })
+        .attr("stroke", "#ff0000")
+        .attr("stroke-width", 2);
 };
 
 drawNodes();
