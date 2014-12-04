@@ -25,7 +25,10 @@ var depthFirstTreeGenerator = function(node) {
     }
 };
 
-var root = { name: "root", children: [], game: tic };
+var root = {
+    name: "root",
+    game: tic
+};
 
 depthFirstTreeGenerator(root);
 
