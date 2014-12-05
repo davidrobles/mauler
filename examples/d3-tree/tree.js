@@ -37,7 +37,7 @@ depthFirstTreeGenerator(root);
 ///////////////////////////
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
-    width = 1700 - margin.left - margin.right,
+    width = 1800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
