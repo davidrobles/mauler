@@ -2,13 +2,13 @@
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.tic.TicTacToe();
+var tic = new mauler.games.tic.TicTacToe().move(0).move(2).move(3).move(1).move(0);
 
-tic.move(0).move(2).move(3).move(1).move(0);
+var nodeSize = 70;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
-    model: tic
-    //svg: document.getElementById("tic-svg")
+    model: tic,
+    sideLength: nodeSize
 });
 
 var depthFirstTreeGenerator = function(node) {
@@ -67,14 +67,14 @@ var drawNodes = function() {
         .attr("stroke", "#666666")
         .attr("stroke-width", 2);
 
-    svg.selectAll("g")
+    svg.selectAll("g.node-group")
         .data(nodes)
         .enter()
         .append("g")
+        .attr("class", "node-group")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - 30) + ", " + d.y + ")"
-        })
-        .attr("class", "node-group");
+            return "translate(" + (d.x - 20) + ", " + d.y + ")"
+        });
 
     // Draw nodes
     svg.selectAll(".node-group")
@@ -97,10 +97,10 @@ var drawNodes = function() {
             return d.game.isGameOver();
         })
         .append("text")
-        .attr("x", function(d) {
+        .attr("x", function() {
             return 30;
         })
-        .attr("y", function(d) {
+        .attr("y", function() {
             return 75;
         })
         .attr("text-anchor", "middle")
@@ -109,10 +109,10 @@ var drawNodes = function() {
             return mauler.utils.utilFunc(d.game, 0);
         });
 
-    //svg.selectAll(".node-group")
-    //    .attr("transform", function() {
-    //        return "scale(1, 1)";
-    //    });
+    svg.selectAll(".node-group")
+        .attr("transform", function() {
+            return this.getAttribute("transform") + " scale(0.6)";
+        });
 };
 
 drawNodes();
