@@ -4,7 +4,7 @@
 
 var tic = new mauler.games.tic.TicTacToe();
 
-tic.move(0).move(2).move(3).move(1).move(1).move(0);
+tic.move(0).move(2).move(3).move(1).move(0);
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic
@@ -36,7 +36,7 @@ depthFirstTreeGenerator(root);
 // Non Tic Tac Toe stuff //
 ///////////////////////////
 
-var width = 500,
+var width = 1700,
     height = 500;
 
 var diagonal = d3.svg.diagonal()
@@ -74,17 +74,17 @@ var drawNodes = function() {
         .attr("transform", function(d) {
             return "translate(" + (d.x - 30) + ", " + d.y + ")"
         })
-        .attr("class", "here");
+        .attr("class", "node-group");
 
     // Draw nodes
-    svg.selectAll(".here")
+    svg.selectAll(".node-group")
         .each(function(node) {
             svgView.model = node.game;
             svgView.svg = d3.select(this);
             svgView.render();
         });
 
-    svg.selectAll(".here")
+    svg.selectAll(".node-group")
         .selectAll("rect.border")
         .filter(function(d) {
             return d.game.isGameOver();
@@ -92,7 +92,7 @@ var drawNodes = function() {
         .attr("stroke", "#ff0000")
         .attr("stroke-width", 2);
 
-    svg.selectAll(".here")
+    svg.selectAll(".node-group")
         .filter(function(d) {
             return d.game.isGameOver();
         })
