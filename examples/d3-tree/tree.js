@@ -126,12 +126,9 @@ var drawNodes = function() {
             return nodeSize / 2;
         })
         .attr("cy", function() {
-            return nodeSize + 40;
+            return nodeSize + 30;
         })
         .attr("r", "20")
-        .attr("font-family", "Helvetica")
-        .attr("font-size", "30px")
-        .attr("text-anchor", "middle")
         .attr("fill", "white")
         .attr("stroke", "black")
         .attr("stroke-width", "2px")
@@ -145,10 +142,10 @@ var drawNodes = function() {
             return nodeSize / 2;
         })
         .attr("y", function() {
-            return nodeSize + 48;
+            return nodeSize + 38;
         })
         .attr("font-family", "Helvetica")
-        .attr("font-size", "26px")
+        .attr("font-size", "24px")
         .attr("text-anchor", "middle")
         .attr("fill", "red")
         .text(function(d) {
