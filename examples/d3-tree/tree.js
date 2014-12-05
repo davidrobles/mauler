@@ -100,10 +100,10 @@ var drawNodes = function() {
         })
         .append("text")
         .attr("x", function() {
-            return 30;
+            return nodeSize / 2;
         })
         .attr("y", function() {
-            return 75;
+            return nodeSize + 30;
         })
         .attr("text-anchor", "middle")
         .attr("fill", "red")
