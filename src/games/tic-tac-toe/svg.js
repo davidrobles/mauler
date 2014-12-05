@@ -117,7 +117,6 @@
 
         this.svg
             .append("circle")
-            .attr("class", "test")
             .attr("cx", function() {
                 return scale(col);
             })

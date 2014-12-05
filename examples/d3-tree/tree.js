@@ -108,6 +108,11 @@ var drawNodes = function() {
         .text(function(d) {
             return mauler.utils.utilFunc(d.game, 0);
         });
+
+    //svg.selectAll(".node-group")
+    //    .attr("transform", function() {
+    //        return "scale(1, 1)";
+    //    });
 };
 
 drawNodes();
