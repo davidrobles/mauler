@@ -36,18 +36,20 @@ depthFirstTreeGenerator(root);
 // Non Tic Tac Toe stuff //
 ///////////////////////////
 
-var width = 1700,
-    height = 500;
+var margin = { top: 50, right: 50, bottom: 100, left: 50 },
+    width = 1700 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
 
-
 var svg = d3.select("body")
     .append("svg")
-    .attr("width", this.width + 80)
-    .attr("height", this.height + 80)
-    .attr("style", "background-color: wheat");
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("style", "background-color: wheat")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 var tree = d3.layout.tree().size([width, height]);
 
