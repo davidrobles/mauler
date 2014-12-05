@@ -29,7 +29,7 @@ var minimax = function(node, player, curDepth) {
 
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2);
 
-var nodeSize = 40;
+var nodeSize = 50;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
