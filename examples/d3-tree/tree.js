@@ -103,8 +103,10 @@ var drawNodes = function() {
             return nodeSize / 2;
         })
         .attr("y", function() {
-            return nodeSize + 25;
+            return nodeSize + 30;
         })
+        .attr("font-family", "Helvetica")
+        .attr("font-size", "26px")
         .attr("text-anchor", "middle")
         .attr("fill", "red")
         .text(function(d) {
