@@ -4,7 +4,7 @@
 
 var tic = new mauler.games.tic.TicTacToe();
 
-tic.move(0).move(2).move(3).move(1).move(1).move(1);
+tic.move(0).move(2).move(3).move(1).move(1).move(0);
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic
@@ -91,6 +91,23 @@ var drawNodes = function() {
         })
         .attr("stroke", "#ff0000")
         .attr("stroke-width", 2);
+
+    svg.selectAll(".here")
+        .filter(function(d) {
+            return d.game.isGameOver();
+        })
+        .append("text")
+        .attr("x", function(d) {
+            return 30;
+        })
+        .attr("y", function(d) {
+            return 75;
+        })
+        .attr("text-anchor", "middle")
+        .attr("fill", "red")
+        .text(function(d) {
+            return mauler.utils.utilFunc(d.game, 0);
+        });
 };
 
 drawNodes();
