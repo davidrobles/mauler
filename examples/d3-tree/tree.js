@@ -112,12 +112,42 @@ var drawNodes = function() {
             svgView.render();
         });
 
+
+    // Leaf nodes
+
+    //svg.selectAll(".node-group")
+    //    .selectAll("rect.border")
+    //    .filter(function(d) {
+    //        return d.game.isGameOver();
+    //    })
+    //    .attr("stroke", "#ff0000")
+    //    .attr("stroke-width", 2);
+
+    // green values
     svg.selectAll(".node-group")
         .selectAll("rect.border")
         .filter(function(d) {
-            return d.game.isGameOver();
+            return d.score === 1;
+        })
+        .attr("stroke", "#008000")
+        .attr("stroke-width", 2);
+
+    // red values
+    svg.selectAll(".node-group")
+        .selectAll("rect.border")
+        .filter(function(d) {
+            return d.score === -1;
         })
         .attr("stroke", "#ff0000")
+        .attr("stroke-width", 2);
+
+    // gray values
+    svg.selectAll(".node-group")
+        .selectAll("rect.border")
+        .filter(function(d) {
+            return d.score === 0;
+        })
+        .attr("stroke", "#686868")
         .attr("stroke-width", 2);
 
     svg.selectAll(".node-group")
