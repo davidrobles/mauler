@@ -1,8 +1,33 @@
+
+/////////////
+// Minimax //
+/////////////
+
+
+var minimax = function(node, player, curDepth) {
+    if (node.game.isGameOver() || curDepth === this.maxDepth) {
+        return node.score = mauler.utils.utilFunc(node.game, player);
+    }
+    var bestScore = node.game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE,
+        numMoves = node.children ? node.children.length : 0;
+    for (var move = 0; move < numMoves; move++) {
+        var curScore = minimax(node.children[move], player, curDepth + 1);
+        if (node.game.currentPlayer() === player) {
+            if (curScore > bestScore) {
+                bestScore = curScore;
+            }
+        } else if (curScore < bestScore) {
+            bestScore = curScore;
+        }
+    }
+    return node.score = bestScore;
+};
+
 ///////////////////////
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.tic.TicTacToe().move(0).move(2).move(3).move(1).move(0);
+var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(3);
 
 var nodeSize = 70;
 
@@ -31,6 +56,9 @@ var root = {
 };
 
 depthFirstTreeGenerator(root);
+
+minimax(root, 0, 0);
+
 
 ///////////////////////////
 // Non Tic Tac Toe stuff //
@@ -95,22 +123,38 @@ var drawNodes = function() {
         .attr("stroke-width", 2);
 
     svg.selectAll(".node-group")
-        .filter(function(d) {
-            return d.game.isGameOver();
+        .append("circle")
+        .attr("cx", function() {
+            return nodeSize / 2;
         })
+        .attr("cy", function() {
+            return nodeSize + 40;
+        })
+        .attr("r", "25")
+        .attr("font-family", "Helvetica")
+        .attr("font-size", "30px")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("stroke-width", "2px")
+        .text(function(d) {
+            return d.score;
+        });
+
+    svg.selectAll(".node-group")
         .append("text")
         .attr("x", function() {
             return nodeSize / 2;
         })
         .attr("y", function() {
-            return nodeSize + 30;
+            return nodeSize + 48;
         })
         .attr("font-family", "Helvetica")
-        .attr("font-size", "26px")
+        .attr("font-size", "30px")
         .attr("text-anchor", "middle")
         .attr("fill", "red")
         .text(function(d) {
-            return mauler.utils.utilFunc(d.game, 0);
+            return d.score;
         });
 
     svg.selectAll(".node-group")
