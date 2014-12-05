@@ -27,9 +27,9 @@ var minimax = function(node, player, curDepth) {
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(3);
+var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2);
 
-var nodeSize = 70;
+var nodeSize = 40;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
@@ -56,16 +56,14 @@ var root = {
 };
 
 depthFirstTreeGenerator(root);
-
-minimax(root, 0, 0);
-
+minimax(root, root.game.currentPlayer(), 0);
 
 ///////////////////////////
 // Non Tic Tac Toe stuff //
 ///////////////////////////
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
-    width = 1800 - margin.left - margin.right,
+    width = 3000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
@@ -103,7 +101,7 @@ var drawNodes = function() {
         .append("g")
         .attr("class", "node-group")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - 20) + ", " + d.y + ")"
+            return "translate(" + (d.x - 12) + ", " + d.y + ")"
         });
 
     // Draw nodes
@@ -130,7 +128,7 @@ var drawNodes = function() {
         .attr("cy", function() {
             return nodeSize + 40;
         })
-        .attr("r", "25")
+        .attr("r", "20")
         .attr("font-family", "Helvetica")
         .attr("font-size", "30px")
         .attr("text-anchor", "middle")
@@ -150,7 +148,7 @@ var drawNodes = function() {
             return nodeSize + 48;
         })
         .attr("font-family", "Helvetica")
-        .attr("font-size", "30px")
+        .attr("font-size", "26px")
         .attr("text-anchor", "middle")
         .attr("fill", "red")
         .text(function(d) {
@@ -161,6 +159,8 @@ var drawNodes = function() {
         .attr("transform", function() {
             return this.getAttribute("transform") + " scale(0.6)";
         });
+
+
 };
 
 drawNodes();
