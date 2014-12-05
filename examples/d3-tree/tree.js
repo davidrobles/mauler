@@ -64,7 +64,7 @@ minimax(root, root.game.currentPlayer(), 0);
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
     width = 3000 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 700 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
