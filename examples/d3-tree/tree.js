@@ -3,24 +3,24 @@
 // Minimax //
 /////////////
 
-
-var minimax = function(node, player, curDepth) {
-    if (node.game.isGameOver() || curDepth === this.maxDepth) {
-        return node.score = mauler.utils.utilFunc(node.game, player);
-    }
-    var bestScore = node.game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE,
-        numMoves = node.children ? node.children.length : 0;
-    for (var move = 0; move < numMoves; move++) {
-        var curScore = minimax(node.children[move], player, curDepth + 1);
-        if (node.game.currentPlayer() === player) {
-            if (curScore > bestScore) {
-                bestScore = curScore;
-            }
-        } else if (curScore < bestScore) {
-            bestScore = curScore;
+var minimax = function(node) {
+    var player = node.game.currentPlayer(),
+        curDepth = 0,
+        maxDepth = 6,
+        evalFunc = mauler.utils.utilFunc;
+    return (function minimax(node, curDepth) {
+        if (node.game.isGameOver() || curDepth === maxDepth) {
+            return node.score = evalFunc(node.game, player);
         }
-    }
-    return node.score = bestScore;
+        var bestScore = node.game.currentPlayer() === 0 ? -Number.MAX_VALUE : Number.MAX_VALUE,
+            bestFunc = node.game.currentPlayer() === 0 ? Math.max : Math.min,
+            childrenSize = node.children ? node.children.length : 0;
+        for (var child = 0; child < childrenSize; child++) {
+            var curScore = minimax(node.children[child], curDepth + 1);
+            bestScore = bestFunc(bestScore, curScore);
+        }
+        return node.score = bestScore;
+    })(node, curDepth);
 };
 
 ///////////////////////
