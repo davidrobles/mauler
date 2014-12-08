@@ -5,7 +5,7 @@
 
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
-var nodeSize = 40;
+var nodeSize = 60;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
@@ -39,8 +39,8 @@ var oneIter = function(node) {
 ///////////////////////////
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
-    width = 1000 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    width = 1800 - margin.left - margin.right,
+    height = 900 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
@@ -99,7 +99,7 @@ var drawNodes = function() {
         });
 
     var t = svg.transition()
-        .duration(400);
+        .duration(200);
 
     // Update links
     t.selectAll(".link")
@@ -126,5 +126,5 @@ var update = function() {
     nodes.push(window.curNode);
 };
 
-var duration = 400,
+var duration = 200,
     timer = setInterval(update, duration);
