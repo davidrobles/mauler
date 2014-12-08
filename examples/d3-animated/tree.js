@@ -62,6 +62,7 @@ tree.separation(function(a, b) {
 var root = { game: tic, id: 0 },
     nodes = tree(root);
 
+root.parent = root;
 root.px = root.x;
 root.py = root.y;
 
