@@ -92,7 +92,9 @@ var drawNodes = function() {
 
     // Enter nodes
     svg.selectAll(".node-group")
-        .data(tree.nodes(root), function(d) { return d.id; })
+        .data(tree.nodes(root), function(d) {
+            return d.id;
+        })
         .enter()
         .append("g")
         .attr("class", "node-group")
