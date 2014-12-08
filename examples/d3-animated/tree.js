@@ -124,12 +124,12 @@ var drawNodes = function() {
 var curNode = root;
 
 var update = function() {
-    if (window.curNode === undefined) {
+    if (curNode === undefined) {
         return clearInterval(timer);
     }
     drawNodes();
-    window.curNode = oneIter(curNode);
-    nodes.push(window.curNode);
+    curNode = oneIter(curNode);
+    nodes.push(curNode);
 };
 
 var duration = 200,
