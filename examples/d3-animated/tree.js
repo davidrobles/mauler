@@ -127,9 +127,9 @@ var update = function() {
     if (!curNode) {
         return clearInterval(timer);
     }
+    nodes.push(curNode);
     drawNodes();
     curNode = oneIter(curNode);
-    nodes.push(curNode);
 };
 
 var duration = 200,
