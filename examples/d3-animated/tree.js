@@ -70,7 +70,9 @@ var drawNodes = function() {
 
     // Enter links
     svg.selectAll(".link")
-        .data(tree.links(nodes), function(d) { return d.source.id + "-" + d.target.id; })
+        .data(tree.links(nodes), function(d) {
+            return d.source.id + "-" + d.target.id;
+        })
         .enter()
         .insert("path")
         .attr("class", "link")
