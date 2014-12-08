@@ -67,6 +67,7 @@ window.nodes = tree(root);
 
 var drawNodes = function() {
 
+    // Enter links
     svg.selectAll(".link")
         .data(window.links)
         .enter()
@@ -80,12 +81,6 @@ var drawNodes = function() {
         .attr("stroke", "#666666")
         .attr("stroke-width", 2);
 
-    var t = svg.transition()
-        .duration(250);
-
-    t.selectAll(".link")
-        .attr("d", diagonal);
-
     // Enter nodes
     svg.selectAll("g.node-group")
         .data(window.nodes)
@@ -93,12 +88,19 @@ var drawNodes = function() {
         .append("g")
         .attr("class", "node-group")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - (nodeSize / 2)) + ", " + d.y + ")"
+            debugger;
+            return "translate(" + (d.parent.x - (nodeSize / 2)) + ", " + d.parent.y + ")"
         });
 
+    var t = svg.transition()
+        .duration(1000);
+
+    // Update links
+    t.selectAll(".link")
+        .attr("d", diagonal);
+
     // Update nodes
-    svg.selectAll("g.node-group")
-        .data(window.nodes)
+    t.selectAll("g.node-group")
         .attr("transform", function(d) {
             return "translate(" + (d.x - (nodeSize / 2)) + ", " + d.y + ")"
         });
