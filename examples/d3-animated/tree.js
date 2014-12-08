@@ -3,7 +3,7 @@
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0).move(0);
+var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
 var nodeSize = 40;
 
@@ -43,8 +43,8 @@ var root = {
 ///////////////////////////
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
-    width = 600 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 1200 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
@@ -108,11 +108,6 @@ var drawNodes = function() {
             svgView.render();
         });
 
-        //svg.selectAll(".node-group")
-        //    .attr("transform", function() {
-        //        return this.getAttribute("transform") + " scale(0.2)";
-        //    });
-
 };
 
 var getLeafNodes = function() {
@@ -137,5 +132,5 @@ var update = function() {
     drawNodes();
 };
 
-var duration = 500,
+var duration = 100,
     timer = setInterval(update, duration);
