@@ -106,7 +106,7 @@ var drawNodes = function() {
         .attr("d", diagonal);
 
     // Update nodes
-    t.selectAll("g.node-group")
+    t.selectAll(".node-group")
         .attr("transform", function(d) {
             d.px = d.x;
             d.py = d.y;
