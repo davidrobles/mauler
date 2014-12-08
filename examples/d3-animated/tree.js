@@ -1,17 +1,3 @@
-
-///////////////////////
-// Tic Tac Toe stuff //
-///////////////////////
-
-var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
-
-var nodeSize = 60;
-
-var svgView = new mauler.games.tic.TicTacToeSVGView({
-    model: tic,
-    sideLength: nodeSize
-});
-
 var depthFirstIteration = function(node) {
     if (node === undefined) {
         return undefined;
@@ -34,9 +20,14 @@ var depthFirstIteration = function(node) {
     }
 };
 
-///////////////////////////
-// Non Tic Tac Toe stuff //
-///////////////////////////
+var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
+
+var nodeSize = 60;
+
+var svgView = new mauler.games.tic.TicTacToeSVGView({
+    model: tic,
+    sideLength: nodeSize
+});
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
     width = 1800 - margin.left - margin.right,
