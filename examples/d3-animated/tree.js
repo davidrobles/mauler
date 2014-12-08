@@ -66,7 +66,13 @@ root.parent = root;
 root.px = root.x;
 root.py = root.y;
 
-var drawNodes = function() {
+var curNode = root;
+
+var update = function() {
+    if (!curNode) {
+        return clearInterval(timer);
+    }
+    nodes.push(curNode);
 
     // Enter links
     svg.selectAll(".link")
@@ -119,16 +125,6 @@ var drawNodes = function() {
             return "translate(" + (d.x - (nodeSize / 2)) + ", " + (d.y - (nodeSize / 2)) + ")"
         });
 
-};
-
-var curNode = root;
-
-var update = function() {
-    if (!curNode) {
-        return clearInterval(timer);
-    }
-    nodes.push(curNode);
-    drawNodes();
     curNode = depthFirstIteration(curNode);
 };
 
