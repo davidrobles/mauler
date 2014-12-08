@@ -101,8 +101,7 @@ var drawNodes = function() {
             return "translate(" + (d.parent.px - (nodeSize / 2)) + ", " + (d.parent.py - (nodeSize / 2)) + ")";
         });
 
-    var t = svg.transition()
-        .duration(200);
+    var t = svg.transition().duration(200);
 
     // Update links
     t.selectAll(".link")
