@@ -86,7 +86,7 @@ var drawNodes = function() {
         .attr("stroke-width", 2);
 
     // Enter nodes
-    svg.selectAll("g.node-group")
+    svg.selectAll(".node-group")
         .data(tree.nodes(root), function(d) { return d.id; })
         .enter()
         .append("g")
