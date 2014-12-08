@@ -1,35 +1,11 @@
 
-/////////////
-// Minimax //
-/////////////
-
-var minimax = function(node) {
-    var player = node.game.currentPlayer(),
-        curDepth = 0,
-        maxDepth = 6,
-        evalFunc = mauler.utils.utilFunc;
-    return (function minimax(node, curDepth) {
-        if (node.game.isGameOver() || curDepth === maxDepth) {
-            return node.score = evalFunc(node.game, player);
-        }
-        var bestScore = node.game.currentPlayer() === 0 ? -Number.MAX_VALUE : Number.MAX_VALUE,
-            bestFunc = node.game.currentPlayer() === 0 ? Math.max : Math.min,
-            childrenSize = node.children ? node.children.length : 0;
-        for (var child = 0; child < childrenSize; child++) {
-            var curScore = minimax(node.children[child], curDepth + 1);
-            bestScore = bestFunc(bestScore, curScore);
-        }
-        return node.score = bestScore;
-    })(node, curDepth);
-};
-
 ///////////////////////
 // Tic Tac Toe stuff //
 ///////////////////////
 
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0).move(0);
 
-var nodeSize = 20;
+var nodeSize = 40;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
@@ -58,48 +34,9 @@ var oneIter = function(node) {
     }
 };
 
-var depthFirstTreeGenerator = function(node) {
-    var numMoves = node.game.numMoves();
-    if (numMoves > 0) {
-        node.children = [];
-        for (var i = 0; i < numMoves; i++) {
-            var newTic = node.game.copy();
-            newTic.move(i);
-            var newGameNode = { game: newTic };
-            node.children.push(newGameNode);
-            depthFirstTreeGenerator(newGameNode);
-        }
-    }
-};
-
-//var curNode = 1;
-
 var root = {
     game: tic
 };
-
-//var cur = root;
-//
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//cur = oneIter(cur);
-//debugger;
-//cur = oneIter(cur);
-//debugger;
-//console.log(cur.game.toString());
-
-
-
-
-//depthFirstTreeGenerator(root);
-//minimax(root, root.game.currentPlayer(), 0);
 
 ///////////////////////////
 // Non Tic Tac Toe stuff //
