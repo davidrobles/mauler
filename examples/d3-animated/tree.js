@@ -93,7 +93,7 @@ var drawNodes = function() {
         });
 
     var t = svg.transition()
-        .duration(1000);
+        .duration(500);
 
     // Update links
     t.selectAll(".link")
@@ -127,5 +127,5 @@ var update = function() {
     drawNodes();
 };
 
-var duration = 1000,
+var duration = 500,
     timer = setInterval(update, duration);
