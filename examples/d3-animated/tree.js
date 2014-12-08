@@ -69,12 +69,12 @@ var drawNodes = function() {
 
     // Enter links
     svg.selectAll(".link")
-        .data(window.links)
+        .data(tree.links(window.nodes))
         .enter()
         .append("path")
         .attr("class", "link")
         .attr("d", function(d) {
-            var o = { x: d.source.x, y: d.source.y };
+            var o = { x: d.source.px, y: d.source.py };
             return diagonal({source: o, target: o});
         })
         .attr("fill", "none")
@@ -83,17 +83,17 @@ var drawNodes = function() {
 
     // Enter nodes
     svg.selectAll("g.node-group")
-        .data(window.nodes)
+        .data(tree.nodes(root))
         .enter()
         .append("g")
         .attr("class", "node-group")
         .attr("transform", function(d) {
             debugger;
-            return "translate(" + (d.parent.x - (nodeSize / 2)) + ", " + d.parent.y + ")"
+            return "translate(" + d.parent.px + ", " + d.parent.py + ")"
         });
 
     var t = svg.transition()
-        .duration(500);
+        .duration(1000);
 
     // Update links
     t.selectAll(".link")
@@ -102,7 +102,9 @@ var drawNodes = function() {
     // Update nodes
     t.selectAll("g.node-group")
         .attr("transform", function(d) {
-            return "translate(" + (d.x - (nodeSize / 2)) + ", " + d.y + ")"
+            d.px = d.x;
+            d.py = d.y;
+            return "translate(" + d.x + ", " + d.y + ")"
         });
 
     // Draw nodes
@@ -121,11 +123,10 @@ var update = function() {
     if (window.curNode === undefined) {
         return clearInterval(timer);
     }
-    window.curNode = oneIter(curNode);
-    window.nodes = tree.nodes(root);
-    window.links = tree.links(window.nodes);
     drawNodes();
+    window.curNode = oneIter(curNode);
+    nodes.push(window.curNode);
 };
 
-var duration = 500,
+var duration = 1000,
     timer = setInterval(update, duration);
