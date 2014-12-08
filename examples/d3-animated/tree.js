@@ -79,7 +79,10 @@ var drawNodes = function() {
                 x: d.source.px,
                 y: d.source.py
             };
-            return diagonal({ source: o, target: o });
+            return diagonal({
+                source: o,
+                target: o
+            });
         })
         .attr("fill", "none")
         .attr("stroke", "#666666")
