@@ -34,10 +34,6 @@ var oneIter = function(node) {
     }
 };
 
-var root = {
-    game: tic
-};
-
 ///////////////////////////
 // Non Tic Tac Toe stuff //
 ///////////////////////////
@@ -63,7 +59,8 @@ tree.separation(function(a, b) {
     return a.parent == b.parent ? 1.5 : 2;
 });
 
-window.nodes = tree(root);
+var root = { game: tic },
+    nodes = tree(root);
 
 var drawNodes = function() {
 
