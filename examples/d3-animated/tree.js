@@ -91,6 +91,9 @@ var drawNodes = function() {
         .append("g")
         .attr("class", "node-group")
         .attr("transform", function(d) {
+            svgView.model = d.game;
+            svgView.svg = d3.select(this);
+            svgView.render();
             return "translate(" + d.parent.px + ", " + d.parent.py + ")";
         });
 
@@ -107,14 +110,6 @@ var drawNodes = function() {
             d.px = d.x;
             d.py = d.y;
             return "translate(" + d.x + ", " + d.y + ")"
-        });
-
-    // Draw nodes
-    svg.selectAll(".node-group")
-        .each(function(node) {
-            svgView.model = node.game;
-            svgView.svg = d3.select(this);
-            svgView.render();
         });
 
 };
