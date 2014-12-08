@@ -12,14 +12,14 @@ var svgView = new mauler.games.tic.TicTacToeSVGView({
     sideLength: nodeSize
 });
 
-var oneIter = function(node) {
+var depthFirstIteration = function(node) {
     if (node === undefined) {
         return undefined;
     }
     // up
     if (node.game.numMoves() === 0 ||
         (node.children !== undefined && node.children.length === node.game.numMoves())) {
-        return oneIter(node.parent);
+        return depthFirstIteration(node.parent);
     }
     if (node.children === undefined) {
         var child = { game: node.game.copy().move(0), parent: node, id: nodes.length };
@@ -129,7 +129,7 @@ var update = function() {
     }
     nodes.push(curNode);
     drawNodes();
-    curNode = oneIter(curNode);
+    curNode = depthFirstIteration(curNode);
 };
 
 var duration = 200,
