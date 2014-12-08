@@ -67,20 +67,23 @@ window.nodes = tree(root);
 
 var drawNodes = function() {
 
-    // Enter links
-
     svg.selectAll(".link")
         .data(window.links)
         .enter()
         .append("path")
         .attr("class", "link")
-        .attr("d", diagonal)
+        .attr("d", function(d) {
+            var o = { x: d.source.x, y: d.source.y };
+            return diagonal({source: o, target: o});
+        })
         .attr("fill", "none")
         .attr("stroke", "#666666")
         .attr("stroke-width", 2);
 
-    // Update links
-    svg.selectAll(".link")
+    var t = svg.transition()
+        .duration(250);
+
+    t.selectAll(".link")
         .attr("d", diagonal);
 
     // Enter nodes
@@ -110,16 +113,6 @@ var drawNodes = function() {
 
 };
 
-var getLeafNodes = function() {
-    var leafNodes = [];
-    for (var i = 0; i < window.nodes.length; i++) {
-        if (window.nodes[i].children === undefined || window.nodes[i].children.length === 0) {
-            leafNodes.push(window.nodes[i]);
-        }
-    }
-    return leafNodes;
-};
-
 var curNode = root;
 
 var update = function() {
@@ -132,5 +125,5 @@ var update = function() {
     drawNodes();
 };
 
-var duration = 100,
+var duration = 1000,
     timer = setInterval(update, duration);
