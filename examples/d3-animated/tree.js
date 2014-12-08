@@ -2,19 +2,20 @@ var depthFirstIteration = function(node) {
     if (node === undefined) {
         return undefined;
     }
-    // up
+    // go to parent node
     if (node.game.numMoves() === 0 ||
         (node.children !== undefined && node.children.length === node.game.numMoves())) {
         return depthFirstIteration(node.parent);
     }
-    if (node.children === undefined) {
-        var child = { game: node.game.copy().move(0), parent: node, id: nodes.length };
-        node.children = [child];
-        return child;
-    }
-    if (node.children.length !== node.game.numMoves()) {
-        var move = node.children.length;
-        var child = { game: node.game.copy().move(move), parent: node, id: nodes.length };
+    else {
+        if (node.children === undefined) {
+            node.children = [];
+        }
+        var child = {
+            game: node.game.copy().move(node.children.length),
+            parent: node,
+            id: nodes.length
+        };
         node.children.push(child);
         return child;
     }
