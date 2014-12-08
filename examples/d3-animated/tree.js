@@ -124,7 +124,7 @@ var drawNodes = function() {
 var curNode = root;
 
 var update = function() {
-    if (curNode === undefined) {
+    if (!curNode) {
         return clearInterval(timer);
     }
     drawNodes();
