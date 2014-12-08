@@ -22,13 +22,13 @@ var oneIter = function(node) {
         return oneIter(node.parent);
     }
     if (node.children === undefined) {
-        var child = { game: node.game.copy().move(0), parent: node };
+        var child = { game: node.game.copy().move(0), parent: node, id: nodes.length };
         node.children = [child];
         return child;
     }
     if (node.children.length !== node.game.numMoves()) {
         var move = node.children.length;
-        var child = { game: node.game.copy().move(move), parent: node };
+        var child = { game: node.game.copy().move(move), parent: node, id: nodes.length };
         node.children.push(child);
         return child;
     }
@@ -59,20 +59,26 @@ tree.separation(function(a, b) {
     return a.parent == b.parent ? 1.5 : 2;
 });
 
-var root = { game: tic },
+var root = { game: tic, id: 0 },
     nodes = tree(root);
+
+root.px = root.x;
+root.py = root.y;
 
 var drawNodes = function() {
 
     // Enter links
     svg.selectAll(".link")
-        .data(tree.links(window.nodes))
+        .data(tree.links(window.nodes), function(d) { return d.source.id + "-" + d.target.id; })
         .enter()
-        .append("path")
+        .insert("path")
         .attr("class", "link")
         .attr("d", function(d) {
-            var o = { x: d.source.px, y: d.source.py };
-            return diagonal({source: o, target: o});
+            var o = {
+                x: d.source.px,
+                y: d.source.py
+            };
+            return diagonal({ source: o, target: o });
         })
         .attr("fill", "none")
         .attr("stroke", "#666666")
@@ -80,17 +86,16 @@ var drawNodes = function() {
 
     // Enter nodes
     svg.selectAll("g.node-group")
-        .data(tree.nodes(root))
+        .data(tree.nodes(root), function(d) { return d.id; })
         .enter()
         .append("g")
         .attr("class", "node-group")
         .attr("transform", function(d) {
-            debugger;
-            return "translate(" + d.parent.px + ", " + d.parent.py + ")"
+            return "translate(" + d.parent.px + ", " + d.parent.py + ")";
         });
 
     var t = svg.transition()
-        .duration(1000);
+        .duration(500);
 
     // Update links
     t.selectAll(".link")
@@ -125,5 +130,5 @@ var update = function() {
     nodes.push(window.curNode);
 };
 
-var duration = 1000,
+var duration = 500,
     timer = setInterval(update, duration);
