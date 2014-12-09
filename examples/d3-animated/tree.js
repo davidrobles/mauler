@@ -66,28 +66,6 @@ var update = function() {
     }
     nodes.push(curNode);
 
-    // Enter links
-    svg.selectAll(".link")
-        .data(tree.links(nodes), function(d) {
-            return d.source.id + "-" + d.target.id;
-        })
-        .enter()
-        .insert("path")
-        .attr("class", "link")
-        .attr("d", function(d) {
-            var o = {
-                x: d.source.px,
-                y: d.source.py
-            };
-            return diagonal({
-                source: o,
-                target: o
-            });
-        })
-        .attr("fill", "none")
-        .attr("stroke", "#666666")
-        .attr("stroke-width", 2);
-
     // Enter nodes
     svg.selectAll(".node-group")
         .data(tree.nodes(root), function(d) {
@@ -103,7 +81,29 @@ var update = function() {
             return "translate(" + (d.parent.px - (nodeSize / 2)) + ", " + (d.parent.py - (nodeSize / 2)) + ")";
         });
 
-    var t = svg.transition().duration(200);
+    // Enter links
+    svg.selectAll(".link")
+        .data(tree.links(nodes), function(d) {
+            return d.source.id + "-" + d.target.id;
+        })
+        .enter()
+        .insert("path", ".node-group")
+        .attr("class", "link")
+        .attr("d", function(d) {
+            var o = {
+                x: d.source.px,
+                y: d.source.py
+            };
+            return diagonal({
+                source: o,
+                target: o
+            });
+        })
+        .attr("fill", "none")
+        .attr("stroke", "#666666")
+        .attr("stroke-width", 2);
+
+    var t = svg.transition().duration(400);
 
     // Update links
     t.selectAll(".link")
@@ -120,5 +120,5 @@ var update = function() {
     curNode = depthFirstIteration(curNode);
 };
 
-var duration = 200,
+var duration = 400,
     timer = setInterval(update, duration);
