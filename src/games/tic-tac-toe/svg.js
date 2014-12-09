@@ -93,14 +93,51 @@
                 if (cellType === 'CROSS') {
                     this.drawCross(row, col, this.colors.cross);
                 } else if (cellType === 'NOUGHT') {
-                    this.drawCross(row, col, this.colors.nought);
+                    this.drawCircle(row, col, this.colors.nought);
                 }
             }
         }
     };
 
-    // Fix this
     TicTacToeSVGView.prototype.drawCross = function (row, col, color) {
+        var scale = d3.scale.ordinal().domain([0, 1, 2]).rangeRoundBands([0, this.sideLength], 1, 0.5),
+            cellSize = this.sideLength / 11;
+
+        this.svg.append("line")
+            .attr("x1", function() {
+                return scale(col) - cellSize;
+            })
+            .attr("y1", function() {
+                return scale(row) - cellSize;
+            })
+            .attr("x2", function() {
+                return scale(col) + cellSize;
+            })
+            .attr("y2", function() {
+                return scale(row) + cellSize;
+            })
+            .attr("stroke", color)
+            .attr("stroke-width", this.sideLength / 30);
+
+        this.svg.append("line")
+            .attr("x1", function() {
+                return scale(col) - cellSize;
+            })
+            .attr("y1", function() {
+                return scale(row) + cellSize;
+            })
+            .attr("x2", function() {
+                return scale(col) + cellSize;
+            })
+            .attr("y2", function() {
+                return scale(row) - cellSize;
+            })
+            .attr("stroke", color)
+            .attr("stroke-width", this.sideLength / 30);
+    };
+
+    // Fix this
+    TicTacToeSVGView.prototype.drawCircle = function (row, col, color) {
 
         var scale = d3.scale.ordinal().domain([0, 1, 2]).rangeRoundBands([0, this.sideLength], 1, 0.5);
 

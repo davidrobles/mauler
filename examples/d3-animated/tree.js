@@ -23,7 +23,7 @@ var depthFirstIteration = function(node) {
 
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
-var nodeSize = 60;
+var nodeSize = 80;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
