@@ -25,7 +25,7 @@ var breadthFirstIteration = function() {
     var node = undefined;
     if (queue.length > 0) {
         node = queue.shift();
-        if (node.parent !== undefined && node.id !== 0) {
+        if (node.parent !== undefined && node.parent != node) {
             if (node.parent.children === undefined) {
                 node.parent.children = [];
             }
@@ -144,8 +144,8 @@ var update = function() {
             return "translate(" + (d.x - (nodeSize / 2)) + ", " + (d.y - (nodeSize / 2)) + ")"
         });
 
-    curNode = depthFirstIteration(curNode);
-    //curNode = breadthFirstIteration();
+    //curNode = depthFirstIteration(curNode);
+    curNode = breadthFirstIteration();
 };
 
 var duration = 200,
