@@ -21,6 +21,31 @@ var depthFirstIteration = function(node) {
     }
 };
 
+var counter = 1;
+
+var breadthFirstIteration = function() {
+    var node = undefined;
+    if (queue.length > 0) {
+        node = queue.shift();
+        if (node.parent !== undefined && node.id !== 0) {
+            if (node.parent.children === undefined) {
+                node.parent.children = [];
+            }
+            node.parent.children.push(node);
+        }
+        var numMoves = node.game.numMoves();
+        for (var i = 0; i < numMoves; i++) {
+            var child = {
+                game: node.game.copy().move(i),
+                parent: node,
+                id: counter++
+            };
+            queue.push(child);
+        }
+    }
+    return node;
+};
+
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
 var nodeSize = 80;
@@ -59,11 +84,13 @@ root.px = root.x;
 root.py = root.y;
 
 var curNode = root;
+var queue = [root];
 
 var update = function() {
     if (!curNode) {
         return clearInterval(timer);
     }
+    //curNode = breadthFirstIteration();
     nodes.push(curNode);
 
     // Enter nodes
@@ -103,7 +130,7 @@ var update = function() {
         .attr("stroke", "#666666")
         .attr("stroke-width", 2);
 
-    var t = svg.transition().duration(400);
+    var t = svg.transition().duration(200);
 
     // Update links
     t.selectAll(".link")
@@ -117,8 +144,12 @@ var update = function() {
             return "translate(" + (d.x - (nodeSize / 2)) + ", " + (d.y - (nodeSize / 2)) + ")"
         });
 
-    curNode = depthFirstIteration(curNode);
+    //curNode = depthFirstIteration(curNode);
+    curNode = breadthFirstIteration();
 };
 
-var duration = 400,
+breadthFirstIteration();
+curNode = root;
+
+var duration = 200,
     timer = setInterval(update, duration);
