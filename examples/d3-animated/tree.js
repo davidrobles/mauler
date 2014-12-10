@@ -21,8 +21,6 @@ var depthFirstIteration = function(node) {
     }
 };
 
-var counter = 1;
-
 var breadthFirstIteration = function() {
     var node = undefined;
     if (queue.length > 0) {
@@ -46,9 +44,11 @@ var breadthFirstIteration = function() {
     return node;
 };
 
+var counter = 1;
+
 var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
-var nodeSize = 80;
+var nodeSize = 50;
 
 var svgView = new mauler.games.tic.TicTacToeSVGView({
     model: tic,
@@ -56,8 +56,8 @@ var svgView = new mauler.games.tic.TicTacToeSVGView({
 });
 
 var margin = { top: 50, right: 50, bottom: 100, left: 50 },
-    width = 1800 - margin.left - margin.right,
-    height = 900 - margin.top - margin.bottom;
+    width = 1200 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.x, d.y]; });
@@ -144,12 +144,9 @@ var update = function() {
             return "translate(" + (d.x - (nodeSize / 2)) + ", " + (d.y - (nodeSize / 2)) + ")"
         });
 
-    //curNode = depthFirstIteration(curNode);
-    curNode = breadthFirstIteration();
+    curNode = depthFirstIteration(curNode);
+    //curNode = breadthFirstIteration();
 };
-
-breadthFirstIteration();
-curNode = root;
 
 var duration = 200,
     timer = setInterval(update, duration);
