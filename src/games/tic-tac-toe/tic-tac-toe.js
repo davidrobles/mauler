@@ -167,7 +167,7 @@
 
         legalMoves: function() {
             var moves = [];
-            if (this.numMoves() > 0) {
+            if (!this.isWin()) {
                 var legal = ~(this.crosses | this.noughts);
                 for (var i = 0; i < 9; i++) {
                     if ((legal & (1 << i)) !== 0) {
