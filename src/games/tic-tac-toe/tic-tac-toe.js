@@ -3,7 +3,7 @@
     var TicTacToe = function(options) {
         this.size = 3;
         this.crosses = this.noughts = 0;
-        this.movesCached = this.legalMovesCached = null;
+        this.movesCached = this.indexMovesCached = null;
         options || (options = {});
         if (options.board) {
             this.setBoard(options.board);
@@ -54,7 +54,8 @@
             if (move < 0 || move >= moves.length) {
                 throw new RangeError('Illegal move');
             }
-            this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
+            var bitboardMove = (1 << this.indexMoves()[move]);
+            this.setCurrentBitboard(this.getCurrentBitboard() | bitboardMove);
             this.clearCache();
             return this;
         },
@@ -62,10 +63,10 @@
         moves: function() {
             if (this.movesCached === null) {
                 this.movesCached = [];
-                var legal = this.legalMoves();
-                for (var i = 0; i < legal.length; i++) {
-                    var row = Math.floor(legal[i] / 3);
-                    var col = (legal[i] % 3) + 1;
+                var indexMove = this.indexMoves();
+                for (var i = 0; i < indexMove.length; i++) {
+                    var row = Math.floor(indexMove[i] / 3);
+                    var col = (indexMove[i] % 3) + 1;
                     this.movesCached.push(mauler.games.tic.letters[row] + col.toString());
                 }
             }
@@ -127,7 +128,7 @@
         //////////////////////////
 
         clearCache: function() {
-            this.movesCached = this.legalMovesCached = null;
+            this.movesCached = this.indexMovesCached = null;
         },
 
         equals: function(other) {
@@ -166,19 +167,19 @@
             return count;
         },
 
-        legalMoves: function() {
-            if (this.legalMovesCached === null) {
-                this.legalMovesCached = [];
+        indexMoves: function() {
+            if (this.indexMovesCached === null) {
+                this.indexMovesCached = [];
                 if (!this.isWin()) {
-                    var legal = ~(this.crosses | this.noughts);
+                    var emptyCellsBitboard = ~(this.crosses | this.noughts);
                     for (var i = 0; i < 9; i++) {
-                        if ((legal & (1 << i)) !== 0) {
-                            this.legalMovesCached.push(i);
+                        if ((emptyCellsBitboard & (1 << i)) !== 0) {
+                            this.indexMovesCached.push(i);
                         }
                     }
                 }
             }
-            return this.legalMovesCached;
+            return this.indexMovesCached;
         },
 
         checkBitboardWin: function(board) {
