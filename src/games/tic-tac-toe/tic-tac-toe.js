@@ -97,6 +97,7 @@
         reset: function() {
             this.crosses = this.noughts = 0;
             this.clearCache();
+            return this;
         },
 
         toString: function() {
