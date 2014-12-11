@@ -209,7 +209,6 @@
                     } else if (value === 'O') {
                         this.noughts |= (1 << ((row * this.size) + col));
                     }
-                    this[bitboard] |= (1 << ((row * this.size) + col));
                 }
             }
         }
