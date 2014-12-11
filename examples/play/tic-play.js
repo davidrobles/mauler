@@ -39,7 +39,7 @@
 
     // Players
 
-    var alphaBeta = new mauler.players.AlphaBeta();
+    var alphaBeta = new mauler.players.Minimax();
 
     var canvasPlayer = new mauler.games.tic.CanvasPlayer({
         match: match,
