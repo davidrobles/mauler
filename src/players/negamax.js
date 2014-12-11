@@ -13,8 +13,9 @@ mauler.players.Negamax.prototype = {
             return { move: -1, score: this.utilFunc(game, game.currentPlayer()) };
         }
         var bestMove = -1,
-            bestScore = -Number.MAX_VALUE;
-        for (var move = 0; move < game.numMoves(); move++) { // TODO use 'n' variable
+            bestScore = -Number.MAX_VALUE,
+            moves = game.moves();
+        for (var move = 0; move < moves.length; move++) {
             var newGame = game.copy();
             newGame.move(move);
             var curMoveScore = this.negamax(newGame, curDepth + 1),
