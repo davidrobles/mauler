@@ -2,9 +2,9 @@ var depthFirstIteration = function(node) {
     if (node === undefined) {
         return undefined;
     }
+    var moves = node.game.moves();
     // go to parent node
-    if (node.game.numMoves() === 0 ||
-        (node.children !== undefined && node.children.length === node.game.numMoves())) {
+    if (moves.length === 0 ||  (node.children !== undefined && node.children.length === moves.length)) {
         return depthFirstIteration(node.parent);
     }
     else {
@@ -31,8 +31,8 @@ var breadthFirstIteration = function() {
             }
             node.parent.children.push(node);
         }
-        var numMoves = node.game.numMoves();
-        for (var i = 0; i < numMoves; i++) {
+        var moves = node.game.moves();
+        for (var i = 0; i < moves.length; i++) {
             var child = {
                 game: node.game.copy().move(i),
                 parent: node,
