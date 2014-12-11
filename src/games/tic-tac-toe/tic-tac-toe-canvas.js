@@ -1,6 +1,6 @@
 (function() {
 
-    var CanvasView = function(options) {
+    var TicTacToeCanvas = function(options) {
         this.model = options.model;
         this.canvas = options.canvas || document.createElement("canvas");
         this.canvas.width = options.width || 100;
@@ -22,13 +22,13 @@
         this.render();
     };
 
-    CanvasView.squareToMove = function(row, col) {
+    TicTacToeCanvas.squareToMove = function(row, col) {
         return mauler.games.tic.letters[row] + (col + 1);
     };
 
-    CanvasView.prototype = {
+    TicTacToeCanvas.prototype = {
 
-        constructor: CanvasView,
+        constructor: TicTacToeCanvas,
 
         render: function() {
             this.drawBackground();
@@ -69,7 +69,7 @@
             for (var row = 0; row < this.model.size; row++) {
                 for (var col = 0; col < this.model.size; col++) {
                     var cellType = this.model.cell(row, col);
-                    var hello = CanvasView.squareToMove(row, col);
+                    var hello = TicTacToeCanvas.squareToMove(row, col);
                     if (cellType === 'CROSS') {
                         this.drawCross(row, col, this.colors.cross);
                     } else if (cellType === 'NOUGHT') {
@@ -154,12 +154,12 @@
 
         canvasLocationToMove: function(loc) {
             var square = this.coordToSquare(loc.x, loc.y);
-            return CanvasView.squareToMove(square.row, square.col);
+            return TicTacToeCanvas.squareToMove(square.row, square.col);
         }
 
     };
 
     mauler.games.tic = mauler.games.tic || {};
-    mauler.games.tic.CanvasView = CanvasView;
+    mauler.games.tic.CanvasView = TicTacToeCanvas;
 
 }());
