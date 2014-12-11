@@ -37,10 +37,10 @@ var svgView = new mauler.games.tic.TicTacToeSVGView({
 });
 
 var depthFirstTreeGenerator = function(node) {
-    var numMoves = node.game.numMoves();
-    if (numMoves > 0) {
+    var moves = node.game.moves();
+    if (moves.length > 0) {
         node.children = [];
-        for (var i = 0; i < numMoves; i++) {
+        for (var i = 0; i < moves.length; i++) {
             var newTic = node.game.copy();
             newTic.move(i);
             var newGameNode = { game: newTic };
