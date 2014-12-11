@@ -1,6 +1,5 @@
 (function() {
 
-    // Base size used for drawing is 1000 pixels
     var TicTacToeSVGView = function(options) {
         this.model = options.model;
         this.sideLength = options.sideLength;
