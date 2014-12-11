@@ -82,7 +82,8 @@ mauler.players.MCTSNode.prototype = {
     constructor: mauler.players.MCTSNode,
 
     init: function() {
-        for (var move = 0; move < this.game.numMoves(); move++) {
+        var moves = this.game.moves();
+        for (var move = 0; move < moves.length; move++) {
             var newGame = this.game.copy();
             newGame.move(move);
             this.children.push(new mauler.players.MCTSNode(newGame));
@@ -121,11 +122,12 @@ mauler.players.UCB1.prototype = {
         var bestMove = -1,
             max = node.game.currentPlayer() === player,
             bestValue = max ? -Number.MAX_VALUE : Number.MAX_VALUE,
-            nb = 0;
-        for (var move = 0; move < node.game.numMoves(); move++) {
+            nb = 0,
+            moves = node.game.moves();
+        for (var move = 0; move < moves.length; move++) {
             nb += node.actionCount(move);
         }
-        for (move = 0; move < node.game.numMoves(); move++) {
+        for (move = 0; move < moves.length; move++) {
             var value = 0;
 
             // ensures that each arm is selected once before further exploration
