@@ -54,13 +54,13 @@
             if (move < 0 || move >= moves.length) {
                 throw new RangeError('Illegal move');
             }
-            this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.bitboardMoves()[move]));
+            this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
             return this;
         },
 
         moves: function() {
             var mvs = [],
-                legal = this.bitboardMoves();
+                legal = this.legalMoves();
             for (var i = 0; i < legal.length; i++) {
                 var row = Math.floor(legal[i] / 3);
                 var col = (legal[i] % 3) + 1;
@@ -159,7 +159,7 @@
             return count;
         },
 
-        bitboardMoves: function() {
+        legalMoves: function() {
             var moves = [];
             if (!this.isWin()) {
                 var legal = ~(this.crosses | this.noughts);
