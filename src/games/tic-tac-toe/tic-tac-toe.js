@@ -81,10 +81,10 @@
             if (!this.isGameOver()) {
                 return ['NA', 'NA'];
             }
-            if (this.checkWin(this.crosses)) {
+            if (this.checkBitboardWin(this.crosses)) {
                 return ['WIN', 'LOSS'];
             }
-            if (this.checkWin(this.noughts)) {
+            if (this.checkBitboardWin(this.noughts)) {
                 return ['LOSS', 'WIN'];
             }
             return ['DRAW', 'DRAW'];
@@ -142,7 +142,7 @@
         },
 
         isWin: function() {
-            return this.checkWin(this.crosses) || this.checkWin(this.noughts);
+            return this.checkBitboardWin(this.crosses) || this.checkBitboardWin(this.noughts);
         },
 
         emptyCells: function() {
@@ -172,7 +172,7 @@
             return moves;
         },
 
-        checkWin: function(board) {
+        checkBitboardWin: function(board) {
             for (var i = 0; i < TicTacToe.PATTERNS.length; i++) {
                 if ((board & TicTacToe.PATTERNS[i]) === TicTacToe.PATTERNS[i]) {
                     return true;
