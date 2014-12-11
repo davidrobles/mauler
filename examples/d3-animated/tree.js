@@ -130,7 +130,7 @@ var update = function() {
         .attr("stroke", "#666666")
         .attr("stroke-width", 2);
 
-    var t = svg.transition().duration(200);
+    var t = svg.transition().duration(250);
 
     // Update links
     t.selectAll(".link")
@@ -148,5 +148,5 @@ var update = function() {
     curNode = breadthFirstIteration();
 };
 
-var duration = 200,
+var duration = 250,
     timer = setInterval(update, duration);
