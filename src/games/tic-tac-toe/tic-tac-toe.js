@@ -2,10 +2,8 @@
 
     var TicTacToe = function(options) {
         this.size = 3;
-        this.crosses = 0;
-        this.noughts = 0;
-        this.movesCached = null;
-        this.legalMovesCached = null;
+        this.crosses = this.noughts = 0;
+        this.movesCached = this.legalMovesCached = null;
         options || (options = {});
         if (options.board) {
             this.setBoard(options.board);
@@ -57,8 +55,7 @@
                 throw new RangeError('Illegal move');
             }
             this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
-            this.movesCached = null;
-            this.legalMovesCached = null;
+            this.clearCache();
             return this;
         },
 
@@ -97,10 +94,8 @@
         },
 
         reset: function() {
-            this.crosses = 0;
-            this.noughts = 0;
-            this.movesCached = null;
-            this.legalMovesCached = null;
+            this.crosses = this.noughts = 0;
+            this.clearCache();
         },
 
         toString: function() {
@@ -130,6 +125,10 @@
         //////////////////////////
         // Tic Tac Toe specific //
         //////////////////////////
+
+        clearCache: function() {
+            this.movesCached = this.legalMovesCached = null;
+        },
 
         equals: function(other) {
             return this.crosses === other.crosses && this.noughts === other.noughts;
