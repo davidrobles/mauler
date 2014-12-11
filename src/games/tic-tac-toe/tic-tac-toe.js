@@ -55,7 +55,7 @@
             if (move < 0 || move >= this.numMoves()) { // TODO refactor, use move length
                 throw new RangeError('Illegal move');
             }
-            this.setCurBitboard(this.getCurBitboard() | (1 << this.legalMoves()[move]));
+            this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
             return this;
         },
 
@@ -187,11 +187,11 @@
             return false;
         },
 
-        getCurBitboard: function() {
+        getCurrentBitboard: function() {
             return this.currentPlayer() === 0 ? this.crosses : this.noughts;
         },
 
-        setCurBitboard: function(bitboard) {
+        setCurrentBitboard: function(bitboard) {
             var currentBitboard = (this.currentPlayer() === 0) ? "crosses" : "noughts";
             this[currentBitboard] = bitboard;
         },
@@ -205,6 +205,7 @@
                     } else if (value === 'O') {
                         this.noughts |= (1 << ((row * this.size) + col));
                     }
+                    this[bitboard] |= (1 << ((row * this.size) + col));
                 }
             }
         }
