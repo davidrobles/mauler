@@ -12,6 +12,8 @@
 
     TicTacToe.PATTERNS = [7, 56, 448, 73, 146, 292, 273, 84];
 
+    TicTacToe.LETTERS = ['A', 'B', 'C'];
+
     TicTacToe.prototype = {
 
         constructor: TicTacToe,
@@ -67,7 +69,7 @@
                 for (var i = 0; i < indexMove.length; i++) {
                     var row = Math.floor(indexMove[i] / 3);
                     var col = (indexMove[i] % 3) + 1;
-                    this.movesCached.push(mauler.games.tic.letters[row] + col.toString());
+                    this.movesCached.push(TicTacToe.LETTERS[row] + col.toString());
                 }
             }
             return this.movesCached;
@@ -217,7 +219,6 @@
     };
 
     mauler.games.tic = mauler.games.tic || {};
-    mauler.games.tic.letters = ['A', 'B', 'C'];
     mauler.games.tic.TicTacToe = TicTacToe;
 
 }());
