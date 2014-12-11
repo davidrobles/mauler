@@ -11,3 +11,7 @@ mauler.players.Random.prototype = {
     }
 
 };
+
+mauler.players.randomFunc = function(game) {
+    return Math.floor(Math.random() * game.numMoves());
+};
