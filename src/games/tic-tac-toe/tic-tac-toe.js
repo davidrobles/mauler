@@ -73,11 +73,6 @@
             return new TicTacToe();
         },
 
-        // TODO no need for having this method... moves().length should be enough
-        numMoves: function() {
-            return this.isWin() ? 0 : this.emptyCells();
-        },
-
         numPlayers: function() {
             return 2;
         },
