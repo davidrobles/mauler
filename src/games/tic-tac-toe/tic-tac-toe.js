@@ -4,6 +4,8 @@
         this.size = 3;
         this.crosses = 0;
         this.noughts = 0;
+        this.movesCached = null;
+        this.legalMovesCached = null;
         options || (options = {});
         if (options.board) {
             this.setBoard(options.board);
@@ -55,18 +57,22 @@
                 throw new RangeError('Illegal move');
             }
             this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
+            this.movesCached = null;
+            this.legalMovesCached = null;
             return this;
         },
 
         moves: function() {
-            var mvs = [],
-                legal = this.legalMoves();
-            for (var i = 0; i < legal.length; i++) {
-                var row = Math.floor(legal[i] / 3);
-                var col = (legal[i] % 3) + 1;
-                mvs.push(mauler.games.tic.letters[row] + col.toString());
+            if (this.movesCached === null) {
+                this.movesCached = [];
+                var legal = this.legalMoves();
+                for (var i = 0; i < legal.length; i++) {
+                    var row = Math.floor(legal[i] / 3);
+                    var col = (legal[i] % 3) + 1;
+                    this.movesCached.push(mauler.games.tic.letters[row] + col.toString());
+                }
             }
-            return mvs
+            return this.movesCached;
         },
 
         newGame: function() {
@@ -160,16 +166,18 @@
         },
 
         legalMoves: function() {
-            var moves = [];
-            if (!this.isWin()) {
-                var legal = ~(this.crosses | this.noughts);
-                for (var i = 0; i < 9; i++) {
-                    if ((legal & (1 << i)) !== 0) {
-                        moves.push(i);
+            if (this.legalMovesCached === null) {
+                this.legalMovesCached = [];
+                if (!this.isWin()) {
+                    var legal = ~(this.crosses | this.noughts);
+                    for (var i = 0; i < 9; i++) {
+                        if ((legal & (1 << i)) !== 0) {
+                            this.legalMovesCached.push(i);
+                        }
                     }
                 }
             }
-            return moves;
+            return this.legalMovesCached;
         },
 
         checkBitboardWin: function(board) {
