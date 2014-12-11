@@ -99,6 +99,8 @@
         reset: function() {
             this.crosses = 0;
             this.noughts = 0;
+            this.movesCached = null;
+            this.legalMovesCached = null;
         },
 
         toString: function() {
