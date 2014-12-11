@@ -32,27 +32,26 @@
         },
 
         isGameOver: function() {
-            return this.numMoves() === 0;
+            return this.moves().length === 0;
         },
 
         move: function(move) {
             if (this.isGameOver()) {
                 throw new Error("Can't make more moves, the game is over!");
             }
+            var moves = this.moves();
             // Make random move if no move given
             if (arguments.length === 0) {
-                move = Math.floor(Math.random() * this.numMoves());
+                move = Math.floor(Math.random() * moves.length);
             } else if (typeof move === 'string') {
-                var theMoves = this.moves();
-                var nMoves = theMoves.length;
-                for (var i = 0; i < nMoves; i++) {
-                    if (move === theMoves[i]) {
+                for (var i = 0; i < moves.length; i++) {
+                    if (move === moves[i]) {
                         move = i;
                         break;
                     }
                 }
             }
-            if (move < 0 || move >= this.numMoves()) { // TODO refactor, use move length
+            if (move < 0 || move >= moves.length) {
                 throw new RangeError('Illegal move');
             }
             this.setCurrentBitboard(this.getCurrentBitboard() | (1 << this.legalMoves()[move]));
