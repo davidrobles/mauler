@@ -135,7 +135,6 @@
             .attr("stroke-width", this.sideLength / 30);
     };
 
-    // Fix this
     TicTacToeSVGView.prototype.drawCircle = function (row, col, color) {
 
         var scale = d3.scale.ordinal().domain([0, 1, 2]).rangeRoundBands([0, this.sideLength], 1, 0.5);
