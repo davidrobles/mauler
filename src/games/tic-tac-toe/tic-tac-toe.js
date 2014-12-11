@@ -192,8 +192,8 @@
         },
 
         setCurBitboard: function(bitboard) {
-            var type = (this.currentPlayer() === 0) ? "crosses" : "noughts";
-            this[type] = bitboard;
+            var currentBitboard = (this.currentPlayer() === 0) ? "crosses" : "noughts";
+            this[currentBitboard] = bitboard;
         },
 
         setBoard: function(board) {
