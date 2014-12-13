@@ -1,5 +1,7 @@
 (function() {
 
+    var TicTacToe = mauler.games.tic.TicTacToe;
+
     var TicTacToeCanvas = function(options) {
         this.model = options.model;
         this.canvas = options.canvas || document.createElement("canvas");
@@ -23,7 +25,7 @@
     };
 
     TicTacToeCanvas.squareToMove = function(row, col) {
-        return mauler.games.tic.letters[row] + (col + 1);
+        return TicTacToe.LETTERS[row] + (col + 1);
     };
 
     TicTacToeCanvas.prototype = {
