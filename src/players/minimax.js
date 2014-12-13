@@ -41,7 +41,7 @@ mauler.players.Minimax.prototype = {
 mauler.players.minimax = function(options) {
     options = options || {};
     var maxDepth = options.maxDepth || Number.MAX_VALUE,
-        evalFunc = options.utilFunc || mauler.utils.utilFunc;
+        evalFunc = options.evalFunc || mauler.utils.utilFunc;
     return function(game) {
         var player = game.currentPlayer();
         return (function minimax(game, curDepth) {
