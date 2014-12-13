@@ -18,9 +18,9 @@
 
         constructor: TicTacToe,
 
-        ////////////////////////////
-        // Mauler Game Interface  //
-        ////////////////////////////
+        ///////////////////////////
+        // Mauler Game Interface //
+        ///////////////////////////
 
         copy: function() {
             var tic = new TicTacToe();
