@@ -42,34 +42,28 @@ mauler.players.minimax = function(options) {
     options = options || {};
     var maxDepth = options.maxDepth || Number.MAX_VALUE,
         evalFunc = options.utilFunc || mauler.utils.utilFunc;
-
-    var minimax = function(game, player, curDepth) {
-        if (game.isGameOver() || curDepth === maxDepth) {
-            return { score: evalFunc(game, player) };
-        }
-        var bestMove = -1,
-            bestScore = game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE,
-            moves = game.moves();
-        for (var move = 0; move < moves.length; move++) {
-            var newGame = game.copy();
-            newGame.move(move);
-            var curMoveScore = minimax(newGame, player, curDepth + 1);
-            if (game.currentPlayer() === player) {
-                if (curMoveScore.score > bestScore) {
-                    bestMove = move;
-                    bestScore = curMoveScore.score;
-                }
-            } else if (curMoveScore.score < bestScore) {
-                bestMove = move;
-                bestScore = curMoveScore.score;
+    return function(game) {
+        var player = game.currentPlayer();
+        return (function minimax(game, curDepth) {
+            if (game.isGameOver() || curDepth === maxDepth) {
+                return { score: evalFunc(game, player) };
             }
-        }
-        return { move: bestMove, score: bestScore };
+            var bestMove = null,
+                bestScore = game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE,
+                moves = game.moves();
+            for (var move = 0; move < moves.length; move++) {
+                var moveScore = minimax(game.copy().move(move), curDepth + 1);
+                if (game.currentPlayer() === player) {
+                    if (moveScore.score > bestScore) {
+                        bestMove = move;
+                        bestScore = moveScore.score;
+                    }
+                } else if (moveScore.score < bestScore) {
+                    bestMove = move;
+                    bestScore = moveScore.score;
+                }
+            }
+            return { move: bestMove, score: bestScore };
+        }(game, 0)).move;
     };
-
-    var min2 = function(game) {
-        return minimax(game, game.currentPlayer(), 0).move;
-    };
-
-    return min2;
 };
