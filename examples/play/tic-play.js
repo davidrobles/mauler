@@ -39,7 +39,7 @@
 
     // Players
 
-    var alphaBeta = mauler.players.alphaBeta();
+    var alphaBeta = mauler.players.monteCarlo();
 
     var canvasPlayer = new mauler.games.tic.CanvasPlayer({
         match: match,

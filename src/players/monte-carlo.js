@@ -1,20 +1,14 @@
-mauler.players.MonteCarlo = function(options) {
+mauler.players.monteCarlo = function(options) {
     options = options || {};
-    this.numSims = options.numSims || 5000;
-    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
-};
-
-mauler.players.MonteCarlo.prototype = {
-
-    constructor: mauler.players.MonteCarlo,
-
-    move: function(game) {
+    var numSims = options.numSims || 5000,
+        evalFunc = options.evalFunc || mauler.utils.utilFunc;
+    return function(game) {
         var moves = game.moves();
         if (moves.length === 1) {
             return 0;
         }
         var outcomes = Array.apply(null, new Array(moves.length)).map(Number.prototype.valueOf, 0);
-        for (var i = 0; i < this.numSims; i++) {
+        for (var i = 0; i < numSims; i++) {
             var newGame = game.copy();
             var move = i % moves.length;
             newGame.move(move);
@@ -22,9 +16,8 @@ mauler.players.MonteCarlo.prototype = {
                 var randMove = Math.floor(Math.random() * newGame.moves().length);
                 newGame.move(randMove);
             }
-            outcomes[move] += this.utilFunc(newGame, game.currentPlayer());
+            outcomes[move] += evalFunc(newGame, game.currentPlayer());
         }
         return mauler.utils.argMax(outcomes);
-    }
-
+    };
 };
