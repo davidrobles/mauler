@@ -37,3 +37,39 @@ mauler.players.Minimax.prototype = {
     }
 
 };
+
+mauler.players.minimax = function(options) {
+    options = options || {};
+    var maxDepth = options.maxDepth || Number.MAX_VALUE,
+        evalFunc = options.utilFunc || mauler.utils.utilFunc;
+
+    var minimax = function(game, player, curDepth) {
+        if (game.isGameOver() || curDepth === maxDepth) {
+            return { score: evalFunc(game, player) };
+        }
+        var bestMove = -1,
+            bestScore = game.currentPlayer() === player ? -Number.MAX_VALUE : Number.MAX_VALUE,
+            moves = game.moves();
+        for (var move = 0; move < moves.length; move++) {
+            var newGame = game.copy();
+            newGame.move(move);
+            var curMoveScore = minimax(newGame, player, curDepth + 1);
+            if (game.currentPlayer() === player) {
+                if (curMoveScore.score > bestScore) {
+                    bestMove = move;
+                    bestScore = curMoveScore.score;
+                }
+            } else if (curMoveScore.score < bestScore) {
+                bestMove = move;
+                bestScore = curMoveScore.score;
+            }
+        }
+        return { move: bestMove, score: bestScore };
+    };
+
+    var min2 = function(game) {
+        return minimax(game, game.currentPlayer(), 0).move;
+    };
+
+    return min2;
+};

@@ -91,7 +91,8 @@
             }
             var gameCopy = this.gameHistory[this.gameHistory.length - 1].copy();
             if (this.currentGameIndex === this.gameHistory.length - 1) {
-                var moveIndex = this.players[gameCopy.currentPlayer()].move(gameCopy);
+                var player = this.players[gameCopy.currentPlayer()];
+                var moveIndex = (typeof player == "function") ? player(gameCopy) : player.move(gameCopy);
                 var moveString = gameCopy.moves()[moveIndex];
                 gameCopy.move(moveIndex);
                 if (!this.gameHistory[this.gameHistory.length - 1].equals(gameCopy)) {
