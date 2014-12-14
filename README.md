@@ -13,17 +13,17 @@ $ npm install mauler
 Games
 -----
 
-- [Tic-Tac-Toe](src/games/tic-tac-toe/tic-tac-toe.js)
+- [Tic-Tac-Toe](http://github.com/davidrobles/mauler/blob/master/src/games/tic-tac-toe/tic-tac-toe.js)
 
 Algorithms
 ----------
 
-- [Random](src/players/random.js)
-- [Minimax](src/players/minimax.js)
-- [Negamax](src/players/negamax.js)
-- [Alpha-beta pruning](src/players/alpha-beta.js)
-- [Monte Carlo](src/players/monte-carlo.js)
-- [Monte Carlo Tree Search](src/players/mcts.js)
+- [Random](http://github.com/davidrobles/mauler/blob/master/src/players/random.js)
+- [Minimax](http://github.com/davidrobles/mauler/blob/master/src/players/minimax.js)
+- [Negamax](http://github.com/davidrobles/mauler/blob/master/src/players/negamax.js)
+- [Alpha-beta pruning](http://github.com/davidrobles/mauler/blob/master/src/players/alpha-beta.js)
+- [Monte Carlo](http://github.com/davidrobles/mauler/blob/master/src/players/monte-carlo.js)
+- [Monte Carlo Tree Search](http://github.com/davidrobles/mauler/blob/master/src/players/mcts.js)
 
 Play a Random Game
 ------------------
