@@ -20,7 +20,7 @@
     };
 
     TicTacToeSVGView.squareToMove = function(row, col) {
-        return mauler.games.tic.letters[row] + (col + 1);
+        return mauler.games.TicTacToe.LETTERS[row] + (col + 1);
     };
 
     TicTacToeSVGView.prototype.render = function() {
@@ -156,7 +156,7 @@
         this.render();
     };
 
-    mauler.games.tic = mauler.games.tic || {};
-    mauler.games.tic.TicTacToeSVGView = TicTacToeSVGView;
+    mauler.views = mauler.views || {};
+    mauler.views.TicTacToeSVGView = TicTacToeSVGView;
 
 })();

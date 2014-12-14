@@ -69,7 +69,7 @@
 
     };
 
-    mauler.games.tic = mauler.games.tic || {};
-    mauler.games.tic.CanvasPlayer = CanvasPlayer;
+    mauler.views = mauler.views || {};
+    mauler.views.CanvasPlayer = CanvasPlayer;
 
 }());

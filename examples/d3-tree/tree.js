@@ -31,7 +31,7 @@ var tic = new mauler.games.TicTacToe().move(4).move(0).move(6).move(2);
 
 var nodeSize = 70;
 
-var svgView = new mauler.games.tic.TicTacToeSVGView({
+var svgView = new mauler.views.TicTacToeSVGView({
     model: tic,
     sideLength: nodeSize
 });

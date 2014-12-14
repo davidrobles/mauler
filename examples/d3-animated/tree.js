@@ -46,11 +46,11 @@ var breadthFirstIteration = function() {
 
 var counter = 1;
 
-var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2).move(0);
+var tic = new mauler.games.TicTacToe().move(4).move(0).move(6).move(2).move(0);
 
 var nodeSize = 50;
 
-var svgView = new mauler.games.tic.TicTacToeSVGView({
+var svgView = new mauler.views.TicTacToeSVGView({
     model: tic,
     sideLength: nodeSize
 });
