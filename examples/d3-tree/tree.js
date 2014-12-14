@@ -27,7 +27,7 @@ var minimax = function(node) {
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.tic.TicTacToe().move(4).move(0).move(6).move(2);
+var tic = new mauler.games.TicTacToe().move(4).move(0).move(6).move(2);
 
 var nodeSize = 70;
 
