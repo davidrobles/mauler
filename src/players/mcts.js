@@ -1,17 +1,17 @@
-mauler.players.MCTS = function(options) {
+ma.players.MCTS = function(options) {
     options = options || {};
     this.treePolicy = options.treePolicy;
     this.defaultPolicy = options.defaultPolicy;
     this.numSims = options.numSims;
-    this.utilFunc = options.utilFunc || mauler.utils.utilFunc;
+    this.utilFunc = options.utilFunc || ma.utilFunc;
 };
 
-mauler.players.MCTS.prototype = {
+ma.players.MCTS.prototype = {
 
-    constructor: mauler.players.MCTS,
+    constructor: ma.players.MCTS,
 
     copy: function() {
-        return new mauler.MCTS(this.treePolicy, this.defaultPolicy, this.numSims);
+        return new ma.MCTS(this.treePolicy, this.defaultPolicy, this.numSims);
     },
 
     simulate: function(curPos, player) {
@@ -60,7 +60,7 @@ mauler.players.MCTS.prototype = {
 
     move: function(game) {
         game = game.copy();
-        var root = new mauler.players.MCTSNode(game);
+        var root = new ma.players.MCTSNode(game);
         var curPlayer = game.currentPlayer();
         for (var i = 0; i < this.numSims; i++) {
             this.simulate(root, curPlayer);
@@ -70,23 +70,23 @@ mauler.players.MCTS.prototype = {
 
 };
 
-mauler.players.MCTSNode = function(game) {
+ma.players.MCTSNode = function(game) {
     this.game = game;
     this.count = 0;
     this.value = 0.0;
     this.children = [];
 };
 
-mauler.players.MCTSNode.prototype = {
+ma.players.MCTSNode.prototype = {
 
-    constructor: mauler.players.MCTSNode,
+    constructor: ma.players.MCTSNode,
 
     init: function() {
         var moves = this.game.moves();
         for (var move = 0; move < moves.length; move++) {
             var newGame = this.game.copy();
             newGame.move(move);
-            this.children.push(new mauler.players.MCTSNode(newGame));
+            this.children.push(new ma.players.MCTSNode(newGame));
         }
     },
 
@@ -109,14 +109,14 @@ mauler.players.MCTSNode.prototype = {
 // Tree policies //
 ///////////////////
 
-mauler.players.UCB1 = function(options) {
+ma.players.UCB1 = function(options) {
     options = options || {};
     this.c = options.c; // TODO add random number generator
 };
 
-mauler.players.UCB1.prototype = {
+ma.players.UCB1.prototype = {
 
-    constructor: mauler.players.UCB1,
+    constructor: ma.players.UCB1,
 
     move: function(node, player) {
         var bestMove = -1,

@@ -25,6 +25,6 @@
 
     };
 
-    mauler.views.RestartView = RestartView;
+    ma.views.RestartView = RestartView;
 
 }());

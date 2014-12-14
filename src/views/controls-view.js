@@ -56,6 +56,6 @@
 
     };
 
-    mauler.views.ControlsView = ControlsView;
+    ma.views.ControlsView = ControlsView;
 
 }());

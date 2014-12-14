@@ -32,7 +32,7 @@
         addClickListener: function () {
             this.canvas.addEventListener("click", function(event) {
                 if (this.match.curGame().currentPlayer() === 0) {
-                    var canvasLoc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
+                    var canvasLoc = ma.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
                     var move = this.canvasView.canvasLocationToMove(canvasLoc);
                     var moves = this.match.curGame().moves();
                     if (_.contains(moves, move)) {
@@ -49,7 +49,7 @@
         addMouseMoveListener: function () {
             this.canvas.addEventListener("mousemove", function(event) {
                 if (this.match.curGame().currentPlayer() === 0) {
-                    var canvasLoc = mauler.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
+                    var canvasLoc = ma.utils.windowToCanvas(this.canvas, event.clientX, event.clientY);
                     var move = this.canvasView.canvasLocationToMove(canvasLoc);
                     var moves = this.match.curGame().moves();
                     if (_.contains(moves, move)) {
@@ -69,7 +69,7 @@
 
     };
 
-    mauler.views = mauler.views || {};
-    mauler.views.CanvasPlayer = CanvasPlayer;
+    ma.views = ma.views || {};
+    ma.views.CanvasPlayer = CanvasPlayer;
 
 }());

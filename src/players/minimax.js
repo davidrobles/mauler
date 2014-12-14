@@ -1,7 +1,7 @@
-mauler.players.minimax = function(options) {
+ma.players.minimax = function(options) {
     options = options || {};
     var maxDepth = options.maxDepth || Number.MAX_VALUE,
-        evalFunc = options.evalFunc || mauler.utils.utilFunc;
+        evalFunc = options.evalFunc || ma.utilFunc;
     return function(game) {
         var player = game.currentPlayer();
         return (function minimax(game, curDepth) {

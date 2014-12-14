@@ -218,7 +218,7 @@
 
     };
 
-    mauler.games = mauler.games || {};
-    mauler.games.TicTacToe = TicTacToe;
+    ma.games = ma.games || {};
+    ma.games.TicTacToe = TicTacToe;
 
 }());

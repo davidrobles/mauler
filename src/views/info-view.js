@@ -29,6 +29,6 @@
 
     };
 
-    mauler.views.InfoView = InfoView;
+    ma.views.InfoView = InfoView;
 
 }());

@@ -1,4 +1,4 @@
-var mauler = {
+var ma = {
     games: {},
     players: {},
     views: {},

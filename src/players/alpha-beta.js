@@ -1,7 +1,7 @@
-mauler.players.alphaBeta = function(options) {
+ma.players.alphaBeta = function(options) {
     options = options || {};
     var maxDepth = options.maxDepth || Number.MAX_VALUE,
-        evalFunc = options.evalFunc || mauler.utils.utilFunc;
+        evalFunc = options.evalFunc || ma.utilFunc;
     return function(game) {
         return (function alphaBeta(game, curDepth, alpha, beta) {
             if (game.isGameOver() || curDepth === maxDepth) {

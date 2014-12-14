@@ -1,7 +1,7 @@
-mauler.players.monteCarlo = function(options) {
+ma.players.monteCarlo = function(options) {
     options = options || {};
     var numSims = options.numSims || 5000,
-        evalFunc = options.evalFunc || mauler.utils.utilFunc;
+        evalFunc = options.evalFunc || ma.utilFunc;
     return function(game) {
         var moves = game.moves();
         if (moves.length === 1) {
@@ -18,6 +18,6 @@ mauler.players.monteCarlo = function(options) {
             }
             outcomes[move] += evalFunc(newGame, game.currentPlayer());
         }
-        return mauler.utils.argMax(outcomes);
+        return ma.argMax(outcomes);
     };
 };

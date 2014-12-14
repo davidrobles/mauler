@@ -7,7 +7,7 @@ var minimax = function(node) {
     var player = node.game.currentPlayer(),
         curDepth = 0,
         maxDepth = 6,
-        evalFunc = mauler.utils.utilFunc;
+        evalFunc = ma.utilFunc;
     return (function minimax(node, curDepth) {
         if (node.game.isGameOver() || curDepth === maxDepth) {
             return node.score = evalFunc(node.game, player);
@@ -27,11 +27,11 @@ var minimax = function(node) {
 // Tic Tac Toe stuff //
 ///////////////////////
 
-var tic = new mauler.games.TicTacToe().move(4).move(0).move(6).move(2);
+var tic = new ma.games.TicTacToe().move(4).move(0).move(6).move(2);
 
 var nodeSize = 70;
 
-var svgView = new mauler.views.TicTacToeSVGView({
+var svgView = new ma.views.TicTacToeSVGView({
     model: tic,
     sideLength: nodeSize
 });

@@ -1,7 +1,7 @@
-mauler.players.negamax = function(options) {
+ma.players.negamax = function(options) {
     options = options || {};
     var maxDepth = options.maxDepth || Number.MAX_VALUE,
-        evalFunc = options.evalFunc || mauler.utils.utilFunc;
+        evalFunc = options.evalFunc || ma.utilFunc;
     return function(game) {
         return (function negamax(game, curDepth) {
             if (game.isGameOver() || curDepth === maxDepth) {

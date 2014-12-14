@@ -2,9 +2,9 @@
 
     // Create a Game Interface for canvas, model, ui?
 
-    var tic = new mauler.games.tic.TicTacToe();
+    var tic = new ma.games.tic.TicTacToe();
 
-    var canvasView = new mauler.games.tic.CanvasView({
+    var canvasView = new ma.games.tic.CanvasView({
         model: tic,
         width: 400,
         height: 400,
@@ -51,9 +51,9 @@
 
     });
 
-    var match = new mauler.Match({
+    var match = new ma.Match({
         game: tic,
-        players: [new mauler.players.Random(), new mauler.players.Random()]
+        players: [new ma.players.Random(), new ma.players.Random()]
     });
 
     match.next();

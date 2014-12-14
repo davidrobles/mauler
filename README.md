@@ -29,7 +29,7 @@ Play a Random Game
 ------------------
 
 ```js
-var game = new mauler.games.TicTacToe();
+var game = new ma.games.TicTacToe();
 console.log(game.toString());
 while (!game.isGameOver() {
   var moves = game.moves();
@@ -43,8 +43,8 @@ Play a Game Between Two Players
 -------------------------------
 
 ```js
-var game = new mauler.games.TicTacToe();
-var players = [new mauler.players.random(), new mauler.players.alphaBeta()]
+var game = new ma.games.TicTacToe();
+var players = [new ma.players.random(), new ma.players.alphaBeta()]
 console.log(game.toString());
 while (!game.isGameOver() {
   var player = players[game.currentPlayer()];

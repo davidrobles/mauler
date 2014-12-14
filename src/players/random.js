@@ -1,10 +1,10 @@
-mauler.players.Random = function() {
+ma.players.Random = function() {
 
 };
 
-mauler.players.Random.prototype = {
+ma.players.Random.prototype = {
 
-    constructor: mauler.players.Random,
+    constructor: ma.players.Random,
 
     move: function(game) {
         return Math.floor(Math.random() * game.numMoves());
@@ -12,6 +12,6 @@ mauler.players.Random.prototype = {
 
 };
 
-mauler.players.randomFunc = function(game) {
+ma.players.randomFunc = function(game) {
     return Math.floor(Math.random() * game.numMoves());
 };

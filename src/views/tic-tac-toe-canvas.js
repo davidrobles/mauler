@@ -1,6 +1,6 @@
 (function() {
 
-    var TicTacToe = mauler.games.TicTacToe;
+    var TicTacToe = ma.games.TicTacToe;
 
     var TicTacToeCanvas = function(options) {
         this.model = options.model;
@@ -161,7 +161,7 @@
 
     };
 
-    mauler.views = mauler.views || {};
-    mauler.views.TicTacToeCanvas = TicTacToeCanvas;
+    ma.views = ma.views || {};
+    ma.views.TicTacToeCanvas = TicTacToeCanvas;
 
 }());
