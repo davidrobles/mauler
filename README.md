@@ -6,7 +6,7 @@ Mauler is a JavaScript framework for playing abstract strategy games.
 Games
 -----
 
-- Tic-Tac-Toe
+- [Tic-Tac-Toe](src/games/tic-tac-toe/tic-tac-toe.js)
 
 Algorithms
 ----------
