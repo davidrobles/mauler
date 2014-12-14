@@ -3,6 +3,13 @@ Mauler
 
 Mauler is a JavaScript framework for abstract strategy games.
 
+Installation
+------------
+
+```bash
+$ npm install mauler
+```
+
 Games
 -----
 
