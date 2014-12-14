@@ -13,7 +13,7 @@
         canvas: document.getElementById("tic-canvas")
     });
 
-    //var svgView = new ma.views.TicTacToeSVGView({
+    //var svgView = new ma.views.TicTacToeSVG({
     //    model: tic,
     //    width: 200,
     //    height: 200,

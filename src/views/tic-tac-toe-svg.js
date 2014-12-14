@@ -1,6 +1,6 @@
 (function() {
 
-    var TicTacToeSVGView = function(options) {
+    var TicTacToeSVG = function(options) {
         this.model = options.model;
         this.sideLength = options.sideLength;
         this.svg = options.svg || document.createElement("svg");
@@ -19,11 +19,11 @@
         this.render();
     };
 
-    TicTacToeSVGView.squareToMove = function(row, col) {
+    TicTacToeSVG.squareToMove = function(row, col) {
         return ma.games.TicTacToe.LETTERS[row] + (col + 1);
     };
 
-    TicTacToeSVGView.prototype.render = function() {
+    TicTacToeSVG.prototype.render = function() {
         this.drawBackground();
         this.drawLines();
         this.drawBorder();
@@ -31,7 +31,7 @@
         return this;
     };
 
-    TicTacToeSVGView.prototype.drawBackground = function() {
+    TicTacToeSVG.prototype.drawBackground = function() {
         this.svg.append("rect")
             .attr({
                 "class": "bg",
@@ -44,14 +44,14 @@
             });
     };
 
-    TicTacToeSVGView.prototype.drawLines = function() {
+    TicTacToeSVG.prototype.drawLines = function() {
         for (var i = 1; i < this.model.size; i++) {
             this.drawVerticalLine(i);
             this.drawHorizontalLine(i);
         }
     };
 
-    TicTacToeSVGView.prototype.drawBorder = function() {
+    TicTacToeSVG.prototype.drawBorder = function() {
         this.svg.append("rect")
             .attr({
                 "class": "border",
@@ -65,7 +65,7 @@
             });
     };
 
-    TicTacToeSVGView.prototype.drawHorizontalLine = function (row) {
+    TicTacToeSVG.prototype.drawHorizontalLine = function (row) {
         this.svg.append("line")
             .attr("x1", 0)
             .attr("y1", (this.sideLength / 3) * row)
@@ -75,7 +75,7 @@
             .attr("stroke-width", this.lineWidth);
     };
 
-    TicTacToeSVGView.prototype.drawVerticalLine = function (col) {
+    TicTacToeSVG.prototype.drawVerticalLine = function (col) {
         this.svg.append("line")
             .attr("x1", (this.sideLength / 3) * col)
             .attr("y1", 0)
@@ -85,7 +85,7 @@
             .attr("stroke-width", this.lineWidth);
     };
 
-    TicTacToeSVGView.prototype.drawSquares = function() {
+    TicTacToeSVG.prototype.drawSquares = function() {
         for (var row = 0; row < this.model.size; row++) {
             for (var col = 0; col < this.model.size; col++) {
                 var cellType = this.model.cell(row, col);
@@ -98,7 +98,7 @@
         }
     };
 
-    TicTacToeSVGView.prototype.drawCross = function (row, col, color) {
+    TicTacToeSVG.prototype.drawCross = function (row, col, color) {
         var scale = d3.scale.ordinal().domain([0, 1, 2]).rangeRoundBands([0, this.sideLength], 1, 0.5),
             cellSize = this.sideLength / 11;
 
@@ -135,7 +135,7 @@
             .attr("stroke-width", this.sideLength / 30);
     };
 
-    TicTacToeSVGView.prototype.drawCircle = function (row, col, color) {
+    TicTacToeSVG.prototype.drawCircle = function (row, col, color) {
 
         var scale = d3.scale.ordinal().domain([0, 1, 2]).rangeRoundBands([0, this.sideLength], 1, 0.5);
 
@@ -151,12 +151,12 @@
             .attr("fill", color);
     };
 
-    TicTacToeSVGView.prototype.update = function(event, model) {
+    TicTacToeSVG.prototype.update = function(event, model) {
         this.model = model;
         this.render();
     };
 
     ma.views = ma.views || {};
-    ma.views.TicTacToeSVGView = TicTacToeSVGView;
+    ma.views.TicTacToeSVG = TicTacToeSVG;
 
 })();

@@ -31,7 +31,7 @@ var tic = new ma.games.TicTacToe().move(4).move(0).move(6).move(2);
 
 var nodeSize = 70;
 
-var svgView = new ma.views.TicTacToeSVGView({
+var svgView = new ma.views.TicTacToeSVG({
     model: tic,
     sideLength: nodeSize
 });
