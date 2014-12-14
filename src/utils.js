@@ -61,11 +61,11 @@
             if (game.isGameOver()) {
                 var outcomes = game.outcomes();
                 switch (outcomes[player]) {
-                    case "WIN":
+                    case 'WIN':
                         return 1.0;
-                    case "DRAW":
+                    case 'DRAW':
                         return 0.0;
-                    case "LOSS":
+                    case 'LOSS':
                         return -1.0;
                 }
             }
