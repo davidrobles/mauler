@@ -47,8 +47,8 @@ var game = new mauler.games.TicTacToe();
 var players = [new mauler.players.random(), new mauler.players.alphaBeta()]
 console.log(game.toString());
 while (!game.isGameOver() {
-  var moves = game.moves();
   var player = players[game.currentPlayer()];
+  var moves = game.moves();
   var randomMove = moves[player()];
   game.move(randomMove);
   console.log(game.toString());
