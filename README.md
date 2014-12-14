@@ -38,3 +38,19 @@ while (!game.isGameOver() {
   console.log(game.toString());
 }
 ```
+
+Play a Game Between Two Players
+-------------------------------
+
+```js
+var game = new mauler.games.TicTacToe();
+var players = [new mauler.players.random(), new mauler.players.alphaBeta()]
+console.log(game.toString());
+while (!game.isGameOver() {
+  var moves = game.moves();
+  var player = players[game.currentPlayer()];
+  var randomMove = moves[player()];
+  game.move(randomMove);
+  console.log(game.toString());
+}
+```
