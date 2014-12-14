@@ -199,7 +199,7 @@
         },
 
         setCurrentBitboard: function(bitboard) {
-            var currentBitboard = (this.currentPlayer() === 0) ? "crosses" : "noughts";
+            var currentBitboard = (this.currentPlayer() === 0) ? 'crosses' : 'noughts';
             this[currentBitboard] = bitboard;
         },
 
