@@ -1,7 +1,5 @@
 (function() {
 
-    mauler.utils = mauler.utils || {};
-
     mauler.utils = {
 
         argMax: function(outcomes) {
