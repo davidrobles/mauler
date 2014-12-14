@@ -130,12 +130,18 @@
         // Tic Tac Toe specific //
         //////////////////////////
 
-        clearCache: function() {
-            this.movesCached = this.indexMovesCached = null;
+        bitCount: function(num) {
+            var count = 0;
+            for (var i = 0; i < 9; i++) {
+                if ((num & (1 << i)) > 0) {
+                    count++;
+                }
+            }
+            return count;
         },
 
-        equals: function(other) {
-            return this.crosses === other.crosses && this.noughts === other.noughts;
+        cell: function(row, col) {
+            return this.cellIndex(this.size * row + col);
         },
 
         cellIndex: function(cellIndex) {
@@ -148,26 +154,29 @@
             return 'EMPTY';
         },
 
-        cell: function(row, col) {
-            return this.cellIndex(this.size * row + col);
+        checkBitboardWin: function(board) {
+            for (var i = 0; i < TicTacToe.PATTERNS.length; i++) {
+                if ((board & TicTacToe.PATTERNS[i]) === TicTacToe.PATTERNS[i]) {
+                    return true;
+                }
+            }
+            return false;
         },
 
-        isWin: function() {
-            return this.checkBitboardWin(this.crosses) || this.checkBitboardWin(this.noughts);
+        clearCache: function() {
+            this.movesCached = this.indexMovesCached = null;
         },
 
         emptyCells: function() {
             return 9 - this.bitCount(this.crosses | this.noughts);
         },
 
-        bitCount: function(num) {
-            var count = 0;
-            for (var i = 0; i < 9; i++) {
-                if ((num & (1 << i)) > 0) {
-                    count++;
-                }
-            }
-            return count;
+        equals: function(other) {
+            return this.crosses === other.crosses && this.noughts === other.noughts;
+        },
+
+        getCurrentBitboard: function() {
+            return this.currentPlayer() === 0 ? this.crosses : this.noughts;
         },
 
         indexMoves: function() {
@@ -185,22 +194,8 @@
             return this.indexMovesCached;
         },
 
-        checkBitboardWin: function(board) {
-            for (var i = 0; i < TicTacToe.PATTERNS.length; i++) {
-                if ((board & TicTacToe.PATTERNS[i]) === TicTacToe.PATTERNS[i]) {
-                    return true;
-                }
-            }
-            return false;
-        },
-
-        getCurrentBitboard: function() {
-            return this.currentPlayer() === 0 ? this.crosses : this.noughts;
-        },
-
-        setCurrentBitboard: function(bitboard) {
-            var currentBitboard = (this.currentPlayer() === 0) ? 'crosses' : 'noughts';
-            this[currentBitboard] = bitboard;
+        isWin: function() {
+            return this.checkBitboardWin(this.crosses) || this.checkBitboardWin(this.noughts);
         },
 
         setBoard: function(board) {
@@ -214,6 +209,11 @@
                     }
                 }
             }
+        },
+
+        setCurrentBitboard: function(bitboard) {
+            var currentBitboard = (this.currentPlayer() === 0) ? 'crosses' : 'noughts';
+            this[currentBitboard] = bitboard;
         }
 
     };
