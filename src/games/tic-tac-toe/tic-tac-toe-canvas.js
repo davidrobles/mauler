@@ -4,19 +4,19 @@
 
     var TicTacToeCanvas = function(options) {
         this.model = options.model;
-        this.canvas = options.canvas || document.createElement("canvas");
+        this.canvas = options.canvas || document.createElement('canvas');
         this.canvas.width = options.width || 100;
         this.canvas.height = options.height || 100;
-        this.ctx = this.canvas.getContext("2d");
+        this.ctx = this.canvas.getContext('2d');
         this.squareSize = this.canvas.width / this.model.size;
         this.cellPer = 0.7;
         this.colors = {
-            bg: "rgb(255, 219, 122)",
-            border: "rgb(229, 197, 110)",
-            cross: "rgba(231, 76, 60, 1.0)",
-            crossLight: "rgba(231, 76, 60, 0.5)",
-            nought: "rgba(41, 128, 185,1.0)",
-            noughtLight: "rgba(41, 128, 185, 0.5)"
+            bg: 'rgb(255, 219, 122)',
+            border: 'rgb(229, 197, 110)',
+            cross: 'rgba(231, 76, 60, 1.0)',
+            crossLight: 'rgba(231, 76, 60, 0.5)',
+            nought: 'rgba(41, 128, 185,1.0)',
+            noughtLight: 'rgba(41, 128, 185, 0.5)'
         };
         this.highlightedMoves = [];
         this.borderSize = 0.02; // percentage
