@@ -1,3 +1,6 @@
+[![NPM Version][npm-image]][npm-url]
+
+
 Mauler
 ======
 
