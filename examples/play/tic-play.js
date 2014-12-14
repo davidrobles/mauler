@@ -1,24 +1,24 @@
 (function() {
 
-    var tic = new mauler.games.tic.TicTacToe();
+    var tic = new mauler.games.TicTacToe();
 
     var match = new mauler.Match({
         game: tic
     });
 
-    var canvasView = new mauler.games.tic.CanvasView({
+    var canvasView = new mauler.views.TicTacToeCanvas({
         model: tic,
         width: 200,
         height: 200,
         canvas: document.getElementById("tic-canvas")
     });
 
-    var svgView = new mauler.games.tic.TicTacToeSVGView({
-        model: tic,
-        width: 200,
-        height: 200,
-        svg: document.getElementById("tic-svg")
-    });
+    //var svgView = new mauler.views.TicTacToeSVGView({
+    //    model: tic,
+    //    width: 200,
+    //    height: 200,
+    //    svg: document.getElementById("tic-svg")
+    //});
 
     var infoView = new mauler.views.InfoView({
         model: tic,
@@ -33,7 +33,7 @@
     // Events
 
     match.on("all", canvasView.update, canvasView);
-    match.on("all", svgView.update, svgView);
+    //match.on("all", svgView.update, svgView);
     match.on("all", infoView.update, infoView);
     match.on("all", restartView.update, restartView);
 
@@ -41,7 +41,7 @@
 
     var alphaBeta = mauler.players.monteCarlo();
 
-    var canvasPlayer = new mauler.games.tic.CanvasPlayer({
+    var canvasPlayer = new mauler.views.CanvasPlayer({
         match: match,
         canvasView: canvasView
     });
