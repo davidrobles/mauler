@@ -48,8 +48,7 @@ var players = [new mauler.players.random(), new mauler.players.alphaBeta()]
 console.log(game.toString());
 while (!game.isGameOver() {
   var player = players[game.currentPlayer()];
-  var moves = game.moves();
-  var randomMove = moves[player()];
+  var move = player(game);
   game.move(randomMove);
   console.log(game.toString());
 }
