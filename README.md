@@ -1,7 +1,7 @@
 Mauler
 ======
 
-Mauler is a JavaScript framework for playing abstract strategy games.
+Mauler is a JavaScript framework for abstract strategy games.
 
 Games
 -----
