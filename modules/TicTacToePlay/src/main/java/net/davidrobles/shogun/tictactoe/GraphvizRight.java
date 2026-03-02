@@ -1,7 +1,7 @@
 //package dr.shogun.tictactoe;
 //
 //import Game;
-//import dr.mauler.core.players.RandPlayer;
+//import dr.mauler.core.players.RandomStrategy;
 //import GamesUtil;
 //import dr.mauler.othello.Othello;
 //import UtilFunc;
@@ -29,7 +29,7 @@
 //
 //        for (int i = 0; i < c.length; i++) {
 //            Othello game = othello.copy();
-//            MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c[i], new Random()), new RandPlayer<Othello>(), nSims);
+//            MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c[i], new Random()), new RandomStrategy<Othello>(), nSims);
 //            String filename = "/Users/drobles/Dropbox/Temp/Graphviz/dr-" + c[i] + ".dot";
 //            File file = new File(filename);
 //            GraphvizMCTSObserver obs = new GraphvizMCTSObserver(file);

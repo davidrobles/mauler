@@ -254,7 +254,7 @@ public class Domineering implements Game<Domineering>
 ////        MonteCarlo<net.davidrobles.mauler.domineering.Domineering> mc = new MonteCarlo<net.davidrobles.mauler.domineering.Domineering>(500);
 //        UCT<net.davidrobles.mauler.domineering.Domineering> uct = new UCT<net.davidrobles.mauler.domineering.Domineering>(0.5, 2000);
 //        AlphaBeta<net.davidrobles.mauler.domineering.Domineering> ab = new AlphaBeta<net.davidrobles.mauler.domineering.Domineering>(new UtilFunc());
-//        RandPlayer<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandPlayer<net.davidrobles.mauler.domineering.Domineering>();
+//        RandomStrategy<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandomStrategy<net.davidrobles.mauler.domineering.Domineering>();
 //        List<Strategy<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Strategy<net.davidrobles.mauler.domineering.Domineering>>();
 //        players.add(ab);
 //        players.add(randPlayer);
@@ -307,7 +307,7 @@ public class Domineering implements Game<Domineering>
 ////        MonteCarlo<net.davidrobles.mauler.domineering.Domineering> mc = new MonteCarlo<net.davidrobles.mauler.domineering.Domineering>(000);
 //        UCT<net.davidrobles.mauler.domineering.Domineering> uct = new UCT<net.davidrobles.mauler.domineering.Domineering>(0.5, 5000);
 //        AlphaBeta<net.davidrobles.mauler.domineering.Domineering> ab = new AlphaBeta<net.davidrobles.mauler.domineering.Domineering>(new UtilFunc());
-//        RandPlayer<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandPlayer<net.davidrobles.mauler.domineering.Domineering>();
+//        RandomStrategy<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandomStrategy<net.davidrobles.mauler.domineering.Domineering>();
 //        List<Strategy<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Strategy<net.davidrobles.mauler.domineering.Domineering>>();
 //        players.add(uct);
 //        players.add(randPlayer);

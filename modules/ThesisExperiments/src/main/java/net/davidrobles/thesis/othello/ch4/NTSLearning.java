@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4;
 //import com.google.gson.Gson;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
 import net.davidrobles.mauler.othello.ef.EvaluatorFitness;
@@ -43,7 +43,7 @@ public class NTSLearning
         // players
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedy<Othello>(wpc, 0.0));
-        players.add(new RandPlayer<Othello>());
+        players.add(new RandomStrategy<Othello>());
 
         for (int episode = 0; episode <= episode; episode++)
         {
@@ -135,7 +135,7 @@ public class NTSLearning
                 // Series against Random
                 players = new ArrayList<Strategy<Othello>>();
                 players.add(new GreedyPlayer<Othello>(nts));
-                players.add(new RandPlayer<Othello>());
+                players.add(new RandomStrategy<Othello>());
                 System.out.println("size: " + players.size());
                 series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);

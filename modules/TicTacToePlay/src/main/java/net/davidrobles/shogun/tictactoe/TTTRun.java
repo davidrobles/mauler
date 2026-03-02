@@ -2,7 +2,7 @@ package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.util.GamesUtil;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
 import net.davidrobles.mauler.players.minimax.AlphaBeta;
@@ -29,7 +29,7 @@ public class TTTRun
 //    static TreePolicy<TicTacToe> uct = new UCTPolicy<TicTacToe>(C, RNG);
 
     // MixedPlayer
-    static RandPlayer<TicTacToe> randomPlayer = new RandPlayer<TicTacToe>(RNG);
+    static RandomStrategy<TicTacToe> randomPlayer = new RandomStrategy<TicTacToe>(RNG);
 
     // Players
     static Minimax<TicTacToe> minimax = new Minimax<TicTacToe>(utilFunc, 25);

@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
@@ -34,14 +34,14 @@ public class MCTS_WPC
         List<String> playersNames = new ArrayList<String>();
 
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c);
-        RandPlayer<Othello> randPlayer = new RandPlayer<Othello>();
+        RandomStrategy<Othello> randPlayer = new RandomStrategy<Othello>();
         MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, randPlayer, sims);
         mcts.setUtilFunc(new UtilFunc<Othello>(1.0, 0.0, 0.5));
         players.add(mcts);
         playersNames.add("u=[1,0.0,0.5]");
 
         TreePolicy<Othello> treePolicy2 = new UCB1<Othello>(c);
-        RandPlayer<Othello> randPlayer2 = new RandPlayer<Othello>();
+        RandomStrategy<Othello> randPlayer2 = new RandomStrategy<Othello>();
         MCTS<Othello> mcts2 = new MCTS<Othello>(treePolicy2, randPlayer2, sims);
         players.add(mcts2);
         playersNames.add("u=[1,-1,0]");
@@ -65,7 +65,7 @@ public class MCTS_WPC
         for (int i = 0; i < cValues.length; i++)
         {
             TreePolicy<Othello> treePolicy = new UCB1<Othello>(cValues[i]);
-            RandPlayer<Othello> randPlayer = new RandPlayer<Othello>();
+            RandomStrategy<Othello> randPlayer = new RandomStrategy<Othello>();
             MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, randPlayer, sims);
             players.add(mcts);
             playersNames.add("c=" + cValues[i]);
@@ -114,7 +114,7 @@ public class MCTS_WPC
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c);
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         EpsilonGreedy<Othello> epsilonGreedy = new EpsilonGreedy<Othello>(wpc, epsilon);
-        MCTS<Othello> stdMCTS = new MCTS<Othello>(treePolicy, new RandPlayer<Othello>(), nSims);
+        MCTS<Othello> stdMCTS = new MCTS<Othello>(treePolicy, new RandomStrategy<Othello>(), nSims);
         MCTS<Othello> wpcMCTS = new MCTS<Othello>(treePolicy, epsilonGreedy, nSims);
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(stdMCTS);
@@ -130,7 +130,7 @@ public class MCTS_WPC
         int timeout = 1000;
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c);
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-//        MCTSTime<Othello> stdMCTS = new MCTSTime<Othello>(treePolicy, new RandPlayer<Othello>());
+//        MCTSTime<Othello> stdMCTS = new MCTSTime<Othello>(treePolicy, new RandomStrategy<Othello>());
         MCTS<Othello> stdMCTS = new MCTS<Othello>(treePolicy, new EpsilonGreedy<Othello>(wpc, 1.0));
         MCTS<Othello> wpcMCTS = new MCTS<Othello>(treePolicy, new EpsilonGreedy<Othello>(wpc, 0.1));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();

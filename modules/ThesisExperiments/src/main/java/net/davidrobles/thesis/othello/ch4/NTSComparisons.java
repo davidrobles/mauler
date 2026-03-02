@@ -38,7 +38,7 @@ public class NTSComparisons
         players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
 //        players.add(new EpsilonGreedy<Othello>(wpc, epsilon));
         players.add(new UCT<Othello>(0.5, 500));
-//        players.add(new RandPlayer<Othello>());
+//        players.add(new RandomStrategy<Othello>());
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.setVerbose(true);

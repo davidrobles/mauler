@@ -2,7 +2,7 @@ package net.davidrobles.mauler.players.mcts;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.players.mcts.tree.UCB1;
 
 /**
@@ -10,7 +10,7 @@ import net.davidrobles.mauler.players.mcts.tree.UCB1;
  *
  * <p>Specialises {@link MCTS} with the {@link UCB1} tree policy and a
  * uniformly random rollout policy. Constructors without a {@code defPolicy}
- * argument use {@link RandPlayer} as the default rollout policy.
+ * argument use {@link RandomStrategy} as the default rollout policy.
  *
  * <p>Two operational modes are supported:
  * <ul>
@@ -29,7 +29,7 @@ public class UCT<GAME extends Game<GAME>> extends MCTS<GAME>
      */
     public UCT(double c)
     {
-        super(new UCB1<>(c), new RandPlayer<>());
+        super(new UCB1<>(c), new RandomStrategy<>());
     }
 
     /**
@@ -40,7 +40,7 @@ public class UCT<GAME extends Game<GAME>> extends MCTS<GAME>
      */
     public UCT(double c, int nSims)
     {
-        super(new UCB1<>(c), new RandPlayer<>(), nSims);
+        super(new UCB1<>(c), new RandomStrategy<>(), nSims);
     }
 
     /**

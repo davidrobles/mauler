@@ -2,7 +2,7 @@ package net.davidrobles.mauler.loa;
 
 import net.davidrobles.mauler.core.MatchController;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;
@@ -23,8 +23,8 @@ public class LOARun
         LOA loa = new LOA();
         List<Strategy<LOA>> players = new ArrayList<Strategy<LOA>>()
         {{
-                add(new RandPlayer<LOA>(RND));
-                add(new RandPlayer<LOA>(RND));
+                add(new RandomStrategy<LOA>(RND));
+                add(new RandomStrategy<LOA>(RND));
             }};
 
         LOAView panel = new LOAView(loa);

@@ -12,7 +12,7 @@ import java.util.Random;
  * <p>Special cases:
  * <ul>
  *   <li>{@code ε = 0.0} — fully greedy (deterministic); equivalent to {@link GreedyPlayer}</li>
- *   <li>{@code ε = 1.0} — fully random; equivalent to {@link RandPlayer}</li>
+ *   <li>{@code ε = 1.0} — fully random; equivalent to {@link RandomStrategy}</li>
  * </ul>
  *
  * <p>Commonly used as a rollout policy inside MCTS to inject heuristic knowledge

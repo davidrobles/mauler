@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.DRPlot;
 import net.davidrobles.mauler.players.UtilFunc;
@@ -41,7 +41,7 @@ public class MCvsMCTS
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandomStrategy<Othello>(rng);
         String[] rowNames = { "MCTS", "MC" };
 
         int interval = (end - start) / steps;
@@ -102,7 +102,7 @@ public class MCvsMCTS
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandomStrategy<Othello>(rng);
         UtilFunc<Othello> utilFunc = new UtilFunc<Othello>();
         String[] rowNames = { "MC", "MCTS" };
 

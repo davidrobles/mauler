@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandPlayer;
+import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.OthelloUtil;
 import net.davidrobles.mauler.othello.TD0;
@@ -105,7 +105,7 @@ public class LogistelloPatterns
                 // Series against Random
                 players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.0));
-                players.add(new RandPlayer<Othello>());
+                players.add(new RandomStrategy<Othello>());
                 series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();

@@ -14,12 +14,12 @@ import java.util.Random;
  *
  * @param <GAME> the game type
  */
-public class RandPlayer<GAME extends Game<GAME>> implements Strategy<GAME>
+public class RandomStrategy<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private final Random rng;
 
     /** Creates a player backed by a default (unseeded) {@link Random}. */
-    public RandPlayer()
+    public RandomStrategy()
     {
         this(new Random());
     }
@@ -29,7 +29,7 @@ public class RandPlayer<GAME extends Game<GAME>> implements Strategy<GAME>
      *
      * @param rng the random source to use for move selection
      */
-    public RandPlayer(Random rng)
+    public RandomStrategy(Random rng)
     {
         this.rng = rng;
     }

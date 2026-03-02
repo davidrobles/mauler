@@ -2,7 +2,7 @@
 //
 //import MatchController;
 //import dr.mauler.core.players.Strategy;
-//import dr.mauler.core.players.RandPlayer;
+//import dr.mauler.core.players.RandomStrategy;
 //import BoardApp;
 //import MatchControllerButtonsView;
 //import MatchControllerSliderView;
@@ -25,8 +25,8 @@
 //        TicTacToe tic = new TicTacToe();
 //        List<Strategy<TicTacToe>> players = new ArrayList<Strategy<TicTacToe>>()
 //        {{
-//            add(new RandPlayer<TicTacToe>(rng));
-//            add(new RandPlayer<TicTacToe>(rng));
+//            add(new RandomStrategy<TicTacToe>(rng));
+//            add(new RandomStrategy<TicTacToe>(rng));
 //        }};
 //
 //        TicTacToeView panel = new TicTacToeView(tic);

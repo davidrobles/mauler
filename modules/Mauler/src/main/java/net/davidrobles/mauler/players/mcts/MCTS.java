@@ -17,7 +17,7 @@ import java.util.List;
  *       until an unexpanded node or terminal state is reached.</li>
  *   <li><b>Expansion</b> — expand the first unvisited node by creating its children.</li>
  *   <li><b>Simulation</b> — run a random rollout to a terminal state using the
- *       default policy (typically a {@link net.davidrobles.mauler.players.RandPlayer}).</li>
+ *       default policy (typically a {@link net.davidrobles.mauler.players.RandomStrategy}).</li>
  *   <li><b>Backpropagation</b> — propagate the outcome back up through all
  *       visited nodes via a running-mean update.</li>
  * </ol>

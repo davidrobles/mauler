@@ -3,7 +3,7 @@ package net.davidrobles.mauler.othello;//package dr.mauler.othello;
 //public class OthelloRun
 //{
 //    // MixedPlayer
-//    static RandPlayer<Othello> randomPlayer = new RandPlayer<Othello>(rand);
+//    static RandomStrategy<Othello> randomPlayer = new RandomStrategy<Othello>(rand);
 //
 //    // Players
 //    static Minimax<Othello> minimax = new Minimax<Othello>(wpc, 4);
