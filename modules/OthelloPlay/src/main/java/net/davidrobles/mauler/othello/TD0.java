@@ -117,8 +117,8 @@ public class TD0<GAME extends Game<GAME>>
         {
             GAME prevGame = game.copy();
             game.makeMove(PlayersUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng));
-            double current = evalFunc.eval(prevGame, 0);
-            double next = evalFunc.eval(game, 0);
+            double current = evalFunc.evaluate(prevGame, 0);
+            double next = evalFunc.evaluate(game, 0);
             double tdError = learningRate * (discountFactor * next - current) * (1 - current * current);
             evalFunc.updateWeights(prevGame, tdError);
         }

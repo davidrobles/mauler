@@ -1,22 +1,22 @@
 package net.davidrobles.mauler.othello.ef;
 
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 import java.util.Iterator;
 import java.util.TreeSet;
 
-public class EvalFuncFitness<T extends EvalFunc> implements Comparable<EvalFuncFitness<T>>
+public class EvaluatorFitness<T extends Evaluator> implements Comparable<EvaluatorFitness<T>>
 {
     private double fitness;
     private T evalFunc;
 
-    public EvalFuncFitness(T evalFunc, double fitness)
+    public EvaluatorFitness(T evalFunc, double fitness)
     {
         this.evalFunc = evalFunc;
         this.fitness = fitness;
     }
 
-    public T getEvalFunc()
+    public T getEvaluator()
     {
         return evalFunc;
     }
@@ -26,9 +26,9 @@ public class EvalFuncFitness<T extends EvalFunc> implements Comparable<EvalFuncF
         return fitness;
     }
 
-    public static <T extends EvalFunc> void printTop(TreeSet<EvalFuncFitness<T>> set, int howMany)
+    public static <T extends Evaluator> void printTop(TreeSet<EvaluatorFitness<T>> set, int howMany)
     {
-        Iterator<EvalFuncFitness<T>> iter = set.iterator();
+        Iterator<EvaluatorFitness<T>> iter = set.iterator();
         System.out.println("Top evaluation functions so far: ");
 
         for (int i = 0; i < howMany && iter.hasNext(); i++)
@@ -41,7 +41,7 @@ public class EvalFuncFitness<T extends EvalFunc> implements Comparable<EvalFuncF
     ////////////////
 
     @Override
-    public int compareTo(EvalFuncFitness<T> other)
+    public int compareTo(EvaluatorFitness<T> other)
     {
         if (getFitness() > other.getFitness())
             return -1;

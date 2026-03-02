@@ -26,7 +26,7 @@ public final class PlayersUtil
      * @return a legal move index in {@code [0, game.getNumMoves())}
      */
     public static <GAME extends Game<GAME>> int epsilonGreedyMove(
-            GAME game, EvalFunc<GAME> evalFunc, double epsilon, Random rng)
+            GAME game, Evaluator<GAME> evalFunc, double epsilon, Random rng)
     {
         if (rng.nextDouble() > epsilon)
             return greedyMove(game, evalFunc);
@@ -43,7 +43,7 @@ public final class PlayersUtil
      * @return a legal move index in {@code [0, game.getNumMoves())}
      */
     public static <GAME extends Game<GAME>> int epsilonGreedyMove(
-            GAME game, EvalFunc<GAME> evalFunc, double epsilon)
+            GAME game, Evaluator<GAME> evalFunc, double epsilon)
     {
         return epsilonGreedyMove(game, evalFunc, epsilon, new Random());
     }
@@ -56,7 +56,7 @@ public final class PlayersUtil
      * @param evalFunc evaluation function to score successor positions
      * @return a legal move index in {@code [0, game.getNumMoves())}
      */
-    public static <GAME extends Game<GAME>> int greedyMove(GAME game, EvalFunc<GAME> evalFunc)
+    public static <GAME extends Game<GAME>> int greedyMove(GAME game, Evaluator<GAME> evalFunc)
     {
         int numMoves = game.getNumMoves();
         if (numMoves == 1)
@@ -69,7 +69,7 @@ public final class PlayersUtil
         {
             GAME copy = game.copy();
             copy.makeMove(move);
-            double value = evalFunc.eval(copy, game.getCurPlayer());
+            double value = evalFunc.evaluate(copy, game.getCurPlayer());
 
             if (value > bestValue)
             {

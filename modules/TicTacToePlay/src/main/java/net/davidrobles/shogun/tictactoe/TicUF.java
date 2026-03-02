@@ -1,11 +1,11 @@
 package net.davidrobles.shogun.tictactoe;
 
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import static net.davidrobles.mauler.core.GameResult.*;
 
-public class TicUF implements EvalFunc<TicTacToe> {
+public class TicUF implements Evaluator<TicTacToe> {
 
     private double win = 1.0, draw = 0.0, loss = -1.0;
 
@@ -20,7 +20,7 @@ public class TicUF implements EvalFunc<TicTacToe> {
     }
 
     @Override
-    public double eval(TicTacToe ticTacToe, int player) {
+    public double evaluate(TicTacToe ticTacToe, int player) {
         if (ticTacToe.isOver()) {
             switch (ticTacToe.getOutcome().orElseThrow()[player]) {
                 case WIN:  return win;

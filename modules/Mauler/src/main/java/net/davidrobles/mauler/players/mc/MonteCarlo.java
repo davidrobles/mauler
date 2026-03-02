@@ -156,7 +156,7 @@ public class MonteCarlo<GAME extends Game<GAME>> implements Player<GAME>
         while (!copy.isOver())
             copy.makeMove(rand.nextInt(copy.getNumMoves()));
 
-        return utilFunc.eval(copy, player);
+        return utilFunc.evaluate(copy, player);
     }
 
     // -------------------------------------------------------------------------

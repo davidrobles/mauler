@@ -128,11 +128,11 @@ public class NTuple implements LinearEF<Othello>
     }
 
     //////////////
-    // EvalFunc //
+    // Evaluator //
     //////////////
 
     @Override
-    public double eval(Othello othello, int player)
+    public double evaluate(Othello othello, int player)
     {
         double value = 0;
         int[] board = NTUtil.boardToNTupleValues(othello);

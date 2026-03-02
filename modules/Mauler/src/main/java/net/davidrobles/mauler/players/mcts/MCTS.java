@@ -144,7 +144,7 @@ public class MCTS<GAME extends Game<GAME>> implements Player<GAME>
         GAME copy = node.getGame().copy();
         while (!copy.isOver())
             copy.makeMove(defPolicy.move(copy));
-        return utilFunc.eval(copy, player);
+        return utilFunc.evaluate(copy, player);
     }
 
     /** Backpropagation: propagates {@code outcome} to every node on the path. */

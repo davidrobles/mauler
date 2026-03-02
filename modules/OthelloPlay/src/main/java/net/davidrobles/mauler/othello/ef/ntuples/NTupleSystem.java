@@ -102,11 +102,11 @@ public class NTupleSystem implements LinearEF<Othello>
     }
 
     //////////////
-    // EvalFunc //
+    // Evaluator //
     //////////////
 
     @Override
-    public double eval(Othello othello, int player)
+    public double evaluate(Othello othello, int player)
     {
         if (othello.isOver())
             return PlayersUtil.utility(othello, player, WIN, LOSS, DRAW);
@@ -114,7 +114,7 @@ public class NTupleSystem implements LinearEF<Othello>
         double value = 0;
 
         for (NTuple nTuple : nTuples)
-            value += nTuple.eval(othello, player);
+            value += nTuple.evaluate(othello, player);
 
         value = player == 0 ? value : -value;
 

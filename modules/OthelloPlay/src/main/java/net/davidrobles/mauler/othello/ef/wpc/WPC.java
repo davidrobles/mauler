@@ -184,7 +184,7 @@ public class WPC implements LinearEF<Othello>
     /////////////////////////
 
     @Override
-    public double eval(Othello othello, int player)
+    public double evaluate(Othello othello, int player)
     {
         if (othello.isOver())
             return PlayersUtil.utility(othello, player, WIN, LOSS, DRAW);

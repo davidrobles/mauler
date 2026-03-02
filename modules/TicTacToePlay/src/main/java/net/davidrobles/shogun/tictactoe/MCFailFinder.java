@@ -144,7 +144,7 @@
 ////            while (!newGame.isOver())
 ////                newGame.makeMove(rand.nextInt(newGame.getNumMoves()));
 ////
-////            outcomes[move] += utilFunc.eval(newGame, 0);
+////            outcomes[move] += utilFunc.evaluate(newGame, 0);
 ////        }
 ////
 ////        for (int i = 0; i < outcomes.length; i++) {

@@ -4,7 +4,7 @@ import net.davidrobles.mauler.players.Player;
 import net.davidrobles.mauler.core.util.SpeedTest;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.EpsilonGreedy;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +19,14 @@ public class NTSSpeedTests
         int timeoutInSecs = 10;
         double epsilon = 0.1;
 
-        Map<String, EvalFunc<Othello>> players = new HashMap<String, EvalFunc<Othello>>();
+        Map<String, Evaluator<Othello>> players = new HashMap<String, Evaluator<Othello>>();
         players.put("DR-WPC", WPC_SYM);
         players.put("FIRST-NTS", NTS_RND);
         players.put("RS-NTS", NTS_RS);
         players.put("LOG-NTS", NTS_LOG);
         players.put("EVO-NTS", NTS_EVO);
 
-        for (Map.Entry<String, EvalFunc<Othello>> entry : players.entrySet())
+        for (Map.Entry<String, Evaluator<Othello>> entry : players.entrySet())
         {
             Player<Othello> player = new EpsilonGreedy<Othello>(entry.getValue(), epsilon);
             double ntsGames = SpeedTest.playerSpeed(othello, player, timeoutInSecs);

@@ -26,7 +26,8 @@ import net.davidrobles.mauler.core.Game;
  * @see UtilFunc
  * @see GreedyPlayer
  */
-public interface EvalFunc<GAME extends Game<GAME>>
+@FunctionalInterface
+public interface Evaluator<GAME extends Game<GAME>>
 {
     /**
      * Scores the given game state from the perspective of {@code player}.
@@ -35,5 +36,5 @@ public interface EvalFunc<GAME extends Game<GAME>>
      * @param player the player index whose perspective to score from
      * @return a score where higher values favour {@code player}
      */
-    double eval(GAME game, int player);
+    double evaluate(GAME game, int player);
 }

@@ -1,19 +1,19 @@
 package net.davidrobles.mauler.players.minimax;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME>
 {
-    private EvalFunc<GAME> evalFunc;
+    private Evaluator<GAME> evalFunc;
     private final int maxDepth;
 
-    public AlphaBeta(EvalFunc<GAME> evalFunc)
+    public AlphaBeta(Evaluator<GAME> evalFunc)
     {
         this(evalFunc, Integer.MAX_VALUE);
     }
 
-    public AlphaBeta(EvalFunc<GAME> evalFunc, int maxDepth)
+    public AlphaBeta(Evaluator<GAME> evalFunc, int maxDepth)
     {
         this.evalFunc = evalFunc;
         this.maxDepth = maxDepth;
@@ -22,7 +22,7 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
     public MoveScore abNegamax(GAME game, int maxDepth, int curDepth, int alpha, int beta)
     {
         if (game.isOver() || curDepth == maxDepth)
-            return new MoveScore(evalFunc.eval(game, game.getCurPlayer()), -1);
+            return new MoveScore(evalFunc.evaluate(game, game.getCurPlayer()), -1);
 
         int bestMove = -1;
         double bestScore = Integer.MIN_VALUE;

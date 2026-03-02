@@ -20,7 +20,7 @@ import net.davidrobles.mauler.core.Game;
  *
  * @param <GAME> the game type
  */
-public class UtilFunc<GAME extends Game<GAME>> implements EvalFunc<GAME>
+public class UtilFunc<GAME extends Game<GAME>> implements Evaluator<GAME>
 {
     private final double win;
     private final double loss;
@@ -50,7 +50,7 @@ public class UtilFunc<GAME extends Game<GAME>> implements EvalFunc<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // EvalFunc
+    // Evaluator
     // -------------------------------------------------------------------------
 
     /**
@@ -62,10 +62,10 @@ public class UtilFunc<GAME extends Game<GAME>> implements EvalFunc<GAME>
      * @throws IllegalStateException if the game is not over, or the outcome is unexpected
      */
     @Override
-    public double eval(GAME game, int player)
+    public double evaluate(GAME game, int player)
     {
         if (!game.isOver())
-            throw new IllegalStateException("UtilFunc.eval() called on a non-terminal position");
+            throw new IllegalStateException("UtilFunc.evaluate() called on a non-terminal position");
 
         switch (game.getOutcome().orElseThrow()[player])
         {

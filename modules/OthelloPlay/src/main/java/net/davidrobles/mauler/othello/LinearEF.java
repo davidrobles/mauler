@@ -1,13 +1,13 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 /**
  * Linear Evaluation function.
  * @param <GAME> the type of the game to be scored
  */
-public interface LinearEF<GAME extends Game<GAME>> extends EvalFunc<GAME>
+public interface LinearEF<GAME extends Game<GAME>> extends Evaluator<GAME>
 {
     /**
      * Updates the weights of the linear function with the temporal

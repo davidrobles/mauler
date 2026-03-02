@@ -1,12 +1,12 @@
 package net.davidrobles.mauler.othello.ef.wpc;
 
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 import java.util.List;
 import java.util.Random;
 
-public class WPCStages implements EvalFunc<Othello>
+public class WPCStages implements Evaluator<Othello>
 {
     private List<? extends WPC> wpcs;
     private int[] ranges;
@@ -29,7 +29,7 @@ public class WPCStages implements EvalFunc<Othello>
     }
 
     @Override
-    public double eval(Othello othello, int player)
+    public double evaluate(Othello othello, int player)
     {
         int stage = findStage(othello.getNumDiscs(), ranges);
         WPC wpc = wpcs.get(stage);
@@ -37,7 +37,7 @@ public class WPCStages implements EvalFunc<Othello>
         if (wpc == null)
             return rng.nextDouble() * 2 - 1;
 
-        return wpc.eval(othello, player);
+        return wpc.evaluate(othello, player);
     }
 
     public static void validateNumStones(int stones)

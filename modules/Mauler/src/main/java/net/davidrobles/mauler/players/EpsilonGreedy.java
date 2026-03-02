@@ -22,7 +22,7 @@ import java.util.Random;
  */
 public class EpsilonGreedy<GAME extends Game<GAME>> implements Player<GAME>
 {
-    protected final EvalFunc<GAME> evalFunc;
+    protected final Evaluator<GAME> evalFunc;
     protected final double epsilon;
     protected final Random rng;
 
@@ -34,7 +34,7 @@ public class EpsilonGreedy<GAME extends Game<GAME>> implements Player<GAME>
      * @param rng      the random source used for exploration decisions
      * @throws IllegalArgumentException if {@code epsilon} is outside {@code [0.0, 1.0]}
      */
-    public EpsilonGreedy(EvalFunc<GAME> evalFunc, double epsilon, Random rng)
+    public EpsilonGreedy(Evaluator<GAME> evalFunc, double epsilon, Random rng)
     {
         if (epsilon < 0.0 || epsilon > 1.0)
             throw new IllegalArgumentException("epsilon must be in [0.0, 1.0], got: " + epsilon);
@@ -50,7 +50,7 @@ public class EpsilonGreedy<GAME extends Game<GAME>> implements Player<GAME>
      * @param evalFunc the evaluation function used for greedy move selection
      * @param epsilon  exploration probability in {@code [0.0, 1.0]}
      */
-    public EpsilonGreedy(EvalFunc<GAME> evalFunc, double epsilon)
+    public EpsilonGreedy(Evaluator<GAME> evalFunc, double epsilon)
     {
         this(evalFunc, epsilon, new Random());
     }

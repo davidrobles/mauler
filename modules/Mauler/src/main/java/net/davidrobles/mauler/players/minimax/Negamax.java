@@ -1,26 +1,26 @@
 package net.davidrobles.mauler.players.minimax;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 
 /**
  * Negamax player.
  */
 public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME>
 {
-    private EvalFunc<GAME> evalFunc;
+    private Evaluator<GAME> evalFunc;
     private final int maxDepth;
 
     /** Iterative Deepening stuff */
     private static final int initialDepth = 4;
     private static final int stepSize = 2;
 
-    public Negamax(EvalFunc<GAME> evalFunc)
+    public Negamax(Evaluator<GAME> evalFunc)
     {
         this(evalFunc, Integer.MAX_VALUE);
     }
 
-    public Negamax(EvalFunc<GAME> evalFunc, int maxDepth)
+    public Negamax(Evaluator<GAME> evalFunc, int maxDepth)
     {
         this.evalFunc = evalFunc;
         this.maxDepth = maxDepth;
@@ -29,7 +29,7 @@ public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
     private MoveScore negamax(GAME game, int currentDepth, int maxDepth)
     {
         if (game.isOver() || currentDepth == maxDepth)
-            return new MoveScore(evalFunc.eval(game, game.getCurPlayer()), -1);
+            return new MoveScore(evalFunc.evaluate(game, game.getCurPlayer()), -1);
 
         int bestMove = -1;
         double bestScore = Integer.MIN_VALUE;

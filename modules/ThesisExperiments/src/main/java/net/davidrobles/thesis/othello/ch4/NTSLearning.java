@@ -6,7 +6,7 @@ import net.davidrobles.mauler.players.Player;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
-import net.davidrobles.mauler.othello.ef.EvalFuncFitness;
+import net.davidrobles.mauler.othello.ef.EvaluatorFitness;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
@@ -35,7 +35,7 @@ public class NTSLearning
         int games = 10000;
 
         // to save the best WPC's
-        TreeSet<EvalFuncFitness<WPC>> set = new TreeSet<EvalFuncFitness<WPC>>();
+        TreeSet<EvaluatorFitness<WPC>> set = new TreeSet<EvaluatorFitness<WPC>>();
 
         WPC wpc = new WPC(type);
         TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
@@ -56,8 +56,8 @@ public class NTSLearning
                 series.run();
                 System.out.println("Episode:  " + episode);
                 System.out.println("Win rate: " + series.getWinsAvg(0));
-                set.add(new EvalFuncFitness<WPC>(wpc.copy(), series.getWinsAvg(0)));
-                EvalFuncFitness.printTop(set, 5);
+                set.add(new EvaluatorFitness<WPC>(wpc.copy(), series.getWinsAvg(0)));
+                EvaluatorFitness.printTop(set, 5);
                 System.out.println("------------------------");
             }
         }

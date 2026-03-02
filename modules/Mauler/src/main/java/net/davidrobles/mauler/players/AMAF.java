@@ -39,7 +39,7 @@ public class AMAF<GAME extends IncrementalGame<GAME>>/* extends AbstractMC<GAME>
 //                allCells[newGame.getCellMoves()[move]];
                 newGame.makeMove(move);
             }
-//            outcomes[move] += utilFunc.eval(newGame, game.getCurPlayer());
+//            outcomes[move] += utilFunc.evaluate(newGame, game.getCurPlayer());
         }
         return 0;
     }
@@ -62,7 +62,7 @@ public class AMAF<GAME extends IncrementalGame<GAME>>/* extends AbstractMC<GAME>
 //            newGame.makeMove(move);
 //            while (!newGame.isOver())
 //                newGame.makeMove(rand.nextInt(newGame.getNumMoves()));
-//            outcomes[move] += utilFunc.eval(newGame, game.getCurPlayer());
+//            outcomes[move] += utilFunc.evaluate(newGame, game.getCurPlayer());
 //        }
 //        return DRUtil.argMax(outcomes);
 //    }

@@ -118,7 +118,7 @@ package net.davidrobles.mauler.players.mc;//package dr.dr.mauler.players.mc;
 //                        newGame.makeMove(rand.nextInt(newGame.getNumMoves()));
 //
 //                    simsCount++;
-//                    outcomes[move] += utilFunc.eval(newGame, game.getCurPlayer());
+//                    outcomes[move] += utilFunc.evaluate(newGame, game.getCurPlayer());
 //                }
 //            }
 //

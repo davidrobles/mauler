@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.enh;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.EvalFunc;
+import net.davidrobles.mauler.players.Evaluator;
 import net.davidrobles.mauler.players.mcts.tree.UCB1;
 
 /**
@@ -10,12 +10,12 @@ import net.davidrobles.mauler.players.mcts.tree.UCB1;
  */
 public class UCTNoRollout<GAME extends Game<GAME>> extends MCTSNoRollout<GAME>
 {
-    public UCTNoRollout(double c, EvalFunc<GAME> evalFunc)
+    public UCTNoRollout(double c, Evaluator<GAME> evalFunc)
     {
         super(new UCB1<GAME>(c), evalFunc);
     }
 
-    public UCTNoRollout(double c, EvalFunc<GAME> evalFunc, int nSims)
+    public UCTNoRollout(double c, Evaluator<GAME> evalFunc, int nSims)
     {
         super(new UCB1<GAME>(c), evalFunc, nSims);
     }
