@@ -7,6 +7,7 @@ import net.davidrobles.mauler.core.util.SpeedTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Othello extends ObservableGame<Othello> {
 
@@ -458,19 +459,19 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     @Override
-    public Outcome[] getOutcome() {
-        if (!isOver()) {
-            return new Outcome[] {Outcome.NA, Outcome.NA};
+    public Optional<Outcome[]> getOutcome() {
+        if (!gameOver) {
+            return Optional.empty();
         }
         int blackStonesCount = Long.bitCount(blackBB);
         int whiteStonesCount = Long.bitCount(whiteBB);
         if (blackStonesCount > whiteStonesCount) {
-            return new Outcome[] {Outcome.WIN, Outcome.LOSS};
+            return Optional.of(new Outcome[] {Outcome.WIN, Outcome.LOSS});
         }
         if (whiteStonesCount > blackStonesCount) {
-            return new Outcome[] {Outcome.LOSS, Outcome.WIN};
+            return Optional.of(new Outcome[] {Outcome.LOSS, Outcome.WIN});
         }
-        return new Outcome[] {Outcome.DRAW, Outcome.DRAW};
+        return Optional.of(new Outcome[] {Outcome.DRAW, Outcome.DRAW});
     }
 
     @Override

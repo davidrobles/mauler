@@ -132,9 +132,9 @@ public class OthelloView extends JPanel implements MoveObserver, MatchController
             g.setColor(Color.RED);
             String msg;
 
-            if (othello.getOutcome()[0] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[0] == Outcome.WIN)
                 msg = "BLACK wins";
-            else if (othello.getOutcome()[1] == Outcome.WIN)
+            else if (othello.getOutcome().orElseThrow()[1] == Outcome.WIN)
                 msg = "WHITE wins";
             else
                 msg = "Draw!";

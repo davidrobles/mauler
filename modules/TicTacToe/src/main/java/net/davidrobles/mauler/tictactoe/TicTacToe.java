@@ -7,6 +7,7 @@ import net.davidrobles.mauler.core.util.SpeedTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 3×3 Tic-tac-toe, represented with two 9-bit integer bitboards.
@@ -154,12 +155,6 @@ public class TicTacToe extends ObservableGame<TicTacToe>
     }
 
     @Override
-    public boolean isOver()
-    {
-        return getNumMoves() == 0;
-    }
-
-    @Override
     public void makeMove(int move)
     {
         List<Integer> indices = legalMoveIndices();
@@ -188,15 +183,15 @@ public class TicTacToe extends ObservableGame<TicTacToe>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        if (!isOver())
-            return new Outcome[] { Outcome.NA, Outcome.NA };
+        if (getNumMoves() != 0)
+            return Optional.empty();
         if (checkWin(crosses))
-            return new Outcome[] { Outcome.WIN, Outcome.LOSS };
+            return Optional.of(new Outcome[] { Outcome.WIN, Outcome.LOSS });
         if (checkWin(noughts))
-            return new Outcome[] { Outcome.LOSS, Outcome.WIN };
-        return new Outcome[] { Outcome.DRAW, Outcome.DRAW };
+            return Optional.of(new Outcome[] { Outcome.LOSS, Outcome.WIN });
+        return Optional.of(new Outcome[] { Outcome.DRAW, Outcome.DRAW });
     }
 
     // -------------------------------------------------------------------------

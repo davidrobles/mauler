@@ -22,7 +22,7 @@ public class TicUF implements EvalFunc<TicTacToe> {
     @Override
     public double eval(TicTacToe ticTacToe, int player) {
         if (ticTacToe.isOver()) {
-            switch (ticTacToe.getOutcome()[player]) {
+            switch (ticTacToe.getOutcome().orElseThrow()[player]) {
                 case WIN:  return win;
                 case DRAW: return draw;
                 case LOSS: return loss;

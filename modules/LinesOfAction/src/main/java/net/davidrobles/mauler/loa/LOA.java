@@ -721,9 +721,9 @@ public class LOA extends ObservableGame<LOA>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        return outcomes;
+        return gameOver ? Optional.of(outcomes) : Optional.empty();
     }
 
     @Override
@@ -986,6 +986,6 @@ public class LOA extends ObservableGame<LOA>
             System.out.println(loa);
         }
 
-        System.out.println(Arrays.toString(loa.getOutcome()));
+        System.out.println(Arrays.toString(loa.getOutcome().orElseThrow()));
     }
 }

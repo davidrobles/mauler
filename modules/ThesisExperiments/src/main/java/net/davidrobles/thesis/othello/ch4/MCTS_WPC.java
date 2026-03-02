@@ -169,7 +169,7 @@ public class MCTS_WPC
                 othello.makeMove(players.get(curPlayer).move(othello, timeout));
             }
 
-            if (othello.getOutcome()[starter] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[starter] == Outcome.WIN)
                 wins++;
         }
 

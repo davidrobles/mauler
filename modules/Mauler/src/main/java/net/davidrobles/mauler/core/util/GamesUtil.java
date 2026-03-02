@@ -101,7 +101,7 @@ public class GamesUtil
         {
             System.out.println(bold("\nOutcome"));
             for (int i = 0; i < players.size(); i++)
-                System.out.println("  " + playerLabel(i) + "  " + outcomeLabel(game.getOutcome()[i]));
+                System.out.println("  " + playerLabel(i) + "  " + outcomeLabel(game.getOutcome().orElseThrow()[i]));
             System.out.println();
         }
     }
@@ -130,7 +130,7 @@ public class GamesUtil
         }
 
         System.out.println(bold("\nOutcome"));
-        Outcome[] outcomes = game.getOutcome();
+        Outcome[] outcomes = game.getOutcome().orElseThrow();
         for (int i = 0; i < outcomes.length; i++)
             System.out.println("  " + playerLabel(i) + "  " + outcomeLabel(outcomes[i]));
         System.out.println();

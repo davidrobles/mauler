@@ -1,5 +1,7 @@
 package net.davidrobles.mauler.core;
 
+import java.util.Optional;
+
 /**
  * This is a fake game used for testing.
  */
@@ -36,15 +38,9 @@ public class DummyGame implements Game<DummyGame>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        return new Outcome[0];
-    }
-
-    @Override
-    public boolean isOver()
-    {
-        return false;
+        return Optional.empty();
     }
 
     @Override

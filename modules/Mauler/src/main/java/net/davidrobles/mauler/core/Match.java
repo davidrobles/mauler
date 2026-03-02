@@ -86,7 +86,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<Outcome[]>
         while (!g.isOver())
             g.makeMove(selectMove(g));
 
-        Outcome[] outcomes = g.getOutcome();
+        Outcome[] outcomes = g.getOutcome().orElseThrow();
 
         if (starter == 1)
             outcomes = new Outcome[] { outcomes[1], outcomes[0] };

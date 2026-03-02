@@ -5,6 +5,7 @@ import net.davidrobles.mauler.core.Outcome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Connect4 implements Game<Connect4>
 {
@@ -263,9 +264,9 @@ public class Connect4 implements Game<Connect4>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        return outcomes;
+        return outcomes[0] == Outcome.NA ? Optional.empty() : Optional.of(outcomes);
     }
 
     @Override

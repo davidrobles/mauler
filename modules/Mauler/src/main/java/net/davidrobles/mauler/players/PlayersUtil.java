@@ -103,7 +103,7 @@ public final class PlayersUtil
         if (!game.isOver())
             throw new IllegalStateException("utility() called on a non-terminal position");
 
-        switch (game.getOutcome()[player])
+        switch (game.getOutcome().orElseThrow()[player])
         {
             case WIN:  return win;
             case LOSS: return loss;

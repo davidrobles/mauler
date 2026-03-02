@@ -67,7 +67,7 @@ public class UtilFunc<GAME extends Game<GAME>> implements EvalFunc<GAME>
         if (!game.isOver())
             throw new IllegalStateException("UtilFunc.eval() called on a non-terminal position");
 
-        switch (game.getOutcome()[player])
+        switch (game.getOutcome().orElseThrow()[player])
         {
             case WIN:  return win;
             case LOSS: return loss;

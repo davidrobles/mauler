@@ -1,5 +1,7 @@
 package net.davidrobles.mauler.core;
 
+import java.util.Optional;
+
 /**
  * Core interface for two-player (and n-player) deterministic board games in the Mauler framework.
  *
@@ -18,7 +20,7 @@ package net.davidrobles.mauler.core;
  *     int move = player.move(game);   // 0 <= move < game.getNumMoves()
  *     game.makeMove(move);
  * }
- * Outcome[] outcomes = game.getOutcome();
+ * Outcome[] outcomes = game.getOutcome().orElseThrow();
  * }</pre>
  *
  * <p>Implementations should also override {@code equals()} and {@code hashCode()} based on the
@@ -92,28 +94,32 @@ public interface Game<GAME extends Game<GAME>>
     int getNumPlayers();
 
     /**
-     * Returns the outcome for each player once the game is over. The array length equals
-     * {@link #getNumPlayers()}, and {@code getOutcome()[i]} gives the result for player {@code i}.
+     * Returns the outcome for each player once the game is over, or an empty
+     * {@link Optional} if the game is still in progress.
      *
-     * <p>Each entry is one of:
-     * <ul>
-     *   <li>{@link Outcome#WIN}  — player {@code i} won</li>
-     *   <li>{@link Outcome#LOSS} — player {@code i} lost</li>
-     *   <li>{@link Outcome#DRAW} — the game ended in a draw</li>
-     *   <li>{@link Outcome#NA}   — game is still in progress</li>
-     * </ul>
+     * <p>When present, the array length equals {@link #getNumPlayers()}, and
+     * {@code getOutcome().orElseThrow()[i]} gives the result for player {@code i}.
+     * Each entry is one of {@link Outcome#WIN}, {@link Outcome#LOSS}, or {@link Outcome#DRAW}.
      *
-     * @return the outcome array, indexed by player
+     * @return an {@code Optional} containing the outcome array when the game is over,
+     *         or {@link Optional#empty()} if the game is still in progress
      */
-    Outcome[] getOutcome();
+    Optional<Outcome[]> getOutcome();
 
     /**
      * Returns {@code true} if the game has ended (no legal moves remain, or a terminal
      * condition has been reached).
      *
+     * <p>The default implementation delegates to {@link #getOutcome()}: returns {@code true}
+     * when an outcome is present. Implementations with a cheap terminal flag (e.g. a cached
+     * {@code gameOver} boolean) should override this for performance.
+     *
      * @return {@code true} if the game is over
      */
-    boolean isOver();
+    default boolean isOver()
+    {
+        return getOutcome().isPresent();
+    }
 
     /**
      * Applies the move at the given index for the current player, advancing the game state.

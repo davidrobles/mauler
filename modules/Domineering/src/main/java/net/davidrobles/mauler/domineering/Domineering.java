@@ -6,6 +6,7 @@ import net.davidrobles.mauler.core.Outcome;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Domineering implements Game<Domineering>
 {
@@ -176,21 +177,15 @@ public class Domineering implements Game<Domineering>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        if (!isOver())
-           return new Outcome[] { Outcome.NA, Outcome.NA };
+        if (getNumMoves() != 0)
+            return Optional.empty();
 
         if (getCurPlayer() == 0)
-            return new Outcome[] { Outcome.LOSS, Outcome.WIN };
+            return Optional.of(new Outcome[] { Outcome.LOSS, Outcome.WIN });
 
-        return new Outcome[] { Outcome.WIN, Outcome.LOSS };
-    }
-
-    @Override
-    public boolean isOver()
-    {
-        return getNumMoves() == 0;
+        return Optional.of(new Outcome[] { Outcome.WIN, Outcome.LOSS });
     }
 
     @Override

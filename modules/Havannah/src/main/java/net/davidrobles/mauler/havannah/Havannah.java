@@ -193,9 +193,9 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public Outcome[] getOutcome()
+    public Optional<Outcome[]> getOutcome()
     {
-        return new Outcome[0];
+        return Optional.empty(); // TODO: implement outcome detection
     }
 
     @Override

@@ -44,7 +44,7 @@ public class MCTSParallelTest
                 othello.makeMove(move);
             }
 
-            if (othello.getOutcome()[0] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[0] == Outcome.WIN)
                 wins++;
         }
 
