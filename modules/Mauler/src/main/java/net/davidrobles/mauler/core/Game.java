@@ -1,77 +1,140 @@
 package net.davidrobles.mauler.core;
 
-public interface Game<GAME extends Game<GAME>> {
-
+/**
+ * Core interface for two-player (and n-player) deterministic board games in the Mauler framework.
+ *
+ * <p>Games are self-referential generics — {@code GAME extends Game<GAME>} — so that methods like
+ * {@link #copy()} and {@link #newInstance()} return the concrete type rather than the raw interface,
+ * enabling type-safe use with {@link net.davidrobles.mauler.players.Player Player} and the
+ * tournament infrastructure ({@code Match}, {@code Series}, {@code RoundRobin}).
+ *
+ * <p>The move model is index-based: {@link #getNumMoves()} returns how many legal moves exist, and
+ * {@link #makeMove(int)} accepts an index in {@code [0, getNumMoves())}. {@link #getMoves()} returns
+ * the same moves as human-readable strings for logging and display purposes.
+ *
+ * <p>Typical game loop:
+ * <pre>{@code
+ * while (!game.isOver()) {
+ *     int move = player.move(game);   // 0 <= move < game.getNumMoves()
+ *     game.makeMove(move);
+ * }
+ * Outcome[] outcomes = game.getOutcome();
+ * }</pre>
+ *
+ * <p>Implementations should also override {@code equals()} and {@code hashCode()} based on the
+ * full game state, which is required for correctness of {@link #copy()} in tests and tree search.
+ *
+ * @param <GAME> the concrete game type (self-referential generic)
+ *
+ * @see net.davidrobles.mauler.core.AbstractGame
+ * @see net.davidrobles.mauler.core.Outcome
+ * @see net.davidrobles.mauler.players.Player
+ */
+public interface Game<GAME extends Game<GAME>>
+{
     /**
-     * Returns a copy of the game.
-     * @return a copy of the game
+     * Returns a deep copy of the current game state. The copy is fully independent —
+     * moves made on the copy do not affect the original, and vice versa.
+     *
+     * <p>Used extensively by AI players to simulate future positions without
+     * modifying the live game.
+     *
+     * @return a deep copy of this game
      */
     GAME copy();
 
     /**
-     * Returns the player in turn. The player indices start from 0.
-     * @return the index of the player in turn
+     * Returns the index of the player whose turn it is. Player indices start at {@code 0}.
+     *
+     * @return the current player index
      */
     int getCurPlayer();
 
     /**
-     * Returns a list of the legal moves. The moves are represented as strings
-     * using game specific representation. The main reason to have this
-     * method is to save the history of moves made.
-     * @return the legal moves
+     * Returns the legal moves for the current player as human-readable strings,
+     * using a game-specific notation (e.g. {@code "e4"}, {@code "a1b2"}).
+     *
+     * <p>The array is parallel to the index space of {@link #makeMove(int)}: index {@code i}
+     * in this array corresponds to passing {@code i} to {@code makeMove}.
+     *
+     * <p>Returns an empty array when the game is over.
+     *
+     * @return the legal moves as strings, in the same order as their indices
      */
     String[] getMoves();
 
     /**
-     * Returns the number of legal moves for the player in turn.
+     * Returns the number of legal moves available to the current player.
+     * Equivalent to {@code getMoves().length} but may be faster since it avoids
+     * allocating the string array.
+     *
+     * <p>Returns {@code 0} when the game is over.
+     *
      * @return the number of legal moves
      */
     int getNumMoves();
 
     /**
-     * The name of the game.
-     * @return name of the game
+     * Returns the display name of the game (e.g. {@code "Tic-tac-toe"}, {@code "Othello"}).
+     *
+     * @return the game name
      */
     String getName();
 
     /**
-     * The number of players of this game.
-     * @return number of players
+     * Returns the number of players in this game.
+     *
+     * @return the number of players
      */
     int getNumPlayers();
 
     /**
-     * Returns an array with the outcomes for each of the players.
-     * For example, if there are 4 players in the game,
-     * the length of the outcomes array will be 4.
-     * @return
+     * Returns the outcome for each player once the game is over. The array length equals
+     * {@link #getNumPlayers()}, and {@code getOutcome()[i]} gives the result for player {@code i}.
+     *
+     * <p>Each entry is one of:
+     * <ul>
+     *   <li>{@link Outcome#WIN}  — player {@code i} won</li>
+     *   <li>{@link Outcome#LOSS} — player {@code i} lost</li>
+     *   <li>{@link Outcome#DRAW} — the game ended in a draw</li>
+     *   <li>{@link Outcome#NA}   — game is still in progress</li>
+     * </ul>
+     *
+     * @return the outcome array, indexed by player
      */
     Outcome[] getOutcome();
 
     /**
-     * Returns true if the game is over.
-     * @return true if the game is over
+     * Returns {@code true} if the game has ended (no legal moves remain, or a terminal
+     * condition has been reached).
+     *
+     * @return {@code true} if the game is over
      */
     boolean isOver();
 
     /**
-     * Makes a move for the player in turn.*
-     * For example, if the number of moves is 5, the player in
-     * turn must take a move from the set {0, 1, 2, 3, 4}. Any
-     * other move is considered an illegal move.
-     * @param move the move to take
+     * Applies the move at the given index for the current player, advancing the game state.
+     * The valid range is {@code [0, getNumMoves())}; implementations should throw
+     * {@link IllegalArgumentException} for out-of-range values.
+     *
+     * @param move the index of the move to apply
+     * @throws IllegalArgumentException if {@code move} is out of range
      */
     void makeMove(int move);
 
     /**
-     * Creates a new game of the same generic type of the current one.
-     * @return a new game
+     * Creates a fresh instance of this game type in its initial state, equivalent to
+     * constructing a new game with default parameters.
+     *
+     * <p>Useful when the concrete type is only known through the generic parameter,
+     * such as in tournament runners.
+     *
+     * @return a new game instance in its initial state
      */
     GAME newInstance();
 
     /**
-     * Restarts the game.
+     * Resets the game to its initial state, as if it were just constructed.
      */
     void reset();
-
 }
