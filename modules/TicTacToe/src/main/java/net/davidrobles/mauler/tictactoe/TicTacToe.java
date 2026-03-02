@@ -8,162 +8,204 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TicTacToe extends ObservableGame<TicTacToe> {
-
+/**
+ * 3×3 Tic-tac-toe, represented with two 9-bit integer bitboards.
+ *
+ * <p>Bit {@code i} in {@code crosses} (resp. {@code noughts}) is set when player 0
+ * (resp. player 1) occupies cell {@code i}, where cells are numbered row-major:
+ * <pre>
+ *   0 | 1 | 2
+ *  ---+---+---
+ *   3 | 4 | 5
+ *  ---+---+---
+ *   6 | 7 | 8
+ * </pre>
+ *
+ * <p>Player 0 is always X (crosses) and moves first.
+ */
+public class TicTacToe extends ObservableGame<TicTacToe>
+{
     public static final int SIZE = 3;
+    public static final int CELLS = SIZE * SIZE;
+
     public enum Cell { CROSS, NOUGHT, EMPTY }
 
     private int crosses, noughts;
-    private static final int[] WINNING_PATTERNS = {7, 56, 448, 73, 146, 292, 273, 84};
 
-    public TicTacToe() {
+    // All eight winning lines as bitmasks
+    private static final int[] WINNING_PATTERNS = { 7, 56, 448, 73, 146, 292, 273, 84 };
+
+    public TicTacToe()
+    {
         reset();
     }
 
-    public Cell getCell(int cellIndex) {
-        if ((crosses & (1L << cellIndex)) != 0L)
-            return Cell.CROSS;
-        if ((noughts & (1L << cellIndex)) != 0L)
-            return Cell.NOUGHT;
+    // -------------------------------------------------------------------------
+    // Board queries
+    // -------------------------------------------------------------------------
+
+    public Cell getCell(int cellIndex)
+    {
+        if ((crosses & (1 << cellIndex)) != 0) return Cell.CROSS;
+        if ((noughts & (1 << cellIndex)) != 0) return Cell.NOUGHT;
         return Cell.EMPTY;
     }
 
-    public Cell getCell(int row, int col) {
+    public Cell getCell(int row, int col)
+    {
         return getCell(SIZE * row + col);
     }
 
-    public Cell[] getBoard() {
-        Cell[] boardArray = new Cell[9];
-        for (int i = 0; i < 9; i++)
-            boardArray[i] = getCell(i);
-        return boardArray;
+    public Cell[] getBoard()
+    {
+        Cell[] board = new Cell[CELLS];
+        for (int i = 0; i < CELLS; i++)
+            board[i] = getCell(i);
+        return board;
     }
 
-    private boolean checkWin(int board) {
+    // -------------------------------------------------------------------------
+    // Internal helpers
+    // -------------------------------------------------------------------------
+
+    private boolean checkWin(int board)
+    {
         for (int pattern : WINNING_PATTERNS)
             if ((board & pattern) == pattern)
                 return true;
         return false;
     }
 
-    private int getCurrentBitboard() {
+    private boolean isWin()
+    {
+        return checkWin(crosses) || checkWin(noughts);
+    }
+
+    private int emptyCells()
+    {
+        return CELLS - Integer.bitCount(crosses | noughts);
+    }
+
+    private int currentBitboard()
+    {
         return getCurPlayer() == 0 ? crosses : noughts;
     }
 
-    private void setCurrentBitboard(int bitboard) {
+    private void setCurrentBitboard(int bitboard)
+    {
         if (getCurPlayer() == 0)
             crosses = bitboard;
         else
             noughts = bitboard;
     }
 
-    private List<Integer> legalMoves() {
-        List<Integer> moves = new ArrayList<Integer>();
+    private List<Integer> legalMoveIndices()
+    {
+        List<Integer> moves = new ArrayList<>();
         if (getNumMoves() > 0) {
-            int legal = ~(crosses | noughts);
-            for (int i = 0; i < 9; i++)
-                if ((legal & (1 << i)) != 0)
+            int empty = ~(crosses | noughts);
+            for (int i = 0; i < CELLS; i++)
+                if ((empty & (1 << i)) != 0)
                     moves.add(i);
         }
         return moves;
     }
 
-    private boolean isWin() {
-        return checkWin(crosses) || checkWin(noughts);
-    }
-
-    private int emptyCells() {
-        return 9 - Integer.bitCount(crosses | noughts);
-    }
-
-    //////////
-    // Game //
-    //////////
+    // -------------------------------------------------------------------------
+    // Game
+    // -------------------------------------------------------------------------
 
     @Override
-    public TicTacToe copy() {
-        TicTacToe gameCopy = new TicTacToe();
-        gameCopy.crosses = crosses;
-        gameCopy.noughts = noughts;
-        return gameCopy;
+    public TicTacToe copy()
+    {
+        TicTacToe copy = new TicTacToe();
+        copy.crosses = crosses;
+        copy.noughts = noughts;
+        return copy;
     }
 
     @Override
-    public int getCurPlayer() {
+    public int getCurPlayer()
+    {
+        // X moves on even turns (9, 7, 5, ... empty cells), O on odd turns
         return (emptyCells() + 1) % 2;
     }
 
     @Override
-    public String[] getMoves() {
-        List<String> moves = new ArrayList<String>();
-        for (Integer move : legalMoves())
-            moves.add(String.valueOf(move));
-        return moves.toArray(new String[moves.size()]);
+    public String[] getMoves()
+    {
+        List<Integer> indices = legalMoveIndices();
+        String[] moves = new String[indices.size()];
+        for (int i = 0; i < indices.size(); i++)
+            moves[i] = String.valueOf(indices.get(i));
+        return moves;
     }
 
     @Override
-    public int getNumMoves() {
+    public int getNumMoves()
+    {
         return isWin() ? 0 : emptyCells();
     }
 
     @Override
-    public int getNumPlayers() {
+    public int getNumPlayers()
+    {
         return 2;
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver()
+    {
         return getNumMoves() == 0;
     }
 
     @Override
-    public void makeMove(int move) {
-        if (move < 0 || move >= getNumMoves())
-            throw new IllegalArgumentException("Illegal move!");
-        setCurrentBitboard(getCurrentBitboard() | (1 << legalMoves().get(move)));
+    public void makeMove(int move)
+    {
+        List<Integer> indices = legalMoveIndices();
+        if (move < 0 || move >= indices.size())
+            throw new IllegalArgumentException("Illegal move: " + move);
+        setCurrentBitboard(currentBitboard() | (1 << indices.get(move)));
+        notifyMoveObservers();
     }
 
     @Override
-    public String getName() {
+    public String getName()
+    {
         return "Tic-tac-toe";
     }
 
     @Override
-    public TicTacToe newInstance() {
+    public TicTacToe newInstance()
+    {
         return new TicTacToe();
     }
 
     @Override
-    public void reset() {
+    public void reset()
+    {
         crosses = noughts = 0;
     }
 
-    // TODO: This method is too long
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        if (!isOver()) {
-            builder.append(("Player: " + getCurPlayer() + "\n"));
-            builder.append(("Moves:  " + Arrays.toString(legalMoves().toArray()) + "\n"));
-        } else {
-            builder.append("Game over\n");
-        }
-        builder.append("\n");
-        for (int i = 0; i < 9; i++) {
-            if ((crosses & (1 << i)) != 0)
-                builder.append(" X ");
-            else if ((noughts & (1 << i)) != 0)
-                builder.append(" O ");
-            else
-                builder.append(" - ");
-            if (i % 3 == 2)
-                builder.append("\n");
-        }
-        return builder.toString();
+    public Outcome[] getOutcome()
+    {
+        if (!isOver())
+            return new Outcome[] { Outcome.NA, Outcome.NA };
+        if (checkWin(crosses))
+            return new Outcome[] { Outcome.WIN, Outcome.LOSS };
+        if (checkWin(noughts))
+            return new Outcome[] { Outcome.LOSS, Outcome.WIN };
+        return new Outcome[] { Outcome.DRAW, Outcome.DRAW };
     }
 
+    // -------------------------------------------------------------------------
+    // Object
+    // -------------------------------------------------------------------------
+
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         if (this == obj) return true;
         if (!(obj instanceof TicTacToe)) return false;
         TicTacToe other = (TicTacToe) obj;
@@ -171,23 +213,37 @@ public class TicTacToe extends ObservableGame<TicTacToe> {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return 31 * crosses + noughts;
     }
 
     @Override
-    public Outcome[] getOutcome() {
-        if (!isOver())
-            return new Outcome[] {Outcome.NA, Outcome.NA};
-        if (checkWin(crosses))
-            return new Outcome[] {Outcome.WIN, Outcome.LOSS};
-        if (checkWin(noughts))
-            return new Outcome[] {Outcome.LOSS, Outcome.WIN};
-        return new Outcome[] {Outcome.DRAW, Outcome.DRAW};
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        if (!isOver()) {
+            sb.append("Player: ").append(getCurPlayer()).append("\n");
+            sb.append("Moves:  ").append(Arrays.toString(legalMoveIndices().toArray())).append("\n");
+        } else {
+            sb.append("Game over\n");
+        }
+        sb.append("\n");
+        for (int i = 0; i < CELLS; i++) {
+            if ((crosses & (1 << i)) != 0)
+                sb.append(" X ");
+            else if ((noughts & (1 << i)) != 0)
+                sb.append(" O ");
+            else
+                sb.append(" - ");
+            if (i % SIZE == SIZE - 1)
+                sb.append("\n");
+        }
+        return sb.toString();
     }
 
-    public static void main(String[] args) {
-        TicTacToe tic = new TicTacToe();
-        System.out.println(SpeedTest.gameSpeed(tic, 10));
+    public static void main(String[] args)
+    {
+        System.out.println(SpeedTest.gameSpeed(new TicTacToe(), 10));
     }
 }
