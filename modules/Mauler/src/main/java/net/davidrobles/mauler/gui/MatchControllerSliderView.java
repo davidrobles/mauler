@@ -39,7 +39,7 @@ public class MatchControllerSliderView<GAME extends Game<GAME> & MoveObservable>
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 if (source.isFocusOwner()) {
-                    controller.setChange(source.getValue());
+                    controller.navigateTo(source.getValue());
                 }
             }
         });

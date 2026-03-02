@@ -92,10 +92,10 @@ public class MatchControllerButtonsView<GAME extends Game<GAME> & MoveObservable
     @Override
     public void update(GAME game)
     {
-        startButton.setEnabled(controller.isStart());
+        startButton.setEnabled(controller.isPrev());
         prevButton.setEnabled(controller.isPrev());
         nextButton.setEnabled(controller.isNext());
-        endButton.setEnabled(controller.isEnd());
+        endButton.setEnabled(controller.canGoToEnd());
         playToEndButton.setEnabled(!controller.isOver());
         repaint();
     }
