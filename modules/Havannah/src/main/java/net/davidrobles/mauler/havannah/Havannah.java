@@ -1,12 +1,11 @@
 package net.davidrobles.mauler.havannah;
 
 import net.davidrobles.mauler.core.AbstractGame;
-import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Outcome;
 
 import java.util.*;
 
-public class Havannah extends AbstractGame implements Game<Havannah>
+public class Havannah extends AbstractGame<Havannah>
 {
     private int ply, size;
     private CellWrapper[] cells;

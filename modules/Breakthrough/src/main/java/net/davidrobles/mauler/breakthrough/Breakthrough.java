@@ -1,7 +1,6 @@
 package net.davidrobles.mauler.breakthrough;
 
 import net.davidrobles.mauler.core.AbstractGame;
-import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Outcome;
 
 import java.awt.*;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Breakthrough extends AbstractGame implements Game<Breakthrough>
+public class Breakthrough extends AbstractGame<Breakthrough>
 {
     public enum Cell { BLACK, WHITE, EMPTY }
     private final int rows, cols, cells;
