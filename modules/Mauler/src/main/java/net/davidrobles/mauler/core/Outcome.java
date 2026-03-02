@@ -14,4 +14,12 @@ public enum Outcome {
         return c;
     }
 
+    public Outcome flip() {
+        switch (this) {
+            case WIN:  return LOSS;
+            case LOSS: return WIN;
+            default:   return this;
+        }
+    }
+
 }

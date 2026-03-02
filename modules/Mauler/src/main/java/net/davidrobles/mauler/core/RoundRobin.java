@@ -1,334 +1,363 @@
 package net.davidrobles.mauler.core;
 
-//import com.google.common.base.Stopwatch;
+import net.davidrobles.mauler.core.util.Console;
 import net.davidrobles.mauler.players.Player;
-import net.davidrobles.util.DRMarkdown;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * A round-robin tournament in which every pair of players plays a {@link Series} of games.
+ *
+ * <p>For {@code n} players, {@code n*(n-1)/2} series are run (one per unique pair). Each series
+ * alternates who starts each game to neutralize first-move advantage. Results are aggregated
+ * into a win-rate matrix: {@code averages[i][j]} is player {@code i}'s win rate against player {@code j}.
+ * The last column ({@code averages[i][n]}) holds player {@code i}'s overall average win rate.
+ *
+ * <p>Results can be exported as a formatted text table ({@link #toFormattedTable()}),
+ * LaTeX ({@link #toLatexTable()}), or CSV ({@link #toCSV()}).
+ *
+ * @param <GAME> the game type
+ */
 public class RoundRobin<GAME extends Game<GAME>>
 {
-    protected GAME game;
-    protected List<Player<GAME>> players;
-    protected List<String> playerNames;
-    protected int nGames;
-    protected boolean finished = false;
-    protected Outcome[][][] outcomes;
-    protected double[][] averages;
-    protected double[][] stdErrors;
-    private String caption = "FILL";
-//    private Stopwatch stopwatch = new Stopwatch();
+    private final GAME game;
+    private final List<Player<GAME>> players;
+    private final List<String> playerNames;
+    private final int nGames;
+    private final int timeout;
+    private final Outcome[][][] outcomes;
+    private final double[][] averages;
+    private final double[][] stdErrors;
+    private String caption = "";
+    private boolean finished = false;
     private boolean verbose = true;
-    private int timeout = -1;
 
+    /**
+     * Creates a round-robin tournament with no per-move time limit.
+     *
+     * @param game    the game to play
+     * @param nGames  number of games per series (per player pair)
+     * @param players the participating players
+     */
     public RoundRobin(GAME game, int nGames, List<Player<GAME>> players)
     {
+        this(game, nGames, players, defaultNames(players), -1);
+    }
+
+    /**
+     * Creates a round-robin tournament with a per-move time limit.
+     *
+     * @param game    the game to play
+     * @param nGames  number of games per series
+     * @param players the participating players
+     * @param timeout per-move time limit in milliseconds (must be positive)
+     */
+    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, int timeout)
+    {
+        this(game, nGames, players, defaultNames(players), timeout);
+    }
+
+    /**
+     * Creates a round-robin tournament with custom player display names.
+     *
+     * @param game        the game to play
+     * @param nGames      number of games per series
+     * @param players     the participating players
+     * @param playerNames display names for each player (parallel to {@code players})
+     */
+    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames)
+    {
+        this(game, nGames, players, playerNames, -1);
+    }
+
+    /**
+     * Creates a round-robin tournament with custom player names and a per-move time limit.
+     *
+     * @param game        the game to play
+     * @param nGames      number of games per series
+     * @param players     the participating players
+     * @param playerNames display names for each player
+     * @param timeout     per-move time limit in milliseconds, or {@code -1} for no limit
+     */
+    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames, int timeout)
+    {
+        if (timeout != -1 && timeout <= 0)
+            throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
+
         this.game = game;
-        this.players = players;
         this.nGames = nGames;
+        this.players = players;
+        this.playerNames = playerNames;
+        this.timeout = timeout;
         this.outcomes = new Outcome[players.size()][players.size()][nGames];
         this.averages = new double[players.size()][players.size() + 1];
         this.stdErrors = new double[players.size()][players.size() + 1];
-        this.playerNames = new ArrayList<String>();
-
-        for (int i = 0; i < players.size(); i++)
-             playerNames.add(players.get(i).toString());
     }
 
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, int timeout)
+    // -------------------------------------------------------------------------
+    // Configuration
+    // -------------------------------------------------------------------------
+
+    public void setVerbose(boolean verbose)
     {
-        this(game, nGames, players);
-
-        if (timeout <= 0)
-            throw new IllegalArgumentException();
-
-        this.timeout = timeout;
+        this.verbose = verbose;
     }
-
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames)
-    {
-        this(game, nGames, players);
-        this.playerNames = playerNames;
-    }
-
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames, int timeout)
-    {
-        this(game, nGames, players, playerNames);
-
-        if (timeout <= 0)
-            throw new IllegalArgumentException();
-
-        this.timeout = timeout;
-    }
-
-    //////////////////////
-    // Abstract methods //
-    //////////////////////
-
-//    protected abstract Series<GAME> createSeries(List<Player<GAME>> players);
-//    protected abstract void toStringExtra(StringBuilder builder);
-
-    //////////////////////
-    // Instance methods //
-    //////////////////////
 
     public void setCaption(String caption)
     {
         this.caption = caption;
     }
 
+    // -------------------------------------------------------------------------
+    // Run
+    // -------------------------------------------------------------------------
+
+    /**
+     * Runs all series and blocks until complete.
+     */
     public void run()
     {
-        if (verbose) {
-            DRMarkdown.printH1("Starting Round Robin");
-            int nSeries = (players.size() / 2) * (players.size() - 1);
-            System.out.println("Series to play: " + nSeries);
-            System.out.println(this);
-        }
+        int n = players.size();
+        int nSeries = n * (n - 1) / 2;
 
-        Collection<Series<GAME>> series = new ArrayList<Series<GAME>>();
-
-        for (int p1 = 0; p1 < players.size(); p1++)
+        if (verbose)
         {
-            for (int p2 = p1 + 1; p2 < players.size(); p2++)
-            {
-                List<Player<GAME>> seriesPlayers = new ArrayList<Player<GAME>>();
-                seriesPlayers.add(players.get(p1));
-                seriesPlayers.add(players.get(p2));
-
-                if (timeout <= 0)
-                    series.add(new Series<GAME>(game, nGames, seriesPlayers));
-                else
-                    series.add(new Series<GAME>(game, nGames, seriesPlayers, timeout));
-            }
+            Console.header("Round Robin — " + game.getName());
+            System.out.println("  " + Console.dim("Series      ") + nSeries);
+            System.out.println("  " + Console.dim("Games each  ") + String.format("%,d", nGames));
+            if (timeout > 0)
+                System.out.println("  " + Console.dim("Timeout     ") + timeout + " ms");
+            System.out.println();
         }
 
-//        stopwatch.start();
+        Collection<Series<GAME>> allSeries = new ArrayList<>();
 
-        for (Series<GAME> s : series) {
-            try {
-                s.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        for (Series<GAME> s : series)
+        for (int p1 = 0; p1 < n; p1++)
         {
-            List<Player<GAME>> thePlayers = s.getPlayers();
-
-            int player1Index = players.indexOf(thePlayers.get(0));
-            int player2Index = players.indexOf(thePlayers.get(1));
-
-            Outcome[] outs = s.getOutcomes();
-
-            stdErrors[player1Index][player2Index] = s.getStdError(0);
-            stdErrors[player2Index][player1Index] = s.getStdError(1);
-            averages[player1Index][player2Index] = s.getWinsAvg(0);
-            averages[player2Index][player1Index] = s.getWinsAvg(1);
-
-            for (int i = 0; i < outs.length; i++)
+            for (int p2 = p1 + 1; p2 < n; p2++)
             {
-                Outcome theOut = outs[i];
-                outcomes[player1Index][player2Index][i] = theOut;
+                List<Player<GAME>> pair = new ArrayList<>();
+                pair.add(players.get(p1));
+                pair.add(players.get(p2));
 
-                if (theOut == Outcome.WIN)
-                    outcomes[player2Index][player1Index][i] = Outcome.LOSS;
-                else if (theOut == Outcome.LOSS)
-                    outcomes[player2Index][player1Index][i] = Outcome.WIN;
-                else
-                    outcomes[player2Index][player1Index][i] = Outcome.DRAW;
+                Series<GAME> s = timeout > 0
+                        ? new Series<>(game, nGames, pair, timeout)
+                        : new Series<>(game, nGames, pair);
+
+                s.setVerbose(false);
+                allSeries.add(s);
             }
         }
+
+        for (Series<GAME> s : allSeries)
+            s.run();
+
+        for (Series<GAME> s : allSeries)
+            recordResults(s);
 
         calculateAverages();
         finished = true;
 
-        if (verbose) {
-            DRMarkdown.printH1("Finished Round Robin");
-            System.out.println(this);
+        if (verbose)
+        {
+            Console.header("Results — " + game.getName());
             System.out.println(toFormattedTable());
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Results
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the formatted win-rate table. Requires {@link #run()} to have completed.
+     */
+    public String toFormattedTable()
+    {
+        checkFinished();
+
+        int col = maxPlayerNameLength() + 4;
+        if (col < 16) col = 16;
+
+        String divider = "─".repeat(col * (players.size() + 2)) + "\n";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(divider);
+        sb.append(String.format("%" + col + "s", ""));
+        for (String name : playerNames)
+            sb.append(String.format("%" + col + "s", name));
+        sb.append(String.format("%" + col + "s", "Avg.")).append("\n");
+        sb.append(divider);
+
+        for (int p1 = 0; p1 < players.size(); p1++)
+        {
+            sb.append(String.format("%" + col + "s", playerNames.get(p1)));
+            for (int p2 = 0; p2 <= players.size(); p2++)
+            {
+                if (p1 == p2)
+                    sb.append(String.format("%" + col + "s", "--"));
+                else
+                    sb.append(String.format("%" + col + "s",
+                            String.format("%6.1f (%.1f)", averages[p1][p2] * 100, stdErrors[p1][p2] * 100)));
+            }
+            sb.append("\n");
+        }
+
+        sb.append(divider);
+        return sb.toString();
+    }
+
+    /**
+     * Returns a LaTeX table of the results. Requires {@link #run()} to have completed.
+     */
+    public String toLatexTable()
+    {
+        checkFinished();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\\begin{table*}[ht]\n");
+        sb.append("\\centering\n");
+        sb.append("\\scriptsize\n");
+        sb.append("\\begin{tabular}{l");
+
+        for (int i = 0; i <= players.size(); i++)
+            sb.append("r");
+
+        sb.append("}\n\\toprule\nPlayer");
+
+        for (String name : playerNames)
+            sb.append(" & ").append(name);
+
+        sb.append(" & Avg. \\\\\n\\midrule\n");
+
+        for (int p1 = 0; p1 < players.size(); p1++)
+        {
+            sb.append(playerNames.get(p1));
+            for (int p2 = 0; p2 <= players.size(); p2++)
+            {
+                if (p1 == p2)
+                    sb.append(" & ---");
+                else
+                    sb.append(String.format(" & %.1f (%.1f)", averages[p1][p2] * 100, stdErrors[p1][p2] * 100));
+            }
+            sb.append(" \\\\\n");
+        }
+
+        sb.append("\\bottomrule\n\\end{tabular}\n");
+        if (!caption.isEmpty())
+            sb.append("\\caption{").append(caption).append("}\n");
+        sb.append("\\end{table*}\n");
+
+        return sb.toString();
+    }
+
+    /**
+     * Returns a CSV of the results. Requires {@link #run()} to have completed.
+     */
+    public String toCSV()
+    {
+        checkFinished();
+
+        StringBuilder sb = new StringBuilder("Player");
+
+        for (String name : playerNames)
+            sb.append(",").append(name);
+
+        sb.append(",Avg.\n");
+
+        for (int p1 = 0; p1 < players.size(); p1++)
+        {
+            sb.append(playerNames.get(p1));
+            for (int p2 = 0; p2 <= players.size(); p2++)
+            {
+                if (p1 == p2)
+                    sb.append(",-");
+                else
+                    sb.append(String.format(",%.6f", averages[p1][p2]));
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    // -------------------------------------------------------------------------
+    // Internal helpers
+    // -------------------------------------------------------------------------
+
+    private void recordResults(Series<GAME> s)
+    {
+        List<Player<GAME>> pair = s.getPlayers();
+        int p1 = players.indexOf(pair.get(0));
+        int p2 = players.indexOf(pair.get(1));
+
+        averages[p1][p2] = s.getWinsAvg(0);
+        averages[p2][p1] = s.getWinsAvg(1);
+        stdErrors[p1][p2] = s.getStdError(0);
+        stdErrors[p2][p1] = s.getStdError(1);
+
+        Outcome[] outs = s.getOutcomes();
+        for (int i = 0; i < outs.length; i++)
+        {
+            outcomes[p1][p2][i] = outs[i];
+            outcomes[p2][p1][i] = outs[i].flip();
         }
     }
 
     private void calculateAverages()
     {
-        for (int p1 = 0; p1 < players.size(); p1++)
+        int n = players.size();
+        for (int p1 = 0; p1 < n; p1++)
         {
             double total = 0;
+            for (int p2 = 0; p2 < n; p2++)
+                if (p1 != p2) total += averages[p1][p2];
 
-            for (int p2 = 0; p2 < players.size(); p2++)
-                if (p1 != p2)
-                    total += averages[p1][p2];
-
-            averages[p1][players.size()] = total / (players.size() - 1);
-            double avg = averages[p1][players.size()];
-            stdErrors[p1][players.size()] = Math.sqrt((avg * (1 - avg)) / ((players.size() - 1) * nGames));
+            double avg = total / (n - 1);
+            averages[p1][n] = avg;
+            stdErrors[p1][n] = Math.sqrt((avg * (1 - avg)) / ((n - 1) * nGames));
         }
     }
 
-    public String toFormattedTable()
+    private void checkFinished()
     {
-        int maxPlayerLength = -1;
-
-        for (String player : playerNames)
-        {
-            int length = player.length();
-
-            if (length > maxPlayerLength)
-                maxPlayerLength = length;
-        }
-
-        maxPlayerLength += 4;
-
-        if (maxPlayerLength < 16)
-            maxPlayerLength = 16;
-
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < maxPlayerLength * (players.size() + 2); i++)
-            builder.append("-");
-
-        builder.append("\n");
-
-        builder.append(String.format("%" + maxPlayerLength + "s", "")); // col headers
-
-        for (String player : playerNames)
-            builder.append(String.format("%" + maxPlayerLength + "s", player));
-
-        builder.append(String.format("%" + maxPlayerLength + "s", "Avg."));
-
-        builder.append("\n");
-
-        for (int i = 0; i < maxPlayerLength * (players.size() + 2); i++)
-            builder.append("-");
-
-        builder.append("\n");
-
-        // rows
-        for (int p1 = 0; p1 < players.size(); p1++)
-        {
-            builder.append(String.format("%" + maxPlayerLength + "s", playerNames.get(p1)));
-
-            for (int p2 = 0; p2 <= players.size(); p2++)
-            {
-                if (p1 == p2)
-                    builder.append(String.format("%" + maxPlayerLength + "s", "--"));
-                else {
-                    String str = String.format("%6.1f (%.1f)", averages[p1][p2] * 100, stdErrors[p1][p2] * 100);
-                    builder.append(String.format("%" + maxPlayerLength + "s", str));
-                }
-            }
-
-            builder.append("\n");
-        }
-
-        for (int i = 0; i < maxPlayerLength * (players.size() + 2); i++)
-            builder.append("-");
-
-        builder.append("\n");
-
-        return builder.toString();
+        if (!finished)
+            throw new IllegalStateException("RoundRobin has not been run yet — call run() first");
     }
 
-    public String toLatexTable()
+    private int maxPlayerNameLength()
     {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("\\begin{table*}[ht]\n");
-        builder.append("\\centering\n");
-        builder.append("\\scriptsize\n");
-        builder.append("\\begin{tabular}{l");
-
-        for (Player<GAME> ignored : players)
-            builder.append("r");
-
-        builder.append("r}\n");
-        builder.append("\\toprule\n");
-        builder.append("Player");
-
-        for (String player : playerNames)
-            builder.append(" & " + player);
-
-        builder.append(" & Avg. \\\\\n");
-        builder.append("\\midrule\n");
-
-        for (int p1 = 0; p1 < players.size(); p1++)
-        {
-            builder.append(playerNames.get(p1));
-
-            for (int p2 = 0; p2 < players.size() + 1; p2++)
-            {
-                if (p1 == p2)
-                    builder.append(" & ---");
-                else
-                    builder.append(String.format(" & %.1f (%.1f)", averages[p1][p2] * 100, stdErrors[p1][p2] * 100));
-            }
-
-            builder.append(" \\\\\n");
-        }
-
-        builder.append("\\bottomrule\n");
-        builder.append("\\end{tabular}\n");
-        builder.append("\\caption{" + caption + "}\n");
-        builder.append("\\label{tab:FILLsdsfsdfs}\n");
-        builder.append("\\end{table*}\n");
-
-        return builder.toString();
+        int max = 0;
+        for (String name : playerNames)
+            if (name.length() > max) max = name.length();
+        return max;
     }
 
-    public String toCSV()
+    private static <GAME extends Game<GAME>> List<String> defaultNames(List<Player<GAME>> players)
     {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Player");
-
-        for (String player : playerNames)
-            builder.append("," + player);
-
-        builder.append(",Avg. \n");
-
-        for (int p1 = 0; p1 < players.size(); p1++)
-        {
-            builder.append(playerNames.get(p1));
-
-            for (int p2 = 0; p2 < players.size() + 1; p2++)
-            {
-                if (p1 == p2)
-                    builder.append(",-");
-                else
-                    builder.append(String.format(",%.6f", averages[p1][p2]));
-            }
-
-            builder.append("\n");
-        }
-
-        return builder.toString();
+        List<String> names = new ArrayList<>();
+        for (Player<GAME> p : players)
+            names.add(p.toString());
+        return names;
     }
 
-    ////////////
-    // Object //
-    ////////////
+    // -------------------------------------------------------------------------
+    // Object
+    // -------------------------------------------------------------------------
 
     @Override
     public String toString()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%14s: %s\n", "Game", game.getName()));
-        builder.append(String.format("%14s: %s\n", "No. matches", nGames));
-
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%14s: %s%n",  "Game",    game.getName()));
+        sb.append(String.format("%14s: %,d%n", "Matches", nGames));
         if (timeout > 0)
-            builder.append(String.format("%14s: %s\n", "Timeout", timeout));
-
-        builder.append(String.format("%14s: %s\n", "Players", players.get(0)));
-
+            sb.append(String.format("%14s: %d ms%n", "Timeout", timeout));
+        sb.append(String.format("%14s: %s%n", "Players", players.get(0)));
         for (int i = 1; i < players.size(); i++)
-            builder.append(String.format("%14s  %s\n", "", players.get(i)));
-
-//        if (finished)
-//            builder.append(String.format("%14s: %s\n", "Elapsed time", stopwatch));
-
-        return builder.toString();
+            sb.append(String.format("%14s  %s%n", "", players.get(i)));
+        return sb.toString();
     }
 }
