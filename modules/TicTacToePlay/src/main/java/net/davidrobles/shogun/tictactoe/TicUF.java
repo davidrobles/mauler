@@ -1,6 +1,6 @@
 package net.davidrobles.shogun.tictactoe;
 
-import net.davidrobles.mauler.players.Evaluator;
+import net.davidrobles.mauler.strategies.Evaluator;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import static net.davidrobles.mauler.core.GameResult.*;

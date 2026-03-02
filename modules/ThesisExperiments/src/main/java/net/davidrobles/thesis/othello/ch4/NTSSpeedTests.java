@@ -3,8 +3,8 @@ package net.davidrobles.thesis.othello.ch4;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.core.util.SpeedTest;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.players.Evaluator;
+import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.Evaluator;
 
 import java.util.HashMap;
 import java.util.Map;

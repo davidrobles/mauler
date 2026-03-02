@@ -9,9 +9,9 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.players.mcts.UCT;
-import net.davidrobles.mauler.players.minimax.AlphaBeta;
+import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.mcts.UCT;
+import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.util.DRMarkdown;
 
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4.ga;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;

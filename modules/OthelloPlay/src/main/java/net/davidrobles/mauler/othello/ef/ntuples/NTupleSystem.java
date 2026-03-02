@@ -2,7 +2,7 @@ package net.davidrobles.mauler.othello.ef.ntuples;
 
 import net.davidrobles.mauler.othello.LinearEF;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.PlayersUtil;
+import net.davidrobles.mauler.strategies.PlayersUtil;
 
 // TODO: write code to convert this to Simon's format
 

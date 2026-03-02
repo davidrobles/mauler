@@ -2,7 +2,7 @@ package net.davidrobles.mauler.loa;
 
 import net.davidrobles.mauler.core.MatchController;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandomStrategy;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;

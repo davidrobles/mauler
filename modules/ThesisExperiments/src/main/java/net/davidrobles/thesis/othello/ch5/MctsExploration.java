@@ -4,7 +4,7 @@ import net.davidrobles.mauler.connect4.Connect4;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.mcts.UCT;
+import net.davidrobles.mauler.strategies.mcts.UCT;
 
 import java.util.ArrayList;
 import java.util.List;

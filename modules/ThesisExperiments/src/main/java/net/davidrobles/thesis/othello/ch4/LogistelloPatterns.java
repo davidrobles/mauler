@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandomStrategy;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.OthelloUtil;
 import net.davidrobles.mauler.othello.TD0;
@@ -10,8 +10,8 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.DRPlot;
-import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.DRPlot;
+import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

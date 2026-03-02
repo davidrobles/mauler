@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  * <p>Games are self-referential generics — {@code GAME extends Game<GAME>} — so that methods like
  * {@link #copy()} returns the concrete type rather than the raw interface,
- * enabling type-safe use with {@link net.davidrobles.mauler.players.Strategy Strategy} and the
+ * enabling type-safe use with {@link net.davidrobles.mauler.strategies.Strategy Strategy} and the
  * tournament infrastructure ({@code Match}, {@code Series}, {@code RoundRobin}).
  *
  * <p>The move model is index-based: {@link #getNumMoves()} returns how many legal moves exist, and
@@ -31,7 +31,7 @@ import java.util.Optional;
  *
  * @see net.davidrobles.mauler.core.ObservableGame
  * @see net.davidrobles.mauler.core.GameResult
- * @see net.davidrobles.mauler.players.Strategy
+ * @see net.davidrobles.mauler.strategies.Strategy
  */
 public interface Game<GAME extends Game<GAME>>
 {

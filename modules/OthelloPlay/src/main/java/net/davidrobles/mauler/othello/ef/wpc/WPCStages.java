@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello.ef.wpc;
 
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.Evaluator;
+import net.davidrobles.mauler.strategies.Evaluator;
 
 import java.util.List;
 import java.util.Random;

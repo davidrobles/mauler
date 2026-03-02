@@ -4,11 +4,11 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.players.mcts.MCTS;
-import net.davidrobles.mauler.players.mcts.UCT;
-import net.davidrobles.mauler.players.mcts.enh.UCTPrior;
-import net.davidrobles.mauler.players.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.mcts.MCTS;
+import net.davidrobles.mauler.strategies.mcts.UCT;
+import net.davidrobles.mauler.strategies.mcts.enh.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
 
 import java.util.ArrayList;
 import java.util.List;

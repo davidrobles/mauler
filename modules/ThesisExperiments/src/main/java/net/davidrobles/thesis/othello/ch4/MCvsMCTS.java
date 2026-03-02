@@ -2,14 +2,14 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandomStrategy;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.DRPlot;
-import net.davidrobles.mauler.players.UtilFunc;
-import net.davidrobles.mauler.players.mc.MonteCarlo;
-import net.davidrobles.mauler.players.mcts.MCTS;
-import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
-import net.davidrobles.mauler.players.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.DRPlot;
+import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.mc.MonteCarlo;
+import net.davidrobles.mauler.strategies.mcts.MCTS;
+import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
+import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
 import net.davidrobles.util.DRMarkdown;
 
 import java.util.ArrayList;

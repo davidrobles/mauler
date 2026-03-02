@@ -2,12 +2,12 @@ package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.util.GamesUtil;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.players.RandomStrategy;
-import net.davidrobles.mauler.players.UtilFunc;
-import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
-import net.davidrobles.mauler.players.minimax.AlphaBeta;
-import net.davidrobles.mauler.players.minimax.Minimax;
-import net.davidrobles.mauler.players.minimax.Negamax;
+import net.davidrobles.mauler.strategies.RandomStrategy;
+import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
+import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
+import net.davidrobles.mauler.strategies.minimax.Minimax;
+import net.davidrobles.mauler.strategies.minimax.Negamax;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import java.util.ArrayList;

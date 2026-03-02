@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.othello.ef;
 
-import net.davidrobles.mauler.players.Evaluator;
+import net.davidrobles.mauler.strategies.Evaluator;
 
 import java.util.Iterator;
 import java.util.TreeSet;

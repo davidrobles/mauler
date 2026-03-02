@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.PlayersUtil;
+import net.davidrobles.mauler.strategies.PlayersUtil;
 
 import java.util.Random;
 import java.util.function.Supplier;

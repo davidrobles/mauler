@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Evaluator;
+import net.davidrobles.mauler.strategies.Evaluator;
 
 /**
  * Linear Evaluation function.

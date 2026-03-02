@@ -1,8 +1,8 @@
 package net.davidrobles.mauler.othello.ef;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Evaluator;
-import net.davidrobles.mauler.players.UtilFunc;
+import net.davidrobles.mauler.strategies.Evaluator;
+import net.davidrobles.mauler.strategies.UtilFunc;
 
 public class UtilityWrapper<GAME extends Game<GAME>> implements Evaluator<GAME>
 {
