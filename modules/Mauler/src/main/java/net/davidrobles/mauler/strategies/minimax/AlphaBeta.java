@@ -1,44 +1,69 @@
 package net.davidrobles.mauler.strategies.minimax;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.Evaluator;
 
+/**
+ * Alpha-beta pruning search with a fixed depth limit.
+ *
+ * <p>Produces identical results to {@link Minimax} but prunes branches that
+ * cannot influence the outcome, visiting far fewer nodes in practice.
+ *
+ * <p>Implemented as negamax with alpha-beta: scores are always from the
+ * perspective of the player to move, negated when returning to the parent.
+ * The {@link Evaluator} must therefore return scores relative to the current
+ * player (positive = good, negative = bad).
+ *
+ * <p>Supports iterative deepening via {@link DepthLimitedSearch}: pass a
+ * per-move timeout to {@link #move(Game, int)} and the search will deepen
+ * until the budget expires, returning the best move found so far.
+ *
+ * @param <GAME> the game type
+ */
 public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME>
 {
-    private Evaluator<GAME> evalFunc;
+    private final Evaluator<GAME> evaluator;
     private final int maxDepth;
 
-    public AlphaBeta(Evaluator<GAME> evalFunc)
+    /**
+     * Creates an Alpha-Beta player that searches to terminal positions.
+     *
+     * @param evaluator the evaluation function for leaf nodes
+     */
+    public AlphaBeta(Evaluator<GAME> evaluator)
     {
-        this(evalFunc, Integer.MAX_VALUE);
+        this(evaluator, Integer.MAX_VALUE);
     }
 
-    public AlphaBeta(Evaluator<GAME> evalFunc, int maxDepth)
+    /**
+     * Creates an Alpha-Beta player with a fixed depth limit.
+     *
+     * @param evaluator the evaluation function for leaf nodes
+     * @param maxDepth  the maximum search depth in plies
+     */
+    public AlphaBeta(Evaluator<GAME> evaluator, int maxDepth)
     {
-        this.evalFunc = evalFunc;
+        this.evaluator = evaluator;
         this.maxDepth = maxDepth;
     }
 
-    public MoveScore abNegamax(GAME game, int maxDepth, int curDepth, int alpha, int beta)
+    private MoveScore search(GAME game, int depth, int depthLimit, double alpha, double beta)
     {
-        if (game.isOver() || curDepth == maxDepth)
-            return new MoveScore(evalFunc.evaluate(game, game.getCurPlayer()), -1);
+        if (game.isOver() || depth == depthLimit)
+            return new MoveScore(evaluator.evaluate(game, game.getCurPlayer()), -1);
 
+        double bestScore = Double.NEGATIVE_INFINITY;
         int bestMove = -1;
-        double bestScore = Integer.MIN_VALUE;
-        assert game.getNumMoves() > 0 : game;
 
         for (int move = 0; move < game.getNumMoves(); move++)
         {
-            GAME newGame = game.copy();
-            newGame.makeMove(move);
-            MoveScore curMoveScore = abNegamax(newGame, maxDepth,  curDepth + 1, -beta, (int) -Math.max(alpha, bestScore));
-            double curScore = -curMoveScore.getScore();
+            GAME child = game.copy();
+            child.makeMove(move);
+            double score = -search(child, depth + 1, depthLimit, -beta, -Math.max(alpha, bestScore)).getScore();
 
-            if (curScore > bestScore)
+            if (score > bestScore)
             {
-                bestScore = curScore;
+                bestScore = score;
                 bestMove = move;
 
                 if (bestScore >= beta)
@@ -49,19 +74,19 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
         return new MoveScore(bestScore, bestMove);
     }
 
-    ///////////////////
-    // MinimaxPlayer //
-    ///////////////////
+    ////////////////////////
+    // DepthLimitedSearch //
+    ////////////////////////
 
     @Override
-    public int move(int maxDepth, GAME game)
+    public int move(int depthLimit, GAME game)
     {
-        return abNegamax(game, maxDepth, 0, Integer.MIN_VALUE, Integer.MAX_VALUE).getMove();
+        return search(game, 0, depthLimit, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getMove();
     }
 
-    ////////////
-    // Strategy //
-    ////////////
+    ///////////////
+    // Strategy  //
+    ///////////////
 
     @Override
     public boolean isDeterministic()
@@ -72,7 +97,7 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
     @Override
     public int move(GAME game)
     {
-        return abNegamax(game, maxDepth, 0, Integer.MIN_VALUE, Integer.MAX_VALUE).getMove();
+        return search(game, 0, maxDepth, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getMove();
     }
 
     @Override
@@ -88,6 +113,6 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
     @Override
     public String toString()
     {
-        return String.format("<Alpha-Beta maxDepth: %d, evalFunc: %s>", maxDepth, evalFunc);
+        return String.format("AlphaBeta(depth=%d, evaluator=%s)", maxDepth, evaluator);
     }
 }
