@@ -61,7 +61,7 @@ public class Minimax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
     }
 
     ////////////
-    // Player //
+    // Strategy //
     ////////////
 
     @Override

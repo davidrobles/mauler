@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.OthelloUtil;
@@ -92,7 +92,7 @@ public class LogistelloPatterns
                 System.out.println(" Episode:  " + episode );
                 System.out.println("---------------------\n");
 
-                List<Player<Othello>> players;
+                List<Strategy<Othello>> players;
                 Series<Othello> series;
 
                 // Series against previous
@@ -103,7 +103,7 @@ public class LogistelloPatterns
 //                System.out.println("vs prev: " + series.getWinsAvg(0));
 
                 // Series against Random
-                players = new ArrayList<Player<Othello>>();
+                players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.0));
                 players.add(new RandPlayer<Othello>());
                 series = new Series<>(Othello::new, games, players);
@@ -113,7 +113,7 @@ public class LogistelloPatterns
                 plot.setData(0, i, series.getWinsAvg(0));
 
                 // Series against best WPC
-                players = new ArrayList<Player<Othello>>();
+                players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.1));
                 players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
                 series = new Series<>(Othello::new, games, players);
@@ -123,7 +123,7 @@ public class LogistelloPatterns
                 plot.setData(1, i, series.getWinsAvg(0));
 
                 // Series against best WPC
-                players = new ArrayList<Player<Othello>>();
+                players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.1));
                 players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
                 series = new Series<>(Othello::new, games, players);
@@ -133,7 +133,7 @@ public class LogistelloPatterns
                 plot.setData(2, i, series.getWinsAvg(0));
 
                 // Series against MCTS
-//                players = new ArrayList<Player<Othello>>();
+//                players = new ArrayList<Strategy<Othello>>();
 //                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
 //                players.add(new UCT<Othello>(0.5, 200));
 //                series = new Series<Othello>(new Othello(), mauler, players);

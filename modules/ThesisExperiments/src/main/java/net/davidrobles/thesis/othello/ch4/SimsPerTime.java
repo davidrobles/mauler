@@ -1,6 +1,6 @@
 package net.davidrobles.thesis.othello.ch4;
 
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
@@ -73,14 +73,14 @@ public class SimsPerTime
 
         Othello othello = new Othello();
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 
         players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
         players.add(new UCT<Othello>(c));
 
-        for (Player<Othello> player : players)
+        for (Strategy<Othello> player : players)
         {
-            System.out.println("Player: " + player);
+            System.out.println("Strategy: " + player);
             int total = 0;
 
             for (int run = 0; run < nRuns; run++)

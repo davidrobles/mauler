@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4.ga;
 
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
@@ -176,7 +176,7 @@ public class GANTuples
             NTupleSystem nts = scoredNTS.getNTupleSystem();
 
             // rest
-            List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
             players.add(new EpsilonGreedy<Othello>(nts, 0.1));
             players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
 

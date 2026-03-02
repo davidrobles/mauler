@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
 
@@ -32,11 +32,11 @@ import java.util.List;
  *
  * @param <GAME> the game type
  */
-public class MCTS<GAME extends Game<GAME>> implements Player<GAME>
+public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected int nSims;
     protected TreePolicy<GAME> treePolicy;
-    protected Player<GAME> defPolicy;
+    protected Strategy<GAME> defPolicy;
     private UtilFunc<GAME> utilFunc = new UtilFunc<>(1.0, -1.0, 0.0);
 
     /**
@@ -45,7 +45,7 @@ public class MCTS<GAME extends Game<GAME>> implements Player<GAME>
      * @param treePolicy the selection/final-move policy
      * @param defPolicy  the rollout (default) policy
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Player<GAME> defPolicy)
+    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy)
     {
         this(treePolicy, defPolicy, 0);
     }
@@ -58,7 +58,7 @@ public class MCTS<GAME extends Game<GAME>> implements Player<GAME>
      * @param nSims      number of simulations per move (must be non-negative)
      * @throws IllegalArgumentException if {@code nSims} is negative
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Player<GAME> defPolicy, int nSims)
+    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy, int nSims)
     {
         if (nSims < 0)
             throw new IllegalArgumentException("nSims must be non-negative, got: " + nSims);
@@ -155,7 +155,7 @@ public class MCTS<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // Player
+    // Strategy
     // -------------------------------------------------------------------------
 
     /** Always {@code false} — rollout and tree policies are typically stochastic. */

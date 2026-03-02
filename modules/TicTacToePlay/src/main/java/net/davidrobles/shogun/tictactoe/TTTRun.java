@@ -1,7 +1,7 @@
 package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.util.GamesUtil;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
@@ -49,7 +49,7 @@ public class TTTRun
 
     private static void runFixed()
     {
-        List<Player<TicTacToe>> players = new ArrayList<>();
+        List<Strategy<TicTacToe>> players = new ArrayList<>();
 
         players.add(randomPlayer);
         players.add(alphaBeta);
@@ -70,7 +70,7 @@ public class TTTRun
 
     private static void runTimed()
     {
-        List<Player<TicTacToe>> players = new ArrayList<>();
+        List<Strategy<TicTacToe>> players = new ArrayList<>();
 
         players.add(randomPlayer);
 //        players.add(minimaxID);

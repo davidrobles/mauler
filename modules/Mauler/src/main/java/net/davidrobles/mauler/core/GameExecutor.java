@@ -14,14 +14,14 @@ package net.davidrobles.mauler.core;//
 //    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 ////    private ScheduledExecutorService executor = Executors.new;
 //
-//    public GameExecutor(GAME game, List<Player<GAME>> players, long timeout, TimeUnit unit)
+//    public GameExecutor(GAME game, List<Strategy<GAME>> players, long timeout, TimeUnit unit)
 //    {
 //        this.game = game;
 //        this.timeout = timeout;
 //        this.unit = unit;
 //        this.playerTasks = new ArrayList<PlayerTask<GAME>>(players.size());
 //
-//        for (Player<GAME> player : players)
+//        for (Strategy<GAME> player : players)
 //            playerTasks.add(new PlayerTask<GAME>(player));
 //    }
 //

@@ -59,7 +59,7 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
     }
 
     ////////////
-    // Player //
+    // Strategy //
     ////////////
 
     @Override

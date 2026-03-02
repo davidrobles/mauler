@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @param <GAME> the game type
  */
-public class RandPlayer<GAME extends Game<GAME>> implements Player<GAME>
+public class RandPlayer<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private final Random rng;
 
@@ -34,7 +34,7 @@ public class RandPlayer<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // Player
+    // Strategy
     // -------------------------------------------------------------------------
 
     @Override

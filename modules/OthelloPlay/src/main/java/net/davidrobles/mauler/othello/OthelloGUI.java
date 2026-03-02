@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.MatchController;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
@@ -25,7 +25,7 @@ public class OthelloGUI
 //        long blackBB = -1089623802071814462L;
 //        long whiteBB = 1089623802054971449L;
 //        othello.setBoard(blackBB, whiteBB);
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>()
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>()
         {{
             add(new RandPlayer<Othello>(rng));
             add(new RandPlayer<Othello>(rng));
@@ -49,7 +49,7 @@ public class OthelloGUI
     {
         Othello othello = new Othello();
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>()
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>()
         {{
             add(new RandPlayer<Othello>(rng));
             add(new RandPlayer<Othello>(rng));

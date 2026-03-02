@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.core.util.SpeedTest;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
@@ -34,7 +34,7 @@ public class NTSComparisons
         int nGames = 1000;
         Othello othello = new Othello();
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
 //        players.add(new EpsilonGreedy<Othello>(wpc, epsilon));
         players.add(new UCT<Othello>(0.5, 500));
@@ -51,7 +51,7 @@ public class NTSComparisons
         int nGames = 10000;
         Othello othello = new Othello();
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
         players.add(new EpsilonGreedy<Othello>(gen, epsilon));
 
@@ -66,7 +66,7 @@ public class NTSComparisons
         int nGames = 50;
         Othello othello = new Othello();
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new AlphaBeta<Othello>(nts));
         players.add(new AlphaBeta<Othello>(wpc));
 
@@ -80,7 +80,7 @@ public class NTSComparisons
         int nGames = 5;
         int timeout = 250;
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playersNames = new ArrayList<String>();
 
         playersNames.add("DR-WPC");

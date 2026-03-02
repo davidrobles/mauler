@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
@@ -38,7 +38,7 @@ public class PriorKnowledgeExp
         double epsilon = 0.01;
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
         players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedy<Othello>(wpc, epsilon), wpc, qInit));
 
@@ -60,7 +60,7 @@ public class PriorKnowledgeExp
         double[] epsilons = { 0.0, 0.1, 0.2, 0.3 };
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         for (int i = 0; i < epsilons.length; i++)
@@ -87,7 +87,7 @@ public class PriorKnowledgeExp
         double c = 0.5;
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
         players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyPlayer<Othello>(wpc)));
 
@@ -108,7 +108,7 @@ public class PriorKnowledgeExp
         int initQVisits = 100;
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
         players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
 
@@ -127,7 +127,7 @@ public class PriorKnowledgeExp
         int[] initQVisits = { 10, 25, 50, 75, 100 };
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
 //        for (int i = 0; i < initQVisits.length; i++)
@@ -173,7 +173,7 @@ public class PriorKnowledgeExp
         int initQVisits = 50;
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         players.add(new MonteCarlo<Othello>());

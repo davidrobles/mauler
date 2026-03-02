@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.core;
 
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 
 import java.util.List;
 import java.util.Random;
@@ -27,7 +27,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
     private static final double RANDOM_MOVE_PROBABILITY = 0.1;
 
     private final Supplier<GAME> gameFactory;
-    private final List<Player<GAME>> players;
+    private final List<Strategy<GAME>> players;
     private final int starter;
     private final int timeout;
     private final boolean injectRandomMoves;
@@ -42,7 +42,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
      * @param timeout     per-move time limit in milliseconds (must be positive)
      * @throws IllegalArgumentException if {@code timeout} is not positive
      */
-    public Match(Supplier<GAME> gameFactory, List<Player<GAME>> players, int starter, int timeout)
+    public Match(Supplier<GAME> gameFactory, List<Strategy<GAME>> players, int starter, int timeout)
     {
         if (timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
@@ -63,7 +63,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
      * @param players     the two players
      * @param starter     {@code 0} or {@code 1} — which player moves first
      */
-    public Match(Supplier<GAME> gameFactory, List<Player<GAME>> players, int starter)
+    public Match(Supplier<GAME> gameFactory, List<Strategy<GAME>> players, int starter)
     {
         if (players.size() < 2)
             throw new IllegalArgumentException("at least 2 players required");
@@ -101,7 +101,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
             return rnd.nextInt(g.getNumMoves());
 
         int playerToMove = (g.getCurPlayer() + starter) % 2;
-        Player<GAME> player = players.get(playerToMove);
+        Strategy<GAME> player = players.get(playerToMove);
 
         return timeout > 0 ? player.move(g, timeout) : player.move(g);
     }

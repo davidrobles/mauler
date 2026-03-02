@@ -135,9 +135,9 @@ public class LOAView extends JPanel implements MoveObserver, MatchControllerObse
             String msg;
 
             if (loa.getOutcome().orElseThrow()[0] == GameResult.WIN)
-                msg = "Player 1 wins";
+                msg = "Strategy 1 wins";
             else if (loa.getOutcome().orElseThrow()[1] == GameResult.WIN)
-                msg = "Player 2 wins";
+                msg = "Strategy 2 wins";
             else
                 msg = "Draw!";
 

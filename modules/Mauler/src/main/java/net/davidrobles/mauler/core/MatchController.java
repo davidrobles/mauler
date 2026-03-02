@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.core;
 
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,14 +10,14 @@ import java.util.function.Supplier;
 public class MatchController<GAME extends Game<GAME> & MoveObservable>
 {
     private Supplier<GAME> gameFactory;
-    private List<Player<GAME>> players;
+    private List<Strategy<GAME>> players;
     private long timeout;
     private List<MatchControllerObserver<GAME>> observers = new ArrayList<MatchControllerObserver<GAME>>();
     private LinkedList<GAME> gameHistory = new LinkedList<GAME>();
     private LinkedList<String> moveHistory = new LinkedList<String>();
     private int currentBoardIndex = 0;
 
-    public MatchController(Supplier<GAME> gameFactory, List<Player<GAME>> players, long timeout)
+    public MatchController(Supplier<GAME> gameFactory, List<Strategy<GAME>> players, long timeout)
     {
         GAME prototype = gameFactory.get();
         if (players.size() != prototype.getNumPlayers())

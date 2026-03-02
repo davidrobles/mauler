@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.RoundRobin;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
@@ -27,7 +27,7 @@ public class OptimalPriorKnowledge
         int[] nSimsRange = { 200 };
 
         Othello othello = new Othello();
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playersNames = new ArrayList<String>();
 
         for (int nSims = nSimsRange[0]; nSims <= nSimsRange[nSimsRange.length - 1]; nSims += nSimsInterval)

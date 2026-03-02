@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.enh;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.players.Evaluator;
 import net.davidrobles.mauler.players.mcts.tree.UCB1;
@@ -22,12 +22,12 @@ public class UCTPrior<GAME extends Game<GAME>> extends MCTSPrior<GAME>
         super(new UCB1<GAME>(c), new RandPlayer<GAME>(), priorEF, initQVisits, nSims);
     }
 
-    public UCTPrior(Player<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits)
+    public UCTPrior(Strategy<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits)
     {
         super(new UCB1<GAME>(c), defPolicy, priorEF, initQVisits);
     }
 
-    public UCTPrior(Player<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits, int nSims)
+    public UCTPrior(Strategy<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits, int nSims)
     {
         super(new UCB1<GAME>(c), defPolicy, priorEF, initQVisits, nSims);
     }

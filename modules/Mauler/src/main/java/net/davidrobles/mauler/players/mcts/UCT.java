@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.players.mcts.tree.UCB1;
 
@@ -49,7 +49,7 @@ public class UCT<GAME extends Game<GAME>> extends MCTS<GAME>
      * @param defPolicy the rollout (default) policy
      * @param c         UCB1 exploration constant
      */
-    public UCT(Player<GAME> defPolicy, double c)
+    public UCT(Strategy<GAME> defPolicy, double c)
     {
         super(new UCB1<>(c), defPolicy);
     }
@@ -61,7 +61,7 @@ public class UCT<GAME extends Game<GAME>> extends MCTS<GAME>
      * @param c         UCB1 exploration constant
      * @param nSims     number of simulations per move
      */
-    public UCT(Player<GAME> defPolicy, double c, int nSims)
+    public UCT(Strategy<GAME> defPolicy, double c, int nSims)
     {
         super(new UCB1<>(c), defPolicy, nSims);
     }

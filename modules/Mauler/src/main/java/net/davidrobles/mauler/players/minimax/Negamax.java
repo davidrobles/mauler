@@ -62,7 +62,7 @@ public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
     }
 
     ////////////
-    // Player //
+    // Strategy //
     ////////////
 
     @Override

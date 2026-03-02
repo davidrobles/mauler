@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4;
 //import com.google.common.base.Stopwatch;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
@@ -34,10 +34,10 @@ public class MCTSExperiments
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Player<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
 
         // Players
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, defaultPolicy, nSims);
         MonteCarlo<Othello> mc = new MonteCarlo<Othello>(nSims);
         players.add(mcts);
@@ -61,10 +61,10 @@ public class MCTSExperiments
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Player<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
 
         // Players
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, defaultPolicy);
         MonteCarlo<Othello> mc = new MonteCarlo<Othello>();
         players.add(mcts);
@@ -83,7 +83,7 @@ public class MCTSExperiments
 //        MCTime<Othello> timedMC = new MCTime<Othello>(utilFunc);
 //        RandomPlayer<Othello> randomPlayer = new RandomPlayer<Othello>();
 //        ParTimedMC<Othello> parTimedMC = new ParTimedMC<Othello>(utilFunc);
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(timedMC);
 //        players.add(randomPlayer);
 //
@@ -94,7 +94,7 @@ public class MCTSExperiments
     public static void testSeries()
     {
         RandPlayer<Othello> randomPlayer = new RandPlayer<Othello>();
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(randomPlayer);
         players.add(randomPlayer);
 
@@ -106,7 +106,7 @@ public class MCTSExperiments
 
     public static void testRoundRobin()
     {
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
         players.add(new RandPlayer<Othello>());
         playerNames.add("Rnd");
@@ -134,7 +134,7 @@ public class MCTSExperiments
 
     public static void hello()
     {
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new MonteCarlo<Othello>(100));
         players.add(new MonteCarlo<Othello>(100));
 
@@ -145,7 +145,7 @@ public class MCTSExperiments
 
     public static void yeap()
     {
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new MonteCarlo<Othello>(500));
         players.add(new MonteCarlo<Othello>(500));
 
@@ -211,13 +211,13 @@ public class MCTSExperiments
             MCTS<Othello> mctsSims = new MCTS<Othello>(treePolicy, new RandPlayer<Othello>(), nSims[run]);
 
             // Players evaluated
-            List<Player<Othello>> testedPlayers = new ArrayList<Player<Othello>>();
+            List<Strategy<Othello>> testedPlayers = new ArrayList<Strategy<Othello>>();
             testedPlayers.add(mcSims);
             testedPlayers.add(mctsSims);
 
             for (int i = 0; i < testedPlayers.size(); i++)
             {
-                List<Player<Othello>> seriesPlayers = new ArrayList<Player<Othello>>();
+                List<Strategy<Othello>> seriesPlayers = new ArrayList<Strategy<Othello>>();
                 seriesPlayers.add(testedPlayers.get(i));
                 seriesPlayers.add(new RandPlayer<Othello>());
 

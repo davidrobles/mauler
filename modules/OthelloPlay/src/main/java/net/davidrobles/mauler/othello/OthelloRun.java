@@ -26,7 +26,7 @@ package net.davidrobles.mauler.othello;//package dr.mauler.othello;
 //
 //    private static void runFixed()
 //    {
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 ////        players.add(randomPlayer);
 //
 //        players.add(new AlphaBeta<Othello>(randomEF, uf, 1));
@@ -43,7 +43,7 @@ package net.davidrobles.mauler.othello;//package dr.mauler.othello;
 //
 //    private static void runTimed()
 //    {
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 ////        players.add(randomPlayer);
 //        players.add(randomPlayer);
 ////        players.add(minimaxID);

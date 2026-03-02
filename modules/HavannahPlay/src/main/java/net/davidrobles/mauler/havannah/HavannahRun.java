@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.havannah;
 
 import net.davidrobles.mauler.core.MatchController;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
@@ -22,7 +22,7 @@ public class HavannahRun
     public static void runGUI()
     {
         Havannah havannah = new Havannah(8);
-        List<Player<Havannah>> players = new ArrayList<Player<Havannah>>() {{
+        List<Strategy<Havannah>> players = new ArrayList<Strategy<Havannah>>() {{
             add(new RandPlayer<Havannah>(rng));
             add(new RandPlayer<Havannah>(rng));
         }};

@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mc;//package dr.dr.mauler.players.mc;
 //
 //import dr.Game;
-//import dr.Player;
+//import dr.Strategy;
 //import dr.dr.mauler.players.UtilityFunction;
 //import DRUtil;
 //
@@ -14,7 +14,7 @@ package net.davidrobles.mauler.players.mc;//package dr.dr.mauler.players.mc;
 ///**
 // * A parallel implementation of a simple Monte-Carlo algorithm.
 // */
-//public class ParTimedMC<GAME extends Game<GAME>> extends AbstractMC<GAME> implements Player<GAME>
+//public class ParTimedMC<GAME extends Game<GAME>> extends AbstractMC<GAME> implements Strategy<GAME>
 //{
 //    public ParTimedMC(UtilityFunction<GAME> utilFunc)
 //    {
@@ -27,7 +27,7 @@ package net.davidrobles.mauler.players.mc;//package dr.dr.mauler.players.mc;
 //    }
 //
 //    ////////////
-//    // Player //
+//    // Strategy //
 //    ////////////
 //
 //    @Override

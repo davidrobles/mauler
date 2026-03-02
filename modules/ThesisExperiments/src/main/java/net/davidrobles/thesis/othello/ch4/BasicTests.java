@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4;
 import net.davidrobles.mauler.core.Match;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
@@ -21,7 +21,7 @@ public class BasicTests
 {
     static void testMatch()
     {
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new RandPlayer<Othello>());
         Match<Othello> match = new Match<>(Othello::new, players, 0);
@@ -33,7 +33,7 @@ public class BasicTests
     {
         int nGames = 50000;
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new RandPlayer<Othello>());
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
@@ -45,7 +45,7 @@ public class BasicTests
         int nGames = 100;
         int nSims = 100;
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new MonteCarlo<Othello>(nSims));
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
@@ -57,7 +57,7 @@ public class BasicTests
         int nGames = 100;
         int timeout = 20;
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new MonteCarlo<Othello>());
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
@@ -70,7 +70,7 @@ public class BasicTests
 //        int maxDepth = 7;
 //        WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new RandPlayer<Othello>());
 //        players.add(new AlphaBeta<Othello>(wpc, maxDepth));
 //
@@ -86,7 +86,7 @@ public class BasicTests
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         NTupleSystem nts = NTUtil.load("logistello-150000-0.996");
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new AlphaBeta<Othello>(nts, maxDepth));
 
@@ -102,7 +102,7 @@ public class BasicTests
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         NTupleSystem nts = NTUtil.load("logistello-150000-0.996");
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new AlphaBeta<Othello>(nts));
 
@@ -116,7 +116,7 @@ public class BasicTests
         int nSims = 200;
         double c = 0.5;
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new MonteCarlo<Othello>(nSims));
         players.add(new UCT<Othello>(c, nSims));
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
@@ -128,7 +128,7 @@ public class BasicTests
         int nGames = 100;
         int timeout = 20;
         double c = 0.5;
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new MonteCarlo<Othello>());
         players.add(new UCT<Othello>(c));
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
@@ -144,7 +144,7 @@ public class BasicTests
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         NTupleSystem nts = NTUtil.load("logistello-150000-0.996");
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new MonteCarlo<Othello>(nSims));
         players.add(new UCT<Othello>(c, nSims));
@@ -168,7 +168,7 @@ public class BasicTests
 
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         playerNames.add("Random");

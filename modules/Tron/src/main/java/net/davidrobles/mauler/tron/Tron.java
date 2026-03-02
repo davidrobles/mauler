@@ -449,7 +449,7 @@
 ////
 ////        // Evaluates the players
 ////        for (TronPlayer p : tronBoard.getPlayers()) {
-////            System.out.println("Player " + p + ": " + tronBoard.evaluate(p));
+////            System.out.println("Strategy " + p + ": " + tronBoard.evaluate(p));
 ////        }
 ////
 ////    }

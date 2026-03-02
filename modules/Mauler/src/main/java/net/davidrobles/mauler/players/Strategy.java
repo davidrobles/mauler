@@ -27,7 +27,7 @@ import net.davidrobles.mauler.core.Game;
  * @see net.davidrobles.mauler.core.Match
  * @see net.davidrobles.mauler.core.Series
  */
-public interface Player<GAME extends Game<GAME>>
+public interface Strategy<GAME extends Game<GAME>>
 {
     /**
      * Returns {@code true} if this player always makes the same move in the same

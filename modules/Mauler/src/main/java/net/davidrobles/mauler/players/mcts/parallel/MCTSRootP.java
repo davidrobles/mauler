@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.parallel;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.MCTSNode;
 import net.davidrobles.mauler.players.mcts.UCT;
@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 /**
  * MCTS with root parallelisation.
  */
-public class MCTSRootP<GAME extends Game<GAME>> implements Player<GAME>
+public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private MCTS<GAME> mcts;
 
@@ -107,7 +107,7 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     ////////////
-    // Player //
+    // Strategy //
     ////////////
 
     @Override

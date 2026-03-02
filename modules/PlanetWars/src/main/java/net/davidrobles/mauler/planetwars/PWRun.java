@@ -30,7 +30,7 @@ public class PWRun {
 
             wins[winner] += 1; 
 
-//            System.out.println("Winner: Player " + winner);
+//            System.out.println("Winner: Strategy " + winner);
         }
 
         for (int i = 0; i < 3; i++) {
@@ -69,7 +69,7 @@ public class PWRun {
         }
 
         // Result
-        System.out.println("Winner: Player " + winner);
+        System.out.println("Winner: Strategy " + winner);
     }
 
     private static void sleep(int sleepTime) {

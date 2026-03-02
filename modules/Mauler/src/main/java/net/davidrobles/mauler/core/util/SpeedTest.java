@@ -2,7 +2,7 @@ package net.davidrobles.mauler.core.util;
 
 import com.google.common.base.Stopwatch;
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +13,7 @@ public class SpeedTest
      * Calculates the number of dr.mauler per second that a player can play in a game.
      * The timeout should be given in seconds.
      */
-    public static <GAME extends Game<GAME>> double playerSpeed(GAME game, Player<GAME> player, int timeout)
+    public static <GAME extends Game<GAME>> double playerSpeed(GAME game, Strategy<GAME> player, int timeout)
     {
 //        Stopwatch stopwatch = new Stopwatch();
 //        stopwatch.start();

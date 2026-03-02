@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.core;
 
 import net.davidrobles.mauler.core.util.Console;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +29,7 @@ public class Series<GAME extends Game<GAME>>
     private final Supplier<GAME> gameFactory;
     private final String gameName;
     private final int nGames;
-    private final List<Player<GAME>> players;
+    private final List<Strategy<GAME>> players;
     private final int timeout;
     private final GameResult[] outcomes;
     private boolean finished = false;
@@ -43,7 +43,7 @@ public class Series<GAME extends Game<GAME>>
      * @param players     the two players
      * @throws IllegalArgumentException if the number of players doesn't match the game
      */
-    public Series(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players)
     {
         this(gameFactory, nGames, players, -1);
     }
@@ -57,7 +57,7 @@ public class Series<GAME extends Game<GAME>>
      * @param timeout     per-move time limit in milliseconds (must be positive)
      * @throws IllegalArgumentException if the number of players doesn't match the game, or timeout is not positive
      */
-    public Series(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, int timeout)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players, int timeout)
     {
         GAME prototype = gameFactory.get();
         if (prototype.getNumPlayers() != players.size())
@@ -135,7 +135,7 @@ public class Series<GAME extends Game<GAME>>
     // Statistics
     // -------------------------------------------------------------------------
 
-    public List<Player<GAME>> getPlayers()
+    public List<Strategy<GAME>> getPlayers()
     {
         return players;
     }

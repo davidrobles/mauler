@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.DRPlot;
@@ -41,7 +41,7 @@ public class MCvsMCTS
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Player<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
         String[] rowNames = { "MCTS", "MC" };
 
         int interval = (end - start) / steps;
@@ -64,7 +64,7 @@ public class MCvsMCTS
             System.out.println("Timeout: " + nTimes[run]);
 
             // Players
-            List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
             MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, defaultPolicy);
             players.add(mcts);
             MonteCarlo<Othello> mc = new MonteCarlo<Othello>();
@@ -102,7 +102,7 @@ public class MCvsMCTS
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
-        Player<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
+        Strategy<Othello> defaultPolicy = new RandPlayer<Othello>(rng);
         UtilFunc<Othello> utilFunc = new UtilFunc<Othello>();
         String[] rowNames = { "MC", "MCTS" };
 
@@ -126,7 +126,7 @@ public class MCvsMCTS
             System.out.println("No. sims:  ");
 
             // Players
-            List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
             MonteCarlo<Othello> mc = new MonteCarlo<Othello>(nSims[run]);
             MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, defaultPolicy, nSims[run]);
             players.add(mc);

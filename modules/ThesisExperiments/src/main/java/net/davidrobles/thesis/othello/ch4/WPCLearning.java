@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
@@ -34,7 +34,7 @@ public class WPCLearning
         TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
         // players
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedy<Othello>(wpc, 0.0));
         players.add(new RandPlayer<Othello>());
 
@@ -80,7 +80,7 @@ public class WPCLearning
             if (episode % interval == 0)
             {
                 // players
-                List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+                List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(prevWPC, 0.1));
                 players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
                 Series<Othello> series = new Series<>(Othello::new, games, players);

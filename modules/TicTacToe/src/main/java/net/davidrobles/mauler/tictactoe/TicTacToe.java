@@ -22,7 +22,7 @@ import java.util.Optional;
  *   6 | 7 | 8
  * </pre>
  *
- * <p>Player 0 is always X (crosses) and moves first.
+ * <p>Strategy 0 is always X (crosses) and moves first.
  */
 public class TicTacToe extends ObservableGame<TicTacToe>
 {

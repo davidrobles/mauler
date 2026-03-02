@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.GameResult;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.mauler.players.mcts.parallel.MCTSRootP;
@@ -25,7 +25,7 @@ public class MCTSParallelTest
         MCTSRootP<Othello> mctsRootP = new MCTSRootP<Othello>(new UCT<Othello>(c));
         UCT<Othello> uct = new UCT<Othello>(c);
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(mctsRootP);
         players.add(uct);
 
@@ -39,7 +39,7 @@ public class MCTSParallelTest
 
             while (!othello.isOver())
             {
-                Player<Othello> curPlayer = players.get(othello.getCurPlayer());
+                Strategy<Othello> curPlayer = players.get(othello.getCurPlayer());
                 int move = curPlayer.move(othello, timeout);
                 othello.makeMove(move);
             }

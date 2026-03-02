@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.IncrementalGame;
 
 import java.util.Random;
 
-public class AMAF<GAME extends IncrementalGame<GAME>>/* extends AbstractMC<GAME>*/ implements Player<GAME>
+public class AMAF<GAME extends IncrementalGame<GAME>>/* extends AbstractMC<GAME>*/ implements Strategy<GAME>
 {
     private int nSims = -1;
 
@@ -14,7 +14,7 @@ public class AMAF<GAME extends IncrementalGame<GAME>>/* extends AbstractMC<GAME>
     }
 
     ////////////
-    // Player //
+    // Strategy //
     ////////////
 
     @Override

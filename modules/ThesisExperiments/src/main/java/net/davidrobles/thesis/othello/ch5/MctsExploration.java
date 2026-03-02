@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch5;
 
 import net.davidrobles.mauler.connect4.Connect4;
 import net.davidrobles.mauler.core.RoundRobin;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.mcts.UCT;
 
@@ -15,7 +15,7 @@ public class MctsExploration {
         Connect4 c4 = new Connect4();
         int numGames = 100;
         int numMctsSims = 10000;
-        List<Player<Connect4>> players = new ArrayList<Player<Connect4>>();
+        List<Strategy<Connect4>> players = new ArrayList<Strategy<Connect4>>();
         List<String> playerNames = new ArrayList<String>();
         players.add(new UCT<Connect4>(0.6, numMctsSims));
         playerNames.add("C = 0.6");
@@ -40,7 +40,7 @@ public class MctsExploration {
         Othello othello = new Othello();
         int numGames = 100;
         int numMctsSims = 10000;
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
         players.add(new UCT<Othello>(0.2, numMctsSims));
         playerNames.add("C = 0.2");

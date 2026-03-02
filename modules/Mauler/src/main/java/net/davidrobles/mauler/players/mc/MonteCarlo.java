@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mc;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.util.DRUtil;
 
@@ -25,7 +25,7 @@ import java.util.Random;
  *
  * @param <GAME> the game type
  */
-public class MonteCarlo<GAME extends Game<GAME>> implements Player<GAME>
+public class MonteCarlo<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected final UtilFunc<GAME> utilFunc = new UtilFunc<>();
     protected final Random rand;
@@ -78,7 +78,7 @@ public class MonteCarlo<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // Player
+    // Strategy
     // -------------------------------------------------------------------------
 
     @Override

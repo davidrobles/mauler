@@ -1,7 +1,7 @@
 //package dr.shogun.tictactoe;
 //
 //import MatchController;
-//import dr.mauler.core.players.Player;
+//import dr.mauler.core.players.Strategy;
 //import dr.mauler.core.players.RandPlayer;
 //import BoardApp;
 //import MatchControllerButtonsView;
@@ -23,7 +23,7 @@
 //    public static void runTest()
 //    {
 //        TicTacToe tic = new TicTacToe();
-//        List<Player<TicTacToe>> players = new ArrayList<Player<TicTacToe>>()
+//        List<Strategy<TicTacToe>> players = new ArrayList<Strategy<TicTacToe>>()
 //        {{
 //            add(new RandPlayer<TicTacToe>(rng));
 //            add(new RandPlayer<TicTacToe>(rng));

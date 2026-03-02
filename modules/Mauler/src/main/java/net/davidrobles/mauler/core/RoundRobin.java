@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.core;
 
 import net.davidrobles.mauler.core.util.Console;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class RoundRobin<GAME extends Game<GAME>>
 {
     private final Supplier<GAME> gameFactory;
     private final String gameName;
-    private final List<Player<GAME>> players;
+    private final List<Strategy<GAME>> players;
     private final List<String> playerNames;
     private final int nGames;
     private final int timeout;
@@ -43,7 +43,7 @@ public class RoundRobin<GAME extends Game<GAME>>
      * @param nGames      number of games per series (per player pair)
      * @param players     the participating players
      */
-    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players)
     {
         this(gameFactory, nGames, players, defaultNames(players), -1);
     }
@@ -56,7 +56,7 @@ public class RoundRobin<GAME extends Game<GAME>>
      * @param players     the participating players
      * @param timeout     per-move time limit in milliseconds (must be positive)
      */
-    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, int timeout)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players, int timeout)
     {
         this(gameFactory, nGames, players, defaultNames(players), timeout);
     }
@@ -69,7 +69,7 @@ public class RoundRobin<GAME extends Game<GAME>>
      * @param players     the participating players
      * @param playerNames display names for each player (parallel to {@code players})
      */
-    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, List<String> playerNames)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players, List<String> playerNames)
     {
         this(gameFactory, nGames, players, playerNames, -1);
     }
@@ -83,7 +83,7 @@ public class RoundRobin<GAME extends Game<GAME>>
      * @param playerNames display names for each player
      * @param timeout     per-move time limit in milliseconds, or {@code -1} for no limit
      */
-    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, List<String> playerNames, int timeout)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players, List<String> playerNames, int timeout)
     {
         if (timeout != -1 && timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
@@ -141,7 +141,7 @@ public class RoundRobin<GAME extends Game<GAME>>
         {
             for (int p2 = p1 + 1; p2 < n; p2++)
             {
-                List<Player<GAME>> pair = new ArrayList<>();
+                List<Strategy<GAME>> pair = new ArrayList<>();
                 pair.add(players.get(p1));
                 pair.add(players.get(p2));
 
@@ -292,7 +292,7 @@ public class RoundRobin<GAME extends Game<GAME>>
 
     private void recordResults(Series<GAME> s)
     {
-        List<Player<GAME>> pair = s.getPlayers();
+        List<Strategy<GAME>> pair = s.getPlayers();
         int p1 = players.indexOf(pair.get(0));
         int p2 = players.indexOf(pair.get(1));
 
@@ -338,10 +338,10 @@ public class RoundRobin<GAME extends Game<GAME>>
         return max;
     }
 
-    private static <GAME extends Game<GAME>> List<String> defaultNames(List<Player<GAME>> players)
+    private static <GAME extends Game<GAME>> List<String> defaultNames(List<Strategy<GAME>> players)
     {
         List<String> names = new ArrayList<>();
-        for (Player<GAME> p : players)
+        for (Strategy<GAME> p : players)
             names.add(p.toString());
         return names;
     }

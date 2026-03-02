@@ -11,7 +11,7 @@ import net.davidrobles.mauler.core.Game;
  *
  * @param <GAME> the game type
  */
-public class GreedyPlayer<GAME extends Game<GAME>> implements Player<GAME>
+public class GreedyPlayer<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private final Evaluator<GAME> evalFunc;
 
@@ -24,7 +24,7 @@ public class GreedyPlayer<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // Player
+    // Strategy
     // -------------------------------------------------------------------------
 
     @Override

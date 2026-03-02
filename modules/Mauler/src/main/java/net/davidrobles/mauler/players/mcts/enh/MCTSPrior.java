@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.enh;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.Evaluator;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.MCTSNode;
@@ -12,14 +12,14 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
     private Evaluator<GAME> priorEF;
     private int initQVisits;
 
-    public MCTSPrior(TreePolicy<GAME> treePolicy, Player<GAME> defPolicy, Evaluator<GAME> priorEF, int initQVisits)
+    public MCTSPrior(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy, Evaluator<GAME> priorEF, int initQVisits)
     {
         super(treePolicy, defPolicy);
         this.priorEF = priorEF;
         this.initQVisits = initQVisits;
     }
 
-    public MCTSPrior(TreePolicy<GAME> treePolicy, Player<GAME> defPolicy, Evaluator<GAME> priorEF,
+    public MCTSPrior(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy, Evaluator<GAME> priorEF,
                      int initQVisits, int nSims)
     {
         super(treePolicy, defPolicy, nSims);

@@ -20,7 +20,7 @@ import java.util.Random;
  *
  * @param <GAME> the game type
  */
-public class EpsilonGreedy<GAME extends Game<GAME>> implements Player<GAME>
+public class EpsilonGreedy<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected final Evaluator<GAME> evalFunc;
     protected final double epsilon;
@@ -62,7 +62,7 @@ public class EpsilonGreedy<GAME extends Game<GAME>> implements Player<GAME>
     }
 
     // -------------------------------------------------------------------------
-    // Player
+    // Strategy
     // -------------------------------------------------------------------------
 
     /** Returns {@code true} when {@code ε = 0} (fully greedy, no randomness). */

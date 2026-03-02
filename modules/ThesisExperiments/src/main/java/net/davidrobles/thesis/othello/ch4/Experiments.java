@@ -4,7 +4,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //import dr.mauler.core.util.Series;
 //import dr.mauler.othello.ef.wpc.*;
 //import GreedyPlayer;
-//import dr.mauler.core.players.Player;
+//import dr.mauler.core.players.Strategy;
 //import Othello;
 //import EpsilonGreedy;
 //import dr.mauler.core.players.RandomPlayer;
@@ -35,7 +35,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //            System.out.print(i + " ");
 //            WPCTDLearn wpc = new WPCTDLearn.Builder(WPCType.SYM, 500, 0.01, 1.0).build();
 //            wpc.learn();
-//            List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new GreedyPlayer<Othello>(wpc));
 //            players.add(new RandomPlayer<Othello>(RNG));
 //            double[] here = null; // GamesUtil.playNGames(new Othello(), players, 10000);
@@ -62,7 +62,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        System.out.println(wpc.getFormattedWeights());
 //
 //        printH2("Playing against random");
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 ////        players.add(new EpsilonGreedy<Othello>(wpc, 0.05));
 ////        players.add(new EpsilonGreedy<Othello>(wpc, 0.05));
 //        players.add(new GreedyPlayer<Othello>(wpc));
@@ -81,17 +81,17 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        int episodes = 150000, nGames = 10000, interval = episodes / 100;
 //        WPCType type = WPCType.SYM;
 //
-//        // Player 1
+//        // Strategy 1
 //        WPCTDLearn wpc = new WPCTDLearn.Builder(type, episodes, 0.001, 1.0)
 //                .lowerBound(0)
 //                .upperBound(22)
 //                .build();
 //        wpc.setWeights(WPCUtil.getZeroWeights(type));
 //
-//        // Player 2
+//        // Strategy 2
 //        WPC symWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new EpsilonGreedy<Othello>(wpc, 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(symWPC, 0.05, RNG));
 //
@@ -139,10 +139,10 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //            allWPCs.add(wpc);
 //        }
 //
-//        // Player 2
+//        // Strategy 2
 //        WPC symWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        // TODO: temp fix
 //        players.add(new EpsilonGreedy<Othello>(new WPCStages(allWPCs, new int[] { 1, 2, 3 }), 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(symWPC, 0.05, RNG));
@@ -191,14 +191,14 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //                            "\\alpha = 0.01",
 //                            "\\alpha = 0.1" };
 //
-//        List<List<Player<Othello>>> players = new ArrayList<List<Player<Othello>>>();
+//        List<List<Strategy<Othello>>> players = new ArrayList<List<Strategy<Othello>>>();
 //        double[] weights = WPCUtil.getRandomWeights(RNG, type);
 //        WPC symWPC = new WPC(WPCUtil.load(new File("OthelloSB/resources/wpc/sml-weights-sym.wpc")));
 //
 //        for (int i = 0; i < wpcs.length; i++)
 //        {
 //            wpcs[i].setWeights(weights);
-//            List<Player<Othello>> ps = new ArrayList<Player<Othello>>();
+//            List<Strategy<Othello>> ps = new ArrayList<Strategy<Othello>>();
 //            ps.add(new EpsilonGreedy<Othello>(wpcs[i], 0.05, RNG));
 //            ps.add(new EpsilonGreedy<Othello>(symWPC, 0.05, RNG));
 ////            ps.add(new RandomPlayer<Othello>(RNG));
@@ -274,7 +274,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        printH2("Learnt weights");
 //        System.out.println(wpc.getFormattedWeights());
 //        printH2("Playing against random");
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new GreedyPlayer<Othello>(wpc));
 //        players.add(new RandomPlayer<Othello>(RNG));
 ////        GamesUtil.playNGames(new Othello(), players, 50000);
@@ -284,7 +284,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //
 //        WPC symWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //
-//        List<Player<Othello>> players2 = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players2 = new ArrayList<Strategy<Othello>>();
 //        players2.add(new EpsilonGreedy<Othello>(symWPC, 0.05, RNG));
 //        players2.add(new EpsilonGreedy<Othello>(symWPC, 0.05, RNG));
 ////        players2.add(new RandomPlayer<Othello>(RNG));
@@ -301,7 +301,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        WPC drAsymWPC = new WPC(WPCUtil.load("dr-asym-6125"));
 //        WPC smlSymWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new EpsilonGreedy<Othello>(drAsymWPC, 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(smlSymWPC, 0.05, RNG));
 ////        players.add(new RandomPlayer<Othello>(RNG));
@@ -334,8 +334,8 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 ////                results[2] / (double) nGames * 100,
 ////                results[1] / (double) nGames * 100 };
 ////
-////        System.out.format("%8s: %4.2f%%\n", "Player 1", resultPer[0]);
-////        System.out.format("%8s: %4.2f%%\n", "Player 2", resultPer[1]);
+////        System.out.format("%8s: %4.2f%%\n", "Strategy 1", resultPer[0]);
+////        System.out.format("%8s: %4.2f%%\n", "Strategy 2", resultPer[1]);
 ////        System.out.format("%8s: %4.2f%%\n", "Draws", resultPer[2]);
 //    }
 //
@@ -351,7 +351,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //            {
 //                printH2("Game " + i);
 //
-//                List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//                List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //                players.add(new GreedyPlayer<Othello>(wpc));
 ////                players.add(new EpsilonGreedy<Othello>(wpc, 0.05));
 ////                players.add(new EpsilonGreedy<Othello>(smlSymWPC, 0.05));
@@ -405,7 +405,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        WPC stdWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //        WPCStages wpcStages = new WPCStages(wpcs, ranges);
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new EpsilonGreedy<Othello>(wpcStages, 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(stdWPC, 0.05, RNG));
 ////        players.add(new RandomPlayer<Othello>());
@@ -461,7 +461,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        WPCTDLearnMulti wpcStages = new WPCTDLearnMulti.Builder(wpcs, ranges, nEpisodes, learningRate, discountFactor)
 //                .setEpsilon(epsilon).build();
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new EpsilonGreedy<Othello>(wpcStages, 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(stdWPC, 0.05, RNG));
 ////        players.add(new RandomPlayer<Othello>());
@@ -515,7 +515,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        WPCStages wpcStages = new WPCStages(wpcs, new int[] { 22, 44 });
 //        WPC smlSymWPC = new WPC(WPCUtil.load("sml-weights-sym"));
 //
-//        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new EpsilonGreedy<Othello>(wpcStages, 0.05, RNG));
 //        players.add(new EpsilonGreedy<Othello>(smlSymWPC, 0.05, RNG));
 ////        players.add(new RandomPlayer<Othello>());

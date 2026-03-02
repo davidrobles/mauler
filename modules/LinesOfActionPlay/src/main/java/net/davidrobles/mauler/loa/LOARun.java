@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.loa;
 
 import net.davidrobles.mauler.core.MatchController;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
@@ -21,7 +21,7 @@ public class LOARun
     private static void runGUI()
     {
         LOA loa = new LOA();
-        List<Player<LOA>> players = new ArrayList<Player<LOA>>()
+        List<Strategy<LOA>> players = new ArrayList<Strategy<LOA>>()
         {{
                 add(new RandPlayer<LOA>(RND));
                 add(new RandPlayer<LOA>(RND));

@@ -255,7 +255,7 @@ public class Domineering implements Game<Domineering>
 //        UCT<net.davidrobles.mauler.domineering.Domineering> uct = new UCT<net.davidrobles.mauler.domineering.Domineering>(0.5, 2000);
 //        AlphaBeta<net.davidrobles.mauler.domineering.Domineering> ab = new AlphaBeta<net.davidrobles.mauler.domineering.Domineering>(new UtilFunc());
 //        RandPlayer<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandPlayer<net.davidrobles.mauler.domineering.Domineering>();
-//        List<Player<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Player<net.davidrobles.mauler.domineering.Domineering>>();
+//        List<Strategy<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Strategy<net.davidrobles.mauler.domineering.Domineering>>();
 //        players.add(ab);
 //        players.add(randPlayer);
 //        net.davidrobles.mauler.domineering.Domineering dom = new net.davidrobles.mauler.domineering.Domineering();
@@ -308,7 +308,7 @@ public class Domineering implements Game<Domineering>
 //        UCT<net.davidrobles.mauler.domineering.Domineering> uct = new UCT<net.davidrobles.mauler.domineering.Domineering>(0.5, 5000);
 //        AlphaBeta<net.davidrobles.mauler.domineering.Domineering> ab = new AlphaBeta<net.davidrobles.mauler.domineering.Domineering>(new UtilFunc());
 //        RandPlayer<net.davidrobles.mauler.domineering.Domineering> randPlayer = new RandPlayer<net.davidrobles.mauler.domineering.Domineering>();
-//        List<Player<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Player<net.davidrobles.mauler.domineering.Domineering>>();
+//        List<Strategy<net.davidrobles.mauler.domineering.Domineering>> players = new ArrayList<Strategy<net.davidrobles.mauler.domineering.Domineering>>();
 //        players.add(uct);
 //        players.add(randPlayer);
 //

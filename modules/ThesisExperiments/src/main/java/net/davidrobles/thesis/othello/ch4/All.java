@@ -2,7 +2,7 @@ package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Player;
+import net.davidrobles.mauler.players.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
@@ -28,7 +28,7 @@ public class All
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         NTupleSystem logistello = NTUtil.load("logistello11-130000-0.822");
 
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         // UCT
@@ -84,7 +84,7 @@ public class All
         int nGames = 100;
         double c = 0.5;
         WPC heuristic = new WPC(WPCUtil.load("dr-sym-6462"));
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.0), c));
         players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 1.0), c));
 
@@ -94,7 +94,7 @@ public class All
 
     static void myDR()
     {
-        List<Player<Othello>> players = new ArrayList<Player<Othello>>();
+        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         // NTS-RS
