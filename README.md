@@ -52,15 +52,21 @@ The `ReinforcementLearning` module implements tabular RL algorithms: `QLearning`
 
 ## Build
 
-The project uses **IntelliJ IDEA's native build system** (no Maven or Gradle). Open the root directory in IntelliJ IDEA and build with the IDE. Compiled output goes to `out/`.
+The project uses **Gradle 8.13** with Kotlin DSL. Java 11 toolchain is required.
 
-Dependencies in `lib/`: `junit-4.11`, `hamcrest-core-1.3`, `guava-18.0`, `gson-2.3.1`, `commons-lang3-3.3.2`
+```sh
+./gradlew build        # compile all 19 modules
+./gradlew projects     # list all subprojects
+```
+
+Dependencies are pulled from Maven Central (no `lib/` directory needed): `guava-33.4.0`, `gson-2.11.0`, `commons-lang3-3.17.0`, `junit-4.13.2`, `hamcrest-2.2`
 
 ## Running Tests
 
-Tests use JUnit 4.11 and are in each module's `test/` directory. Run them via IntelliJ or directly with the JUnit runner:
-
 ```sh
-java -cp lib/junit-4.11.jar:lib/hamcrest-core-1.3.jar:<compiled-classes> \
-  org.junit.runner.JUnitCore <TestClassName>
+./gradlew test                          # run all tests
+./gradlew :TicTacToe:test              # run tests for a single module
+./gradlew :TicTacToe:test --tests "net.davidrobles.mauler.tictactoe.TicTacToeTest.testCopy"  # single test method
 ```
+
+Test reports are written to `modules/<Name>/build/reports/tests/test/index.html`.
