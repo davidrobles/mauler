@@ -2,7 +2,7 @@ package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.MoveObserver;
 import net.davidrobles.mauler.core.MatchControllerObserver;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -132,9 +132,9 @@ public class OthelloView extends JPanel implements MoveObserver, MatchController
             g.setColor(Color.RED);
             String msg;
 
-            if (othello.getOutcome().orElseThrow()[0] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[0] == GameResult.WIN)
                 msg = "BLACK wins";
-            else if (othello.getOutcome().orElseThrow()[1] == Outcome.WIN)
+            else if (othello.getOutcome().orElseThrow()[1] == GameResult.WIN)
                 msg = "WHITE wins";
             else
                 msg = "Draw!";

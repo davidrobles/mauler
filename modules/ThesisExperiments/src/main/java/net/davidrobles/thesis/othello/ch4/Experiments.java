@@ -1,6 +1,6 @@
 package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //
-//import Outcome;
+//import GameResult;
 //import dr.mauler.core.util.Series;
 //import dr.mauler.othello.ef.wpc.*;
 //import GreedyPlayer;
@@ -239,7 +239,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //                            while (!othello.isOver())
 //                                othello.makeMove(players.get(player).get(othello.getCurPlayer()).move(othello));
 //
-//                            if (othello.getOutcome()[0] == Outcome.WIN)
+//                            if (othello.getOutcome()[0] == GameResult.WIN)
 //                                wins++;
 //                        }
 //
@@ -320,13 +320,13 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 ////            while (!othello.isOver())
 ////                othello.makeMove(players.get(othello.getCurPlayer()).move(othello.copy()));
 ////
-////            Outcome[] outcomes = othello.getOutcome();
+////            GameResult[] outcomes = othello.getOutcome();
 ////
-////            if (outcomes[0] == Outcome.WIN)
+////            if (outcomes[0] == GameResult.WIN)
 ////                results[0]++;
-////            else if (outcomes[0] == Outcome.DRAW)
+////            else if (outcomes[0] == GameResult.DRAW)
 ////                results[1]++;
-////            else if (outcomes[0] == Outcome.LOSS)
+////            else if (outcomes[0] == GameResult.LOSS)
 ////                results[2]++;
 ////        }
 ////

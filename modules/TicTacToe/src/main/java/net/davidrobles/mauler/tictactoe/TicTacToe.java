@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.tictactoe;
 
 import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.util.SpeedTest;
 
 import java.util.ArrayList;
@@ -183,15 +183,15 @@ public class TicTacToe extends ObservableGame<TicTacToe>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         if (getNumMoves() != 0)
             return Optional.empty();
         if (checkWin(crosses))
-            return Optional.of(new Outcome[] { Outcome.WIN, Outcome.LOSS });
+            return Optional.of(new GameResult[] { GameResult.WIN, GameResult.LOSS });
         if (checkWin(noughts))
-            return Optional.of(new Outcome[] { Outcome.LOSS, Outcome.WIN });
-        return Optional.of(new Outcome[] { Outcome.DRAW, Outcome.DRAW });
+            return Optional.of(new GameResult[] { GameResult.LOSS, GameResult.WIN });
+        return Optional.of(new GameResult[] { GameResult.DRAW, GameResult.DRAW });
     }
 
     // -------------------------------------------------------------------------

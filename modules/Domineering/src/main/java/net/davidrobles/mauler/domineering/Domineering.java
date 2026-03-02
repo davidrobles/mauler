@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.domineering;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -177,15 +177,15 @@ public class Domineering implements Game<Domineering>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         if (getNumMoves() != 0)
             return Optional.empty();
 
         if (getCurPlayer() == 0)
-            return Optional.of(new Outcome[] { Outcome.LOSS, Outcome.WIN });
+            return Optional.of(new GameResult[] { GameResult.LOSS, GameResult.WIN });
 
-        return Optional.of(new Outcome[] { Outcome.WIN, Outcome.LOSS });
+        return Optional.of(new GameResult[] { GameResult.WIN, GameResult.LOSS });
     }
 
     @Override

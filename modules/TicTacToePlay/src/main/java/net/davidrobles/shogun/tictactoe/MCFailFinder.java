@@ -1,7 +1,7 @@
 //package dr.shogun.tictactoe;
 //
 //import Game;
-//import Outcome;
+//import GameResult;
 //import dr.mauler.core.players.RandPlayer;
 //import dr.mauler.othello.Othello;
 //import UtilFunc;
@@ -43,21 +43,21 @@
 //        // left
 //        Game gameLeft = game.copy();
 //        gameLeft.makeMove(0);
-//        Outcome[] left = hello(gameLeft);
+//        GameResult[] left = hello(gameLeft);
 //        String result = getValue(left);
 //        set.remove(result);
 //
 //        // center
 //        Game gameCenter = game.copy();
 //        gameCenter.makeMove(1);
-//        Outcome[] center = hello(gameCenter);
+//        GameResult[] center = hello(gameCenter);
 //        result = getValue(center);
 //        set.remove(result);
 //
 //        // right
 //        Game gameRight = game.copy();
 //        gameRight.makeMove(2);
-//        Outcome[] right = hello(game);
+//        GameResult[] right = hello(game);
 //        result = getValue(right);
 //        set.remove(result);
 //
@@ -71,17 +71,17 @@
 //        return false;
 //    }
 //
-//    private static String getValue(Outcome[] outcomes) {
+//    private static String getValue(GameResult[] outcomes) {
 //        if (outcomes == null) {
 //            return "";
 //        }
-//        if (outcomes[0] == Outcome.WIN && outcomes[1] == Outcome.LOSS) {
+//        if (outcomes[0] == GameResult.WIN && outcomes[1] == GameResult.LOSS) {
 //            return "WL";
 //        }
-//        if (outcomes[0] == Outcome.DRAW && outcomes[1] == Outcome.DRAW) {
+//        if (outcomes[0] == GameResult.DRAW && outcomes[1] == GameResult.DRAW) {
 //            return "DD";
 //        }
-//        if (outcomes[0] == Outcome.LOSS && outcomes[1] == Outcome.WIN) {
+//        if (outcomes[0] == GameResult.LOSS && outcomes[1] == GameResult.WIN) {
 //            return "LW";
 //        }
 //        return "";
@@ -188,7 +188,7 @@
 //        while (!game.isOver()) {
 //            game.makeMove(ab.move(game));
 //        }
-//        return game.getOutcome()[0] == Outcome.WIN;
+//        return game.getOutcome()[0] == GameResult.WIN;
 //    }
 //
 //    static <GAME extends Game<GAME>> boolean isWinForMC(GAME game) {
@@ -201,11 +201,11 @@
 //            else
 //                game.makeMove(ab.move(game));
 //        }
-//        return game.getOutcome()[0] == Outcome.WIN;
+//        return game.getOutcome()[0] == GameResult.WIN;
 //    }
 //
-//    private static Outcome[] hello(Game game) {
-//        Outcome[] outcomes = new Outcome[2];
+//    private static GameResult[] hello(Game game) {
+//        GameResult[] outcomes = new GameResult[2];
 //
 //        // Left
 //        Game leftBoard = game.copy();

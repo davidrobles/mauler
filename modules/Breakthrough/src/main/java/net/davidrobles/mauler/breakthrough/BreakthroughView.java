@@ -77,9 +77,9 @@ public class BreakthroughView extends JPanel implements MoveObserver, MatchContr
 //            g.setColor(Color.RED);
 //            String msg;
 //
-//            if (bk.getOutcome()[0] == Outcome.WIN)
+//            if (bk.getOutcome()[0] == GameResult.WIN)
 //                msg = "BLACK wins";
-//            else if (bk.getOutcome()[1] == Outcome.WIN)
+//            else if (bk.getOutcome()[1] == GameResult.WIN)
 //                msg = "WHITE wins";
 //            else
 //                msg = "Draw!";

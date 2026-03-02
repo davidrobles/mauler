@@ -1,6 +1,6 @@
 package net.davidrobles.thesis.othello.ch4;
 
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.players.Player;
@@ -169,7 +169,7 @@ public class MCTS_WPC
                 othello.makeMove(players.get(curPlayer).move(othello, timeout));
             }
 
-            if (othello.getOutcome().orElseThrow()[starter] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[starter] == GameResult.WIN)
                 wins++;
         }
 

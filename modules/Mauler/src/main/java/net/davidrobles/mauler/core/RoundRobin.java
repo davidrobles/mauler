@@ -27,7 +27,7 @@ public class RoundRobin<GAME extends Game<GAME>>
     private final List<String> playerNames;
     private final int nGames;
     private final int timeout;
-    private final Outcome[][][] outcomes;
+    private final GameResult[][][] outcomes;
     private final double[][] averages;
     private final double[][] stdErrors;
     private String caption = "";
@@ -91,7 +91,7 @@ public class RoundRobin<GAME extends Game<GAME>>
         this.players = players;
         this.playerNames = playerNames;
         this.timeout = timeout;
-        this.outcomes = new Outcome[players.size()][players.size()][nGames];
+        this.outcomes = new GameResult[players.size()][players.size()][nGames];
         this.averages = new double[players.size()][players.size() + 1];
         this.stdErrors = new double[players.size()][players.size() + 1];
     }
@@ -298,7 +298,7 @@ public class RoundRobin<GAME extends Game<GAME>>
         stdErrors[p1][p2] = s.getStdError(0);
         stdErrors[p2][p1] = s.getStdError(1);
 
-        Outcome[] outs = s.getOutcomes();
+        GameResult[] outs = s.getOutcomes();
         for (int i = 0; i < outs.length; i++)
         {
             outcomes[p1][p2][i] = outs[i];

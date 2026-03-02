@@ -3,7 +3,7 @@ package net.davidrobles.shogun.tictactoe;
 import net.davidrobles.mauler.players.EvalFunc;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
-import static net.davidrobles.mauler.core.Outcome.*;
+import static net.davidrobles.mauler.core.GameResult.*;
 
 public class TicUF implements EvalFunc<TicTacToe> {
 

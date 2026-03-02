@@ -20,7 +20,7 @@ import java.util.Optional;
  *     int move = player.move(game);   // 0 <= move < game.getNumMoves()
  *     game.makeMove(move);
  * }
- * Outcome[] outcomes = game.getOutcome().orElseThrow();
+ * GameResult[] outcomes = game.getOutcome().orElseThrow();
  * }</pre>
  *
  * <p>Implementations should also override {@code equals()} and {@code hashCode()} based on the
@@ -29,7 +29,7 @@ import java.util.Optional;
  * @param <GAME> the concrete game type (self-referential generic)
  *
  * @see net.davidrobles.mauler.core.ObservableGame
- * @see net.davidrobles.mauler.core.Outcome
+ * @see net.davidrobles.mauler.core.GameResult
  * @see net.davidrobles.mauler.players.Player
  */
 public interface Game<GAME extends Game<GAME>>
@@ -99,12 +99,12 @@ public interface Game<GAME extends Game<GAME>>
      *
      * <p>When present, the array length equals {@link #getNumPlayers()}, and
      * {@code getOutcome().orElseThrow()[i]} gives the result for player {@code i}.
-     * Each entry is one of {@link Outcome#WIN}, {@link Outcome#LOSS}, or {@link Outcome#DRAW}.
+     * Each entry is one of {@link GameResult#WIN}, {@link GameResult#LOSS}, or {@link GameResult#DRAW}.
      *
      * @return an {@code Optional} containing the outcome array when the game is over,
      *         or {@link Optional#empty()} if the game is still in progress
      */
-    Optional<Outcome[]> getOutcome();
+    Optional<GameResult[]> getOutcome();
 
     /**
      * Returns {@code true} if the game has ended (no legal moves remain, or a terminal

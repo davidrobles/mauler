@@ -1,6 +1,6 @@
 package net.davidrobles.thesis.othello.ch4;
 
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.players.Player;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.mcts.UCT;
@@ -44,7 +44,7 @@ public class MCTSParallelTest
                 othello.makeMove(move);
             }
 
-            if (othello.getOutcome().orElseThrow()[0] == Outcome.WIN)
+            if (othello.getOutcome().orElseThrow()[0] == GameResult.WIN)
                 wins++;
         }
 

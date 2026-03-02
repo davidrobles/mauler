@@ -38,7 +38,7 @@ public class DummyGame implements Game<DummyGame>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         return Optional.empty();
     }

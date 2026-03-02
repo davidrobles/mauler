@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.havannah;
 
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ public class HavannahUtil
     @SuppressWarnings("unchecked")
     private static int[][][] adjs = new int[MAX - MIN][][];
     private static short[][] bits = new short[MAX - MIN][];
-    private static Outcome[][] wins = new Outcome[MAX - MIN][(int)(Math.pow(2, 12))];
+    private static GameResult[][] wins = new GameResult[MAX - MIN][(int)(Math.pow(2, 12))];
 
     public static void initHavannah(int size)
     {
@@ -45,7 +45,7 @@ public class HavannahUtil
                     count++;
 
             if (count > 1) {
-                wins[index][i] = Outcome.WIN;
+                wins[index][i] = GameResult.WIN;
                 continue;
             }
 
@@ -58,12 +58,12 @@ public class HavannahUtil
                     count++;
 
             if (count > 2) {
-                wins[index][i] = Outcome.WIN;
+                wins[index][i] = GameResult.WIN;
                 continue;
             }
 
             // TODO: fix this
-//            wins[index][i] = Outcome.NA;
+//            wins[index][i] = GameResult.NA;
         }
     }
 
@@ -229,7 +229,7 @@ public class HavannahUtil
         return boards[size - MIN];
     }
     
-    public static Outcome[] getWins(int size)
+    public static GameResult[] getWins(int size)
     {
         return wins[size - MIN];
     }

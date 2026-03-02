@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.loa;
 
 import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import java.awt.*;
 import java.util.*;
@@ -13,7 +13,7 @@ public class LOA extends ObservableGame<LOA>
     private boolean gameOver;
     private int current;
     private long black, white;
-    private Outcome[] outcomes;
+    private GameResult[] outcomes;
 
     public static final int SIDE_SIZE = 8;
     public static final int N_CELLS = 64;
@@ -721,7 +721,7 @@ public class LOA extends ObservableGame<LOA>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         return gameOver ? Optional.of(outcomes) : Optional.empty();
     }
@@ -742,20 +742,20 @@ public class LOA extends ObservableGame<LOA>
         if (checkWin(getCurrentBitboard()) && checkWin(getOpponentBitboard()))
         {
             gameOver = true;
-            outcomes[0] = Outcome.DRAW;
-            outcomes[1] = Outcome.DRAW;
+            outcomes[0] = GameResult.DRAW;
+            outcomes[1] = GameResult.DRAW;
         }
         else if (checkWin(getCurrentBitboard()))
         {
             gameOver = true;
-            outcomes[getCurPlayer()] = Outcome.WIN;
-            outcomes[getOppositePlayer()] = Outcome.LOSS;
+            outcomes[getCurPlayer()] = GameResult.WIN;
+            outcomes[getOppositePlayer()] = GameResult.LOSS;
         }
         else if (checkWin(getOpponentBitboard()))
         {
             gameOver = true;
-            outcomes[getCurPlayer()] = Outcome.LOSS;
-            outcomes[getOppositePlayer()] = Outcome.WIN;
+            outcomes[getCurPlayer()] = GameResult.LOSS;
+            outcomes[getOppositePlayer()] = GameResult.WIN;
         }
 
         moves.clear();
@@ -773,8 +773,8 @@ public class LOA extends ObservableGame<LOA>
                 if (moves.isEmpty())
                 {
                     gameOver = true;
-                    outcomes[0] = Outcome.DRAW;
-                    outcomes[1] = Outcome.DRAW;
+                    outcomes[0] = GameResult.DRAW;
+                    outcomes[1] = GameResult.DRAW;
                 }
                 else
                 {
@@ -800,7 +800,7 @@ public class LOA extends ObservableGame<LOA>
         black = 9079256848778920062L;
         white = 36452665219186944L;
         gameOver = false;
-        outcomes = new Outcome[] { Outcome.NA, Outcome.NA };
+        outcomes = new GameResult[] { GameResult.NA, GameResult.NA };
         calculateLegalMoves();
     }
 

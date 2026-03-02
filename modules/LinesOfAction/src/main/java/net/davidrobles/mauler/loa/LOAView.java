@@ -2,7 +2,7 @@ package net.davidrobles.mauler.loa;
 
 import net.davidrobles.mauler.core.MoveObserver;
 import net.davidrobles.mauler.core.MatchControllerObserver;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -134,9 +134,9 @@ public class LOAView extends JPanel implements MoveObserver, MatchControllerObse
             g.setColor(Color.RED);
             String msg;
 
-            if (loa.getOutcome().orElseThrow()[0] == Outcome.WIN)
+            if (loa.getOutcome().orElseThrow()[0] == GameResult.WIN)
                 msg = "Player 1 wins";
-            else if (loa.getOutcome().orElseThrow()[1] == Outcome.WIN)
+            else if (loa.getOutcome().orElseThrow()[1] == GameResult.WIN)
                 msg = "Player 2 wins";
             else
                 msg = "Draw!";

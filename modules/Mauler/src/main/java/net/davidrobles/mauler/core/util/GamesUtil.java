@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.core.util;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.players.Player;
 
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class GamesUtil
         return fmt(PLAYER_LABELS[player % 2], BOLD, PLAYER_COLORS[player % 2]);
     }
 
-    private static String outcomeLabel(Outcome outcome)
+    private static String outcomeLabel(GameResult outcome)
     {
         switch (outcome) {
             case WIN:  return fmt("WIN",  BOLD, BRIGHT_GREEN);
@@ -130,7 +130,7 @@ public class GamesUtil
         }
 
         System.out.println(bold("\nOutcome"));
-        Outcome[] outcomes = game.getOutcome().orElseThrow();
+        GameResult[] outcomes = game.getOutcome().orElseThrow();
         for (int i = 0; i < outcomes.length; i++)
             System.out.println("  " + playerLabel(i) + "  " + outcomeLabel(outcomes[i]));
         System.out.println();

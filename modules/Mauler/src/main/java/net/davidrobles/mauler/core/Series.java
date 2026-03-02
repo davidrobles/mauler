@@ -29,7 +29,7 @@ public class Series<GAME extends Game<GAME>>
     private final int nGames;
     private final List<Player<GAME>> players;
     private final int timeout;
-    private final Outcome[] outcomes;
+    private final GameResult[] outcomes;
     private boolean finished = false;
     private boolean verbose = true;
 
@@ -66,7 +66,7 @@ public class Series<GAME extends Game<GAME>>
         this.nGames = nGames;
         this.players = players;
         this.timeout = timeout;
-        this.outcomes = new Outcome[nGames];
+        this.outcomes = new GameResult[nGames];
     }
 
     // -------------------------------------------------------------------------
@@ -104,11 +104,11 @@ public class Series<GAME extends Game<GAME>>
 
         try
         {
-            List<Future<Outcome[]>> futures = executor.invokeAll(matches);
+            List<Future<GameResult[]>> futures = executor.invokeAll(matches);
             executor.shutdown();
 
             int i = 0;
-            for (Future<Outcome[]> future : futures)
+            for (Future<GameResult[]> future : futures)
                 outcomes[i++] = future.get()[0];
         }
         catch (InterruptedException e)
@@ -136,7 +136,7 @@ public class Series<GAME extends Game<GAME>>
         return players;
     }
 
-    public Outcome[] getOutcomes()
+    public GameResult[] getOutcomes()
     {
         checkFinished();
         return outcomes;
@@ -150,19 +150,19 @@ public class Series<GAME extends Game<GAME>>
     public int getWins(int player)
     {
         checkFinished();
-        return count(player == 0 ? Outcome.WIN : Outcome.LOSS);
+        return count(player == 0 ? GameResult.WIN : GameResult.LOSS);
     }
 
     public int getLosses(int player)
     {
         checkFinished();
-        return count(player == 0 ? Outcome.LOSS : Outcome.WIN);
+        return count(player == 0 ? GameResult.LOSS : GameResult.WIN);
     }
 
     public int getDraws()
     {
         checkFinished();
-        return count(Outcome.DRAW);
+        return count(GameResult.DRAW);
     }
 
     public double getWinsAvg(int player)
@@ -200,10 +200,10 @@ public class Series<GAME extends Game<GAME>>
             throw new IllegalStateException("Series has not been run yet — call run() first");
     }
 
-    private int count(Outcome outcome)
+    private int count(GameResult outcome)
     {
         int n = 0;
-        for (Outcome o : outcomes)
+        for (GameResult o : outcomes)
             if (outcome == o) n++;
         return n;
     }

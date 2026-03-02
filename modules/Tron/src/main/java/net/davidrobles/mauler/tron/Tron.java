@@ -2,7 +2,7 @@
 //
 //import ObservableGame;
 //import Game;
-//import Outcome;
+//import GameResult;
 //
 //import java.io.BufferedReader;
 //import java.io.FileReader;
@@ -73,9 +73,9 @@
 //    }
 //
 //    @Override
-//    public Outcome[] getOutcome()
+//    public GameResult[] getOutcome()
 //    {
-//        return new Outcome[0];
+//        return new GameResult[0];
 //    }
 //
 //    @Override

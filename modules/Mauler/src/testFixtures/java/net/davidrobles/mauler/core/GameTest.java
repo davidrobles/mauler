@@ -49,9 +49,9 @@ public abstract class GameTest<GAME extends Game<GAME>>
 //            game.makeMove(rnd.nextInt(game.getNumMoves()));
 //        }
 //
-//        Outcome[] outcomes = game.getOutcome();
+//        GameResult[] outcomes = game.getOutcome();
 //
 //        for (int i = 0; i < game.getNumPlayers(); i++)
-//            assertFalse(outcomes[i] == Outcome.NA);
+//            assertFalse(outcomes[i] == GameResult.NA);
 //    }
 }

@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.breakthrough;
 
 import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -181,7 +181,7 @@ public class Breakthrough extends ObservableGame<Breakthrough>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         return Optional.empty(); // TODO: implement outcome detection
     }

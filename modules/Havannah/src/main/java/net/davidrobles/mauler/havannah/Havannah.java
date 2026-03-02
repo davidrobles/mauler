@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.havannah;
 
 import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class Havannah extends ObservableGame<Havannah>
     private int[][] adjs;
     private short[] bits;
     private HCell[][] board;
-    private Outcome[] wins;
+    private GameResult[] wins;
 
     private Havannah() {  }
 
@@ -193,7 +193,7 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome()
+    public Optional<GameResult[]> getOutcome()
     {
         return Optional.empty(); // TODO: implement outcome detection
     }
@@ -215,7 +215,7 @@ public class Havannah extends ObservableGame<Havannah>
     public boolean checkWin()
     {
         for (Map.Entry<Set<Integer>, Short> entry : connectionsMap[getOppPlayer()].entrySet())
-            if (wins[entry.getValue()] == Outcome.WIN)
+            if (wins[entry.getValue()] == GameResult.WIN)
                 return true;
 
         return false;

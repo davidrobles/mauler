@@ -14,7 +14,7 @@ package net.davidrobles.mauler.core;
  *   <li>{@link #isTerminal()} — {@code true} for WIN, LOSS, DRAW; {@code false} for NA</li>
  * </ul>
  */
-public enum Outcome
+public enum GameResult
 {
     /** The player won. */
     WIN,
@@ -33,7 +33,7 @@ public enum Outcome
      *
      * @return the flipped outcome
      */
-    public Outcome flip()
+    public GameResult flip()
     {
         switch (this) {
             case WIN:  return LOSS;

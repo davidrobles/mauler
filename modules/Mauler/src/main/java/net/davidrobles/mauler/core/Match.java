@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 
 /**
- * A single game between two players, returning the {@link Outcome} for each player.
+ * A single game between two players, returning the {@link GameResult} for each player.
  *
  * <p>Implements {@link Callable} so matches can be submitted to an {@link java.util.concurrent.ExecutorService}
  * for parallel tournament execution.
@@ -21,7 +21,7 @@ import java.util.concurrent.Callable;
  *
  * @param <GAME> the game type
  */
-public class Match<GAME extends Game<GAME>> implements Callable<Outcome[]>
+public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
 {
     private static final double RANDOM_MOVE_PROBABILITY = 0.1;
 
@@ -79,17 +79,17 @@ public class Match<GAME extends Game<GAME>> implements Callable<Outcome[]>
     // -------------------------------------------------------------------------
 
     @Override
-    public Outcome[] call()
+    public GameResult[] call()
     {
         GAME g = game.newInstance();
 
         while (!g.isOver())
             g.makeMove(selectMove(g));
 
-        Outcome[] outcomes = g.getOutcome().orElseThrow();
+        GameResult[] outcomes = g.getOutcome().orElseThrow();
 
         if (starter == 1)
-            outcomes = new Outcome[] { outcomes[1], outcomes[0] };
+            outcomes = new GameResult[] { outcomes[1], outcomes[0] };
 
         return outcomes;
     }

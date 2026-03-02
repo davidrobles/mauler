@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.Outcome;
+import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.util.SpeedTest;
 
 import java.util.ArrayList;
@@ -459,19 +459,19 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     @Override
-    public Optional<Outcome[]> getOutcome() {
+    public Optional<GameResult[]> getOutcome() {
         if (!gameOver) {
             return Optional.empty();
         }
         int blackStonesCount = Long.bitCount(blackBB);
         int whiteStonesCount = Long.bitCount(whiteBB);
         if (blackStonesCount > whiteStonesCount) {
-            return Optional.of(new Outcome[] {Outcome.WIN, Outcome.LOSS});
+            return Optional.of(new GameResult[] {GameResult.WIN, GameResult.LOSS});
         }
         if (whiteStonesCount > blackStonesCount) {
-            return Optional.of(new Outcome[] {Outcome.LOSS, Outcome.WIN});
+            return Optional.of(new GameResult[] {GameResult.LOSS, GameResult.WIN});
         }
-        return Optional.of(new Outcome[] {Outcome.DRAW, Outcome.DRAW});
+        return Optional.of(new GameResult[] {GameResult.DRAW, GameResult.DRAW});
     }
 
     @Override
