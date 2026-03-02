@@ -6,101 +6,102 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+/**
+ * A single game between two players, returning the {@link Outcome} for each player.
+ *
+ * <p>Implements {@link Callable} so matches can be submitted to an {@link java.util.concurrent.ExecutorService}
+ * for parallel tournament execution.
+ *
+ * <p>When both players are deterministic, a 10% random-move injection is applied to avoid
+ * the same game being played every time (which would make multi-game series meaningless).
+ *
+ * <p>The {@code starter} parameter controls which player moves first: {@code 0} means
+ * {@code players.get(0)} starts, {@code 1} means {@code players.get(1)} starts. Outcomes
+ * are always returned from {@code players.get(0)}'s perspective regardless of who started.
+ *
+ * @param <GAME> the game type
+ */
 public class Match<GAME extends Game<GAME>> implements Callable<Outcome[]>
 {
-    private GAME game;
-    private List<Player<GAME>> players;
-    private int starter;
-    private int timeout = -1;
-    private boolean deterministic = false;
-    private Random rnd = new Random();
+    private static final double RANDOM_MOVE_PROBABILITY = 0.1;
 
+    private final GAME game;
+    private final List<Player<GAME>> players;
+    private final int starter;
+    private final int timeout;
+    private final boolean injectRandomMoves;
+    private final Random rnd = new Random();
+
+    /**
+     * Creates a match with a per-move time limit.
+     *
+     * @param game    the game to play
+     * @param players the two players; index 0 is player one, index 1 is player two
+     * @param starter {@code 0} or {@code 1} — which player moves first
+     * @param timeout per-move time limit in milliseconds (must be positive)
+     * @throws IllegalArgumentException if {@code timeout} is not positive
+     */
     public Match(GAME game, List<Player<GAME>> players, int starter, int timeout)
     {
         if (timeout <= 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
+        if (players.size() < 2)
+            throw new IllegalArgumentException("at least 2 players required");
 
         this.game = game;
         this.players = players;
         this.starter = starter;
         this.timeout = timeout;
-
-        if (players.get(0).isDeterministic() && players.get(1).isDeterministic())
-            deterministic = true;
-        else
-            deterministic = false;
+        this.injectRandomMoves = players.get(0).isDeterministic() && players.get(1).isDeterministic();
     }
 
+    /**
+     * Creates a match with no time limit.
+     *
+     * @param game    the game to play
+     * @param players the two players
+     * @param starter {@code 0} or {@code 1} — which player moves first
+     */
     public Match(GAME game, List<Player<GAME>> players, int starter)
     {
+        if (players.size() < 2)
+            throw new IllegalArgumentException("at least 2 players required");
+
         this.game = game;
         this.players = players;
         this.starter = starter;
+        this.timeout = -1;
+        this.injectRandomMoves = players.get(0).isDeterministic() && players.get(1).isDeterministic();
     }
 
-    //////////////
-    // Callable //
-    //////////////
+    // -------------------------------------------------------------------------
+    // Callable
+    // -------------------------------------------------------------------------
 
     @Override
     public Outcome[] call()
     {
-        game = game.newInstance();
+        GAME g = game.newInstance();
 
-        if (deterministic)
-        {
-            while (!game.isOver())
-            {
-                int move;
+        while (!g.isOver())
+            g.makeMove(selectMove(g));
 
-                if (rnd.nextDouble() < 0.1)
-                    move = rnd.nextInt(game.getNumMoves());
-                else
-                {
-                    int playerToMove = (game.getCurPlayer() + starter) % 2;
-                    Player<GAME> player = players.get(playerToMove);
-
-                    if (timeout > 0)
-                        move = player.move(game, timeout);
-                    else
-                        move = player.move(game);
-                }
-
-                game.makeMove(move);
-            }
-        }
-        else
-        {
-            while (!game.isOver())
-            {
-                int move;
-                int playerToMove = (game.getCurPlayer() + starter) % 2;
-                Player<GAME> player = players.get(playerToMove);
-
-                if (timeout > 0)
-                    move = player.move(game, timeout);
-                else
-                    move = player.move(game);
-
-                game.makeMove(move);
-            }
-        }
-
-        Outcome[] outcomes = game.getOutcome();
+        Outcome[] outcomes = g.getOutcome();
 
         if (starter == 1)
             outcomes = new Outcome[] { outcomes[1], outcomes[0] };
 
-        game = null;
-//        System.out.println("Match: " + increaseCounter());
-
         return outcomes;
     }
 
-    static int counter = 0;
-
-    public synchronized int increaseCounter()
+    private int selectMove(GAME g)
     {
-        return counter++;
+        if (injectRandomMoves && rnd.nextDouble() < RANDOM_MOVE_PROBABILITY)
+            return rnd.nextInt(g.getNumMoves());
+
+        int playerToMove = (g.getCurPlayer() + starter) % 2;
+        Player<GAME> player = players.get(playerToMove);
+
+        return timeout > 0 ? player.move(g, timeout) : player.move(g);
     }
 }
