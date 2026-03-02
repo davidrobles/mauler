@@ -9,7 +9,7 @@ import java.util.List;
  *
  * <p>Concrete games should extend this class with themselves as the type parameter:
  * <pre>{@code
- * public class TicTacToe extends AbstractGame<TicTacToe> {
+ * public class TicTacToe extends ObservableGame<TicTacToe> {
  *     // implement the remaining Game<TicTacToe> methods
  * }
  * }</pre>
@@ -29,7 +29,7 @@ import java.util.List;
  * @see MoveObservable
  * @see MoveObserver
  */
-public abstract class AbstractGame<GAME extends Game<GAME>> implements Game<GAME>, MoveObservable
+public abstract class ObservableGame<GAME extends Game<GAME>> implements Game<GAME>, MoveObservable
 {
     private final List<MoveObserver> observers = new ArrayList<>();
 

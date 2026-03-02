@@ -26,7 +26,7 @@ package net.davidrobles.mauler.core;
  *
  * @param <GAME> the concrete game type (self-referential generic)
  *
- * @see net.davidrobles.mauler.core.AbstractGame
+ * @see net.davidrobles.mauler.core.ObservableGame
  * @see net.davidrobles.mauler.core.Outcome
  * @see net.davidrobles.mauler.players.Player
  */

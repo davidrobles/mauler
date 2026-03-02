@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.tictactoe;
 
-import net.davidrobles.mauler.core.AbstractGame;
+import net.davidrobles.mauler.core.ObservableGame;
 import net.davidrobles.mauler.core.Outcome;
 import net.davidrobles.mauler.core.util.SpeedTest;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TicTacToe extends AbstractGame<TicTacToe> {
+public class TicTacToe extends ObservableGame<TicTacToe> {
 
     public static final int SIZE = 3;
     public enum Cell { CROSS, NOUGHT, EMPTY }

@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.othello;
 
-import net.davidrobles.mauler.core.AbstractGame;
+import net.davidrobles.mauler.core.ObservableGame;
 import net.davidrobles.mauler.core.Outcome;
 import net.davidrobles.mauler.core.util.SpeedTest;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Othello extends AbstractGame<Othello> {
+public class Othello extends ObservableGame<Othello> {
 
     /** The size of the sides. */
     public static final int SIZE = 8;

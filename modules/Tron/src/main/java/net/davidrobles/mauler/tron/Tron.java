@@ -1,6 +1,6 @@
 //package dr.games.tron;//package dr.games.tron;
 //
-//import AbstractGame;
+//import ObservableGame;
 //import Game;
 //import Outcome;
 //
@@ -11,7 +11,7 @@
 //import java.util.List;
 //import java.util.Random;
 //
-//public class Tron extends AbstractGame implements Game<Tron>
+//public class Tron extends ObservableGame implements Game<Tron>
 //{
 //    private int plyCount = 0;
 //    private boolean[][] walls;

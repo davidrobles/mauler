@@ -1,13 +1,13 @@
 package net.davidrobles.mauler.loa;
 
-import net.davidrobles.mauler.core.AbstractGame;
+import net.davidrobles.mauler.core.ObservableGame;
 import net.davidrobles.mauler.core.Outcome;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class LOA extends AbstractGame<LOA>
+public class LOA extends ObservableGame<LOA>
 {
     public enum Cell { BLACK, WHITE, EMPTY }
     private boolean gameOver;
