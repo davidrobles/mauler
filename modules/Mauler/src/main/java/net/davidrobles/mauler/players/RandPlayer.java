@@ -34,12 +34,6 @@ public class RandPlayer<GAME extends Game<GAME>> implements Player<GAME>
         return rng.nextInt(game.getNumMoves());
     }
 
-    @Override
-    public int move(GAME game, int timeout)
-    {
-        return move(game);
-    }
-
     ////////////
     // Object //
     ////////////
