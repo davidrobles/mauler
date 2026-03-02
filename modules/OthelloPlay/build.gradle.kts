@@ -1,3 +1,11 @@
+plugins {
+    application
+}
+
+application {
+    mainClass.set("net.davidrobles.mauler.othello.OthelloRun")
+}
+
 dependencies {
     implementation(project(":Mauler"))
     implementation(project(":Othello"))
