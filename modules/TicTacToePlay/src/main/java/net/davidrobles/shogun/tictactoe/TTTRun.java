@@ -1,7 +1,7 @@
 package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.util.GamesUtil;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.mauler.players.mcts.tree.TreePolicy;

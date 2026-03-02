@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.UtilFunc;
 import net.davidrobles.mauler.players.mcts.tree.TreePolicy;
 

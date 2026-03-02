@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.enh;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.Evaluator;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.MCTSNode;

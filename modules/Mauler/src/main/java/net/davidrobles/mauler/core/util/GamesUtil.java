@@ -1,8 +1,8 @@
 package net.davidrobles.mauler.core.util;
 
 import net.davidrobles.mauler.core.Game;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.core.GameResult;
-import net.davidrobles.mauler.players.Strategy;
 
 import java.util.Arrays;
 import java.util.List;

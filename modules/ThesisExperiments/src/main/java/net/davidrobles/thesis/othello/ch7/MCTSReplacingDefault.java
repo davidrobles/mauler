@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch7;
 
 import net.davidrobles.mauler.core.RoundRobin;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.players.EpsilonGreedy;
 import net.davidrobles.mauler.players.mcts.UCT;

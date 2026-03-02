@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.minimax;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 
 /**
  * Search algorithms that implement this interface search up to a given max depth.

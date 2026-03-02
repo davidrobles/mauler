@@ -2,7 +2,7 @@ package net.davidrobles.mauler.core.util;
 
 import com.google.common.base.Stopwatch;
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

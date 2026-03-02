@@ -1,6 +1,7 @@
 package net.davidrobles.mauler.players.minimax;
 
 import net.davidrobles.mauler.core.Game;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.Evaluator;
 
 public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME>

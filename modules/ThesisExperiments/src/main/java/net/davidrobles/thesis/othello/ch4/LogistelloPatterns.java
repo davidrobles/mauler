@@ -1,7 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
 import net.davidrobles.mauler.core.Series;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.OthelloUtil;

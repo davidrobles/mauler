@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.players.mcts.parallel;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.MCTSNode;
 import net.davidrobles.mauler.players.mcts.UCT;

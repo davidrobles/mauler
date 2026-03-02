@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.MatchController;
-import net.davidrobles.mauler.players.Strategy;
+import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.players.RandPlayer;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;

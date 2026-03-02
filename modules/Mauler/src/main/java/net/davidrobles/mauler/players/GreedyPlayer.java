@@ -1,6 +1,7 @@
 package net.davidrobles.mauler.players;
 
 import net.davidrobles.mauler.core.Game;
+import net.davidrobles.mauler.core.Strategy;
 
 /**
  * A player that always picks the move leading to the highest-scored successor state.

@@ -1,6 +1,5 @@
 package net.davidrobles.mauler.core;
 
-import net.davidrobles.mauler.players.Strategy;
 
 import java.util.List;
 import java.util.Random;

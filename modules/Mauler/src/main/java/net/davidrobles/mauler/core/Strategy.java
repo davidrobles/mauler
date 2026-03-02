@@ -1,6 +1,4 @@
-package net.davidrobles.mauler.players;
-
-import net.davidrobles.mauler.core.Game;
+package net.davidrobles.mauler.core;
 
 /**
  * A game-playing agent that selects a move from the current game state.

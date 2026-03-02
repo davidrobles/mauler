@@ -1,6 +1,5 @@
 package net.davidrobles.mauler.core;
 
-import net.davidrobles.mauler.players.Strategy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
