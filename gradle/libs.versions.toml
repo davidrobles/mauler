@@ -1,0 +1,13 @@
+[versions]
+guava = "33.4.0-jre"
+gson = "2.11.0"
+commons-lang3 = "3.17.0"
+junit = "4.13.2"
+hamcrest = "2.2"
+
+[libraries]
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
+junit = { module = "junit:junit", version.ref = "junit" }
+hamcrest-core = { module = "org.hamcrest:hamcrest-core", version.ref = "hamcrest" }
