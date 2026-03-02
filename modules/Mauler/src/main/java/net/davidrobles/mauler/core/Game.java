@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  * <p>Games are self-referential generics — {@code GAME extends Game<GAME>} — so that methods like
  * {@link #copy()} returns the concrete type rather than the raw interface,
- * enabling type-safe use with {@link net.davidrobles.mauler.strategies.Strategy Strategy} and the
+ * enabling type-safe use with {@link net.davidrobles.mauler.core.Strategy Strategy} and the
  * tournament infrastructure ({@code Match}, {@code Series}, {@code RoundRobin}).
  *
  * <p>The move model is index-based: {@link #getNumMoves()} returns how many legal moves exist, and
@@ -18,7 +18,7 @@ import java.util.Optional;
  * <p>Typical game loop:
  * <pre>{@code
  * while (!game.isOver()) {
- *     int move = player.move(game);   // 0 <= move < game.getNumMoves()
+ *     int move = strategy.move(game);   // 0 <= move < game.getNumMoves()
  *     game.makeMove(move);
  * }
  * GameResult[] outcomes = game.getOutcome().orElseThrow();
@@ -31,7 +31,7 @@ import java.util.Optional;
  *
  * @see net.davidrobles.mauler.core.ObservableGame
  * @see net.davidrobles.mauler.core.GameResult
- * @see net.davidrobles.mauler.strategies.Strategy
+ * @see net.davidrobles.mauler.core.Strategy
  */
 public interface Game<GAME extends Game<GAME>>
 {
@@ -39,7 +39,7 @@ public interface Game<GAME extends Game<GAME>>
      * Returns a deep copy of the current game state. The copy is fully independent —
      * moves made on the copy do not affect the original, and vice versa.
      *
-     * <p>Used extensively by AI players to simulate future positions without
+     * <p>Used extensively by strategies to simulate future positions without
      * modifying the live game.
      *
      * @return a deep copy of this game
@@ -68,8 +68,8 @@ public interface Game<GAME extends Game<GAME>>
 
     /**
      * Returns the number of legal moves available to the current player.
-     * Equivalent to {@code getMoves().length} but may be faster since it avoids
-     * allocating the string array.
+     * Equivalent to {@code getMoves().size()} but may be faster since it avoids
+     * allocating the list.
      *
      * <p>Returns {@code 0} when the game is over.
      *
