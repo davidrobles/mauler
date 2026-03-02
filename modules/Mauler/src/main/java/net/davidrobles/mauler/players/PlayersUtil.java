@@ -108,7 +108,7 @@ public final class PlayersUtil
             case WIN:  return win;
             case LOSS: return loss;
             case DRAW: return draw;
-            default:   throw new IllegalStateException("Unexpected outcome NA for a finished game");
+            default:   throw new IllegalStateException("Unknown GameResult: " + game.getOutcome().orElseThrow()[player]);
         }
     }
 }

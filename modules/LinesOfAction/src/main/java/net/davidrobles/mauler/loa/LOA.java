@@ -800,7 +800,7 @@ public class LOA extends ObservableGame<LOA>
         black = 9079256848778920062L;
         white = 36452665219186944L;
         gameOver = false;
-        outcomes = new GameResult[] { GameResult.NA, GameResult.NA };
+        outcomes = new GameResult[2];
         calculateLegalMoves();
     }
 

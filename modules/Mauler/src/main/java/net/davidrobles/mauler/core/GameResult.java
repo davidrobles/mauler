@@ -3,15 +3,15 @@ package net.davidrobles.mauler.core;
 /**
  * The result of a finished game from one player's perspective.
  *
- * <p>Each value of {@link Game#getOutcome()} is one of these constants.
- * {@code NA} is a sentinel for games still in progress; the other three
- * represent terminal states.
+ * <p>Each value in the array returned by {@link Game#getOutcome()} is one of
+ * these three constants. All values represent a terminal state; the
+ * in-progress case is represented by {@link java.util.Optional#empty()} at
+ * the {@code getOutcome()} level.
  *
  * <p>Utility methods:
  * <ul>
- *   <li>{@link #flip()} — converts between WIN and LOSS (identity for DRAW/NA)</li>
+ *   <li>{@link #flip()} — converts WIN↔LOSS (identity for DRAW)</li>
  *   <li>{@link #toScore()} — maps to the standard MCTS score: WIN=1.0, DRAW=0.5, LOSS=0.0</li>
- *   <li>{@link #isTerminal()} — {@code true} for WIN, LOSS, DRAW; {@code false} for NA</li>
  * </ul>
  */
 public enum GameResult
@@ -23,15 +23,12 @@ public enum GameResult
     LOSS,
 
     /** The game ended in a draw. */
-    DRAW,
-
-    /** The game has not ended yet (not applicable). */
-    NA;
+    DRAW;
 
     /**
-     * Returns the opposite outcome: WIN↔LOSS. DRAW and NA are returned unchanged.
+     * Returns the opposite result: WIN↔LOSS. DRAW is returned unchanged.
      *
-     * @return the flipped outcome
+     * @return the flipped result
      */
     public GameResult flip()
     {
@@ -43,11 +40,10 @@ public enum GameResult
     }
 
     /**
-     * Maps this outcome to a numeric score using the standard MCTS convention:
+     * Maps this result to a numeric score using the standard MCTS convention:
      * WIN → 1.0, DRAW → 0.5, LOSS → 0.0.
      *
      * @return the numeric score in [0.0, 1.0]
-     * @throws IllegalStateException if called on {@link #NA}
      */
     public double toScore()
     {
@@ -55,18 +51,7 @@ public enum GameResult
             case WIN:  return 1.0;
             case DRAW: return 0.5;
             case LOSS: return 0.0;
-            default:   throw new IllegalStateException("toScore() called on NA");
+            default:   throw new IllegalStateException("Unknown GameResult: " + this);
         }
-    }
-
-    /**
-     * Returns {@code true} if this outcome represents a finished game
-     * (WIN, LOSS, or DRAW), {@code false} for {@link #NA}.
-     *
-     * @return {@code true} if the game is over
-     */
-    public boolean isTerminal()
-    {
-        return this != NA;
     }
 }

@@ -12,7 +12,8 @@ public class Connect4 implements Game<Connect4>
     public enum Cell { P1, P2, EMPTY }
     private int current;
     private long player1, player2, legal;
-    private GameResult[] outcomes = {GameResult.NA, GameResult.NA};
+    private boolean gameOver = false;
+    private GameResult[] outcomes;
     private int rows, cols, cellsCount, n;
     private List<Long> moves = new ArrayList<Long>();
     private static final long LEFT_MASK = -4432676798594L, RIGHT_MASK = -283691315109953L,
@@ -223,7 +224,8 @@ public class Connect4 implements Game<Connect4>
     {
         Connect4 connect4 = new Connect4();
         connect4.current = current;
-        connect4.outcomes = new GameResult[] { outcomes[0], outcomes[1] };
+        connect4.gameOver = gameOver;
+        connect4.outcomes = gameOver ? new GameResult[] { outcomes[0], outcomes[1] } : null;
         connect4.player1 = player1;
         connect4.player2 = player2;
         connect4.legal = legal;
@@ -246,7 +248,7 @@ public class Connect4 implements Game<Connect4>
     @Override
     public boolean isOver()
     {
-        return outcomes[0] != GameResult.NA;
+        return gameOver;
     }
 
     @Override
@@ -266,7 +268,7 @@ public class Connect4 implements Game<Connect4>
     @Override
     public Optional<GameResult[]> getOutcome()
     {
-        return outcomes[0] == GameResult.NA ? Optional.empty() : Optional.of(outcomes);
+        return gameOver ? Optional.of(outcomes) : Optional.empty();
     }
 
     @Override
@@ -282,8 +284,10 @@ public class Connect4 implements Game<Connect4>
 
         if (checkWin(getCurrentPlayerBitboard(), moveBitboard))
         {
+            outcomes = new GameResult[2];
             outcomes[getCurPlayer()] = GameResult.WIN;
             outcomes[(getCurPlayer() + 1) % 2] = GameResult.LOSS;
+            gameOver = true;
             legal = 0L;
         }
         else
@@ -292,8 +296,8 @@ public class Connect4 implements Game<Connect4>
 
             if (Long.bitCount(legal) == 0)
             {
-                outcomes[0] = GameResult.DRAW;
-                outcomes[1] = GameResult.DRAW;
+                outcomes = new GameResult[] { GameResult.DRAW, GameResult.DRAW };
+                gameOver = true;
             }
         }
 
@@ -313,8 +317,8 @@ public class Connect4 implements Game<Connect4>
         player1 = 0L;
         player2 = 0L;
         legal = 4363686772736L;
-        outcomes[0] = GameResult.NA;
-        outcomes[1] = GameResult.NA;
+        gameOver = false;
+        outcomes = null;
         moves.clear();
     }
 
