@@ -27,7 +27,7 @@ public class MCTSNoRollout<GAME extends Game<GAME>> extends MCTS<GAME>
     //////////////////
 
     @Override
-    protected double simDefault(MCTSNode<GAME> node, int player)
+    protected double rollout(MCTSNode<GAME> node, int player)
     {
         return evalFunc.eval(node.getGame(), player);
     }
