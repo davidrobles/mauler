@@ -1,5 +1,6 @@
 package net.davidrobles.mauler.core;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -56,14 +57,14 @@ public interface Game<GAME extends Game<GAME>>
      * Returns the legal moves for the current player as human-readable strings,
      * using a game-specific notation (e.g. {@code "e4"}, {@code "a1b2"}).
      *
-     * <p>The array is parallel to the index space of {@link #makeMove(int)}: index {@code i}
-     * in this array corresponds to passing {@code i} to {@code makeMove}.
+     * <p>The list is parallel to the index space of {@link #makeMove(int)}: index {@code i}
+     * in this list corresponds to passing {@code i} to {@code makeMove}.
      *
-     * <p>Returns an empty array when the game is over.
+     * <p>Returns an empty list when the game is over. The returned list is unmodifiable.
      *
      * @return the legal moves as strings, in the same order as their indices
      */
-    String[] getMoves();
+    List<String> getMoves();
 
     /**
      * Returns the number of legal moves available to the current player.
@@ -76,7 +77,7 @@ public interface Game<GAME extends Game<GAME>>
      */
     default int getNumMoves()
     {
-        return getMoves().length;
+        return getMoves().size();
     }
 
     /**

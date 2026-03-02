@@ -362,7 +362,7 @@ public class Othello extends ObservableGame<Othello> {
         builder.append(String.format("Turn: %s\n", curPlayerStr()));
         builder.append(String.format("Black count: %d\n", Long.bitCount(blackBB)));
         builder.append(String.format("White count: %d\n", Long.bitCount(whiteBB)));
-        builder.append(("Legal moves: " + Arrays.toString(getMoves()) + "\n\n"));
+        builder.append(("Legal moves: " + getMoves() + "\n\n"));
         return builder.toString();
     }
 
@@ -437,8 +437,8 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     @Override
-    public String[] getMoves() {
-        List<String> othelloMoves = new ArrayList<String>();
+    public List<String> getMoves() {
+        List<String> othelloMoves = new ArrayList<>();
         long[] bitMovesArray = getBitMovesArray();
         int nMoves = getNumMoves();
         if (nMoves == 1 && bitMovesArray[0] == PASS) {
@@ -450,7 +450,7 @@ public class Othello extends ObservableGame<Othello> {
                 othelloMoves.add(OthelloUtil.cellToStr(cellIndex));
             }
         }
-        return othelloMoves.toArray(new String[othelloMoves.size()]);
+        return List.copyOf(othelloMoves);
     }
 
     @Override
@@ -480,9 +480,9 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     public void makeMove(String move) {
-        String[] moves = getMoves();
-        for (int i = 0; i < moves.length; i++) {
-            if (moves[i].equalsIgnoreCase(move)) {
+        List<String> moves = getMoves();
+        for (int i = 0; i < moves.size(); i++) {
+            if (moves.get(i).equalsIgnoreCase(move)) {
                 makeMove(i);
                 return;
             }

@@ -258,11 +258,11 @@ public class Connect4 implements Game<Connect4>
     }
 
     @Override
-    public String[] getMoves() {
-        List<String> moves = new ArrayList<String>();
+    public List<String> getMoves() {
+        List<String> moves = new ArrayList<>();
         for (int i = 0; i < getBitMoves().size(); i++)
             moves.add(String.valueOf(i));
-        return moves.toArray(new String[moves.size()]);
+        return List.copyOf(moves);
     }
 
     @Override

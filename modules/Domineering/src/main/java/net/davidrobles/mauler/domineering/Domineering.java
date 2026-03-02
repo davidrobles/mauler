@@ -4,7 +4,6 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.GameResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -143,19 +142,19 @@ public class Domineering implements Game<Domineering>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
         List<Long> bitMoves = bitMoves();
-        String[] moves = new String[bitMoves.size()];
+        List<String> moves = new ArrayList<>();
 
         for (int i = 0; i < bitMoves.size(); i++)
         {
             long bitMove = bitMoves.get(i);
             int test = Long.numberOfTrailingZeros(bitMove);
-            moves[i] = "" + (test / 8) + " " + (test % 8);
+            moves.add("" + (test / 8) + " " + (test % 8));
         }
 
-        return moves;
+        return List.copyOf(moves);
     }
 
     @Override
@@ -218,7 +217,7 @@ public class Domineering implements Game<Domineering>
         StringBuilder builder = new StringBuilder();
         builder.append("Cur. player: " + getCurPlayer() + "\n");
         builder.append("Num. moves: " + getNumMoves() + "\n");
-        builder.append("Moves: " + Arrays.toString(getMoves()) + "\n\n");
+        builder.append("Moves: " + getMoves() + "\n\n");
 
         for (int i = 0; i < 64; i++)
         {

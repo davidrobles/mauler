@@ -1,5 +1,6 @@
 package net.davidrobles.mauler.core;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,9 +21,9 @@ public class DummyGame implements Game<DummyGame>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
-        return new String[0];
+        return List.of();
     }
 
     @Override

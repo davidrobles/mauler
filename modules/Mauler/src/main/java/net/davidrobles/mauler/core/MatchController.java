@@ -136,7 +136,7 @@ public class MatchController<GAME extends Game<GAME> & MoveObservable>
         {
             // TODO: Fix timeDue
             int moveIndex = players.get(gameCopy.getCurPlayer()).move(gameCopy);
-            String moveString = gameCopy.getMoves()[moveIndex];
+            String moveString = gameCopy.getMoves().get(moveIndex);
             gameCopy.makeMove(moveIndex);
 
             if (!gameHistory.getLast().equals(gameCopy))

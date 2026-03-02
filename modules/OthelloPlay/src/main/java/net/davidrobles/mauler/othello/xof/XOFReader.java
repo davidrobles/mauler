@@ -5,7 +5,6 @@ import net.davidrobles.mauler.othello.Othello;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,12 +36,12 @@ public class XOFReader
             if (!checkMove(othello, myMove))
                 return false;
 
-            othello.makeMove(Arrays.asList(othello.getMoves()).indexOf(myMove));
+            othello.makeMove(othello.getMoves().indexOf(myMove));
 
             if (debug)
                 System.out.println(othello);
 
-            if (othello.getMoves().length == 1 && othello.getMoves()[0].equals("PASS"))
+            if (othello.getMoves().size() == 1 && othello.getMoves().get(0).equals("PASS"))
             {
                 othello.makeMove(0);
 
@@ -68,7 +67,7 @@ public class XOFReader
 
     static boolean checkMove(Othello othello, String moveStr)
     {
-        return Arrays.asList(othello.getMoves()).contains(moveStr);
+        return othello.getMoves().contains(moveStr);
     }
 
     static void checkGames(String[] games, boolean debug)

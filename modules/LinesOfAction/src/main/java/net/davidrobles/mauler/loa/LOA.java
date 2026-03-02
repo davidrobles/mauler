@@ -692,14 +692,14 @@ public class LOA extends ObservableGame<LOA>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
-        List<String> legalMoves = new ArrayList<String>();
+        List<String> legalMoves = new ArrayList<>();
 
         for (long[] move : moves)
             legalMoves.add(cellToString(cellBitToIndex(move[0])) + "-" + cellToString(cellBitToIndex(move[1])));
 
-        return legalMoves.toArray(new String[legalMoves.size()]);
+        return List.copyOf(legalMoves);
     }
 
     @Override

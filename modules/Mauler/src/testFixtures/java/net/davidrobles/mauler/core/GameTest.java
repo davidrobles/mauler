@@ -33,12 +33,12 @@ public abstract class GameTest<GAME extends Game<GAME>>
     public void testNumLegalMovesEqualsListMoves()
     {
         while (!game.isOver()) {
-            assertEquals(game.getNumMoves(), game.getMoves().length);
+            assertEquals(game.getNumMoves(), game.getMoves().size());
             game.makeMove(rnd.nextInt(game.getNumMoves()));
         }
 
         assertEquals(0, game.getNumMoves());
-        assertEquals(0, game.getMoves().length);
+        assertEquals(0, game.getMoves().size());
     }
 
 //    @Test

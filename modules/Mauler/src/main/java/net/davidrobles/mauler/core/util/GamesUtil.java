@@ -82,7 +82,7 @@ public class GamesUtil
             else
                 move = players.get(currentPlayer).move(copyGame ? game.copy() : game);
 
-            String moveStr = game.getMoves()[move];
+            String moveStr = game.getMoves().get(move);
             game.makeMove(move);
 
             if (verbose)
@@ -117,7 +117,7 @@ public class GamesUtil
         {
             int currentPlayer = game.getCurPlayer();
             int move = RNG.nextInt(game.getNumMoves());
-            String moveStr = game.getMoves()[move];
+            String moveStr = game.getMoves().get(move);
             game.makeMove(move);
 
             System.out.println(dim("Move " + moveNum + "  ")

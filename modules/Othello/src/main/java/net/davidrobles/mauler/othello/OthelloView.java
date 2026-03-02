@@ -144,7 +144,7 @@ public class OthelloView extends JPanel implements MoveObserver, MatchController
         else
         {
             // possible moves
-            if (othello.getMoves().length == 1 && othello.getMoves()[0].equals("PASS"))
+            if (othello.getMoves().size() == 1 && othello.getMoves().get(0).equals("PASS"))
             {
                 g.setColor(Color.RED);
                 g.drawString("NO MOVES AVAILABLE... PASS!", 200, 200);

@@ -170,14 +170,14 @@ public class Breakthrough extends ObservableGame<Breakthrough>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
-        List<String> bkMoves = new ArrayList<String>();
+        List<String> bkMoves = new ArrayList<>();
 
         for (int[] move : getMovesArray())
             bkMoves.add(cellToString(move[0]) + cellToString(move[1]));
 
-        return bkMoves.toArray(new String[bkMoves.size()]);
+        return List.copyOf(bkMoves);
     }
 
     @Override

@@ -164,14 +164,14 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
-        String[] moveStr = new String[getNumMoves()];
+        List<String> moveStr = new ArrayList<>();
 
-        for (int i = 0; i < moveStr.length; i++)
-            moveStr[i] = "testing";
+        for (int i = 0; i < getNumMoves(); i++)
+            moveStr.add("testing");
 
-        return moveStr;
+        return List.copyOf(moveStr);
     }
 
     @Override

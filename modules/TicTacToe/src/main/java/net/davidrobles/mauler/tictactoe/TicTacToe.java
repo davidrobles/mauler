@@ -133,13 +133,13 @@ public class TicTacToe extends ObservableGame<TicTacToe>
     }
 
     @Override
-    public String[] getMoves()
+    public List<String> getMoves()
     {
         List<Integer> indices = legalMoveIndices();
-        String[] moves = new String[indices.size()];
+        List<String> moves = new ArrayList<>();
         for (int i = 0; i < indices.size(); i++)
-            moves[i] = String.valueOf(indices.get(i));
-        return moves;
+            moves.add(String.valueOf(indices.get(i)));
+        return List.copyOf(moves);
     }
 
     @Override
