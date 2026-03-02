@@ -74,7 +74,7 @@ public class All
 //        players.add(new UCTPrior<Othello>(greedy, c, logistello, nInit));
 //        playerNames.add("UCT+NR+PK");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -88,7 +88,7 @@ public class All
         players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.0), c));
         players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 1.0), c));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, 50);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, 50);
         series.run();
     }
 
@@ -113,7 +113,7 @@ public class All
         players.add(new EpsilonGreedy<Othello>(OthelloVF.NTS_LOG, 0.1));
         playerNames.add("NTS-LOG");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), 10000, players, playerNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, 10000, players, playerNames);
         roundRobin.run();
         System.out.println();
         System.out.println(roundRobin.toLatexTable());

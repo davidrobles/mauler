@@ -28,7 +28,7 @@ public class HavannahRun
         }};
 
         HavannahView panel = new HavannahView(havannah);
-        MatchController<Havannah> mc = new MatchController<Havannah>(havannah, players, 50);
+        MatchController<Havannah> mc = new MatchController<Havannah>(() -> new Havannah(8), players, 50);
         MatchControllerButtonsView<Havannah> buttonsView = new MatchControllerButtonsView<Havannah>(mc);
         MatchControllerSliderView<Havannah> sliderView = new MatchControllerSliderView<Havannah>(mc);
         TableModel model = new HavannahTableModel(mc);

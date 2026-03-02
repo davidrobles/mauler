@@ -46,7 +46,7 @@ public class MCTS_WPC
         players.add(mcts2);
         playersNames.add("u=[1,-1,0]");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(othello, nGames, players, playersNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -71,7 +71,7 @@ public class MCTS_WPC
             playersNames.add("c=" + cValues[i]);
         }
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(othello, nGames, players, playersNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -100,7 +100,7 @@ public class MCTS_WPC
             playersNames.add("e=" + epsilonValues[i]);
         }
 
-        RoundRobin<Othello> rr = new RoundRobin<Othello>(othello, nGames, players, playersNames, timeout);
+        RoundRobin<Othello> rr = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
         rr.run();
         System.out.println(rr.toLatexTable());
     }
@@ -119,7 +119,7 @@ public class MCTS_WPC
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(stdMCTS);
         players.add(wpcMCTS);
-        Series<Othello> untimedSeries = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> untimedSeries = new Series<>(Othello::new, nGames, players);
         untimedSeries.run();
     }
 
@@ -137,7 +137,7 @@ public class MCTS_WPC
         players.add(stdMCTS);
         players.add(wpcMCTS);
 
-        Series<Othello> timedSeries = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> timedSeries = new Series<>(Othello::new, nGames, players, timeout);
         timedSeries.run();
     }
 
@@ -188,7 +188,7 @@ public class MCTS_WPC
         players.add(new UCT<Othello>(new GreedyPlayer<Othello>(wpc), c));
         players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(wpc, epsilon), c));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 }

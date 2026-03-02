@@ -171,12 +171,6 @@ public class TicTacToe extends ObservableGame<TicTacToe>
     }
 
     @Override
-    public TicTacToe newInstance()
-    {
-        return new TicTacToe();
-    }
-
-    @Override
     public void reset()
     {
         crosses = noughts = 0;

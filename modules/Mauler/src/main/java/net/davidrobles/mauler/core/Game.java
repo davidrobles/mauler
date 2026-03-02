@@ -7,7 +7,7 @@ import java.util.Optional;
  * Core interface for two-player (and n-player) deterministic board games in the Mauler framework.
  *
  * <p>Games are self-referential generics — {@code GAME extends Game<GAME>} — so that methods like
- * {@link #copy()} and {@link #newInstance()} return the concrete type rather than the raw interface,
+ * {@link #copy()} returns the concrete type rather than the raw interface,
  * enabling type-safe use with {@link net.davidrobles.mauler.players.Player Player} and the
  * tournament infrastructure ({@code Match}, {@code Series}, {@code RoundRobin}).
  *
@@ -131,17 +131,6 @@ public interface Game<GAME extends Game<GAME>>
      * @throws IllegalArgumentException if {@code move} is out of range
      */
     void makeMove(int move);
-
-    /**
-     * Creates a fresh instance of this game type in its initial state, equivalent to
-     * constructing a new game with default parameters.
-     *
-     * <p>Useful when the concrete type is only known through the generic parameter,
-     * such as in tournament runners.
-     *
-     * @return a new game instance in its initial state
-     */
-    GAME newInstance();
 
     /**
      * Resets the game to its initial state, as if it were just constructed.

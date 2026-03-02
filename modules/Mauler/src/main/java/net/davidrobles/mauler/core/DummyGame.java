@@ -51,12 +51,6 @@ public class DummyGame implements Game<DummyGame>
     }
 
     @Override
-    public DummyGame newInstance()
-    {
-        return null;
-    }
-
-    @Override
     public void reset()
     {
 

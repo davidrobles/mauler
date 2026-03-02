@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 /**
  * Runs a series of {@link Match}es between two players and aggregates the results.
@@ -25,7 +26,8 @@ import java.util.concurrent.Future;
  */
 public class Series<GAME extends Game<GAME>>
 {
-    private final GAME game;
+    private final Supplier<GAME> gameFactory;
+    private final String gameName;
     private final int nGames;
     private final List<Player<GAME>> players;
     private final int timeout;
@@ -36,33 +38,35 @@ public class Series<GAME extends Game<GAME>>
     /**
      * Creates a series with no per-move time limit.
      *
-     * @param game    the game to play
-     * @param nGames  number of matches to run
-     * @param players the two players
+     * @param gameFactory supplier that produces a fresh game instance for each match
+     * @param nGames      number of matches to run
+     * @param players     the two players
      * @throws IllegalArgumentException if the number of players doesn't match the game
      */
-    public Series(GAME game, int nGames, List<Player<GAME>> players)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players)
     {
-        this(game, nGames, players, -1);
+        this(gameFactory, nGames, players, -1);
     }
 
     /**
      * Creates a series with a per-move time limit.
      *
-     * @param game    the game to play
-     * @param nGames  number of matches to run
-     * @param players the two players
-     * @param timeout per-move time limit in milliseconds (must be positive)
+     * @param gameFactory supplier that produces a fresh game instance for each match
+     * @param nGames      number of matches to run
+     * @param players     the two players
+     * @param timeout     per-move time limit in milliseconds (must be positive)
      * @throws IllegalArgumentException if the number of players doesn't match the game, or timeout is not positive
      */
-    public Series(GAME game, int nGames, List<Player<GAME>> players, int timeout)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, int timeout)
     {
-        if (game.getNumPlayers() != players.size())
-            throw new IllegalArgumentException("Game requires " + game.getNumPlayers() + " players, got " + players.size());
+        GAME prototype = gameFactory.get();
+        if (prototype.getNumPlayers() != players.size())
+            throw new IllegalArgumentException("Game requires " + prototype.getNumPlayers() + " players, got " + players.size());
         if (timeout != -1 && timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
 
-        this.game = game;
+        this.gameFactory = gameFactory;
+        this.gameName = prototype.getName();
         this.nGames = nGames;
         this.players = players;
         this.timeout = timeout;
@@ -98,8 +102,8 @@ public class Series<GAME extends Game<GAME>>
         {
             int starter = i % 2;
             matches.add(timeout > 0
-                    ? new Match<>(game, players, starter, timeout)
-                    : new Match<>(game, players, starter));
+                    ? new Match<>(gameFactory, players, starter, timeout)
+                    : new Match<>(gameFactory, players, starter));
         }
 
         try
@@ -210,7 +214,7 @@ public class Series<GAME extends Game<GAME>>
 
     private void printHeader(int nProcessors)
     {
-        Console.header("Series — " + game.getName());
+        Console.header("Series — " + gameName);
         System.out.println("  " + Console.dim("Processors  ") + nProcessors);
         System.out.println("  " + Console.dim("Matches     ") + String.format("%,d", nGames));
         System.out.println("  " + Console.dim("Player 1    ") + players.get(0));
@@ -222,7 +226,7 @@ public class Series<GAME extends Game<GAME>>
 
     private void printFooter()
     {
-        Console.header("Results — " + game.getName());
+        Console.header("Results — " + gameName);
         System.out.println("  " + Console.green(String.format("%-12s %,d  (%.1f%%)", "Wins P1", getWins(0), getWinsAvg(0) * 100)));
         System.out.println("  " + Console.blue(String.format("%-12s %,d  (%.1f%%)", "Wins P2", getWins(1), getWinsAvg(1) * 100)));
         System.out.println("  " + Console.yellow(String.format("%-12s %,d  (%.1f%%)", "Draws", getDraws(), getDrawsAvg() * 100)));
@@ -237,7 +241,7 @@ public class Series<GAME extends Game<GAME>>
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%14s: %s%n",   "Game",       game.getName()));
+        sb.append(String.format("%14s: %s%n",   "Game",       gameName));
         sb.append(String.format("%14s: %,d%n",  "Matches",    nGames));
         sb.append(String.format("%14s: %s%n",   "Player 1",   players.get(0)));
         sb.append(String.format("%14s: %s%n",   "Player 2",   players.get(1)));

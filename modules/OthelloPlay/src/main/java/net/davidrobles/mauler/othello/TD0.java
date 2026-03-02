@@ -4,6 +4,7 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.players.PlayersUtil;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 // TODO: allow a termination condition
 
@@ -26,16 +27,16 @@ public class TD0<GAME extends Game<GAME>>
     private boolean verbose = false;
     private Random rng;
 
-    public TD0(GAME game, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
+    public TD0(Supplier<GAME> gameFactory, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
                double epsilon)
     {
-        this(game, evalFunc, episodes, learningRate, discountFactor, epsilon, new Random());
+        this(gameFactory, evalFunc, episodes, learningRate, discountFactor, epsilon, new Random());
     }
 
-    public TD0(GAME game, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
+    public TD0(Supplier<GAME> gameFactory, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
                double epsilon, Random rng)
     {
-        this.game = game.newInstance();
+        this.game = gameFactory.get();
         this.evalFunc = evalFunc;
         this.episodes = episodes;
         this.learningRate = learningRate;

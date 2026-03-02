@@ -155,7 +155,7 @@ public class GANTuples
         @Override
         public Void call() throws Exception
         {
-            TD0<Othello> td0 = new TD0<Othello>(new Othello(), nts, episodes, learningRate, discountFactor, epsilon);
+            TD0<Othello> td0 = new TD0<Othello>(Othello::new, nts, episodes, learningRate, discountFactor, epsilon);
             td0.learn();
             System.out.println("Completed");
             return null;
@@ -180,7 +180,7 @@ public class GANTuples
             players.add(new EpsilonGreedy<Othello>(nts, 0.1));
             players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
 
-            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+            Series<Othello> series = new Series<>(Othello::new, nGames, players);
             series.run();
 
             double winsAvg = series.getWinsAvg(0);

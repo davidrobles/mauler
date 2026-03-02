@@ -74,7 +74,7 @@ public class FitProp
                 players.add(new EpsilonGreedy<Othello>(nts1.getNTupleSystem(), epsilon));
                 players.add(new EpsilonGreedy<Othello>(nts2.getNTupleSystem(), epsilon));
 
-                Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+                Series<Othello> series = new Series<>(Othello::new, nGames, players);
                 series.run();
 
                 if (series.getWinsAvg(0) >= series.getWinsAvg(1))

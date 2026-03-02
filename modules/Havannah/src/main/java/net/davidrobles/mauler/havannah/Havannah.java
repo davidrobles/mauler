@@ -262,12 +262,6 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public Havannah newInstance()
-    {
-        return new Havannah(size);
-    }
-
-    @Override
     public void reset()
     {
         ply = 0;

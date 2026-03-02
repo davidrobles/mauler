@@ -28,7 +28,7 @@ public class LOARun
             }};
 
         LOAView panel = new LOAView(loa);
-        MatchController<LOA> mc = new MatchController<LOA>(loa, players, 50);
+        MatchController<LOA> mc = new MatchController<LOA>(LOA::new, players, 50);
         MatchControllerButtonsView<LOA> buttonsView = new MatchControllerButtonsView<LOA>(mc);
         MatchControllerSliderView<LOA> sliderView = new MatchControllerSliderView<LOA>(mc);
         TableModel model = new LOATableModel(mc);

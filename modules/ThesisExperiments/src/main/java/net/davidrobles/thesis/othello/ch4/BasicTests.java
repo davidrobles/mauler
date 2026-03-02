@@ -24,7 +24,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new RandPlayer<Othello>());
-        Match<Othello> match = new Match<Othello>(new Othello(), players, 0);
+        Match<Othello> match = new Match<>(Othello::new, players, 0);
         match.call();
         System.out.println(match);
     }
@@ -36,7 +36,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new RandPlayer<Othello>());
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
     }
 
@@ -48,7 +48,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new MonteCarlo<Othello>(nSims));
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
     }
 
@@ -60,7 +60,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new RandPlayer<Othello>());
         players.add(new MonteCarlo<Othello>());
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -90,7 +90,7 @@ public class BasicTests
         players.add(new RandPlayer<Othello>());
         players.add(new AlphaBeta<Othello>(nts, maxDepth));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
     }
 
@@ -106,7 +106,7 @@ public class BasicTests
         players.add(new RandPlayer<Othello>());
         players.add(new AlphaBeta<Othello>(nts));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -119,7 +119,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new MonteCarlo<Othello>(nSims));
         players.add(new UCT<Othello>(c, nSims));
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
     }
 
@@ -131,7 +131,7 @@ public class BasicTests
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
         players.add(new MonteCarlo<Othello>());
         players.add(new UCT<Othello>(c));
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -156,7 +156,7 @@ public class BasicTests
         playerNames.add("UCT");
         playerNames.add("Alpha-Beta");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames);
         roundRobin.run();
     }
 
@@ -183,7 +183,7 @@ public class BasicTests
         playerNames.add("Alpha-Beta");
         players.add(new AlphaBeta<Othello>(wpc, 6));
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
     }
 

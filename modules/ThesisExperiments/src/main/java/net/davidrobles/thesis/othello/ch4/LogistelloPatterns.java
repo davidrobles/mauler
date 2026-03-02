@@ -68,7 +68,7 @@ public class LogistelloPatterns
 //        NTupleSystem prevNTS = nts.copy();
 
         // Learning algorithm
-        TD0<Othello> td0 = new TD0<Othello>(new Othello(), nts, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 = new TD0<Othello>(Othello::new, nts, episodes, learningRate, discountFactor, epsilon);
 
         // Plot
         Object[] rowNames = { "Random", "DR-WPC", "Logistello" };
@@ -106,7 +106,7 @@ public class LogistelloPatterns
                 players = new ArrayList<Player<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.0));
                 players.add(new RandPlayer<Othello>());
-                series = new Series<Othello>(new Othello(), games, players);
+                series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("vs Random: " + series.getWinsAvg(0));
@@ -116,7 +116,7 @@ public class LogistelloPatterns
                 players = new ArrayList<Player<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.1));
                 players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
-                series = new Series<Othello>(new Othello(), games, players);
+                series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("vs WPC: " + series.getWinsAvg(0));
@@ -126,7 +126,7 @@ public class LogistelloPatterns
                 players = new ArrayList<Player<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(nts, 0.1));
                 players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
-                series = new Series<Othello>(new Othello(), games, players);
+                series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("vs Logistello: " + series.getWinsAvg(0));

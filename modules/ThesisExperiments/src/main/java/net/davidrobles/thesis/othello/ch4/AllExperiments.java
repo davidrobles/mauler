@@ -47,7 +47,7 @@ public class AllExperiments
         players.add(new UCTPrior<Othello>(greedy, c, wpc, nInit));
         playerNames.add("UCT+NR+PK");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }

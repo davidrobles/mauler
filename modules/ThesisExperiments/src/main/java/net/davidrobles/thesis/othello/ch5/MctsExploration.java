@@ -31,7 +31,7 @@ public class MctsExploration {
         playerNames.add("C = 1.2");
         players.add(new UCT<Connect4>(1.4, numMctsSims));
         playerNames.add("C = 1.4");
-        RoundRobin<Connect4> roundRobin = new RoundRobin<Connect4>(c4, numGames, players, playerNames);
+        RoundRobin<Connect4> roundRobin = new RoundRobin<>(Connect4::new, numGames, players, playerNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -48,7 +48,7 @@ public class MctsExploration {
         playerNames.add("C = 5.0");
         players.add(new UCT<Othello>(10.0, numMctsSims));
         playerNames.add("C = 10.0");
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(othello, numGames, players, playerNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, numGames, players, playerNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }

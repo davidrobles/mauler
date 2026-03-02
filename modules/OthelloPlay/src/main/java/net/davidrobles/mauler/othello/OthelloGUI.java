@@ -32,7 +32,7 @@ public class OthelloGUI
         }};
 
         OthelloView panel = new OthelloView(othello);
-        MatchController<Othello> mc = new MatchController<Othello>(othello, players, 50);
+        MatchController<Othello> mc = new MatchController<Othello>(Othello::new, players, 50);
         MatchControllerButtonsView<Othello> buttonsView = new MatchControllerButtonsView<Othello>(mc);
         MatchControllerSliderView<Othello> sliderView = new MatchControllerSliderView<Othello>(mc);
         TableModel model = new OthelloTableModel(mc);
@@ -56,7 +56,7 @@ public class OthelloGUI
         }};
 
         OthelloView panel = new OthelloView(othello);
-        MatchController<Othello> match = new MatchController<Othello>(othello, players, 50);
+        MatchController<Othello> match = new MatchController<Othello>(Othello::new, players, 50);
         match.registerObserver(panel);
         JFrame frame = new JFrame();
         frame.add(panel);

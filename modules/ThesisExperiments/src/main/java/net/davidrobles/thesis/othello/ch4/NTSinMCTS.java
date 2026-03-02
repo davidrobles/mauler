@@ -42,7 +42,7 @@ public class NTSinMCTS
             playersNames.add("e = " + epsilonValues[i]);
         }
 
-        RoundRobin<Othello> rr = new RoundRobin<Othello>(othello, nGames, players, playersNames, timeout);
+        RoundRobin<Othello> rr = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
         rr.run();
         System.out.println(rr.toLatexTable());
     }

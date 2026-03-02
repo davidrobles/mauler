@@ -681,11 +681,6 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     @Override
-    public Othello newInstance() {
-        return new Othello();
-    }
-
-    @Override
     public void reset() {
         current = 0;
         gameOver = false;

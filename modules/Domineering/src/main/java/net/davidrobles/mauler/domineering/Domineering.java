@@ -198,12 +198,6 @@ public class Domineering implements Game<Domineering>
     }
 
     @Override
-    public Domineering newInstance()
-    {
-        return new Domineering();
-    }
-
-    @Override
     public void reset()
     {
         vBoard = hBoard = 0L;

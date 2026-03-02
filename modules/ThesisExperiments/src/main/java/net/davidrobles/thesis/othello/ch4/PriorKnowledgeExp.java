@@ -42,7 +42,7 @@ public class PriorKnowledgeExp
         players.add(new UCT<Othello>(c));
         players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedy<Othello>(wpc, epsilon), wpc, qInit));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -70,7 +70,7 @@ public class PriorKnowledgeExp
             playerNames.add("e = " + epsilons[i]);
         }
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -91,7 +91,7 @@ public class PriorKnowledgeExp
         players.add(new UCT<Othello>(c));
         players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyPlayer<Othello>(wpc)));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -112,7 +112,7 @@ public class PriorKnowledgeExp
         players.add(new UCT<Othello>(c));
         players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -160,7 +160,7 @@ public class PriorKnowledgeExp
 //        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(NTS_LOG, 0.1), c));
 //        playerNames.add("NR");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
@@ -185,7 +185,7 @@ public class PriorKnowledgeExp
         players.add(new UCTNoRollout<Othello>(c, wpc));
         playerNames.add("UCTNoRollout");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }

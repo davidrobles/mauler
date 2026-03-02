@@ -5,6 +5,7 @@ import net.davidrobles.mauler.players.Player;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 /**
  * A single game between two players, returning the {@link GameResult} for each player.
@@ -25,7 +26,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
 {
     private static final double RANDOM_MOVE_PROBABILITY = 0.1;
 
-    private final GAME game;
+    private final Supplier<GAME> gameFactory;
     private final List<Player<GAME>> players;
     private final int starter;
     private final int timeout;
@@ -35,20 +36,20 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
     /**
      * Creates a match with a per-move time limit.
      *
-     * @param game    the game to play
-     * @param players the two players; index 0 is player one, index 1 is player two
-     * @param starter {@code 0} or {@code 1} — which player moves first
-     * @param timeout per-move time limit in milliseconds (must be positive)
+     * @param gameFactory supplier that produces a fresh game instance for each call
+     * @param players     the two players; index 0 is player one, index 1 is player two
+     * @param starter     {@code 0} or {@code 1} — which player moves first
+     * @param timeout     per-move time limit in milliseconds (must be positive)
      * @throws IllegalArgumentException if {@code timeout} is not positive
      */
-    public Match(GAME game, List<Player<GAME>> players, int starter, int timeout)
+    public Match(Supplier<GAME> gameFactory, List<Player<GAME>> players, int starter, int timeout)
     {
         if (timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
         if (players.size() < 2)
             throw new IllegalArgumentException("at least 2 players required");
 
-        this.game = game;
+        this.gameFactory = gameFactory;
         this.players = players;
         this.starter = starter;
         this.timeout = timeout;
@@ -58,16 +59,16 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
     /**
      * Creates a match with no time limit.
      *
-     * @param game    the game to play
-     * @param players the two players
-     * @param starter {@code 0} or {@code 1} — which player moves first
+     * @param gameFactory supplier that produces a fresh game instance for each call
+     * @param players     the two players
+     * @param starter     {@code 0} or {@code 1} — which player moves first
      */
-    public Match(GAME game, List<Player<GAME>> players, int starter)
+    public Match(Supplier<GAME> gameFactory, List<Player<GAME>> players, int starter)
     {
         if (players.size() < 2)
             throw new IllegalArgumentException("at least 2 players required");
 
-        this.game = game;
+        this.gameFactory = gameFactory;
         this.players = players;
         this.starter = starter;
         this.timeout = -1;
@@ -81,7 +82,7 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
     @Override
     public GameResult[] call()
     {
-        GAME g = game.newInstance();
+        GAME g = gameFactory.get();
 
         while (!g.isOver())
             g.makeMove(selectMove(g));

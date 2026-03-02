@@ -31,7 +31,7 @@ public class WPCLearning
         TreeSet<EvalFuncFitness<WPC>> set = new TreeSet<EvalFuncFitness<WPC>>();
 
         WPC wpc = new WPC(type);
-        TD0<Othello> td0 = new TD0<Othello>(new Othello(), wpc, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
         // players
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
@@ -44,7 +44,7 @@ public class WPCLearning
 
             if (episode % interval == 0)
             {
-                Series<Othello> series = new Series<Othello>(new Othello(), games, players);
+                Series<Othello> series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("Episode:  " + episode);
@@ -71,7 +71,7 @@ public class WPCLearning
 
         WPC wpc = new WPC(type);
         WPC prevWPC = wpc.copy();
-        TD0<Othello> td0 = new TD0<Othello>(new Othello(), wpc, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
         for (int episode = 1; episode <= episode; episode++)
         {
@@ -83,7 +83,7 @@ public class WPCLearning
                 List<Player<Othello>> players = new ArrayList<Player<Othello>>();
                 players.add(new EpsilonGreedy<Othello>(prevWPC, 0.1));
                 players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
-                Series<Othello> series = new Series<Othello>(new Othello(), games, players);
+                Series<Othello> series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("Episode:  " + episode);

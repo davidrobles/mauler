@@ -59,7 +59,7 @@ public class MCTSReplacingDefault
         playerNames.add("NTS-EVO");
         playerNames.add("NTS_LOG");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames, 1000);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, 1000);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }

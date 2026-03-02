@@ -6,6 +6,7 @@ import net.davidrobles.mauler.players.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A round-robin tournament in which every pair of players plays a {@link Series} of games.
@@ -22,7 +23,8 @@ import java.util.List;
  */
 public class RoundRobin<GAME extends Game<GAME>>
 {
-    private final GAME game;
+    private final Supplier<GAME> gameFactory;
+    private final String gameName;
     private final List<Player<GAME>> players;
     private final List<String> playerNames;
     private final int nGames;
@@ -37,56 +39,57 @@ public class RoundRobin<GAME extends Game<GAME>>
     /**
      * Creates a round-robin tournament with no per-move time limit.
      *
-     * @param game    the game to play
-     * @param nGames  number of games per series (per player pair)
-     * @param players the participating players
+     * @param gameFactory supplier that produces a fresh game instance for each match
+     * @param nGames      number of games per series (per player pair)
+     * @param players     the participating players
      */
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players)
     {
-        this(game, nGames, players, defaultNames(players), -1);
+        this(gameFactory, nGames, players, defaultNames(players), -1);
     }
 
     /**
      * Creates a round-robin tournament with a per-move time limit.
      *
-     * @param game    the game to play
-     * @param nGames  number of games per series
-     * @param players the participating players
-     * @param timeout per-move time limit in milliseconds (must be positive)
+     * @param gameFactory supplier that produces a fresh game instance for each match
+     * @param nGames      number of games per series
+     * @param players     the participating players
+     * @param timeout     per-move time limit in milliseconds (must be positive)
      */
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, int timeout)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, int timeout)
     {
-        this(game, nGames, players, defaultNames(players), timeout);
+        this(gameFactory, nGames, players, defaultNames(players), timeout);
     }
 
     /**
      * Creates a round-robin tournament with custom player display names.
      *
-     * @param game        the game to play
+     * @param gameFactory supplier that produces a fresh game instance for each match
      * @param nGames      number of games per series
      * @param players     the participating players
      * @param playerNames display names for each player (parallel to {@code players})
      */
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, List<String> playerNames)
     {
-        this(game, nGames, players, playerNames, -1);
+        this(gameFactory, nGames, players, playerNames, -1);
     }
 
     /**
      * Creates a round-robin tournament with custom player names and a per-move time limit.
      *
-     * @param game        the game to play
+     * @param gameFactory supplier that produces a fresh game instance for each match
      * @param nGames      number of games per series
      * @param players     the participating players
      * @param playerNames display names for each player
      * @param timeout     per-move time limit in milliseconds, or {@code -1} for no limit
      */
-    public RoundRobin(GAME game, int nGames, List<Player<GAME>> players, List<String> playerNames, int timeout)
+    public RoundRobin(Supplier<GAME> gameFactory, int nGames, List<Player<GAME>> players, List<String> playerNames, int timeout)
     {
         if (timeout != -1 && timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
 
-        this.game = game;
+        this.gameFactory = gameFactory;
+        this.gameName = gameFactory.get().getName();
         this.nGames = nGames;
         this.players = players;
         this.playerNames = playerNames;
@@ -124,7 +127,7 @@ public class RoundRobin<GAME extends Game<GAME>>
 
         if (verbose)
         {
-            Console.header("Round Robin — " + game.getName());
+            Console.header("Round Robin — " + gameName);
             System.out.println("  " + Console.dim("Series      ") + nSeries);
             System.out.println("  " + Console.dim("Games each  ") + String.format("%,d", nGames));
             if (timeout > 0)
@@ -143,8 +146,8 @@ public class RoundRobin<GAME extends Game<GAME>>
                 pair.add(players.get(p2));
 
                 Series<GAME> s = timeout > 0
-                        ? new Series<>(game, nGames, pair, timeout)
-                        : new Series<>(game, nGames, pair);
+                        ? new Series<>(gameFactory, nGames, pair, timeout)
+                        : new Series<>(gameFactory, nGames, pair);
 
                 s.setVerbose(false);
                 allSeries.add(s);
@@ -162,7 +165,7 @@ public class RoundRobin<GAME extends Game<GAME>>
 
         if (verbose)
         {
-            Console.header("Results — " + game.getName());
+            Console.header("Results — " + gameName);
             System.out.println(toFormattedTable());
         }
     }
@@ -351,7 +354,7 @@ public class RoundRobin<GAME extends Game<GAME>>
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%14s: %s%n",  "Game",    game.getName()));
+        sb.append(String.format("%14s: %s%n",  "Game",    gameName));
         sb.append(String.format("%14s: %,d%n", "Matches", nGames));
         if (timeout > 0)
             sb.append(String.format("%14s: %d ms%n", "Timeout", timeout));

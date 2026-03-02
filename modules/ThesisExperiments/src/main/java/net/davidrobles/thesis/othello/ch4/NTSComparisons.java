@@ -40,7 +40,7 @@ public class NTSComparisons
         players.add(new UCT<Othello>(0.5, 500));
 //        players.add(new RandPlayer<Othello>());
 
-        Series<Othello> series = new Series<Othello>(othello, nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.setVerbose(true);
         series.run();
     }
@@ -55,7 +55,7 @@ public class NTSComparisons
         players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
         players.add(new EpsilonGreedy<Othello>(gen, epsilon));
 
-        Series<Othello> series = new Series<Othello>(othello, nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.setVerbose(true);
         series.run();
     }
@@ -70,7 +70,7 @@ public class NTSComparisons
         players.add(new AlphaBeta<Othello>(nts));
         players.add(new AlphaBeta<Othello>(wpc));
 
-        Series<Othello> series = new Series<Othello>(othello, nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.setVerbose(true);
         series.run();
     }
@@ -103,7 +103,7 @@ public class NTSComparisons
 //        players.add(new EpsilonGreedy<Othello>(NTS_EVO, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_EVO));
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playersNames, timeout);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }

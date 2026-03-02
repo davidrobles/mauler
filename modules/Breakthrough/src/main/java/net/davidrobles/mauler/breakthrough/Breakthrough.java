@@ -217,12 +217,6 @@ public class Breakthrough extends ObservableGame<Breakthrough>
     }
 
     @Override
-    public Breakthrough newInstance()
-    {
-        return new Breakthrough(rows, cols, rng);
-    }
-
-    @Override
     public void reset()
     {
         current = 0;

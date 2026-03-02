@@ -70,7 +70,7 @@ public class MCvsMCTS
             MonteCarlo<Othello> mc = new MonteCarlo<Othello>();
             players.add(mc);
 
-            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, nTimes[run]);
+            Series<Othello> series = new Series<>(Othello::new, nGames, players, nTimes[run]);
             series.run();
 
             for (int player = 0; player < players.size(); player++)
@@ -132,7 +132,7 @@ public class MCvsMCTS
             players.add(mc);
             players.add(mcts);
 
-            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+            Series<Othello> series = new Series<>(Othello::new, nGames, players);
             series.run();
 
             for (int player = 0; player < players.size(); player++)

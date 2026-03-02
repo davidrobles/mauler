@@ -788,12 +788,6 @@ public class LOA extends ObservableGame<LOA>
     }
 
     @Override
-    public LOA newInstance()
-    {
-        return new LOA();
-    }
-
-    @Override
     public void reset()
     {
         current = 0;

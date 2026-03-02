@@ -5,10 +5,11 @@ import net.davidrobles.mauler.players.Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class MatchController<GAME extends Game<GAME> & MoveObservable>
 {
-    private GAME game;
+    private Supplier<GAME> gameFactory;
     private List<Player<GAME>> players;
     private long timeout;
     private List<MatchControllerObserver<GAME>> observers = new ArrayList<MatchControllerObserver<GAME>>();
@@ -16,12 +17,13 @@ public class MatchController<GAME extends Game<GAME> & MoveObservable>
     private LinkedList<String> moveHistory = new LinkedList<String>();
     private int currentBoardIndex = 0;
 
-    public MatchController(GAME game, List<Player<GAME>> players, long timeout)
+    public MatchController(Supplier<GAME> gameFactory, List<Player<GAME>> players, long timeout)
     {
-        if (players.size() != game.getNumPlayers())
+        GAME prototype = gameFactory.get();
+        if (players.size() != prototype.getNumPlayers())
             throw new IllegalArgumentException("Different size of players.");
 
-        this.game = game;
+        this.gameFactory = gameFactory;
         this.players = players;
         this.timeout = timeout;
         reset();
@@ -32,7 +34,7 @@ public class MatchController<GAME extends Game<GAME> & MoveObservable>
         currentBoardIndex = 0;
         moveHistory.clear();
         gameHistory.clear();
-        gameHistory.add(game.newInstance());
+        gameHistory.add(gameFactory.get());
         notifyObservers();
     }
 

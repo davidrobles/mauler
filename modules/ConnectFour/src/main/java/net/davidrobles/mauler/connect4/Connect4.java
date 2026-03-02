@@ -305,12 +305,6 @@ public class Connect4 implements Game<Connect4>
     }
 
     @Override
-    public Connect4 newInstance()
-    {
-        return new Connect4();
-    }
-
-    @Override
     public void reset()
     {
         current = 0;

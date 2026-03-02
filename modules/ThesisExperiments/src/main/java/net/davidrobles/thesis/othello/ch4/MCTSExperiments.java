@@ -45,7 +45,7 @@ public class MCTSExperiments
 
         int nGames = 50;
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
     }
 
@@ -72,7 +72,7 @@ public class MCTSExperiments
 
         int nGames = 100;
 
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
     }
 
@@ -99,7 +99,7 @@ public class MCTSExperiments
         players.add(randomPlayer);
 
         int nGames = 250;
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.run();
         System.out.println(series);
     }
@@ -120,7 +120,7 @@ public class MCTSExperiments
         playerNames.add("MCTS");
 
         int nGames = 100;
-        RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(new Othello(), nGames, players, playerNames);
+        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames);
         String caption = String.format("Round Robin Tournament (Winning rates over %d mauler).", nGames);
         roundRobin.setCaption(caption);
         roundRobin.run();
@@ -139,7 +139,7 @@ public class MCTSExperiments
         players.add(new MonteCarlo<Othello>(100));
 
         int nGames = 20;
-        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+        Series<Othello> series = new Series<>(Othello::new, nGames, players);
 //        series.call();
     }
 
@@ -222,7 +222,7 @@ public class MCTSExperiments
                 seriesPlayers.add(new RandPlayer<Othello>());
 
                 // Series
-                Series<Othello> series = new Series<Othello>(new Othello(), nGames, seriesPlayers);
+                Series<Othello> series = new Series<>(Othello::new, nGames, seriesPlayers);
                 series.run();
 
                 // Plot

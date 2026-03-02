@@ -38,7 +38,7 @@ public class NTSLearning
         TreeSet<EvalFuncFitness<WPC>> set = new TreeSet<EvalFuncFitness<WPC>>();
 
         WPC wpc = new WPC(type);
-        TD0<Othello> td0 = new TD0<Othello>(new Othello(), wpc, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
         // players
         List<Player<Othello>> players = new ArrayList<Player<Othello>>();
@@ -51,7 +51,7 @@ public class NTSLearning
 
             if (episode % interval == 0)
             {
-                Series<Othello> series = new Series<Othello>(new Othello(), games, players);
+                Series<Othello> series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("Episode:  " + episode);
@@ -92,7 +92,7 @@ public class NTSLearning
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 
         NTupleSystem prevNTS = nts.copy();
-        TD0<Othello> td0 = new TD0<Othello>(new Othello(), nts, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 = new TD0<Othello>(Othello::new, nts, episodes, learningRate, discountFactor, epsilon);
 
         for (int episode = 1; episode <= episodes; episode++)
         {
@@ -137,7 +137,7 @@ public class NTSLearning
                 players.add(new GreedyPlayer<Othello>(nts));
                 players.add(new RandPlayer<Othello>());
                 System.out.println("size: " + players.size());
-                series = new Series<Othello>(new Othello(), games, players);
+                series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
                 System.out.println("vs Random: " + series.getWinsAvg(0));

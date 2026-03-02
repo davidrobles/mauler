@@ -45,7 +45,7 @@ public class OptimalPriorKnowledge
             System.out.println(" Timeout: " + nSims);
             System.out.println("==================");
 
-            RoundRobin<Othello> roundRobin = new RoundRobin<Othello>(othello, nGames, players, playersNames, nSims);
+            RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames, nSims);
             roundRobin.run();
         }
     }
