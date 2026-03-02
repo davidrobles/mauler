@@ -4,23 +4,38 @@ import net.davidrobles.mauler.core.Game;
 
 import java.util.Random;
 
+/**
+ * A player that selects moves uniformly at random.
+ *
+ * <p>Useful as a baseline opponent, a rollout policy in Monte Carlo search,
+ * and in tests where reproducible behaviour is needed (pass a seeded
+ * {@link Random} to the constructor).
+ *
+ * @param <GAME> the game type
+ */
 public class RandPlayer<GAME extends Game<GAME>> implements Player<GAME>
 {
-    private Random rng;
+    private final Random rng;
 
+    /** Creates a player backed by a default (unseeded) {@link Random}. */
     public RandPlayer()
     {
-        this.rng = new Random();
+        this(new Random());
     }
 
+    /**
+     * Creates a player backed by the given {@link Random}.
+     *
+     * @param rng the random source to use for move selection
+     */
     public RandPlayer(Random rng)
     {
         this.rng = rng;
     }
 
-    ////////////
-    // Player //
-    ////////////
+    // -------------------------------------------------------------------------
+    // Player
+    // -------------------------------------------------------------------------
 
     @Override
     public boolean isDeterministic()
@@ -34,9 +49,9 @@ public class RandPlayer<GAME extends Game<GAME>> implements Player<GAME>
         return rng.nextInt(game.getNumMoves());
     }
 
-    ////////////
-    // Object //
-    ////////////
+    // -------------------------------------------------------------------------
+    // Object
+    // -------------------------------------------------------------------------
 
     @Override
     public String toString()
