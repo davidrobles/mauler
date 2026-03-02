@@ -1,50 +1,69 @@
 package net.davidrobles.mauler.strategies.minimax;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.Evaluator;
 
 /**
- * Negamax player.
+ * Negamax search with a fixed depth limit.
+ *
+ * <p>A simplification of {@link Minimax} that exploits the zero-sum property:
+ * the score for the current player is always the negation of the score for the
+ * opponent, so a single maximisation pass suffices at every node.
+ *
+ * <p>The {@link Evaluator} must return scores <em>from the perspective of the
+ * player to move</em> at the node being evaluated: positive means good for
+ * that player, negative means bad.
+ *
+ * <p>Supports iterative deepening via {@link DepthLimitedSearch}: pass a
+ * per-move timeout to {@link #move(Game, int)} and the search will deepen
+ * until the budget expires, returning the best move found so far.
+ *
+ * @param <GAME> the game type
  */
 public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME>
 {
-    private Evaluator<GAME> evalFunc;
+    private final Evaluator<GAME> evaluator;
     private final int maxDepth;
 
-    /** Iterative Deepening stuff */
-    private static final int initialDepth = 4;
-    private static final int stepSize = 2;
-
-    public Negamax(Evaluator<GAME> evalFunc)
+    /**
+     * Creates a Negamax player that searches to terminal positions.
+     *
+     * @param evaluator the evaluation function for leaf nodes
+     */
+    public Negamax(Evaluator<GAME> evaluator)
     {
-        this(evalFunc, Integer.MAX_VALUE);
+        this(evaluator, Integer.MAX_VALUE);
     }
 
-    public Negamax(Evaluator<GAME> evalFunc, int maxDepth)
+    /**
+     * Creates a Negamax player with a fixed depth limit.
+     *
+     * @param evaluator the evaluation function for leaf nodes
+     * @param maxDepth  the maximum search depth in plies
+     */
+    public Negamax(Evaluator<GAME> evaluator, int maxDepth)
     {
-        this.evalFunc = evalFunc;
+        this.evaluator = evaluator;
         this.maxDepth = maxDepth;
     }
 
-    private MoveScore negamax(GAME game, int currentDepth, int maxDepth)
+    private MoveScore negamax(GAME game, int depth, int depthLimit)
     {
-        if (game.isOver() || currentDepth == maxDepth)
-            return new MoveScore(evalFunc.evaluate(game, game.getCurPlayer()), -1);
+        if (game.isOver() || depth == depthLimit)
+            return new MoveScore(evaluator.evaluate(game, game.getCurPlayer()), -1);
 
+        double bestScore = Double.NEGATIVE_INFINITY;
         int bestMove = -1;
-        double bestScore = Integer.MIN_VALUE;
 
         for (int move = 0; move < game.getNumMoves(); move++)
         {
-            GAME newGame = game.copy();
-            newGame.makeMove(move);
-            MoveScore recursedMoveScore = negamax(newGame, currentDepth + 1, maxDepth);
-            double currentScore = -recursedMoveScore.getScore();
+            GAME child = game.copy();
+            child.makeMove(move);
+            double score = -negamax(child, depth + 1, depthLimit).getScore();
 
-            if (currentScore > bestScore)
+            if (score > bestScore)
             {
-                bestScore = currentScore;
+                bestScore = score;
                 bestMove = move;
             }
         }
@@ -52,19 +71,19 @@ public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
         return new MoveScore(bestScore, bestMove);
     }
 
-    ///////////////////
-    // MinimaxPlayer //
-    ///////////////////
+    ////////////////////////
+    // DepthLimitedSearch //
+    ////////////////////////
 
     @Override
-    public int move(int maxDepth, GAME game)
+    public int move(int depthLimit, GAME game)
     {
-        return negamax(game, 0, maxDepth).getMove();
+        return negamax(game, 0, depthLimit).getMove();
     }
 
-    ////////////
-    // Strategy //
-    ////////////
+    ///////////////
+    // Strategy  //
+    ///////////////
 
     @Override
     public boolean isDeterministic()
@@ -91,6 +110,6 @@ public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
     @Override
     public String toString()
     {
-        return String.format("<Negamax evalFunc: %s>", evalFunc);
+        return String.format("Negamax(depth=%d, evaluator=%s)", maxDepth, evaluator);
     }
 }
