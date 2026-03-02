@@ -100,7 +100,7 @@ public class Negamax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
     @Override
     public int move(GAME game, int timeout)
     {
-        return IterDeep.move(game, this, timeout);
+        return IterativeDeepening.move(game, this, timeout);
     }
 
     ////////////

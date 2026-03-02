@@ -78,7 +78,7 @@ public class AlphaBeta<GAME extends Game<GAME>> implements DepthLimitedSearch<GA
     @Override
     public int move(GAME game, int timeout)
     {
-        return IterDeep.move(game, this, timeout);
+        return IterativeDeepening.move(game, this, timeout);
     }
 
     ////////////
