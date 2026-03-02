@@ -8,7 +8,7 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.mauler.players.mcts.enh.UCTPrior;
 
@@ -36,20 +36,20 @@ public class All
         playerNames.add("UCT");
 
 //        // UCT + Non Random Default Policy
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(wpc, 0.1), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c));
 //        playerNames.add("UCT+NR");
 
 //        UCT + Non Random Default Policy
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.9), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.9), c));
 //        playerNames.add("UCT-0.9");
 
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.99), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.99), c));
 //        playerNames.add("UCT-0.99");
 //
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.999), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.999), c));
 //        playerNames.add("UCT-0.999");
 //
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 1.0), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 1.0), c));
 //        playerNames.add("UCT-1.0");
 
         // UCT + Prior Knowledge
@@ -70,7 +70,7 @@ public class All
 //        playerNames.add("UCT+5000");
 
         // UCT + Non Random Default Policy + Prior Knowledge
-//        GreedyPlayer<Othello> greedy = new GreedyPlayer<Othello>(logistello);
+//        GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(logistello);
 //        players.add(new UCTPrior<Othello>(greedy, c, logistello, nInit));
 //        playerNames.add("UCT+NR+PK");
 
@@ -85,8 +85,8 @@ public class All
         double c = 0.5;
         WPC heuristic = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 0.0), c));
-        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(heuristic, 1.0), c));
+        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.0), c));
+        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 1.0), c));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players, 50);
         series.run();
@@ -98,19 +98,19 @@ public class All
         List<String> playerNames = new ArrayList<String>();
 
         // NTS-RS
-        players.add(new EpsilonGreedy<Othello>( OthelloVF.NTS_RS, 0.1));
+        players.add(new EpsilonGreedyStrategy<Othello>( OthelloVF.NTS_RS, 0.1));
         playerNames.add("NTS-RS");
 
         // WPC-SYM
-//        players.add(new EpsilonGreedy<Othello>(WPC_SYM, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
 //        playerNames.add("WPC-SYM");
 
 //        // NTS-RND
-//        players.add(new EpsilonGreedy<Othello>(NTS_RND, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
 //        playerNames.add("NTS-RND");
 
 //        // NTS-LOG
-        players.add(new EpsilonGreedy<Othello>(OthelloVF.NTS_LOG, 0.1));
+        players.add(new EpsilonGreedyStrategy<Othello>(OthelloVF.NTS_LOG, 0.1));
         playerNames.add("NTS-LOG");
 
         RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, 10000, players, playerNames);

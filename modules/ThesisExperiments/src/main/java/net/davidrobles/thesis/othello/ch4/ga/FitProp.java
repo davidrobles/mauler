@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4.ga;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,8 +71,8 @@ public class FitProp
                 nts2.setFitness(nts2.getFitness() + 1);
 
                 List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-                players.add(new EpsilonGreedy<Othello>(nts1.getNTupleSystem(), epsilon));
-                players.add(new EpsilonGreedy<Othello>(nts2.getNTupleSystem(), epsilon));
+                players.add(new EpsilonGreedyStrategy<Othello>(nts1.getNTupleSystem(), epsilon));
+                players.add(new EpsilonGreedyStrategy<Othello>(nts2.getNTupleSystem(), epsilon));
 
                 Series<Othello> series = new Series<>(Othello::new, nGames, players);
                 series.run();

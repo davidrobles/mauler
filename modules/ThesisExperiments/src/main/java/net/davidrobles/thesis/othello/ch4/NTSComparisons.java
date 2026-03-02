@@ -9,7 +9,7 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.mauler.players.minimax.AlphaBeta;
 import net.davidrobles.util.DRMarkdown;
@@ -35,8 +35,8 @@ public class NTSComparisons
         Othello othello = new Othello();
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-        players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
-//        players.add(new EpsilonGreedy<Othello>(wpc, epsilon));
+        players.add(new EpsilonGreedyStrategy<Othello>(logistello, epsilon));
+//        players.add(new EpsilonGreedyStrategy<Othello>(wpc, epsilon));
         players.add(new UCT<Othello>(0.5, 500));
 //        players.add(new RandomStrategy<Othello>());
 
@@ -52,8 +52,8 @@ public class NTSComparisons
         Othello othello = new Othello();
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-        players.add(new EpsilonGreedy<Othello>(logistello, epsilon));
-        players.add(new EpsilonGreedy<Othello>(gen, epsilon));
+        players.add(new EpsilonGreedyStrategy<Othello>(logistello, epsilon));
+        players.add(new EpsilonGreedyStrategy<Othello>(gen, epsilon));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.setVerbose(true);
@@ -84,23 +84,23 @@ public class NTSComparisons
         List<String> playersNames = new ArrayList<String>();
 
         playersNames.add("DR-WPC");
-//        players.add(new EpsilonGreedy<Othello>(WPC_SYM, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
         players.add(new AlphaBeta<Othello>(WPC_SYM));
 
         playersNames.add("LOG-NTS");
-//        players.add(new EpsilonGreedy<Othello>(NTS_LOG, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_LOG));
 
         playersNames.add("FIRST-NTS");
-//        players.add(new EpsilonGreedy<Othello>(NTS_RND, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_RND));
 
         playersNames.add("RS-NTS");
-//        players.add(new EpsilonGreedy<Othello>(NTS_RS, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RS, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_RS));
 
         playersNames.add("EVO-NTS");
-//        players.add(new EpsilonGreedy<Othello>(NTS_EVO, 0.1));
+//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_EVO, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_EVO));
 
         RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
@@ -120,7 +120,7 @@ public class NTSComparisons
             DRMarkdown.printH1(entry.getKey());
             NTupleSystem logistello = NTUtil.load(entry.getValue());
             System.out.print(logistello.getInfo());
-            double gamesPerSec = SpeedTest.playerSpeed(new Othello(), new EpsilonGreedy<Othello>(logistello, 0.1), 10);
+            double gamesPerSec = SpeedTest.playerSpeed(new Othello(), new EpsilonGreedyStrategy<Othello>(logistello, 0.1), 10);
             System.out.println("Games per second: " + gamesPerSec + "\n");
         }
     }

@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.mauler.players.mcts.enh.UCTPrior;
@@ -44,7 +44,7 @@ public class SimsPerTime
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         double c = 0.5;
         double epsilon = 0.0;
-        EpsilonGreedy<Othello> epsilonGreedy = new EpsilonGreedy<Othello>(wpc, epsilon);
+        EpsilonGreedyStrategy<Othello> epsilonGreedy = new EpsilonGreedyStrategy<Othello>(wpc, epsilon);
         MCTS<Othello> player = new MCTS<Othello>(new UCB1<Othello>(c), epsilonGreedy);
         double total = 0;
         double runs = 50;

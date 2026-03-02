@@ -5,7 +5,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.GreedyPlayer;
+import net.davidrobles.mauler.players.GreedyStrategy;
 import net.davidrobles.mauler.players.mc.MonteCarlo;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.mauler.players.mcts.enh.UCTPrior;
@@ -35,7 +35,7 @@ public class AllExperiments
         playerNames.add("UCT");
 
         // UCT + Non Random Default Policy
-        players.add(new UCT<Othello>(new GreedyPlayer<Othello>(wpc), c));
+        players.add(new UCT<Othello>(new GreedyStrategy<Othello>(wpc), c));
         playerNames.add("UCT+NR");
 
         // UCT + Prior Knowledge
@@ -43,7 +43,7 @@ public class AllExperiments
         playerNames.add("UCT+PK");
 
         // UCT + Non Random Default Policy + Prior Knowledge
-        GreedyPlayer<Othello> greedy = new GreedyPlayer<Othello>(wpc);
+        GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(wpc);
         players.add(new UCTPrior<Othello>(greedy, c, wpc, nInit));
         playerNames.add("UCT+NR+PK");
 

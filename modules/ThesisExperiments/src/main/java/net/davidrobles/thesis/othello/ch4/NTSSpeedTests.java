@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch4;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.core.util.SpeedTest;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.Evaluator;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class NTSSpeedTests
 
         for (Map.Entry<String, Evaluator<Othello>> entry : players.entrySet())
         {
-            Strategy<Othello> player = new EpsilonGreedy<Othello>(entry.getValue(), epsilon);
+            Strategy<Othello> player = new EpsilonGreedyStrategy<Othello>(entry.getValue(), epsilon);
             double ntsGames = SpeedTest.playerSpeed(othello, player, timeoutInSecs);
             System.out.println(entry.getValue());
             System.out.format("%s %.1f mauler per second.\n", entry.getKey(), ntsGames);

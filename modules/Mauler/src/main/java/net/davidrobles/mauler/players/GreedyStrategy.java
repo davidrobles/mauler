@@ -12,14 +12,14 @@ import net.davidrobles.mauler.core.Strategy;
  *
  * @param <GAME> the game type
  */
-public class GreedyPlayer<GAME extends Game<GAME>> implements Strategy<GAME>
+public class GreedyStrategy<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private final Evaluator<GAME> evalFunc;
 
     /**
      * @param evalFunc the evaluation function used to score successor positions
      */
-    public GreedyPlayer(Evaluator<GAME> evalFunc)
+    public GreedyStrategy(Evaluator<GAME> evalFunc)
     {
         this.evalFunc = evalFunc;
     }

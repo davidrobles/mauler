@@ -5,7 +5,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.tree.UCB1;
 
@@ -36,7 +36,7 @@ public class NTSinMCTS
 
         for (int i = 0; i < epsilonValues.length; i++)
         {
-            EpsilonGreedy<Othello> eGreedyLogistello = new EpsilonGreedy<Othello>(wpc, epsilonValues[i]);
+            EpsilonGreedyStrategy<Othello> eGreedyLogistello = new EpsilonGreedyStrategy<Othello>(wpc, epsilonValues[i]);
             MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c), eGreedyLogistello);
             players.add(mcts);
             playersNames.add("e = " + epsilonValues[i]);

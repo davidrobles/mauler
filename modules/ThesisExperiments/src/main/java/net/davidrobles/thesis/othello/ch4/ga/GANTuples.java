@@ -9,7 +9,7 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTuple;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -177,8 +177,8 @@ public class GANTuples
 
             // rest
             List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-            players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-            players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
+            players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+            players.add(new EpsilonGreedyStrategy<Othello>(logistello, 0.1));
 
             Series<Othello> series = new Series<>(Othello::new, nGames, players);
             series.run();

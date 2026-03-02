@@ -12,8 +12,8 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCType;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
-import net.davidrobles.mauler.players.GreedyPlayer;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.players.GreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class NTSLearning
 
         // players
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-        players.add(new EpsilonGreedy<Othello>(wpc, 0.0));
+        players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.0));
         players.add(new RandomStrategy<Othello>());
 
         for (int episode = 0; episode <= episode; episode++)
@@ -107,8 +107,8 @@ public class NTSLearning
 
                 // Series against previous
 //                players = new ArrayList<Strategy<Othello>>();
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-//                players.add(new EpsilonGreedy<Othello>(prevNTS, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(prevNTS, 0.1));
 //                series = new Series<Othello>(new Othello(), mauler, players);
 //                series.setVerbose(false);
 //                series.run();
@@ -116,8 +116,8 @@ public class NTSLearning
 
                 // Series against best WPC
 //                players = new ArrayList<Strategy<Othello>>();
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-//                players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
 //                series = new Series<Othello>(new Othello(), mauler, players);
 //                series.setVerbose(false);
 //                series.run();
@@ -125,7 +125,7 @@ public class NTSLearning
 
 //                // Series against MC
 //                players = new ArrayList<Strategy<Othello>>();
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.0));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.0));
 //                players.add(new MonteCarlo<Othello>(200));
 //                series = new Series<Othello>(new Othello(), mauler, players);
 //                series.setVerbose(false);
@@ -134,7 +134,7 @@ public class NTSLearning
 
                 // Series against Random
                 players = new ArrayList<Strategy<Othello>>();
-                players.add(new GreedyPlayer<Othello>(nts));
+                players.add(new GreedyStrategy<Othello>(nts));
                 players.add(new RandomStrategy<Othello>());
                 System.out.println("size: " + players.size());
                 series = new Series<>(Othello::new, games, players);
@@ -144,8 +144,8 @@ public class NTSLearning
 
                 // Series against Logistello
 //                players = new ArrayList<Strategy<Othello>>();
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-//                players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(logistello, 0.1));
 //                series = new Series<Othello>(new Othello(), mauler, players);
 //                series.setVerbose(false);
 //                series.run();

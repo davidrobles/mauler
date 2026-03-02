@@ -11,7 +11,7 @@ import java.util.Random;
  *
  * <p>Special cases:
  * <ul>
- *   <li>{@code ε = 0.0} — fully greedy (deterministic); equivalent to {@link GreedyPlayer}</li>
+ *   <li>{@code ε = 0.0} — fully greedy (deterministic); equivalent to {@link GreedyStrategy}</li>
  *   <li>{@code ε = 1.0} — fully random; equivalent to {@link RandomStrategy}</li>
  * </ul>
  *
@@ -21,7 +21,7 @@ import java.util.Random;
  *
  * @param <GAME> the game type
  */
-public class EpsilonGreedy<GAME extends Game<GAME>> implements Strategy<GAME>
+public class EpsilonGreedyStrategy<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected final Evaluator<GAME> evalFunc;
     protected final double epsilon;
@@ -35,7 +35,7 @@ public class EpsilonGreedy<GAME extends Game<GAME>> implements Strategy<GAME>
      * @param rng      the random source used for exploration decisions
      * @throws IllegalArgumentException if {@code epsilon} is outside {@code [0.0, 1.0]}
      */
-    public EpsilonGreedy(Evaluator<GAME> evalFunc, double epsilon, Random rng)
+    public EpsilonGreedyStrategy(Evaluator<GAME> evalFunc, double epsilon, Random rng)
     {
         if (epsilon < 0.0 || epsilon > 1.0)
             throw new IllegalArgumentException("epsilon must be in [0.0, 1.0], got: " + epsilon);
@@ -51,7 +51,7 @@ public class EpsilonGreedy<GAME extends Game<GAME>> implements Strategy<GAME>
      * @param evalFunc the evaluation function used for greedy move selection
      * @param epsilon  exploration probability in {@code [0.0, 1.0]}
      */
-    public EpsilonGreedy(Evaluator<GAME> evalFunc, double epsilon)
+    public EpsilonGreedyStrategy(Evaluator<GAME> evalFunc, double epsilon)
     {
         this(evalFunc, epsilon, new Random());
     }

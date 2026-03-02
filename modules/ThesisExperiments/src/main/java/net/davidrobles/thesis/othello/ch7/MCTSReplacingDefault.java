@@ -3,7 +3,7 @@ package net.davidrobles.thesis.othello.ch7;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.players.mcts.UCT;
 import net.davidrobles.thesis.othello.ch4.PriorKnowledgeExp;
 
@@ -30,7 +30,7 @@ public class MCTSReplacingDefault
 //            WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 //            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new UCT<Othello>(c));
-//            players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedy<Othello>(wpc, epsilon), wpc, qInit));
+//            players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
 //
 //            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
 //            series.run();
@@ -49,9 +49,9 @@ public class MCTSReplacingDefault
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new UCT<Othello>(Rc));
-        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(WPC_SYM, 0.1), c));
-        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(NTS_EVO, 0.1), c));
-        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(NTS_LOG, 0.1), c));
+        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1), c));
+        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(NTS_EVO, 0.1), c));
+        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1), c));
 
         List<String> playerNames = new ArrayList<String>();
         playerNames.add("UCT");
@@ -78,7 +78,7 @@ public class MCTSReplacingDefault
 //            WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 //            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new UCT<Othello>(c));
-//            players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyPlayer<Othello>(wpc)));
+//            players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyStrategy<Othello>(wpc)));
 //
 //            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
 //            series.run();

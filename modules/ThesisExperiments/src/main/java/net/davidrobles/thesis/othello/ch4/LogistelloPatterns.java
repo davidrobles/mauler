@@ -11,7 +11,7 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.players.DRPlot;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,15 +96,15 @@ public class LogistelloPatterns
                 Series<Othello> series;
 
                 // Series against previous
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-//                players.add(new EpsilonGreedy<Othello>(prevNTS, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(prevNTS, 0.1));
 //                series.setVerbose(false);
 //                series.run();
 //                System.out.println("vs prev: " + series.getWinsAvg(0));
 
                 // Series against Random
                 players = new ArrayList<Strategy<Othello>>();
-                players.add(new EpsilonGreedy<Othello>(nts, 0.0));
+                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.0));
                 players.add(new RandomStrategy<Othello>());
                 series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
@@ -114,8 +114,8 @@ public class LogistelloPatterns
 
                 // Series against best WPC
                 players = new ArrayList<Strategy<Othello>>();
-                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-                players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
                 series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
@@ -124,8 +124,8 @@ public class LogistelloPatterns
 
                 // Series against best WPC
                 players = new ArrayList<Strategy<Othello>>();
-                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
-                players.add(new EpsilonGreedy<Othello>(logistello, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(logistello, 0.1));
                 series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
@@ -134,7 +134,7 @@ public class LogistelloPatterns
 
                 // Series against MCTS
 //                players = new ArrayList<Strategy<Othello>>();
-//                players.add(new EpsilonGreedy<Othello>(nts, 0.1));
+//                players.add(new EpsilonGreedyStrategy<Othello>(nts, 0.1));
 //                players.add(new UCT<Othello>(0.5, 200));
 //                series = new Series<Othello>(new Othello(), mauler, players);
 //                series.setVerbose(false);

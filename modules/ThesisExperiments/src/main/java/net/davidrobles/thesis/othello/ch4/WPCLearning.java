@@ -6,7 +6,7 @@ import net.davidrobles.mauler.players.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
 import net.davidrobles.mauler.othello.ef.EvaluatorFitness;
-import net.davidrobles.mauler.players.EpsilonGreedy;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCType;
 
@@ -35,7 +35,7 @@ public class WPCLearning
 
         // players
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-        players.add(new EpsilonGreedy<Othello>(wpc, 0.0));
+        players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.0));
         players.add(new RandomStrategy<Othello>());
 
         for (int episode = 0; episode <= episode; episode++)
@@ -81,8 +81,8 @@ public class WPCLearning
             {
                 // players
                 List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-                players.add(new EpsilonGreedy<Othello>(prevWPC, 0.1));
-                players.add(new EpsilonGreedy<Othello>(wpc, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(prevWPC, 0.1));
+                players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
                 Series<Othello> series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();

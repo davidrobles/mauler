@@ -6,8 +6,8 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.players.EpsilonGreedy;
-import net.davidrobles.mauler.players.GreedyPlayer;
+import net.davidrobles.mauler.players.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.players.GreedyStrategy;
 import net.davidrobles.mauler.players.mc.MonteCarlo;
 import net.davidrobles.mauler.players.mcts.MCTS;
 import net.davidrobles.mauler.players.mcts.UCT;
@@ -40,7 +40,7 @@ public class PriorKnowledgeExp
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
-        players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedy<Othello>(wpc, epsilon), wpc, qInit));
+        players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
@@ -65,7 +65,7 @@ public class PriorKnowledgeExp
 
         for (int i = 0; i < epsilons.length; i++)
         {
-            EpsilonGreedy<Othello> eGreedy = new EpsilonGreedy<Othello>(wpc, epsilons[i]);
+            EpsilonGreedyStrategy<Othello> eGreedy = new EpsilonGreedyStrategy<Othello>(wpc, epsilons[i]);
             players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), eGreedy, wpc, nInit, nSims));
             playerNames.add("e = " + epsilons[i]);
         }
@@ -89,7 +89,7 @@ public class PriorKnowledgeExp
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
-        players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyPlayer<Othello>(wpc)));
+        players.add(new MCTS<Othello>(new UCB1<Othello>(c), new GreedyStrategy<Othello>(wpc)));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
@@ -145,7 +145,7 @@ public class PriorKnowledgeExp
 //        players.add(new UCT<Othello>(c));
 //        playerNames.add("UCT");
 
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(wpc, 0.1), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c));
 //        playerNames.add("NR");
 
         players.add(new UCTPrior<Othello>(c, OthelloVF.NTS_LOG, 100));
@@ -154,10 +154,10 @@ public class PriorKnowledgeExp
         players.add(new UCTPrior<Othello>(c, OthelloVF.NTS_EVO, 100));
         playerNames.add("NTS_LOG");
 
-//        players.add(new UCTPrior<Othello>(new EpsilonGreedy<Othello>(wpc, 0.1), c, NTS_LOG, 100));
+//        players.add(new UCTPrior<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c, NTS_LOG, 100));
 //        playerNames.add("BOTH");
 
-//        players.add(new UCT<Othello>(new EpsilonGreedy<Othello>(NTS_LOG, 0.1), c));
+//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1), c));
 //        playerNames.add("NR");
 
         RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
