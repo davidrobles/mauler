@@ -24,12 +24,6 @@ public class DummyGame implements Game<DummyGame>
     }
 
     @Override
-    public int getNumMoves()
-    {
-        return 0;
-    }
-
-    @Override
     public String getName()
     {
         return null;

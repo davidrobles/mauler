@@ -72,7 +72,10 @@ public interface Game<GAME extends Game<GAME>>
      *
      * @return the number of legal moves
      */
-    int getNumMoves();
+    default int getNumMoves()
+    {
+        return getMoves().length;
+    }
 
     /**
      * Returns the display name of the game (e.g. {@code "Tic-tac-toe"}, {@code "Othello"}).
