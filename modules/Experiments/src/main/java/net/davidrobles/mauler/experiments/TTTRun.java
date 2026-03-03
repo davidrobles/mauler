@@ -9,7 +9,7 @@ import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.mcts.enhancements.UCTNoRollout;
-import net.davidrobles.mauler.strategies.mcts.MCTSRootP;
+import net.davidrobles.mauler.strategies.mcts.MCTSRootParallel;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;
 import net.davidrobles.mauler.strategies.minimax.Negamax;
@@ -58,10 +58,10 @@ public class TTTRun
     static final Strategy<TicTacToe> uct10000 = new UCT<TicTacToe>(Math.sqrt(2), 10000);
 
     // -------------------------------------------------------------------------
-    // UCT with root parallelisation
+    // UCT with root parallelization
     // -------------------------------------------------------------------------
 
-    static final Strategy<TicTacToe> uctRootP = new MCTSRootP<TicTacToe>(new UCT<TicTacToe>(Math.sqrt(2), 1000));
+    static final Strategy<TicTacToe> uctRootP = new MCTSRootParallel<TicTacToe>(new UCT<TicTacToe>(Math.sqrt(2), 1000));
 
     // -------------------------------------------------------------------------
     // Greedy / ε-Greedy — require a non-terminal heuristic evaluator

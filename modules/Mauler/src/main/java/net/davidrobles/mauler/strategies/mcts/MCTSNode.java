@@ -89,7 +89,7 @@ public class MCTSNode<GAME extends Game<GAME>>
 
     /**
      * Overrides the visit count. Used by prior-knowledge initialization
-     * ({@code MCTSPrior}) and parallel root parallelisation ({@code MCTSRootP}).
+     * ({@code MCTSPrior}) and parallel root parallelization ({@code MCTSRootParallel}).
      */
     public void setVisits(int visits)
     {

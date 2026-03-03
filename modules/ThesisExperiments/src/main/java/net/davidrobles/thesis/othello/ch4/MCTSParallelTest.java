@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.MCTSRootP;
+import net.davidrobles.mauler.strategies.mcts.MCTSRootParallel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class MCTSParallelTest
         double c = 0.5;
         int nGames = 10;
         int timeout = 1000;
-        MCTSRootP<Othello> mctsRootP = new MCTSRootP<Othello>(new UCT<Othello>(c));
+        MCTSRootParallel<Othello> mctsRootP = new MCTSRootParallel<Othello>(new UCT<Othello>(c));
         UCT<Othello> uct = new UCT<Othello>(c);
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();

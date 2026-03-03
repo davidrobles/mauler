@@ -33,7 +33,7 @@ import java.util.concurrent.*;
  *
  * @param <GAME> the game type
  */
-public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
+public class MCTSRootParallel<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     private final MCTS<GAME> mcts;
     private final int        nThreads;
@@ -43,7 +43,7 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
      *
      * @param mcts the base MCTS configuration; each thread receives an independent copy
      */
-    public MCTSRootP(MCTS<GAME> mcts)
+    public MCTSRootParallel(MCTS<GAME> mcts)
     {
         this(mcts, Runtime.getRuntime().availableProcessors());
     }
@@ -54,7 +54,7 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
      * @param mcts     the base MCTS configuration; each thread receives an independent copy
      * @param nThreads number of parallel threads
      */
-    public MCTSRootP(MCTS<GAME> mcts, int nThreads)
+    public MCTSRootParallel(MCTS<GAME> mcts, int nThreads)
     {
         this.mcts     = mcts;
         this.nThreads = nThreads;
@@ -261,6 +261,6 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
     @Override
     public String toString()
     {
-        return String.format("<MCTSRootP mcts=%s nThreads=%d>", mcts, nThreads);
+        return String.format("<MCTSRootParallel mcts=%s nThreads=%d>", mcts, nThreads);
     }
 }
