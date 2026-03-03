@@ -55,7 +55,7 @@ public class TTTRun
     // -------------------------------------------------------------------------
 
     static final Strategy<TicTacToe> uct100  = new UCT<TicTacToe>(Math.sqrt(2), 100);
-    static final Strategy<TicTacToe> uct1000 = new UCT<TicTacToe>(Math.sqrt(2), 1000);
+    static final Strategy<TicTacToe> uct10000 = new UCT<TicTacToe>(Math.sqrt(2), 10000);
 
     // -------------------------------------------------------------------------
     // UCT with root parallelisation
@@ -82,7 +82,7 @@ public class TTTRun
 
     public static void main(String[] args)
     {
-        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(random, pvs));
+        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(random, uct10000));
         series.run();
     }
 }
