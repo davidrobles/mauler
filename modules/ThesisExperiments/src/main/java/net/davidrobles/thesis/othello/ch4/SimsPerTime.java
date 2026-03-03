@@ -7,7 +7,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
 import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class SimsPerTime
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 
-        players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
+        players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits));
         players.add(new UCT<Othello>(c));
 
         for (Strategy<Othello> player : players)

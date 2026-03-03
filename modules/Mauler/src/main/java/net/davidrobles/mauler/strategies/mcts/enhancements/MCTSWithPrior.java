@@ -41,13 +41,13 @@ import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
  * @param <GAME> the game type
  * @see UCTPrior
  */
-public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
+public class MCTSWithPrior<GAME extends Game<GAME>> extends MCTS<GAME>
 {
     private final Evaluator<GAME> priorEF;
     private final int             initQVisits;
 
     /**
-     * Creates a time-based MCTSPrior instance (use {@link #move(Game, int)}).
+     * Creates a time-based MCTSWithPrior instance (use {@link #move(Game, int)}).
      *
      * @param selectionPolicy the UCB1 or other selection policy
      * @param rolloutPolicy   the rollout (default) policy
@@ -56,7 +56,7 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
      *                        must be &ge; 1
      * @throws IllegalArgumentException if {@code initQVisits} is less than 1
      */
-    public MCTSPrior(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy,
+    public MCTSWithPrior(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy,
                      Evaluator<GAME> priorEF, int initQVisits)
     {
         super(selectionPolicy, rolloutPolicy);
@@ -67,7 +67,7 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
     }
 
     /**
-     * Creates a simulation-count MCTSPrior instance.
+     * Creates a simulation-count MCTSWithPrior instance.
      *
      * @param selectionPolicy the UCB1 or other selection policy
      * @param rolloutPolicy   the rollout (default) policy
@@ -77,7 +77,7 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
      * @param nSims           number of simulations per move
      * @throws IllegalArgumentException if {@code initQVisits} is less than 1
      */
-    public MCTSPrior(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy,
+    public MCTSWithPrior(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy,
                      Evaluator<GAME> priorEF, int initQVisits, int nSims)
     {
         super(selectionPolicy, rolloutPolicy, nSims);
@@ -117,10 +117,10 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
     public String toString()
     {
         if (nSims > 0)
-            return String.format("<MCTSPrior selectionPolicy=%s rolloutPolicy=%s priorEF=%s initQVisits=%d nSims=%d>",
+            return String.format("<MCTSWithPrior selectionPolicy=%s rolloutPolicy=%s priorEF=%s initQVisits=%d nSims=%d>",
                     selectionPolicy, rolloutPolicy, priorEF, initQVisits, nSims);
         else
-            return String.format("<MCTSPrior selectionPolicy=%s rolloutPolicy=%s priorEF=%s initQVisits=%d>",
+            return String.format("<MCTSWithPrior selectionPolicy=%s rolloutPolicy=%s priorEF=%s initQVisits=%d>",
                     selectionPolicy, rolloutPolicy, priorEF, initQVisits);
     }
 }

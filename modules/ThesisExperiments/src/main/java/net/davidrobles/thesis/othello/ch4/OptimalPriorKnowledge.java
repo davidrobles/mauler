@@ -5,7 +5,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class OptimalPriorKnowledge
 
             for (int prior = priorRange[0]; prior <= priorRange[1]; prior += priorInterval)
             {
-                players.add(new UCTPrior<Othello>(c, wpc, prior, nSims));
+                players.add(new UCTWithPrior<Othello>(c, wpc, prior, nSims));
                 playersNames.add("Prior=" + prior);
             }
 

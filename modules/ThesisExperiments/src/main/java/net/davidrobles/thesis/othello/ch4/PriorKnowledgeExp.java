@@ -11,9 +11,9 @@ import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.MCTSPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.MCTSWithPrior;
 import net.davidrobles.mauler.strategies.mcts.enhancements.UCTNoRollout;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
 import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class PriorKnowledgeExp
      * vs
      * MCTS with Prior Knowledge and Non-Random Default Policy
      */
-    static void MCTSvsMCTSPriorNonRandom()
+    static void MCTSvsMCTSWithPriorNonRandom()
     {
         int nGames = 50;
         int timeout = 1000;
@@ -40,7 +40,7 @@ public class PriorKnowledgeExp
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
-        players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
+        players.add(new MCTSWithPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
@@ -50,7 +50,7 @@ public class PriorKnowledgeExp
      * Round robin tournament between MCTS players with Prior Knowledge
      * and Non-Random Default Policy using different exploration.
      */
-    static void roundRobinMCTSPriorNonRandom()
+    static void roundRobinMCTSWithPriorNonRandom()
     {
         int nGames = 250;
         int nSims = 1000;
@@ -66,7 +66,7 @@ public class PriorKnowledgeExp
         for (int i = 0; i < epsilons.length; i++)
         {
             EpsilonGreedyStrategy<Othello> eGreedy = new EpsilonGreedyStrategy<Othello>(wpc, epsilons[i]);
-            players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), eGreedy, wpc, nInit, nSims));
+            players.add(new MCTSWithPrior<Othello>(new UCB1<Othello>(c), eGreedy, wpc, nInit, nSims));
             playerNames.add("e = " + epsilons[i]);
         }
 
@@ -100,7 +100,7 @@ public class PriorKnowledgeExp
      * vs
      * MCTS with Prior Knowledge
      */
-    static void MCTSvsMCTSPrior()
+    static void MCTSvsMCTSWithPrior()
     {
         int nGames = 250;
         int timeout = 1000;
@@ -110,7 +110,7 @@ public class PriorKnowledgeExp
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new UCT<Othello>(c));
-        players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
+        players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits));
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players, timeout);
         series.run();
@@ -132,14 +132,14 @@ public class PriorKnowledgeExp
 
 //        for (int i = 0; i < initQVisits.length; i++)
 //        {
-//            players.add(new UCTPrior<Othello>(c, wpc, initQVisits[i]));
+//            players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits[i]));
 //            playerNames.add("QVisits = " + initQVisits[i]);
 //        }
 
-//        players.add(new UCTPrior<Othello>(c, wpc, 100));
+//        players.add(new UCTWithPrior<Othello>(c, wpc, 100));
 //        playerNames.add("WPC");
 
-//        players.add(new UCTPrior<Othello>(c, NTS_LOG, 100));
+//        players.add(new UCTWithPrior<Othello>(c, NTS_LOG, 100));
 //        playerNames.add("NTS_LOG");
 
 //        players.add(new UCT<Othello>(c));
@@ -148,13 +148,13 @@ public class PriorKnowledgeExp
 //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c));
 //        playerNames.add("NR");
 
-        players.add(new UCTPrior<Othello>(c, OthelloVF.NTS_LOG, 100));
+        players.add(new UCTWithPrior<Othello>(c, OthelloVF.NTS_LOG, 100));
         playerNames.add("NTS_LOG");
 
-        players.add(new UCTPrior<Othello>(c, OthelloVF.NTS_EVO, 100));
+        players.add(new UCTWithPrior<Othello>(c, OthelloVF.NTS_EVO, 100));
         playerNames.add("NTS_LOG");
 
-//        players.add(new UCTPrior<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c, NTS_LOG, 100));
+//        players.add(new UCTWithPrior<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c, NTS_LOG, 100));
 //        playerNames.add("BOTH");
 
 //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1), c));
@@ -180,8 +180,8 @@ public class PriorKnowledgeExp
         playerNames.add("MonteCarlo");
         players.add(new UCT<Othello>(c));
         playerNames.add("UCT");
-        players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
-        playerNames.add("UCTPrior");
+        players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits));
+        playerNames.add("UCTWithPrior");
         players.add(new UCTNoRollout<Othello>(c, wpc));
         playerNames.add("UCTNoRollout");
 
@@ -192,6 +192,6 @@ public class PriorKnowledgeExp
 
     public static void main(String[] args)
     {
-        roundRobinMCTSPriorNonRandom();
+        roundRobinMCTSWithPriorNonRandom();
     }
 }

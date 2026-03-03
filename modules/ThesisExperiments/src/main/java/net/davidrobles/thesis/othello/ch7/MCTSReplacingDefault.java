@@ -19,7 +19,7 @@ public class MCTSReplacingDefault
 //         * vs
 //         * MCTS with Prior Knowledge and Non-Random Default Policy
 //         */
-//        static void MCTSvsMCTSPriorNonRandom()
+//        static void MCTSvsMCTSWithPriorNonRandom()
 //        {
 //            int nGames = 50;
 //            int timeout = 1000;
@@ -30,7 +30,7 @@ public class MCTSReplacingDefault
 //            WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 //            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new UCT<Othello>(c));
-//            players.add(new MCTSPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
+//            players.add(new MCTSWithPrior<Othello>(new UCB1<Othello>(c), new EpsilonGreedyStrategy<Othello>(wpc, epsilon), wpc, qInit));
 //
 //            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
 //            series.run();
@@ -40,7 +40,7 @@ public class MCTSReplacingDefault
      * Round robin tournament between MCTS players with Prior Knowledge
      * and Non-Random Default Policy using different exploration.
      */
-    static void roundRobinMCTSPriorNonRandom()
+    static void roundRobinMCTSWithPriorNonRandom()
     {
         System.out.println("spaguetti");
 
@@ -89,7 +89,7 @@ public class MCTSReplacingDefault
 //         * vs
 //         * MCTS with Prior Knowledge
 //         */
-//        static void MCTSvsMCTSPrior()
+//        static void MCTSvsMCTSWithPrior()
 //        {
 //            int nGames = 250;
 //            int timeout = 1000;
@@ -99,7 +99,7 @@ public class MCTSReplacingDefault
 //            WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 //            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new UCT<Othello>(c));
-//            players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
+//            players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits));
 //
 //            Series<Othello> series = new Series<Othello>(new Othello(), nGames, players, timeout);
 //            series.run();
@@ -118,7 +118,7 @@ public class MCTSReplacingDefault
 //
 //            for (int i = 0; i < initQVisits.length; i++)
 //            {
-//                players.add(new UCTPrior<Othello>(c, wpc, initQVisits[i], nSims));
+//                players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits[i], nSims));
 //                playerNames.add("QVisits = " + initQVisits[i]);
 //            }
 //
@@ -142,8 +142,8 @@ public class MCTSReplacingDefault
 //            playerNames.add("MonteCarlo");
 //            players.add(new UCT<Othello>(c));
 //            playerNames.add("UCT");
-//            players.add(new UCTPrior<Othello>(c, wpc, initQVisits));
-//            playerNames.add("UCTPrior");
+//            players.add(new UCTWithPrior<Othello>(c, wpc, initQVisits));
+//            playerNames.add("UCTWithPrior");
 //            players.add(new UCTNoRollout<Othello>(c, wpc));
 //            playerNames.add("UCTNoRollout");
 //
@@ -154,12 +154,12 @@ public class MCTSReplacingDefault
 
     public static void main(String[] args)
     {
-//        roundRobinMCTSPriorNonRandom();
+//        roundRobinMCTSWithPriorNonRandom();
 
 //        MCTS_WPC.MCTSvsMCTS_WPCEpsilonValues();
 
 
-//        roundRobinMCTSPriorNonRandom();
+//        roundRobinMCTSWithPriorNonRandom();
 
         PriorKnowledgeExp.roundRobinBetweenPriorKnowMCTSPlayersWithSims();
     }

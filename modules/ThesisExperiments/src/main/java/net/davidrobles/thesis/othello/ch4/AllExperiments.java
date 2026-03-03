@@ -8,7 +8,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +39,12 @@ public class AllExperiments
         playerNames.add("UCT+NR");
 
         // UCT + Prior Knowledge
-        players.add(new UCTPrior<Othello>(c, wpc, nInit));
+        players.add(new UCTWithPrior<Othello>(c, wpc, nInit));
         playerNames.add("UCT+PK");
 
         // UCT + Non Random Default Policy + Prior Knowledge
         GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(wpc);
-        players.add(new UCTPrior<Othello>(greedy, c, wpc, nInit));
+        players.add(new UCTWithPrior<Othello>(greedy, c, wpc, nInit));
         playerNames.add("UCT+NR+PK");
 
         RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);

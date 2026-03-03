@@ -10,7 +10,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,25 +53,25 @@ public class All
 //        playerNames.add("UCT-1.0");
 
         // UCT + Prior Knowledge
-//        players.add(new UCTPrior<Othello>(c, logistello, 100));
+//        players.add(new UCTWithPrior<Othello>(c, logistello, 100));
 //        playerNames.add("UCT+100");
 //
-//        players.add(new UCTPrior<Othello>(c, logistello, 500));
+//        players.add(new UCTWithPrior<Othello>(c, logistello, 500));
 //        playerNames.add("UCT+500");
 
-        players.add(new UCTPrior<Othello>(c, logistello, 1000));
+        players.add(new UCTWithPrior<Othello>(c, logistello, 1000));
         playerNames.add("UCT+1000+Log");
 
-        players.add(new UCTPrior<Othello>(c, wpc, 1000));
+        players.add(new UCTWithPrior<Othello>(c, wpc, 1000));
         playerNames.add("UCT+1000+WPC");
 
 //
-//        players.add(new UCTPrior<Othello>(c, heuristic, 5000));
+//        players.add(new UCTWithPrior<Othello>(c, heuristic, 5000));
 //        playerNames.add("UCT+5000");
 
         // UCT + Non Random Default Policy + Prior Knowledge
 //        GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(logistello);
-//        players.add(new UCTPrior<Othello>(greedy, c, logistello, nInit));
+//        players.add(new UCTWithPrior<Othello>(greedy, c, logistello, nInit));
 //        playerNames.add("UCT+NR+PK");
 
         RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
