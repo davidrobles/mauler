@@ -36,36 +36,36 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected int nSims;
     protected TreePolicy<GAME> treePolicy;
-    protected Strategy<GAME> defPolicy;
+    protected Strategy<GAME> rolloutPolicy;
     private TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>(1.0, -1.0, 0.0);
 
     /**
      * Creates a time-based MCTS instance (use {@link #move(Game, int)}).
      *
-     * @param treePolicy the selection/final-move policy
-     * @param defPolicy  the rollout (default) policy
+     * @param treePolicy   the selection/final-move policy
+     * @param rolloutPolicy the rollout (default) policy
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy)
+    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> rolloutPolicy)
     {
-        this(treePolicy, defPolicy, 0);
+        this(treePolicy, rolloutPolicy, 0);
     }
 
     /**
      * Creates a simulation-count MCTS instance.
      *
-     * @param treePolicy the selection/final-move policy
-     * @param defPolicy  the rollout (default) policy
-     * @param nSims      number of simulations per move (must be non-negative)
+     * @param treePolicy   the selection/final-move policy
+     * @param rolloutPolicy the rollout (default) policy
+     * @param nSims        number of simulations per move (must be non-negative)
      * @throws IllegalArgumentException if {@code nSims} is negative
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> defPolicy, int nSims)
+    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> rolloutPolicy, int nSims)
     {
         if (nSims < 0)
             throw new IllegalArgumentException("nSims must be non-negative, got: " + nSims);
 
-        this.treePolicy = treePolicy;
-        this.defPolicy  = defPolicy;
-        this.nSims      = nSims;
+        this.treePolicy    = treePolicy;
+        this.rolloutPolicy = rolloutPolicy;
+        this.nSims         = nSims;
     }
 
     /**
@@ -80,7 +80,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     /** Returns a new MCTS with the same configuration, including the current utility function. */
     public MCTS<GAME> copy()
     {
-        MCTS<GAME> copy = new MCTS<>(treePolicy, defPolicy, nSims);
+        MCTS<GAME> copy = new MCTS<>(treePolicy, rolloutPolicy, nSims);
         copy.utilFunc = this.utilFunc;
         return copy;
     }
@@ -113,7 +113,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         while (!node.getGame().isOver())
         {
             path.add(node);
-            if (node.getCount() == 0)
+            if (node.getVisits() == 0)
             {
                 expand(node, player);
                 return path;
@@ -131,7 +131,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
      */
     protected void expand(MCTSNode<GAME> node, int player)
     {
-        node.init();
+        node.expand();
     }
 
     /**
@@ -143,7 +143,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     {
         GAME copy = node.getGame().copy();
         while (!copy.isOver())
-            copy.makeMove(defPolicy.move(copy));
+            copy.makeMove(rolloutPolicy.move(copy));
         return utilFunc.evaluate(copy, player);
     }
 
@@ -200,10 +200,10 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     public String toString()
     {
         if (nSims > 0)
-            return String.format("<MCTS treePolicy=%s defPolicy=%s nSims=%d>",
-                    treePolicy, defPolicy, nSims);
+            return String.format("<MCTS treePolicy=%s rolloutPolicy=%s nSims=%d>",
+                    treePolicy, rolloutPolicy, nSims);
         else
-            return String.format("<MCTS treePolicy=%s defPolicy=%s>",
-                    treePolicy, defPolicy);
+            return String.format("<MCTS treePolicy=%s rolloutPolicy=%s>",
+                    treePolicy, rolloutPolicy);
     }
 }

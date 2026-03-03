@@ -30,7 +30,7 @@ public class GreedyTreePolicy<GAME extends Game<GAME>> implements TreePolicy<GAM
             double value;
 
             // ensures that each arm is selected once before further exploration
-            if (node.getActionCount(move) == 0)
+            if (node.getActionVisits(move) == 0)
             {
                 int bias = rng.nextInt(1000) + 10;
                 value = max ? (100000000 - bias) : (-100000000 + bias);

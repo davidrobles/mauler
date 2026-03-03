@@ -31,17 +31,17 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
         int bestMove = -1;
         boolean max = node.getGame().getCurPlayer() == player;
         double bestValue = max ? -Double.MAX_VALUE : Double.MAX_VALUE;
-        double nb = 0;
+        double parentVisits = 0;
 
         for (int move = 0; move < node.getGame().getNumMoves(); move++)
-            nb += node.getActionCount(move);
+            parentVisits += node.getActionVisits(move);
 
         for (int move = 0; move < node.getGame().getNumMoves(); move++)
         {
             double value = 0;
 
             // ensures that each arm is selected once before further exploration
-            if (node.getActionCount(move) == 0)
+            if (node.getActionVisits(move) == 0)
             {
                 int bias = rng.nextInt(1000) + 10;
                 value = max ? (100000000 - bias) : (-100000000 + bias);
@@ -49,7 +49,7 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
             else
             {
                 double exploitation = node.getActionValue(move);
-                double exploration = c * Math.sqrt(Math.log(nb) / (double) node.getActionCount(move));
+                double exploration = c * Math.sqrt(Math.log(parentVisits) / (double) node.getActionVisits(move));
                 value += exploitation;
                 value += max ? exploration : -exploration;
             }

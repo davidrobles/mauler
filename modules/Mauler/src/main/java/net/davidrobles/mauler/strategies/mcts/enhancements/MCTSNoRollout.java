@@ -41,9 +41,9 @@ public class MCTSNoRollout<GAME extends Game<GAME>> extends MCTS<GAME>
     {
         if (nSims > 0)
             return String.format("<MCTSNoRollout treePolicy: %s, defaultPolicy: %s, evalFunc: %s, nSims: %d>",
-                    treePolicy, defPolicy, evalFunc, nSims);
+                    treePolicy, rolloutPolicy, evalFunc, nSims);
         else
             return String.format("<MCTSNoRollout treePolicy: %s, defaultPolicy: %s, evalFunc: %s>",
-                    treePolicy, defPolicy, evalFunc);
+                    treePolicy, rolloutPolicy, evalFunc);
     }
 }

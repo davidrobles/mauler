@@ -36,15 +36,15 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
     public MCTSNode<GAME> joinMCTSNodes(List<MCTSNode<GAME>> rootNodes)
     {
         MCTSNode<GAME> all = new MCTSNode<GAME>(rootNodes.get(0).getGame().copy());
-        all.init();
+        all.expand();
 
         for (MCTSNode<GAME> rootNode : rootNodes)
         {
             for (int move = 0; move < rootNode.getChildren().size(); move++)
             {
-                int oldVisits = all.getChild(move).getCount();
-                int newVisits = oldVisits + rootNode.getChild(move).getCount();
-                all.getChild(move).setCount(newVisits);
+                int oldVisits = all.getChild(move).getVisits();
+                int newVisits = oldVisits + rootNode.getChild(move).getVisits();
+                all.getChild(move).setVisits(newVisits);
             }
         }
 
@@ -63,7 +63,7 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
 
         for (int move = 0; move < childrenSize; move++)
         {
-            int childVisits = mctsNode.getChild(move).getCount();
+            int childVisits = mctsNode.getChild(move).getVisits();
 
             if (childVisits > mostVisits)
             {

@@ -18,7 +18,7 @@ import java.util.List;
 public class MCTSNode<GAME extends Game<GAME>>
 {
     private final GAME game;
-    private int count = 0;                              // N(s): number of visits to this node
+    private int visits = 0;                             // N(s): number of visits to this node
     private double value = 0.0;                         // Q(s,a): mean outcome for the current player
     private final List<MCTSNode<GAME>> children = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class MCTSNode<GAME extends Game<GAME>>
      * control when expansion happens — expanding only the node chosen by the
      * tree policy, not every node at construction time.
      */
-    public void init()
+    public void expand()
     {
         for (int move = 0; move < game.getNumMoves(); move++)
         {
@@ -52,14 +52,14 @@ public class MCTSNode<GAME extends Game<GAME>>
      */
     public void update(double outcome)
     {
-        count++;
-        value += (outcome - value) / count;
+        visits++;
+        value += (outcome - value) / visits;
     }
 
     /** Returns N(s,a): the number of times {@code move} has been taken from this node. */
-    public int getActionCount(int move)
+    public int getActionVisits(int move)
     {
-        return children.get(move).getCount();
+        return children.get(move).getVisits();
     }
 
     /** Returns Q(s,a): the mean outcome after taking {@code move} from this node. */
@@ -82,18 +82,18 @@ public class MCTSNode<GAME extends Game<GAME>>
         return children;
     }
 
-    public int getCount()
+    public int getVisits()
     {
-        return count;
+        return visits;
     }
 
     /**
      * Overrides the visit count. Used by prior-knowledge initialisation
      * ({@code MCTSPrior}) and parallel root parallelisation ({@code MCTSRootP}).
      */
-    public void setCount(int count)
+    public void setVisits(int visits)
     {
-        this.count = count;
+        this.visits = visits;
     }
 
     public GAME getGame()
@@ -122,6 +122,6 @@ public class MCTSNode<GAME extends Game<GAME>>
     @Override
     public String toString()
     {
-        return String.format("<MCTSNode count: %d, value: %f>", count, value);
+        return String.format("<MCTSNode visits: %d, value: %f>", visits, value);
     }
 }

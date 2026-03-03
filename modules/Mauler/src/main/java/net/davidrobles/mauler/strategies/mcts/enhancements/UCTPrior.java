@@ -22,13 +22,13 @@ public class UCTPrior<GAME extends Game<GAME>> extends MCTSPrior<GAME>
         super(new UCB1<GAME>(c), new RandomStrategy<GAME>(), priorEF, initQVisits, nSims);
     }
 
-    public UCTPrior(Strategy<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits)
+    public UCTPrior(Strategy<GAME> rolloutPolicy, double c, Evaluator<GAME> priorEF, int initQVisits)
     {
-        super(new UCB1<GAME>(c), defPolicy, priorEF, initQVisits);
+        super(new UCB1<GAME>(c), rolloutPolicy, priorEF, initQVisits);
     }
 
-    public UCTPrior(Strategy<GAME> defPolicy, double c, Evaluator<GAME> priorEF, int initQVisits, int nSims)
+    public UCTPrior(Strategy<GAME> rolloutPolicy, double c, Evaluator<GAME> priorEF, int initQVisits, int nSims)
     {
-        super(new UCB1<GAME>(c), defPolicy, priorEF, initQVisits, nSims);
+        super(new UCB1<GAME>(c), rolloutPolicy, priorEF, initQVisits, nSims);
     }
 }

@@ -9,7 +9,7 @@ import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
  * Upper Confidence Bounds for Trees (UCT).
  *
  * <p>Specialises {@link MCTS} with the {@link UCB1} tree policy and a
- * uniformly random rollout policy. Constructors without a {@code defPolicy}
+ * uniformly random rollout policy. Constructors without a {@code rolloutPolicy}
  * argument use {@link RandomStrategy} as the default rollout policy.
  *
  * <p>Two operational modes are supported:
@@ -46,23 +46,23 @@ public class UCT<GAME extends Game<GAME>> extends MCTS<GAME>
     /**
      * Creates a time-based UCT instance with a custom rollout policy.
      *
-     * @param defPolicy the rollout (default) policy
+     * @param rolloutPolicy the rollout (default) policy
      * @param c         UCB1 exploration constant
      */
-    public UCT(Strategy<GAME> defPolicy, double c)
+    public UCT(Strategy<GAME> rolloutPolicy, double c)
     {
-        super(new UCB1<>(c), defPolicy);
+        super(new UCB1<>(c), rolloutPolicy);
     }
 
     /**
      * Creates a simulation-count UCT instance with a custom rollout policy.
      *
-     * @param defPolicy the rollout (default) policy
+     * @param rolloutPolicy the rollout (default) policy
      * @param c         UCB1 exploration constant
      * @param nSims     number of simulations per move
      */
-    public UCT(Strategy<GAME> defPolicy, double c, int nSims)
+    public UCT(Strategy<GAME> rolloutPolicy, double c, int nSims)
     {
-        super(new UCB1<>(c), defPolicy, nSims);
+        super(new UCB1<>(c), rolloutPolicy, nSims);
     }
 }
