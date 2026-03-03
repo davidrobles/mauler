@@ -36,7 +36,7 @@ public class GreedyTreePolicy<GAME extends Game<GAME>> implements TreePolicy<GAM
             }
             else
             {
-                value = node.getActionValue(move);
+                value = -node.getActionValue(move);
             }
 
             if (value > bestValue)

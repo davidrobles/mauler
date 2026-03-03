@@ -47,7 +47,7 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
             }
             else
             {
-                double exploitation = node.getActionValue(move);
+                double exploitation = -node.getActionValue(move);
                 double exploration  = c * Math.sqrt(Math.log(parentVisits) / (double) node.getActionVisits(move));
                 value = exploitation + exploration;
             }
