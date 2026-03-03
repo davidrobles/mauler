@@ -113,10 +113,10 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //    public RLPolicy<S, A> run()
 //    {
 //        valueFunction = new TabularVFunction<S>();
-////        MDPUtil.initialiseVFunction(mdp, valueFunction);
+////        MDPUtil.initializeVFunction(mdp, valueFunction);
 //        policy = new LookupTablePolicy<S, A>();
 //
-//        // initialise the policy arbitrarily
+//        // initialize the policy arbitrarily
 //        for (S state : mdp.getStates()) {
 //            List<A> actions = mdp.getActions(state);
 //            Collections.shuffle(actions);

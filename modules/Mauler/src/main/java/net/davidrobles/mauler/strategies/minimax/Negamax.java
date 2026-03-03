@@ -8,7 +8,7 @@ import net.davidrobles.mauler.strategies.Evaluator;
  *
  * <p>A simplification of {@link Minimax} that exploits the zero-sum property:
  * the score for the current player is always the negation of the score for the
- * opponent, so a single maximisation pass suffices at every node.
+ * opponent, so a single maximization pass suffices at every node.
  *
  * <p>The {@link Evaluator} must return scores <em>from the perspective of the
  * player to move</em> at the node being evaluated: positive means good for

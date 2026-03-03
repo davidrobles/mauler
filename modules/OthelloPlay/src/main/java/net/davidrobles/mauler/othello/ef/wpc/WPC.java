@@ -35,7 +35,7 @@ public class WPC implements LinearEF<Othello>
     }
 
     /**
-     * Creates a weighted piece counter (WPC) initialised to zero.
+     * Creates a weighted piece counter (WPC) initialized to zero.
      */
     public WPC(WPCType type)
     {

@@ -117,7 +117,7 @@ public class PolicyIteration<S, A> implements Learner
     {
 //        policy = new TabularPolicy<S, A>();
 //
-//        // initialise the policy arbitrarily
+//        // initialize the policy arbitrarily
 //        for (S state : mdp.getStates())
 //        {
 //            List<A> actions = mdp.getActions(state);

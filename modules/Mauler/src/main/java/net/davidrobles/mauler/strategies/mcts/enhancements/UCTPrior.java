@@ -8,7 +8,7 @@ import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
 
 /**
  * An Upper Confidence Bounds for Trees algorithm with prior knowledge
- * initialisation in the tree policy.
+ * initialization in the tree policy.
  */
 public class UCTPrior<GAME extends Game<GAME>> extends MCTSPrior<GAME>
 {

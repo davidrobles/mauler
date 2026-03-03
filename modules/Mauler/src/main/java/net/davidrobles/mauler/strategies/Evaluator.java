@@ -34,7 +34,7 @@ public interface Evaluator<GAME extends Game<GAME>>
      *
      * @param game   the game state to evaluate
      * @param player the player index whose perspective to score from
-     * @return a score where higher values favour {@code player}
+     * @return a score where higher values favor {@code player}
      */
     double evaluate(GAME game, int player);
 }

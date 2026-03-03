@@ -8,7 +8,7 @@ import net.davidrobles.mauler.strategies.Evaluator;
  *
  * <p>Explores the game tree up to {@code maxDepth} plies and evaluates leaf
  * nodes with the supplied {@link Evaluator}. At each node the current player
- * maximises their score; the opponent minimises it.
+ * maximizes their score; the opponent minimizes it.
  *
  * <p>When constructed without an explicit depth limit the search runs to
  * terminal positions. Use {@link AlphaBeta} for better performance — it
@@ -52,8 +52,8 @@ public class Minimax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
         if (game.isOver() || depth == depthLimit)
             return new MoveScore(evaluator.evaluate(game, player), -1);
 
-        boolean maximising = game.getCurPlayer() == player;
-        double bestScore = maximising ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+        boolean maximizing = game.getCurPlayer() == player;
+        double bestScore = maximizing ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
         int bestMove = -1;
 
         for (int move = 0; move < game.getNumMoves(); move++)
@@ -62,7 +62,7 @@ public class Minimax<GAME extends Game<GAME>> implements DepthLimitedSearch<GAME
             child.makeMove(move);
             double score = minimax(child, player, depth + 1, depthLimit).getScore();
 
-            if (maximising ? score > bestScore : score < bestScore)
+            if (maximizing ? score > bestScore : score < bestScore)
             {
                 bestScore = score;
                 bestMove = move;

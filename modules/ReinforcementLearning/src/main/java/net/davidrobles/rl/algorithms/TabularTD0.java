@@ -17,7 +17,7 @@ public class TabularTD0<S, A> implements Learner
     private RLEnv<S, A> env;
 
     /**
-     * Behaviour policy.
+     * Behavior policy.
      */
     private RLPolicy<S, A> policy;
 

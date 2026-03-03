@@ -9,7 +9,7 @@ import java.util.Random;
  * A player that selects moves uniformly at random.
  *
  * <p>Useful as a baseline opponent, a rollout policy in Monte Carlo search,
- * and in tests where reproducible behaviour is needed (pass a seeded
+ * and in tests where reproducible behavior is needed (pass a seeded
  * {@link Random} to the constructor).
  *
  * @param <GAME> the game type

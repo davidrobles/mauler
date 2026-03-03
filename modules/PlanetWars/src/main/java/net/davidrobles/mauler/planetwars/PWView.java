@@ -10,7 +10,7 @@ public class PWView extends JPanel implements PWGameObserver {
     private static final int LEFT_OFFSET = 20;
     private static final int TOP_OFFSET = 20;
 
-    // Colours
+    // Colors
     private static Color P1_COLOR = new Color(0x99ccff); // BLUE
     private static Color P2_COLOR = new Color(0xcc3333); // RED
     private static Color NEUTRAL_COLOR = Color.GRAY;

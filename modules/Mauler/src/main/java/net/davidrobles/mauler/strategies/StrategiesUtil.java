@@ -50,7 +50,7 @@ public final class StrategiesUtil
 
     /**
      * Selects the move leading to the highest-scored successor state.
-     * Ties are broken in favour of the first move encountered.
+     * Ties are broken in favor of the first move encountered.
      *
      * @param game     the current game state
      * @param evalFunc evaluation function to score successor positions

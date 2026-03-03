@@ -64,7 +64,7 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //    public RLPolicy<S, A> run()
 //    {
 ////        TabularVFunction newValueFunction = new TabularVFunction();
-////        MDPUtil.initialiseVFunction(mdp, newValueFunction);
+////        MDPUtil.initializeVFunction(mdp, newValueFunction);
 ////        RLPolicy policy = new RandomPolicy(mdp);
 ////        RLPolicy policy = new VEpsilonGreedy(mdp, 0.01, newValueFunction);
 ////        addVFunctionObserver((VEpsilonGreedy)policy);

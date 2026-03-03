@@ -26,7 +26,7 @@ public class GWRun
 //        GridWorldEnv env = new GridWorldEnv(mdp, RNG);
 //        GWVView view = new GWVView(mdp, 4, 4, null, env);
 //        TabularVFunction<GWState> vFunction = new TabularVFunction<GWState>();
-////        MDPUtil.initialiseVFunction(mdp, vFunction);
+////        MDPUtil.initializeVFunction(mdp, vFunction);
 //        new DRFrame(view);
 //        VValuesAlgorithm<GWState, GWAction> algorithm =
 //                new DPValueIteration<GWState, GWAction>(mdp, vFunction, alpha, gamma);

@@ -10,7 +10,7 @@ import net.davidrobles.mauler.strategies.StrategiesUtil;
  *
  * <p>On each turn, every legal move is tried on a copy of the game; the resulting
  * position is scored with the given {@link Evaluator}, and the move with the highest
- * score is returned. Ties are broken in favour of the first move encountered.
+ * score is returned. Ties are broken in favor of the first move encountered.
  *
  * @param <GAME> the game type
  */
