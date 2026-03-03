@@ -7,7 +7,7 @@ import net.davidrobles.mauler.core.Strategy;
 import java.util.List;
 import java.util.Random;
 
-import static net.davidrobles.mauler.core.util.Console.*;
+import static net.davidrobles.util.Console.*;
 
 /**
  * Static utilities for running and displaying games on the console.

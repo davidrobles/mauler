@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.core;
 
-import net.davidrobles.mauler.core.util.Console;
+import net.davidrobles.util.Console;
 
 import java.util.ArrayList;
 import java.util.Collection;

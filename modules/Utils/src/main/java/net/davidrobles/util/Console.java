@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.core.util;
+package net.davidrobles.util;
 
 public final class Console
 {
