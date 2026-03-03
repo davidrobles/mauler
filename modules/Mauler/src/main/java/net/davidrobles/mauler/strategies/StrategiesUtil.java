@@ -7,9 +7,9 @@ import java.util.Random;
 /**
  * Static utility methods for move selection and position evaluation.
  */
-public final class PlayersUtil
+public final class StrategiesUtil
 {
-    private PlayersUtil() {}
+    private StrategiesUtil() {}
 
     // -------------------------------------------------------------------------
     // Move selection

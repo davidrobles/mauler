@@ -3,7 +3,7 @@ package net.davidrobles.mauler.strategies.greedy;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.Evaluator;
-import net.davidrobles.mauler.strategies.PlayersUtil;
+import net.davidrobles.mauler.strategies.StrategiesUtil;
 
 /**
  * A player that always picks the move leading to the highest-scored successor state.
@@ -39,7 +39,7 @@ public class GreedyStrategy<GAME extends Game<GAME>> implements Strategy<GAME>
     @Override
     public int move(GAME game)
     {
-        return PlayersUtil.greedyMove(game, evalFunc);
+        return StrategiesUtil.greedyMove(game, evalFunc);
     }
 
     // -------------------------------------------------------------------------

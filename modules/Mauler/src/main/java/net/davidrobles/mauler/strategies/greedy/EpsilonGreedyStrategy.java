@@ -3,7 +3,7 @@ package net.davidrobles.mauler.strategies.greedy;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.Evaluator;
-import net.davidrobles.mauler.strategies.PlayersUtil;
+import net.davidrobles.mauler.strategies.StrategiesUtil;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 
 import java.util.Random;
@@ -79,7 +79,7 @@ public class EpsilonGreedyStrategy<GAME extends Game<GAME>> implements Strategy<
     @Override
     public int move(GAME game)
     {
-        return PlayersUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng);
+        return StrategiesUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng);
     }
 
     // -------------------------------------------------------------------------

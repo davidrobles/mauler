@@ -3,7 +3,7 @@ package net.davidrobles.mauler.othello.ef.wpc;
 import net.davidrobles.mauler.othello.LinearEF;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.OthelloUtil;
-import net.davidrobles.mauler.strategies.PlayersUtil;
+import net.davidrobles.mauler.strategies.StrategiesUtil;
 
 /**
  * A weighted piece counter.
@@ -187,7 +187,7 @@ public class WPC implements LinearEF<Othello>
     public double evaluate(Othello othello, int player)
     {
         if (othello.isOver())
-            return PlayersUtil.utility(othello, player, WIN, LOSS, DRAW);
+            return StrategiesUtil.utility(othello, player, WIN, LOSS, DRAW);
 
         double boardValue = 0;
         final boolean sym = getType() == WPCType.SYM;

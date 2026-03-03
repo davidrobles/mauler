@@ -2,7 +2,7 @@ package net.davidrobles.mauler.othello.ef.ntuples;
 
 import net.davidrobles.mauler.othello.LinearEF;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.strategies.PlayersUtil;
+import net.davidrobles.mauler.strategies.StrategiesUtil;
 
 // TODO: write code to convert this to Simon's format
 
@@ -109,7 +109,7 @@ public class NTupleSystem implements LinearEF<Othello>
     public double evaluate(Othello othello, int player)
     {
         if (othello.isOver())
-            return PlayersUtil.utility(othello, player, WIN, LOSS, DRAW);
+            return StrategiesUtil.utility(othello, player, WIN, LOSS, DRAW);
 
         double value = 0;
 

@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.othello;
 
 import net.davidrobles.mauler.core.Game;
-import net.davidrobles.mauler.strategies.PlayersUtil;
+import net.davidrobles.mauler.strategies.StrategiesUtil;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -116,7 +116,7 @@ public class TD0<GAME extends Game<GAME>>
         while (!game.isOver())
         {
             GAME prevGame = game.copy();
-            game.makeMove(PlayersUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng));
+            game.makeMove(StrategiesUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng));
             double current = evalFunc.evaluate(prevGame, 0);
             double next = evalFunc.evaluate(game, 0);
             double tdError = learningRate * (discountFactor * next - current) * (1 - current * current);
