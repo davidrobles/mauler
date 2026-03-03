@@ -256,7 +256,7 @@ public class MCTSExperiments
 //        mcVsRandom();
 
 //        int mb = 1024 * 1024;
-//        GamesUtil.playGame();
+//        Games.play();
 //        hello();
 
 //        MCTSWithWPC();

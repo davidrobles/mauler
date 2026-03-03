@@ -38,7 +38,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //            List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //            players.add(new GreedyStrategy<Othello>(wpc));
 //            players.add(new RandomPlayer<Othello>(RNG));
-//            double[] here = null; // GamesUtil.playNGames(new Othello(), players, 10000);
+//            double[] here = null; // Games.playNGames(new Othello(), players, 10000);
 //
 //            for (int j = 0; j < test.length; j++)
 //                test[j] += here[j];
@@ -277,7 +277,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
 //        players.add(new GreedyStrategy<Othello>(wpc));
 //        players.add(new RandomPlayer<Othello>(RNG));
-////        GamesUtil.playNGames(new Othello(), players, 50000);
+////        Games.playNGames(new Othello(), players, 50000);
 //        System.out.println("");
 //        printH2("Latex table");
 //        System.out.println(wpc.toLatexTable());
@@ -288,7 +288,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        players2.add(new EpsilonGreedyStrategy<Othello>(symWPC, 0.05, RNG));
 //        players2.add(new EpsilonGreedyStrategy<Othello>(symWPC, 0.05, RNG));
 ////        players2.add(new RandomPlayer<Othello>(RNG));
-////        GamesUtil.playNGames(new Othello(), players2, 50000);
+////        Games.playNGames(new Othello(), players2, 50000);
 //
 //        Series<Othello> series = new Series.Builder<Othello>(new Othello(), 50000, players).build();
 //        series.playSeries();
@@ -306,7 +306,7 @@ package net.davidrobles.thesis.othello.ch4;//package dr.thesis.othello;
 //        players.add(new EpsilonGreedyStrategy<Othello>(smlSymWPC, 0.05, RNG));
 ////        players.add(new RandomPlayer<Othello>(RNG));
 ////        players.add(new RandomPlayer<Othello>(RNG));
-////        GamesUtil.playNGames(new Othello(), players, 50000);
+////        Games.playNGames(new Othello(), players, 50000);
 //
 ////        Othello othello = new Othello();
 ////        int[] results = new int[3];

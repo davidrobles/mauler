@@ -61,8 +61,8 @@ public class HavannahRun
     }
 
     public static void main(String[] args) {
-//        GamesUtil.playRandomGame(new Havannah(4));
-//        GamesUtil.playerSpeed(new Havannah(6), 10000);
+//        Games.playRandom(new Havannah(4));
+//        Games.playerSpeed(new Havannah(6), 10000);
         runGUI();
 //        test();
     }

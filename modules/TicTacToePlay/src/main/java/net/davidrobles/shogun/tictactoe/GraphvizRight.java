@@ -2,7 +2,7 @@
 //
 //import Game;
 //import dr.mauler.core.players.RandomStrategy;
-//import GamesUtil;
+//import Games;
 //import dr.mauler.othello.Othello;
 //import TerminalEvaluator;
 //import GraphvizMCTSObserver;
@@ -21,7 +21,7 @@
 //
 //    private static void hello() throws IOException {
 //        Othello othello = new Othello();
-//        boolean advanceSuccesful = GamesUtil.advanceGame(othello, 30);
+//        boolean advanceSuccesful = Games.advanceRandom(othello, 30);
 //        System.out.println(othello);
 ////        double[] c = { 0.2, 5.0, 10.0 };
 //        double[] c = { 100 };

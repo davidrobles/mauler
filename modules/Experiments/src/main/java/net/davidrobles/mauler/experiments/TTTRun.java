@@ -1,6 +1,6 @@
 package net.davidrobles.mauler.experiments;
 
-import net.davidrobles.mauler.core.util.GamesUtil;
+import net.davidrobles.mauler.core.util.Games;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
@@ -57,7 +57,7 @@ public class TTTRun
 //        players.add(fixedStandardMCTS);
 //        players.add(fixedGreedyMCTS);
 
-//        GamesUtil.playNGames(tic, players, 100); // TODO change this
+//        Games.playNGames(tic, players, 100); // TODO change this
 //        ParallelRoundRobin<TicTacToe> roundRobin = new ParallelRoundRobin<TicTacToe>(tic, players, 50);
 //        roundRobin.run();
 //        System.out.println(roundRobin.toFormattedTable());
@@ -75,7 +75,7 @@ public class TTTRun
 //        players.add(timedStandardMCTS);
 //        players.add(timedGreedyMCTS);
 
-//        GamesUtil.playNGamesTimed(tic, players, 100, 100, true);
+//        Games.playNGamesTimed(tic, players, 100, 100, true);
 //        RoundRobinTime<TicTacToe> roundRobin = new RoundRobinTime<TicTacToe>(tic, players, 20, 200);
 //        roundRobin.run();
 //        System.out.println(roundRobin.toFormattedTable());
@@ -85,6 +85,6 @@ public class TTTRun
     {
 //        runFixed();
 //        runTimed();
-        GamesUtil.playRandomGame(new TicTacToe());
+        Games.playRandom(new TicTacToe());
     }
 }

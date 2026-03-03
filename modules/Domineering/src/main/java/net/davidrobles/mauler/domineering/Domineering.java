@@ -250,7 +250,7 @@ public class Domineering implements Game<Domineering>
 ////        dom.makeMove(rnd.nextInt(dom.getNumMoves()));
 ////        System.out.println(dom);
 //
-////        GamesUtil.playRandomGame(new net.davidrobles.mauler.domineering.Domineering());
+////        Games.playRandom(new net.davidrobles.mauler.domineering.Domineering());
 ////        MonteCarlo<net.davidrobles.mauler.domineering.Domineering> mc = new MonteCarlo<net.davidrobles.mauler.domineering.Domineering>(500);
 //        UCT<net.davidrobles.mauler.domineering.Domineering> uct = new UCT<net.davidrobles.mauler.domineering.Domineering>(0.5, 2000);
 //        AlphaBeta<net.davidrobles.mauler.domineering.Domineering> ab = new AlphaBeta<net.davidrobles.mauler.domineering.Domineering>(new TerminalEvaluator());
@@ -267,7 +267,7 @@ public class Domineering implements Game<Domineering>
 //        }
 //
 //
-////        GamesUtil.playGame(dom, players, false, true, true, 0);
+////        Games.play(dom, players, false, true, true, 0);
 //
 //        while (!dom.isOver())
 //        {

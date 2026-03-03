@@ -55,7 +55,7 @@ public class MctsExploration {
 
     public static void main(String[] args) {
         c4Exploration();
-//        GamesUtil.playRandomGame(new Connect4());
+//        Games.playRandom(new Connect4());
 //        Connect4 c4 = new Connect4();
 //        System.out.println(c4);
     }
