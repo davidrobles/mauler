@@ -24,8 +24,10 @@ import java.util.Optional;
  * GameResult[] outcomes = game.getOutcome().orElseThrow();
  * }</pre>
  *
- * <p>Implementations should also override {@code equals()} and {@code hashCode()} based on the
- * full game state, which is required for correctness of {@link #copy()} in tests and tree search.
+ * <p>Implementations <strong>must</strong> override {@code equals(Object)} and {@code hashCode()}
+ * based on the complete game state. The standard Java contract applies: objects that are
+ * {@code equals} must have the same {@code hashCode}. This is required for correctness of
+ * {@link #copy()} verification in tests and is a prerequisite for transposition tables in tree search.
  *
  * @param <GAME> the concrete game type (self-referential generic)
  *

@@ -864,6 +864,12 @@ public class LOA extends ObservableGame<LOA>
         return true;
     }
 
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(black, white, current, gameOver);
+    }
+
     /**
      * Resets the state of the game. It resets both bitboards: black and white.<br /><br />
      * Black bitboard to:<br /><br />

@@ -30,6 +30,17 @@ public abstract class GameTest<GAME extends Game<GAME>>
     }
 
     @Test
+    public void testHashCode()
+    {
+        assertEquals(game.hashCode(), game.copy().hashCode());
+
+        while (!game.isOver()) {
+            game.makeMove(rnd.nextInt(game.getNumMoves()));
+            assertEquals(game.hashCode(), game.copy().hashCode());
+        }
+    }
+
+    @Test
     public void testNumLegalMovesEqualsListMoves()
     {
         while (!game.isOver()) {
