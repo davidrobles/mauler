@@ -197,10 +197,20 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         return false;
     }
 
-    /** Runs {@code nSims} simulations from the current position and returns the best move. */
+    /**
+     * Runs {@code nSims} simulations from the current position and returns the best move.
+     *
+     * @throws IllegalStateException if this instance was configured for time-based search
+     *         ({@code nSims=0}); use {@link #move(Game, int)} instead
+     */
     @Override
     public int move(GAME game)
     {
+        if (nSims == 0)
+            throw new IllegalStateException(
+                    "This MCTS instance was configured for time-based search (nSims=0). " +
+                    "Use move(game, timeoutMs) instead.");
+
         MCTSNode<GAME> root = new MCTSNode<>(game);
 
         for (int i = 0; i < nSims; i++)
