@@ -15,6 +15,13 @@ import java.util.Random;
  *
  * <p>Any unvisited arm is treated as having infinite value, and one is chosen
  * uniformly at random among them via reservoir sampling.
+ *
+ * <p>References:
+ * <ul>
+ *   <li>Browne et al. (2012). "A Survey of Monte Carlo Tree Search Methods."
+ *       <em>IEEE TCIAIG</em>, 4(1):1&ndash;43. §3.2 discusses the exploration
+ *       constant and notes that c&nbsp;=&nbsp;0 reduces UCT to pure exploitation.
+ * </ul>
  */
 public class GreedySelectionPolicy<GAME extends Game<GAME>> implements SelectionPolicy<GAME>
 {
