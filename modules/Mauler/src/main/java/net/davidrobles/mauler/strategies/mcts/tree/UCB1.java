@@ -64,40 +64,60 @@ public class UCB1<GAME extends Game<GAME>> implements SelectionPolicy<GAME>
     @Override
     public int move(MCTSNode<GAME> node)
     {
-        int numMoves = node.getGame().getNumMoves();
+        int unvisited = randomUnvisited(node);
+        return unvisited != -1 ? unvisited : bestVisited(node);
+    }
 
-        // Randomly select among unvisited arms (the limit of UCB1 as N(s,a) -> 0 is +infinity).
-        // Reservoir sampling gives uniform random selection in a single O(k) pass.
-        int unvisitedMove  = -1;
-        int unvisitedCount = 0;
+    /**
+     * Returns a uniformly random unvisited arm, or -1 if all arms have been visited.
+     * Uses reservoir sampling for uniform selection in a single O(k) pass.
+     */
+    private int randomUnvisited(MCTSNode<GAME> node)
+    {
+        int selected = -1;
+        int count    = 0;
 
-        for (int move = 0; move < numMoves; move++)
+        for (int move = 0; move < node.getGame().getNumMoves(); move++)
         {
             if (node.getActionVisits(move) == 0)
             {
-                unvisitedCount++;
-                if (rng.nextInt(unvisitedCount) == 0)
-                    unvisitedMove = move;
+                count++;
+                if (rng.nextInt(count) == 0)
+                    selected = move;
             }
         }
 
-        if (unvisitedMove != -1)
-            return unvisitedMove;
+        return selected;
+    }
 
-        // All arms visited: apply UCB1.
-        // N (parent visits) equals node.getVisits() because each simulation that passes
-        // through this node visits exactly one child, keeping the counts in sync.
-        double parentVisits = node.getVisits();
-        int    bestMove     = 0;
-        double bestValue    = Double.NEGATIVE_INFINITY;
+    /**
+     * Returns the UCB1 score for {@code move} from the current node.
+     *
+     * @param logParentVisits precomputed ln(N) to avoid recomputing it per arm
+     */
+    private double ucb1Score(MCTSNode<GAME> node, int move, double logParentVisits)
+    {
+        // Negate: getActionValue returns Q from the child's (opponent's) perspective;
+        // the zero-sum property means the current player's value is its negation.
+        double exploitation = -node.getActionValue(move);
+        double exploration  = c * Math.sqrt(logParentVisits / node.getActionVisits(move));
+        return exploitation + exploration;
+    }
 
-        for (int move = 0; move < numMoves; move++)
+    /**
+     * Returns the arm with the highest UCB1 score. Assumes all arms have been visited at least once.
+     * N (parent visits) equals node.getVisits() because each simulation that passes
+     * through this node visits exactly one child, keeping the counts in sync.
+     */
+    private int bestVisited(MCTSNode<GAME> node)
+    {
+        int    bestMove        = 0;
+        double bestValue       = Double.NEGATIVE_INFINITY;
+        double logParentVisits = Math.log(node.getVisits());
+
+        for (int move = 0; move < node.getGame().getNumMoves(); move++)
         {
-            // Negate: getActionValue returns Q from the child's (opponent's) perspective;
-            // the zero-sum property means the current player's value is its negation.
-            double exploitation = -node.getActionValue(move);
-            double exploration  = c * Math.sqrt(Math.log(parentVisits) / node.getActionVisits(move));
-            double value        = exploitation + exploration;
+            double value = ucb1Score(node, move, logParentVisits);
 
             if (value > bestValue)
             {
