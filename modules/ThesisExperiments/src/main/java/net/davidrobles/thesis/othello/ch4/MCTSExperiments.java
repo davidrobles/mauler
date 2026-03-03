@@ -12,7 +12,7 @@ import net.davidrobles.util.DRPlot;
 import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
-import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
+import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
 import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
 import net.davidrobles.util.DRMarkdown;
 
@@ -31,7 +31,7 @@ public class MCTSExperiments
         int nSims = 5000;
 
         // Tree policies
-        TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
+        SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
         Strategy<Othello> defaultPolicy = new RandomStrategy<Othello>(rng);
@@ -58,7 +58,7 @@ public class MCTSExperiments
         int timeout = 302;
 
         // Tree policies
-        TreePolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
+        SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c, rng);
 
         // Default policies
         Strategy<Othello> defaultPolicy = new RandomStrategy<Othello>(rng);
@@ -207,7 +207,7 @@ public class MCTSExperiments
 
             // MCTS
             double c = 0.5;
-            TreePolicy<Othello> treePolicy = new UCB1<Othello>(c);
+            SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c);
             MCTS<Othello> mctsSims = new MCTS<Othello>(treePolicy, new RandomStrategy<Othello>(), nSims[run]);
 
             // Players evaluated

@@ -3,7 +3,7 @@ package net.davidrobles.mauler.strategies.mcts;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
-import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
+import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * <p>Each simulation consists of four phases:
  * <ol>
- *   <li><b>Selection</b> — walk the existing tree using the {@link TreePolicy}
+ *   <li><b>Selection</b> — walk the existing tree using the {@link SelectionPolicy}
  *       until an unexpanded node or terminal state is reached.</li>
  *   <li><b>Expansion</b> — expand the first unvisited node by creating its children.</li>
  *   <li><b>Simulation</b> — run a random rollout to a terminal state using the
@@ -35,35 +35,35 @@ import java.util.List;
 public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 {
     protected int nSims;
-    protected TreePolicy<GAME> treePolicy;
+    protected SelectionPolicy<GAME> selectionPolicy;
     protected Strategy<GAME> rolloutPolicy;
     private TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>(1.0, -1.0, 0.0);
 
     /**
      * Creates a time-based MCTS instance (use {@link #move(Game, int)}).
      *
-     * @param treePolicy   the selection/final-move policy
+     * @param selectionPolicy   the selection/final-move policy
      * @param rolloutPolicy the rollout (default) policy
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> rolloutPolicy)
+    public MCTS(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy)
     {
-        this(treePolicy, rolloutPolicy, 0);
+        this(selectionPolicy, rolloutPolicy, 0);
     }
 
     /**
      * Creates a simulation-count MCTS instance.
      *
-     * @param treePolicy   the selection/final-move policy
+     * @param selectionPolicy   the selection/final-move policy
      * @param rolloutPolicy the rollout (default) policy
      * @param nSims        number of simulations per move (must be non-negative)
      * @throws IllegalArgumentException if {@code nSims} is negative
      */
-    public MCTS(TreePolicy<GAME> treePolicy, Strategy<GAME> rolloutPolicy, int nSims)
+    public MCTS(SelectionPolicy<GAME> selectionPolicy, Strategy<GAME> rolloutPolicy, int nSims)
     {
         if (nSims < 0)
             throw new IllegalArgumentException("nSims must be non-negative, got: " + nSims);
 
-        this.treePolicy    = treePolicy;
+        this.selectionPolicy    = selectionPolicy;
         this.rolloutPolicy = rolloutPolicy;
         this.nSims         = nSims;
     }
@@ -80,7 +80,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     /** Returns a new MCTS with the same configuration, including the current utility function. */
     public MCTS<GAME> copy()
     {
-        MCTS<GAME> copy = new MCTS<>(treePolicy, rolloutPolicy, nSims);
+        MCTS<GAME> copy = new MCTS<>(selectionPolicy, rolloutPolicy, nSims);
         copy.utilFunc = this.utilFunc;
         return copy;
     }
@@ -117,7 +117,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
                 expand(node);
                 return path;
             }
-            node = node.getChild(treePolicy.move(node));
+            node = node.getChild(selectionPolicy.move(node));
         }
 
         path.add(node);     // terminal node
@@ -146,6 +146,29 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         while (!copy.isOver())
             copy.makeMove(rolloutPolicy.move(copy));
         return utilFunc.evaluate(copy, leafPlayer);
+    }
+
+    /**
+     * Final move selection: returns the most-visited child of {@code root}.
+     * Using visit count (robust child) rather than the selection policy avoids
+     * the exploration bonus influencing the actual move played.
+     */
+    private int mostVisitedChild(MCTSNode<GAME> root)
+    {
+        int bestMove  = 0;
+        int mostVisits = -1;
+
+        for (int move = 0; move < root.getGame().getNumMoves(); move++)
+        {
+            int childVisits = root.getActionVisits(move);
+            if (childVisits > mostVisits)
+            {
+                mostVisits = childVisits;
+                bestMove   = move;
+            }
+        }
+
+        return bestMove;
     }
 
     /**
@@ -183,7 +206,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         for (int i = 0; i < nSims; i++)
             simulate(root);
 
-        return treePolicy.move(root);
+        return mostVisitedChild(root);
     }
 
     /** Runs simulations within the time budget and returns the best move. */
@@ -196,7 +219,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         while (System.currentTimeMillis() < timeDue)
             simulate(root);
 
-        return treePolicy.move(root);
+        return mostVisitedChild(root);
     }
 
     // -------------------------------------------------------------------------
@@ -207,10 +230,10 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     public String toString()
     {
         if (nSims > 0)
-            return String.format("<MCTS treePolicy=%s rolloutPolicy=%s nSims=%d>",
-                    treePolicy, rolloutPolicy, nSims);
+            return String.format("<MCTS selectionPolicy=%s rolloutPolicy=%s nSims=%d>",
+                    selectionPolicy, rolloutPolicy, nSims);
         else
-            return String.format("<MCTS treePolicy=%s rolloutPolicy=%s>",
-                    treePolicy, rolloutPolicy);
+            return String.format("<MCTS selectionPolicy=%s rolloutPolicy=%s>",
+                    selectionPolicy, rolloutPolicy);
     }
 }

@@ -5,18 +5,18 @@ import net.davidrobles.mauler.strategies.mcts.MCTSNode;
 
 import java.util.Random;
 
-public class GreedyTreePolicy<GAME extends Game<GAME>> implements TreePolicy<GAME>
+public class GreedySelectionPolicy<GAME extends Game<GAME>> implements SelectionPolicy<GAME>
 {
     private Random rng;
 
-    public GreedyTreePolicy(Random rng)
+    public GreedySelectionPolicy(Random rng)
     {
         this.rng = rng;
     }
 
-    /////////////////
-    // Tree Policy //
-    /////////////////
+    //////////////////////
+    // SelectionPolicy  //
+    //////////////////////
 
     @Override
     public int move(MCTSNode<GAME> node)

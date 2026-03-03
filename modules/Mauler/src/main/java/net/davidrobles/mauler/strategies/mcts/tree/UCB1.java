@@ -5,7 +5,7 @@ import net.davidrobles.mauler.strategies.mcts.MCTSNode;
 
 import java.util.Random;
 
-public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
+public class UCB1<GAME extends Game<GAME>> implements SelectionPolicy<GAME>
 {
     private final double c;
     private final Random rng;
@@ -21,9 +21,9 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
         this(c, new Random());
     }
 
-    /////////////////
-    // Tree Policy //
-    /////////////////
+    //////////////////////
+    // SelectionPolicy  //
+    //////////////////////
 
     @Override
     public int move(MCTSNode<GAME> node)

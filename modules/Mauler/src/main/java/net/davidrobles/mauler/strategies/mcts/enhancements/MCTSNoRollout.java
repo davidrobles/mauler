@@ -4,19 +4,19 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.Evaluator;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.MCTSNode;
-import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
+import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
 
 public class MCTSNoRollout<GAME extends Game<GAME>> extends MCTS<GAME>
 {
     private Evaluator<GAME> evalFunc;
 
-    public MCTSNoRollout(TreePolicy<GAME> treePolicy, Evaluator<GAME> evalFunc)
+    public MCTSNoRollout(SelectionPolicy<GAME> treePolicy, Evaluator<GAME> evalFunc)
     {
         super(treePolicy, null);
         this.evalFunc = evalFunc;
     }
 
-    public MCTSNoRollout(TreePolicy<GAME> treePolicy, Evaluator<GAME> evalFunc, int nSims)
+    public MCTSNoRollout(SelectionPolicy<GAME> treePolicy, Evaluator<GAME> evalFunc, int nSims)
     {
         super(treePolicy, null, nSims);
         this.evalFunc = evalFunc;
