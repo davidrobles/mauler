@@ -5,7 +5,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,17 +96,17 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
      */
     public void simulate(MCTSNode<GAME> root)
     {
-        LinkedList<MCTSNode<GAME>> path = selectAndExpand(root);
-        backup(path, rollout(path.getLast()));
+        List<MCTSNode<GAME>> path = selectAndExpand(root);
+        backup(path, rollout(path.get(path.size() - 1)));
     }
 
     /**
      * Selection + expansion: walks the tree via the tree policy until an
      * unexpanded node or terminal state is reached, then expands it.
      */
-    private LinkedList<MCTSNode<GAME>> selectAndExpand(MCTSNode<GAME> root)
+    private List<MCTSNode<GAME>> selectAndExpand(MCTSNode<GAME> root)
     {
-        LinkedList<MCTSNode<GAME>> path = new LinkedList<>();
+        List<MCTSNode<GAME>> path = new ArrayList<>();
         MCTSNode<GAME> node = root;
 
         while (!node.getGame().isOver())
