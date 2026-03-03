@@ -1,6 +1,7 @@
-package net.davidrobles.mauler.tictactoe;
+package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.MatchController;
+import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;

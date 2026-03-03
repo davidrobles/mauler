@@ -1,7 +1,8 @@
-package net.davidrobles.mauler.tictactoe;
+package net.davidrobles.shogun.tictactoe;
 
 import net.davidrobles.mauler.core.MatchControllerObserver;
 import net.davidrobles.mauler.core.MoveObserver;
+import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import javax.swing.*;
 import java.awt.*;

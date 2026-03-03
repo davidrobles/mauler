@@ -8,8 +8,6 @@ import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;
 import net.davidrobles.mauler.gui.MatchControllerTableView;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
-import net.davidrobles.mauler.tictactoe.TicTacToeTableModel;
-import net.davidrobles.mauler.tictactoe.TicTacToeView;
 import net.davidrobles.util.DRUtil;
 
 import javax.swing.table.TableModel;
