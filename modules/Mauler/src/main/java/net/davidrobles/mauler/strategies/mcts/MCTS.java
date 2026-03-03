@@ -34,6 +34,9 @@ import java.util.List;
  */
 public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 {
+    /** Number of simulations between wall-clock checks in time-based search. Must be a power of 2. */
+    private static final int TIME_CHECK_INTERVAL = 128;
+
     protected int nSims;
     protected SelectionPolicy<GAME> selectionPolicy;
     protected Strategy<GAME> rolloutPolicy;
@@ -219,14 +222,21 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
         return mostVisitedChild(root);
     }
 
-    /** Runs simulations within the time budget and returns the best move. */
+    /**
+     * Runs simulations within the time budget and returns the best move.
+     *
+     * <p>Time is checked once every {@value #TIME_CHECK_INTERVAL} simulations rather than
+     * every simulation to avoid the overhead of frequent {@link System#currentTimeMillis()}
+     * calls, which matters for fast games where simulations run in microseconds.
+     */
     @Override
     public int move(GAME game, int timeout)
     {
         MCTSNode<GAME> root = new MCTSNode<>(game.copy());
         long timeDue = System.currentTimeMillis() + timeout;
+        int sims = 0;
 
-        while (System.currentTimeMillis() < timeDue)
+        while ((++sims & TIME_CHECK_INTERVAL - 1) != 0 || System.currentTimeMillis() < timeDue)
             simulate(root);
 
         return mostVisitedChild(root);
