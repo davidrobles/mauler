@@ -1,10 +1,9 @@
-package net.davidrobles.shogun.tictactoe;
+package net.davidrobles.mauler.experiments;
 
 import net.davidrobles.mauler.core.util.GamesUtil;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.UtilFunc;
-import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;
 import net.davidrobles.mauler.strategies.minimax.Negamax;
@@ -23,10 +22,6 @@ public class TTTRun
     static Random RNG = new Random();
     static TicTacToe tic = new TicTacToe();
     static UtilFunc<TicTacToe> utilFunc = new UtilFunc<TicTacToe>();
-
-    // MCTS
-//    static TreePolicy<TicTacToe> greedyTP = new GreedyPolicy<TicTacToe>(RNG);
-//    static TreePolicy<TicTacToe> uct = new UCTPolicy<TicTacToe>(C, RNG);
 
     // MixedPlayer
     static RandomStrategy<TicTacToe> randomPlayer = new RandomStrategy<TicTacToe>(RNG);
