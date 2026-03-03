@@ -51,6 +51,12 @@ public class UCB1<GAME extends Game<GAME>> implements SelectionPolicy<GAME>
         this(c, new Random());
     }
 
+    /** Creates a UCB1 policy using the theoretical exploration constant c = sqrt(2). */
+    public UCB1()
+    {
+        this(C_THEORETICAL);
+    }
+
     //////////////////////
     // SelectionPolicy  //
     //////////////////////
