@@ -1,3 +1,11 @@
+plugins {
+    application
+}
+
+application {
+    mainClass.set("net.davidrobles.mauler.experiments.TTTRun")
+}
+
 dependencies {
     implementation(project(":Mauler"))
     implementation(project(":TicTacToe"))
