@@ -11,9 +11,9 @@ import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.MCTSWithPrior;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTNoRollout;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
+import net.davidrobles.mauler.strategies.mcts.MCTSWithPrior;
+import net.davidrobles.mauler.strategies.mcts.UCTNoRollout;
+import net.davidrobles.mauler.strategies.mcts.UCTWithPrior;
 import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 import java.util.ArrayList;

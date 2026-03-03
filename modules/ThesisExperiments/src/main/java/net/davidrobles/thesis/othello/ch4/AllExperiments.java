@@ -8,7 +8,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
+import net.davidrobles.mauler.strategies.mcts.UCTWithPrior;
 
 import java.util.ArrayList;
 import java.util.List;

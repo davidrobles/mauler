@@ -8,7 +8,7 @@ import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTNoRollout;
+import net.davidrobles.mauler.strategies.mcts.UCTNoRollout;
 import net.davidrobles.mauler.strategies.mcts.MCTSRootParallel;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;

@@ -7,7 +7,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enhancements.UCTWithPrior;
+import net.davidrobles.mauler.strategies.mcts.UCTWithPrior;
 import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 import java.util.ArrayList;
