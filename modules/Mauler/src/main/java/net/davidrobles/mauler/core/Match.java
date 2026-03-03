@@ -2,35 +2,30 @@ package net.davidrobles.mauler.core;
 
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 /**
- * A single game between two players, returning the {@link GameResult} for each player.
+ * A single game between two strategies, returning the {@link GameResult} for each player.
  *
  * <p>Implements {@link Callable} so matches can be submitted to an {@link java.util.concurrent.ExecutorService}
  * for parallel tournament execution.
  *
- * <p>When both players are deterministic, a 10% random-move injection is applied to avoid
- * the same game being played every time (which would make multi-game series meaningless).
+ * <p>The {@code starter} parameter controls which strategy moves first: {@code 0} means
+ * {@code strategies.get(0)} starts, {@code 1} means {@code strategies.get(1)} starts. Outcomes
+ * are always returned from {@code strategies.get(0)}'s perspective regardless of who started.
  *
- * <p>The {@code starter} parameter controls which player moves first: {@code 0} means
- * {@code players.get(0)} starts, {@code 1} means {@code players.get(1)} starts. Outcomes
- * are always returned from {@code players.get(0)}'s perspective regardless of who started.
+ * <p>Each strategy receives a defensive copy of the game state so it cannot mutate
+ * the live game.
  *
  * @param <GAME> the game type
  */
 public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
 {
-    private static final double RANDOM_MOVE_PROBABILITY = 0.1;
-
     private final Supplier<GAME> gameFactory;
     private final List<Strategy<GAME>> players;
     private final int starter;
     private final int timeout;
-    private final boolean injectRandomMoves;
-    private final Random rnd = new Random();
 
     /**
      * Creates a match with a per-move time limit.
@@ -52,7 +47,6 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
         this.players = players;
         this.starter = starter;
         this.timeout = timeout;
-        this.injectRandomMoves = players.get(0).isDeterministic() && players.get(1).isDeterministic();
     }
 
     /**
@@ -71,7 +65,6 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
         this.players = players;
         this.starter = starter;
         this.timeout = -1;
-        this.injectRandomMoves = players.get(0).isDeterministic() && players.get(1).isDeterministic();
     }
 
     // -------------------------------------------------------------------------
@@ -96,12 +89,10 @@ public class Match<GAME extends Game<GAME>> implements Callable<GameResult[]>
 
     private int selectMove(GAME g)
     {
-        if (injectRandomMoves && rnd.nextDouble() < RANDOM_MOVE_PROBABILITY)
-            return rnd.nextInt(g.getNumMoves());
-
         int playerToMove = (g.getCurPlayer() + starter) % 2;
-        Strategy<GAME> player = players.get(playerToMove);
+        Strategy<GAME> strategy = players.get(playerToMove);
+        GAME copy = g.copy();
 
-        return timeout > 0 ? player.move(g, timeout) : player.move(g);
+        return timeout > 0 ? strategy.move(copy, timeout) : strategy.move(copy);
     }
 }
