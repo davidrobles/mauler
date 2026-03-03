@@ -4,7 +4,7 @@
 //import dr.mauler.core.players.RandomStrategy;
 //import GamesUtil;
 //import dr.mauler.othello.Othello;
-//import UtilFunc;
+//import TerminalEvaluator;
 //import GraphvizMCTSObserver;
 //import MCTS;
 //import UCB1;
@@ -34,7 +34,7 @@
 //            File file = new File(filename);
 //            GraphvizMCTSObserver obs = new GraphvizMCTSObserver(file);
 ////            mcts.addMctsObserver(obs);
-//            mcts.setUtilFunc(new UtilFunc<Othello>(1.0, 0.0, 0.5));
+//            mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, 0.0, 0.5));
 //            mcts.move(game);
 //
 ////            Runtime rt = Runtime.getRuntime();

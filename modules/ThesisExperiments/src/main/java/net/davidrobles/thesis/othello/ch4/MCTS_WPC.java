@@ -10,7 +10,7 @@ import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
 import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.GreedyStrategy;
-import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
@@ -36,7 +36,7 @@ public class MCTS_WPC
         TreePolicy<Othello> treePolicy = new UCB1<Othello>(c);
         RandomStrategy<Othello> randPlayer = new RandomStrategy<Othello>();
         MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, randPlayer, sims);
-        mcts.setUtilFunc(new UtilFunc<Othello>(1.0, 0.0, 0.5));
+        mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, 0.0, 0.5));
         players.add(mcts);
         playersNames.add("u=[1,0.0,0.5]");
 

@@ -4,7 +4,7 @@
 //import GameResult;
 //import dr.mauler.core.players.RandomStrategy;
 //import dr.mauler.othello.Othello;
-//import UtilFunc;
+//import TerminalEvaluator;
 //import MonteCarlo;
 //import MCTS;
 //import UCT;
@@ -95,8 +95,8 @@
 ////        double c = 0.2;
 ////        int nSims = 40000;
 ////        MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c, new Random()), new RandomStrategy<Othello>(), nSims);
-////        mcts.setUtilFunc(new UtilFunc<Othello>(1.0, 0.0, 0.5));
-//////        mcts.setUtilFunc(new UtilFunc<Othello>(1.0, -1.0, 0.0));
+////        mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, 0.0, 0.5));
+//////        mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, -1.0, 0.0));
 ////        mcts.move(othello);
 //
 //
@@ -132,7 +132,7 @@
 //
 ////        double[] outcomes = new double[othello.getNumMoves()];
 ////        Random rand = new Random();
-////        UtilFunc<Othello> utilFunc = new UtilFunc<Othello>();
+////        TerminalEvaluator<Othello> utilFunc = new TerminalEvaluator<Othello>();
 //
 //
 ////        for (int i = 0; i < 10000; i++)
@@ -183,7 +183,7 @@
 //    }
 //
 //    static <GAME extends Game<GAME>> boolean isWinForAlphaBeta(GAME game) {
-//        AlphaBeta<GAME> ab = new AlphaBeta<GAME>(new UtilFunc<GAME>());
+//        AlphaBeta<GAME> ab = new AlphaBeta<GAME>(new TerminalEvaluator<GAME>());
 //        game = game.copy();
 //        while (!game.isOver()) {
 //            game.makeMove(ab.move(game));
@@ -193,7 +193,7 @@
 //
 //    static <GAME extends Game<GAME>> boolean isWinForMC(GAME game) {
 //        MonteCarlo<GAME> mc = new MonteCarlo<GAME>(10000);
-//        AlphaBeta<GAME> ab = new AlphaBeta<GAME>(new UtilFunc<GAME>());
+//        AlphaBeta<GAME> ab = new AlphaBeta<GAME>(new TerminalEvaluator<GAME>());
 //        game = game.copy();
 //        while (!game.isOver()) {
 //            if (game.getCurPlayer() == 0)

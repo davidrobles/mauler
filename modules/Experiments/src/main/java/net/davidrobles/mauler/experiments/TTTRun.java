@@ -3,7 +3,7 @@ package net.davidrobles.mauler.experiments;
 import net.davidrobles.mauler.core.util.GamesUtil;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
-import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;
 import net.davidrobles.mauler.strategies.minimax.Negamax;
@@ -21,7 +21,7 @@ public class TTTRun
 
     static Random RNG = new Random();
     static TicTacToe tic = new TicTacToe();
-    static UtilFunc<TicTacToe> utilFunc = new UtilFunc<TicTacToe>();
+    static TerminalEvaluator<TicTacToe> utilFunc = new TerminalEvaluator<TicTacToe>();
 
     // MixedPlayer
     static RandomStrategy<TicTacToe> randomPlayer = new RandomStrategy<TicTacToe>(RNG);

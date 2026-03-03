@@ -5,7 +5,7 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.strategies.DRPlot;
-import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
@@ -103,7 +103,7 @@ public class MCvsMCTS
 
         // Default policies
         Strategy<Othello> defaultPolicy = new RandomStrategy<Othello>(rng);
-        UtilFunc<Othello> utilFunc = new UtilFunc<Othello>();
+        TerminalEvaluator<Othello> utilFunc = new TerminalEvaluator<Othello>();
         String[] rowNames = { "MC", "MCTS" };
 
         int interval = (end - start) / steps;

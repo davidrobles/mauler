@@ -2,7 +2,7 @@ package net.davidrobles.mauler.strategies.mcts;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mcts.tree.TreePolicy;
 
 import java.util.LinkedList;
@@ -37,7 +37,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     protected int nSims;
     protected TreePolicy<GAME> treePolicy;
     protected Strategy<GAME> defPolicy;
-    private UtilFunc<GAME> utilFunc = new UtilFunc<>(1.0, -1.0, 0.0);
+    private TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>(1.0, -1.0, 0.0);
 
     /**
      * Creates a time-based MCTS instance (use {@link #move(Game, int)}).
@@ -72,7 +72,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
      * Replaces the utility function used to score terminal rollout positions.
      * The default is the standard minimax convention: win=+1, draw=0, loss=-1.
      */
-    public void setUtilFunc(UtilFunc<GAME> utilFunc)
+    public void setUtilFunc(TerminalEvaluator<GAME> utilFunc)
     {
         this.utilFunc = utilFunc;
     }

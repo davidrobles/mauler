@@ -2,7 +2,7 @@ package net.davidrobles.mauler.strategies.mc;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.UtilFunc;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.util.DRUtil;
 
 import java.util.Random;
@@ -11,7 +11,7 @@ import java.util.Random;
  * Flat (one-ply) Monte Carlo player.
  *
  * <p>For each legal move, a number of random rollouts are run to completion
- * and scored with a {@link UtilFunc}. The move with the highest cumulative
+ * and scored with a {@link TerminalEvaluator}. The move with the highest cumulative
  * score is returned.
  *
  * <p>Two operational modes are supported:
@@ -27,7 +27,7 @@ import java.util.Random;
  */
 public class MonteCarlo<GAME extends Game<GAME>> implements Strategy<GAME>
 {
-    protected final UtilFunc<GAME> utilFunc = new UtilFunc<>();
+    protected final TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>();
     protected final Random rand;
     private final int nSims;
 

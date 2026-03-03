@@ -24,7 +24,7 @@ Each game has a corresponding `*Play` module that adds a Swing GUI for interacti
 
 **Monte Carlo family** (`players/mc/`, `players/mcts/`): `MonteCarlo`, `MCTS` (UCT), `UCT`, `ParTimedMC` (parallel), `AMAF`, `MCTSPrior`, `MCTSNoRollout`, `MCTSRootP` (root parallelization)
 
-**Other**: `RandPlayer`, `GreedyPlayer`, `EpsilonGreedy`, `UtilFunc` (evaluation function wrapper)
+**Other**: `RandPlayer`, `GreedyPlayer`, `EpsilonGreedy`, `TerminalEvaluator` (evaluation function wrapper)
 
 ## Architecture
 

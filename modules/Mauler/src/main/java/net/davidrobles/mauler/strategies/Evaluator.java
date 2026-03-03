@@ -13,17 +13,17 @@ import net.davidrobles.mauler.core.Game;
  * The exact range is implementation-defined:
  * <ul>
  *   <li>Terminal utility: {@code +1} win, {@code 0} draw, {@code -1} loss
- *       (see {@link UtilFunc})</li>
+ *       (see {@link TerminalEvaluator})</li>
  *   <li>Heuristic: any real-valued score where larger means more favorable</li>
  * </ul>
  *
  * <p><b>Terminal vs. non-terminal:</b> implementations must document which
- * game states they accept. {@link UtilFunc} only handles terminal states and
+ * game states they accept. {@link TerminalEvaluator} only handles terminal states and
  * throws on non-terminal input; heuristic functions typically handle both.
  *
  * @param <GAME> the game type
  *
- * @see UtilFunc
+ * @see TerminalEvaluator
  * @see GreedyStrategy
  */
 @FunctionalInterface
