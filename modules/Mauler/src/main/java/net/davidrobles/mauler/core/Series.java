@@ -12,11 +12,11 @@ import java.util.concurrent.Future;
 import java.util.function.Supplier;
 
 /**
- * Runs a series of {@link Match}es between two players and aggregates the results.
+ * Runs a series of {@link Match}es between two strategies and aggregates the results.
  *
  * <p>Matches are executed in parallel using a thread pool sized to the number of
  * available processors. The starter alternates every game (game 0: player 0 starts,
- * game 1: player 1 starts, etc.) to give both players equal first-move advantage.
+ * game 1: player 1 starts, etc.) to give both strategies equal first-move advantage.
  *
  * <p>All statistics ({@link #getWins}, {@link #getDraws}, etc.) are only available
  * after {@link #run()} has completed.
@@ -28,7 +28,7 @@ public class Series<GAME extends Game<GAME>>
     private final Supplier<GAME> gameFactory;
     private final String gameName;
     private final int nGames;
-    private final List<Strategy<GAME>> players;
+    private final List<Strategy<GAME>> strategies;
     private final int timeout;
     private final GameResult[] outcomes;
     private boolean finished = false;
@@ -39,12 +39,12 @@ public class Series<GAME extends Game<GAME>>
      *
      * @param gameFactory supplier that produces a fresh game instance for each match
      * @param nGames      number of matches to run
-     * @param players     the two players
-     * @throws IllegalArgumentException if the number of players doesn't match the game
+     * @param strategies     the two strategies
+     * @throws IllegalArgumentException if the number of strategies doesn't match the game
      */
-    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> strategies)
     {
-        this(gameFactory, nGames, players, -1);
+        this(gameFactory, nGames, strategies, -1);
     }
 
     /**
@@ -52,22 +52,22 @@ public class Series<GAME extends Game<GAME>>
      *
      * @param gameFactory supplier that produces a fresh game instance for each match
      * @param nGames      number of matches to run
-     * @param players     the two players
+     * @param strategies     the two strategies
      * @param timeout     per-move time limit in milliseconds (must be positive)
-     * @throws IllegalArgumentException if the number of players doesn't match the game, or timeout is not positive
+     * @throws IllegalArgumentException if the number of strategies doesn't match the game, or timeout is not positive
      */
-    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> players, int timeout)
+    public Series(Supplier<GAME> gameFactory, int nGames, List<Strategy<GAME>> strategies, int timeout)
     {
         GAME prototype = gameFactory.get();
-        if (prototype.getNumPlayers() != players.size())
-            throw new IllegalArgumentException("Game requires " + prototype.getNumPlayers() + " players, got " + players.size());
+        if (prototype.getNumPlayers() != strategies.size())
+            throw new IllegalArgumentException("Game requires " + prototype.getNumPlayers() + " strategies, got " + strategies.size());
         if (timeout != -1 && timeout <= 0)
             throw new IllegalArgumentException("timeout must be positive, got: " + timeout);
 
         this.gameFactory = gameFactory;
         this.gameName = prototype.getName();
         this.nGames = nGames;
-        this.players = players;
+        this.strategies = strategies;
         this.timeout = timeout;
         this.outcomes = new GameResult[nGames];
     }
@@ -101,8 +101,8 @@ public class Series<GAME extends Game<GAME>>
         {
             int starter = i % 2;
             matches.add(timeout > 0
-                    ? new Match<>(gameFactory, players, starter, timeout)
-                    : new Match<>(gameFactory, players, starter));
+                    ? new Match<>(gameFactory, strategies, starter, timeout)
+                    : new Match<>(gameFactory, strategies, starter));
         }
 
         try
@@ -134,9 +134,9 @@ public class Series<GAME extends Game<GAME>>
     // Statistics
     // -------------------------------------------------------------------------
 
-    public List<Strategy<GAME>> getPlayers()
+    public List<Strategy<GAME>> getStrategies()
     {
-        return players;
+        return strategies;
     }
 
     public GameResult[] getOutcomes()
@@ -216,8 +216,8 @@ public class Series<GAME extends Game<GAME>>
         Console.header("Series — " + gameName);
         System.out.println("  " + Console.dim("Processors  ") + nProcessors);
         System.out.println("  " + Console.dim("Matches     ") + String.format("%,d", nGames));
-        System.out.println("  " + Console.dim("Player 1    ") + players.get(0));
-        System.out.println("  " + Console.dim("Player 2    ") + players.get(1));
+        System.out.println("  " + Console.dim("Player 1    ") + strategies.get(0));
+        System.out.println("  " + Console.dim("Player 2    ") + strategies.get(1));
         if (timeout > 0)
             System.out.println("  " + Console.dim("Timeout     ") + timeout + " ms");
         System.out.println();
@@ -242,8 +242,8 @@ public class Series<GAME extends Game<GAME>>
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%14s: %s%n",   "Game",       gameName));
         sb.append(String.format("%14s: %,d%n",  "Matches",    nGames));
-        sb.append(String.format("%14s: %s%n",   "Player 1",   players.get(0)));
-        sb.append(String.format("%14s: %s%n",   "Player 2",   players.get(1)));
+        sb.append(String.format("%14s: %s%n",   "Player 1",   strategies.get(0)));
+        sb.append(String.format("%14s: %s%n",   "Player 2",   strategies.get(1)));
         if (timeout > 0)
             sb.append(String.format("%14s: %d ms%n", "Timeout", timeout));
         if (finished) {

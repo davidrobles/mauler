@@ -291,7 +291,7 @@ public class RoundRobin<GAME extends Game<GAME>>
 
     private void recordResults(Series<GAME> s)
     {
-        List<Strategy<GAME>> pair = s.getPlayers();
+        List<Strategy<GAME>> pair = s.getStrategies();
         int p1 = players.indexOf(pair.get(0));
         int p2 = players.indexOf(pair.get(1));
 
