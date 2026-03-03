@@ -13,6 +13,7 @@ import net.davidrobles.mauler.strategies.mcts.MCTSRootP;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;
 import net.davidrobles.mauler.strategies.minimax.Negamax;
+import net.davidrobles.mauler.strategies.minimax.PVS;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class TTTRun
     static final Strategy<TicTacToe> minimax   = new Minimax<TicTacToe>(terminalEval);
     static final Strategy<TicTacToe> negamax   = new Negamax<TicTacToe>(terminalEval);
     static final Strategy<TicTacToe> alphaBeta = new AlphaBeta<TicTacToe>(terminalEval);
+    static final Strategy<TicTacToe> pvs       = new PVS<TicTacToe>(terminalEval);
 
     // -------------------------------------------------------------------------
     // Monte Carlo — flat, simulation-count
@@ -80,7 +82,7 @@ public class TTTRun
 
     public static void main(String[] args)
     {
-        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(alphaBeta, random));
+        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(random, pvs));
         series.run();
     }
 }
