@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.Evaluator;
-import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 /**
  * An Upper Confidence Bounds for Trees algorithm with prior knowledge

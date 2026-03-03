@@ -13,8 +13,8 @@ import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
-import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
+import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,8 +8,8 @@ import net.davidrobles.util.DRPlot;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
-import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
-import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
+import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 import net.davidrobles.util.DRMarkdown;
 
 import java.util.ArrayList;

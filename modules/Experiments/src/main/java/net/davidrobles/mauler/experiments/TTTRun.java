@@ -82,7 +82,7 @@ public class TTTRun
 
     public static void main(String[] args)
     {
-        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(random, uct10000));
+        Series<TicTacToe> series = new Series<>(TicTacToe::new, 1000, List.of(uct10000, random));
         series.run();
     }
 }

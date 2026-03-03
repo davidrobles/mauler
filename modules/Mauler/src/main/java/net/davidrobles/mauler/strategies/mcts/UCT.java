@@ -3,7 +3,7 @@ package net.davidrobles.mauler.strategies.mcts;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
-import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 /**
  * Upper Confidence Bounds for Trees (UCT).

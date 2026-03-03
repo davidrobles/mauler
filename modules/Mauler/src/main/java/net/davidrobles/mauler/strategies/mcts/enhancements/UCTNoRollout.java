@@ -2,7 +2,7 @@ package net.davidrobles.mauler.strategies.mcts.enhancements;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.Evaluator;
-import net.davidrobles.mauler.strategies.mcts.tree.UCB1;
+import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
 /**
  * An Upper Confidence Bounds for Trees algorithm that replaces

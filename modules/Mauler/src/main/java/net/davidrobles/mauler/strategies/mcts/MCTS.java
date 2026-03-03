@@ -3,7 +3,7 @@ package net.davidrobles.mauler.strategies.mcts;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
-import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
+import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
 
 import java.util.LinkedList;
 import java.util.List;

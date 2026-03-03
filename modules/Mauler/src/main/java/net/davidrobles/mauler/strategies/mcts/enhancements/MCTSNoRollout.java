@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.Evaluator;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.MCTSNode;
-import net.davidrobles.mauler.strategies.mcts.tree.SelectionPolicy;
+import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
 
 public class MCTSNoRollout<GAME extends Game<GAME>> extends MCTS<GAME>
 {

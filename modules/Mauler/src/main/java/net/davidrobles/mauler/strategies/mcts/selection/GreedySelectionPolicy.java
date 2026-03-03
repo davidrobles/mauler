@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.strategies.mcts.tree;
+package net.davidrobles.mauler.strategies.mcts.selection;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.mcts.MCTSNode;
