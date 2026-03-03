@@ -1,49 +1,40 @@
-//package dr.shogun.tictactoe;
-//
-//import MatchController;
-//import dr.mauler.core.players.Strategy;
-//import dr.mauler.core.players.RandomStrategy;
-//import BoardApp;
-//import MatchControllerButtonsView;
-//import MatchControllerSliderView;
-//import MatchControllerTableView;
-//import TicTacToe;
-//import TicTacToeTableModel;
-//import TicTacToeView;
-//
-//import javax.swing.table.TableModel;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Random;
-//
-//public class TicGUI
-//{
-//    private static final Random rng = new Random();
-//
-//    public static void runTest()
-//    {
-//        TicTacToe tic = new TicTacToe();
-//        List<Strategy<TicTacToe>> players = new ArrayList<Strategy<TicTacToe>>()
-//        {{
-//            add(new RandomStrategy<TicTacToe>(rng));
-//            add(new RandomStrategy<TicTacToe>(rng));
-//        }};
-//
-//        TicTacToeView panel = new TicTacToeView(tic);
-//        MatchController<TicTacToe> mc = new MatchController<TicTacToe>(tic, players, 50);
-//        MatchControllerButtonsView<TicTacToe> buttonsView = new MatchControllerButtonsView<TicTacToe>(mc);
-//        MatchControllerSliderView<TicTacToe> sliderView = new MatchControllerSliderView<TicTacToe>(mc);
-//        TableModel model = new TicTacToeTableModel(mc);
-//        MatchControllerTableView<TicTacToe> mcTableView = new MatchControllerTableView<TicTacToe>(model, mc);
-//        mc.registerObserver(mcTableView);
-//        mc.registerObserver(buttonsView);
-//        mc.registerObserver(sliderView);
-//        mc.registerObserver(panel);
-//        new BoardApp<TicTacToe>(panel, mc, buttonsView, sliderView, mcTableView);
-//    }
-//
-//    public static void main(String[] args)
-//    {
-//        runTest();
-//    }
-//}
+package net.davidrobles.shogun.tictactoe;
+
+import net.davidrobles.mauler.core.MatchController;
+import net.davidrobles.mauler.core.Strategy;
+import net.davidrobles.mauler.strategies.RandomStrategy;
+import net.davidrobles.mauler.gui.BoardApp;
+import net.davidrobles.mauler.gui.MatchControllerButtonsView;
+import net.davidrobles.mauler.gui.MatchControllerSliderView;
+import net.davidrobles.mauler.gui.MatchControllerTableView;
+import net.davidrobles.mauler.tictactoe.TicTacToe;
+import net.davidrobles.mauler.tictactoe.TicTacToeTableModel;
+import net.davidrobles.mauler.tictactoe.TicTacToeView;
+import net.davidrobles.util.DRUtil;
+
+import javax.swing.table.TableModel;
+import java.util.List;
+
+public class TicGUI
+{
+    public static void main(String[] args)
+    {
+        List<Strategy<TicTacToe>> players = List.of(
+                new RandomStrategy<>(),
+                new RandomStrategy<>()
+        );
+
+        TicTacToeView panel = new TicTacToeView(new TicTacToe());
+        MatchController<TicTacToe> mc = new MatchController<>(TicTacToe::new, players, 50);
+        MatchControllerButtonsView<TicTacToe> buttonsView = new MatchControllerButtonsView<>(mc);
+        MatchControllerSliderView<TicTacToe> sliderView = new MatchControllerSliderView<>(mc);
+        TableModel model = new TicTacToeTableModel(mc);
+        MatchControllerTableView<TicTacToe> mcTableView = new MatchControllerTableView<>(model, mc);
+        mc.registerObserver(mcTableView);
+        mc.registerObserver(buttonsView);
+        mc.registerObserver(sliderView);
+        mc.registerObserver(panel);
+        BoardApp<TicTacToe> boardApp = new BoardApp<>(panel, mc, buttonsView, sliderView, mcTableView);
+        DRUtil.centerJFrame(boardApp);
+    }
+}
