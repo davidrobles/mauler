@@ -10,8 +10,8 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.strategies.DRPlot;
-import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.util.DRPlot;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

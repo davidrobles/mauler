@@ -9,7 +9,7 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTuple;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 
 import java.util.*;
 import java.util.concurrent.Callable;

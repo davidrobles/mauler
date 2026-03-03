@@ -6,7 +6,7 @@ import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
 import net.davidrobles.mauler.othello.ef.EvaluatorFitness;
-import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCType;
 

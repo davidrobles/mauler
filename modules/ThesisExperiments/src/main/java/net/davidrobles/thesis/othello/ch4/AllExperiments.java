@@ -5,10 +5,10 @@ import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.strategies.GreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enh.UCTPrior;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTPrior;
 
 import java.util.ArrayList;
 import java.util.List;

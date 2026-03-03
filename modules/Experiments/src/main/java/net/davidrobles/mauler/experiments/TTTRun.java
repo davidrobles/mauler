@@ -2,14 +2,14 @@ package net.davidrobles.mauler.experiments;
 
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.strategies.GreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.enh.UCTNoRollout;
-import net.davidrobles.mauler.strategies.mcts.parallel.MCTSRootP;
+import net.davidrobles.mauler.strategies.mcts.enhancements.UCTNoRollout;
+import net.davidrobles.mauler.strategies.mcts.MCTSRootP;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.mauler.strategies.minimax.Minimax;
 import net.davidrobles.mauler.strategies.minimax.Negamax;

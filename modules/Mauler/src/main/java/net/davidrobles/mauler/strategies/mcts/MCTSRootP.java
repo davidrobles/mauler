@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.strategies.mcts.parallel;
+package net.davidrobles.mauler.strategies.mcts;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.Strategy;

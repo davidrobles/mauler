@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.strategies.mcts.enh;
+package net.davidrobles.mauler.strategies.mcts.enhancements;
 
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.Evaluator;

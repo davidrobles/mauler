@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.strategies.DRPlot;
+import net.davidrobles.util.DRPlot;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.MCTS;

@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.strategies;
+package net.davidrobles.util;
 
 public class DRPlot
 {

@@ -12,8 +12,8 @@ import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCType;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
-import net.davidrobles.mauler.strategies.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.strategies.GreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
+import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

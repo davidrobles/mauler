@@ -4,7 +4,7 @@ import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.strategies.mcts.UCT;
-import net.davidrobles.mauler.strategies.mcts.parallel.MCTSRootP;
+import net.davidrobles.mauler.strategies.mcts.MCTSRootP;
 
 import java.util.ArrayList;
 import java.util.List;

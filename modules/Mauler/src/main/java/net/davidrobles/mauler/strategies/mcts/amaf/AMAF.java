@@ -1,4 +1,4 @@
-package net.davidrobles.mauler.strategies;
+package net.davidrobles.mauler.strategies.mcts.amaf;
 
 import net.davidrobles.mauler.core.IncrementalGame;
 import net.davidrobles.mauler.core.Strategy;
