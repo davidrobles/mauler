@@ -19,11 +19,10 @@ public class GreedyTreePolicy<GAME extends Game<GAME>> implements TreePolicy<GAM
     /////////////////
 
     @Override
-    public int move(MCTSNode<GAME> node, int player)
+    public int move(MCTSNode<GAME> node)
     {
         int bestMove = -1;
-        boolean max = node.getGame().getCurPlayer() == player;
-        double bestValue = max ? Integer.MIN_VALUE : Double.MAX_VALUE;
+        double bestValue = Double.NEGATIVE_INFINITY;
 
         for (int move = 0; move < node.getGame().getNumMoves(); move++)
         {
@@ -33,18 +32,16 @@ public class GreedyTreePolicy<GAME extends Game<GAME>> implements TreePolicy<GAM
             if (node.getActionVisits(move) == 0)
             {
                 int bias = rng.nextInt(1000) + 10;
-                value = max ? (100000000 - bias) : (-100000000 + bias);
-            } else {
-                value = max ? node.getActionValue(move) : -node.getActionValue(move);
+                value = 100000000 - bias;
+            }
+            else
+            {
+                value = node.getActionValue(move);
             }
 
-            if (max) { // max
-                if (value > bestValue) {
-                    bestMove = move;
-                    bestValue = value;
-                }
-            } else if (value < bestValue) { // min
-                bestMove = move;
+            if (value > bestValue)
+            {
+                bestMove  = move;
                 bestValue = value;
             }
         }

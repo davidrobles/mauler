@@ -12,7 +12,7 @@ import java.util.List;
  * simulations that pass through it: visit count N(s) and mean action-value
  * Q(s,a) from the perspective of the current player at that state.
  *
- * <p>Children are created lazily via {@link #init()}, which expands one level
+ * <p>Children are created lazily via {@link #expand()}, which expands one level
  * of successors for the stored game state.
  */
 public class MCTSNode<GAME extends Game<GAME>>

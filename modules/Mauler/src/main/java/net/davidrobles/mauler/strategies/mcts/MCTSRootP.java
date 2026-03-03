@@ -90,14 +90,13 @@ public class MCTSRootP<GAME extends Game<GAME>> implements Strategy<GAME>
         public MCTSNode<GAME> call() throws Exception
         {
             long timeDue = System.currentTimeMillis() + timeout;
-            int curPlayer = game.getCurPlayer();
 //            MCTS<GAME> simMcts = mcts.copy();
             MCTS<GAME> simMcts = new UCT<GAME>(0.5);
             MCTSNode<GAME> mctsNode = new MCTSNode<GAME>(game.copy());
             int count = 0;
 
             while (System.currentTimeMillis() < timeDue) {
-                simMcts.simulate(mctsNode, curPlayer);
+                simMcts.simulate(mctsNode);
 //                if (count++ % 50 == 0)
 //                    System.out.println("count: " + count);
             }

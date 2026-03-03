@@ -92,20 +92,19 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     /**
      * Runs one full simulation: selection → expansion → rollout → backpropagation.
      *
-     * @param root   the root node of the search tree
-     * @param player the player whose win/loss perspective to back up
+     * @param root the root node of the search tree
      */
-    public void simulate(MCTSNode<GAME> root, int player)
+    public void simulate(MCTSNode<GAME> root)
     {
-        LinkedList<MCTSNode<GAME>> path = selectAndExpand(root, player);
-        backup(path, rollout(path.getLast(), player));
+        LinkedList<MCTSNode<GAME>> path = selectAndExpand(root);
+        backup(path, rollout(path.getLast()));
     }
 
     /**
      * Selection + expansion: walks the tree via the tree policy until an
      * unexpanded node or terminal state is reached, then expands it.
      */
-    private LinkedList<MCTSNode<GAME>> selectAndExpand(MCTSNode<GAME> root, int player)
+    private LinkedList<MCTSNode<GAME>> selectAndExpand(MCTSNode<GAME> root)
     {
         LinkedList<MCTSNode<GAME>> path = new LinkedList<>();
         MCTSNode<GAME> node = root;
@@ -115,10 +114,10 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
             path.add(node);
             if (node.getVisits() == 0)
             {
-                expand(node, player);
+                expand(node);
                 return path;
             }
-            node = node.getChild(treePolicy.move(node, player));
+            node = node.getChild(treePolicy.move(node));
         }
 
         path.add(node);     // terminal node
@@ -129,29 +128,39 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
      * Expansion: creates child nodes for all legal moves from {@code node}.
      * Subclasses may override to attach prior knowledge or other metadata.
      */
-    protected void expand(MCTSNode<GAME> node, int player)
+    protected void expand(MCTSNode<GAME> node)
     {
         node.expand();
     }
 
     /**
      * Simulation (default policy): plays moves uniformly at random on a copy
-     * of the node's game until a terminal state is reached, then scores it.
+     * of the node's game until a terminal state is reached, then scores it
+     * from the perspective of the player to move at {@code node}.
      * A copy is used so the node's game state is not modified.
      */
-    protected double rollout(MCTSNode<GAME> node, int player)
+    protected double rollout(MCTSNode<GAME> node)
     {
+        int leafPlayer = node.getGame().getCurPlayer();
         GAME copy = node.getGame().copy();
         while (!copy.isOver())
             copy.makeMove(rolloutPolicy.move(copy));
-        return utilFunc.evaluate(copy, player);
+        return utilFunc.evaluate(copy, leafPlayer);
     }
 
-    /** Backpropagation: propagates {@code outcome} to every node on the path. */
+    /**
+     * Backpropagation: walks the path from leaf to root, negating the value at
+     * each step so that every node stores the outcome from its own current
+     * player's perspective.
+     */
     private void backup(List<MCTSNode<GAME>> path, double outcome)
     {
-        for (MCTSNode<GAME> node : path)
-            node.update(outcome);
+        double value = outcome;
+        for (int i = path.size() - 1; i >= 0; i--)
+        {
+            path.get(i).update(value);
+            value = -value;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -170,12 +179,11 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     public int move(GAME game)
     {
         MCTSNode<GAME> root = new MCTSNode<>(game);
-        int player = game.getCurPlayer();
 
         for (int i = 0; i < nSims; i++)
-            simulate(root, player);
+            simulate(root);
 
-        return treePolicy.move(root, player);
+        return treePolicy.move(root);
     }
 
     /** Runs simulations within the time budget and returns the best move. */
@@ -183,13 +191,12 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     public int move(GAME game, int timeout)
     {
         MCTSNode<GAME> root = new MCTSNode<>(game.copy());
-        int player = game.getCurPlayer();
         long timeDue = System.currentTimeMillis() + timeout;
 
         while (System.currentTimeMillis() < timeDue)
-            simulate(root, player);
+            simulate(root);
 
-        return treePolicy.move(root, player);
+        return treePolicy.move(root);
     }
 
     // -------------------------------------------------------------------------

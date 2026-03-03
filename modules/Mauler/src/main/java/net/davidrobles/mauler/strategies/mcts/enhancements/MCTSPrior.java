@@ -28,10 +28,10 @@ public class MCTSPrior<GAME extends Game<GAME>> extends MCTS<GAME>
     }
 
     @Override
-    protected void expand(MCTSNode<GAME> node, int player)
+    protected void expand(MCTSNode<GAME> node)
     {
         node.expand();
-        node.setValue(priorEF.evaluate(node.getGame(), player));
+        node.setValue(priorEF.evaluate(node.getGame(), node.getGame().getCurPlayer()));
         node.setVisits(initQVisits);
     }
 

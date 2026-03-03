@@ -27,9 +27,9 @@ public class MCTSNoRollout<GAME extends Game<GAME>> extends MCTS<GAME>
     //////////////////
 
     @Override
-    protected double rollout(MCTSNode<GAME> node, int player)
+    protected double rollout(MCTSNode<GAME> node)
     {
-        return evalFunc.evaluate(node.getGame(), player);
+        return evalFunc.evaluate(node.getGame(), node.getGame().getCurPlayer());
     }
 
     ////////////

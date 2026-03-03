@@ -26,11 +26,10 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
     /////////////////
 
     @Override
-    public int move(MCTSNode<GAME> node, int player)
+    public int move(MCTSNode<GAME> node)
     {
         int bestMove = -1;
-        boolean max = node.getGame().getCurPlayer() == player;
-        double bestValue = max ? -Double.MAX_VALUE : Double.MAX_VALUE;
+        double bestValue = Double.NEGATIVE_INFINITY;
         double parentVisits = 0;
 
         for (int move = 0; move < node.getGame().getNumMoves(); move++)
@@ -38,31 +37,24 @@ public class UCB1<GAME extends Game<GAME>> implements TreePolicy<GAME>
 
         for (int move = 0; move < node.getGame().getNumMoves(); move++)
         {
-            double value = 0;
+            double value;
 
             // ensures that each arm is selected once before further exploration
             if (node.getActionVisits(move) == 0)
             {
                 int bias = rng.nextInt(1000) + 10;
-                value = max ? (100000000 - bias) : (-100000000 + bias);
+                value = 100000000 - bias;
             }
             else
             {
                 double exploitation = node.getActionValue(move);
-                double exploration = c * Math.sqrt(Math.log(parentVisits) / (double) node.getActionVisits(move));
-                value += exploitation;
-                value += max ? exploration : -exploration;
+                double exploration  = c * Math.sqrt(Math.log(parentVisits) / (double) node.getActionVisits(move));
+                value = exploitation + exploration;
             }
 
-            if (max)
+            if (value > bestValue)
             {
-                if (value > bestValue) {
-                    bestMove = move;
-                    bestValue = value;
-                }
-            }
-            else if (value < bestValue) { // min
-                bestMove = move;
+                bestMove  = move;
                 bestValue = value;
             }
         }
