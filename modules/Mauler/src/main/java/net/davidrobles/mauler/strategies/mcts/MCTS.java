@@ -211,7 +211,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
                     "This MCTS instance was configured for time-based search (nSims=0). " +
                     "Use move(game, timeoutMs) instead.");
 
-        MCTSNode<GAME> root = new MCTSNode<>(game);
+        MCTSNode<GAME> root = new MCTSNode<>(game.copy());
 
         for (int i = 0; i < nSims; i++)
             simulate(root);
