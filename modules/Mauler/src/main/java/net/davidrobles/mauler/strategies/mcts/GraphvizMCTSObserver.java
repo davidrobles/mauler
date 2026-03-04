@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Writes the MCTS search tree to a Graphviz DOT file after each search.
@@ -29,10 +30,27 @@ import java.util.Map;
 public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserver<GAME>
 {
     private final File file;
+    private final Function<MCTSNode<GAME>, String> labelFn;
 
+    /**
+     * Creates an observer that labels each node with its visit count and mean value.
+     */
     public GraphvizMCTSObserver(File file)
     {
-        this.file = file;
+        this(file, node -> String.format("v=%d\\nq=%.3f", node.getVisits(), node.getValue()));
+    }
+
+    /**
+     * Creates an observer with a custom label function.
+     *
+     * <p>The function receives the {@link MCTSNode} and must return either a
+     * plain string (output as {@code "..."}) or an HTML label
+     * (starts with {@code <}, output as {@code <...>}).
+     */
+    public GraphvizMCTSObserver(File file, Function<MCTSNode<GAME>, String> labelFn)
+    {
+        this.file    = file;
+        this.labelFn = labelFn;
     }
 
     @Override
@@ -44,8 +62,7 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
 
         Map<GAME, Integer> seen = new HashMap<>();
         seen.put(root.getGame(), 0);
-        sb.append(String.format("    0 [label=\"v=%d\\nq=%.3f\"];\n",
-                root.getVisits(), root.getValue()));
+        appendNodeDef(sb, 0, root);
         writeChildren(root, 0, sb, seen);
 
         sb.append("}\n");
@@ -58,6 +75,16 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
         {
             throw new RuntimeException("Cannot write Graphviz output to " + file, e);
         }
+    }
+
+    /** Appends the DOT node definition, using plain or HTML label as appropriate. */
+    private void appendNodeDef(StringBuilder sb, int id, MCTSNode<GAME> node)
+    {
+        String label = labelFn.apply(node);
+        if (label.startsWith("<"))
+            sb.append(String.format("    %d [label=%s];\n", id, label));
+        else
+            sb.append(String.format("    %d [label=\"%s\"];\n", id, label));
     }
 
     /**
@@ -77,8 +104,7 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
             {
                 int childId = seen.size();
                 seen.put(child.getGame(), childId);
-                sb.append(String.format("    %d [label=\"v=%d\\nq=%.3f\"];\n",
-                        childId, child.getVisits(), child.getValue()));
+                appendNodeDef(sb, childId, child);
             }
             int childId = seen.get(child.getGame());
             sb.append(String.format("    %d -> %d;\n", nodeId, childId));
