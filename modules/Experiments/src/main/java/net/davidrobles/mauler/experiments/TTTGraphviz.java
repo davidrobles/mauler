@@ -36,7 +36,7 @@ public class TTTGraphviz
         // Build the near-terminal position: makeMove(0) advances through cells
         // 0-5 in order since each call picks the lowest-indexed empty cell.
         TicTacToe game = new TicTacToe();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
             game.makeMove(0);   // fills cells 0-5 alternating X/O
 
         System.out.println(game);
