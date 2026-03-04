@@ -5,6 +5,8 @@ import net.davidrobles.mauler.core.Game;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Writes the MCTS search tree to a Graphviz DOT file after each search.
@@ -15,6 +17,12 @@ import java.io.PrintWriter;
  * <pre>
  *   dot -Tpdf tree.dot -o tree.pdf
  * </pre>
+ *
+ * <p><b>Transposition handling:</b> multiple MCTS tree nodes that represent the
+ * same game state (equal under {@link Object#equals}) are collapsed into a single
+ * DOT node. Statistics shown are from the first-encountered tree node for that
+ * state. Games that do not override {@code equals()} will fall back to identity
+ * comparison and no deduplication will occur.
  *
  * @param <GAME> the game type
  */
@@ -33,7 +41,13 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
         StringBuilder sb = new StringBuilder();
         sb.append("digraph MCTS {\n");
         sb.append("    node [shape=box fontname=Helvetica];\n");
-        writeSubtree(root, sb);
+
+        Map<GAME, Integer> seen = new HashMap<>();
+        seen.put(root.getGame(), 0);
+        sb.append(String.format("    0 [label=\"v=%d\\nq=%.3f\"];\n",
+                root.getVisits(), root.getValue()));
+        writeChildren(root, 0, sb, seen);
+
         sb.append("}\n");
 
         try (PrintWriter writer = new PrintWriter(file))
@@ -47,22 +61,29 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
     }
 
     /**
-     * Recursively writes DOT nodes and edges for {@code node} and all visited
-     * descendants.
+     * Recursively writes edges (and node definitions on first encounter) for
+     * all visited children of {@code node}. Each unique game state gets exactly
+     * one DOT node regardless of how many MCTS tree nodes share that state.
      */
-    private void writeSubtree(MCTSNode<GAME> node, StringBuilder sb)
+    private void writeChildren(MCTSNode<GAME> node, int nodeId, StringBuilder sb, Map<GAME, Integer> seen)
     {
-        int id = System.identityHashCode(node);
-        sb.append(String.format("    %d [label=\"v=%d\\nq=%.3f\"];\n",
-                id, node.getVisits(), node.getValue()));
-
         for (MCTSNode<GAME> child : node.getChildren())
         {
-            if (child.getVisits() > 0)
+            if (child.getVisits() == 0)
+                continue;
+
+            boolean firstVisit = !seen.containsKey(child.getGame());
+            if (firstVisit)
             {
-                sb.append(String.format("    %d -> %d;\n", id, System.identityHashCode(child)));
-                writeSubtree(child, sb);
+                int childId = seen.size();
+                seen.put(child.getGame(), childId);
+                sb.append(String.format("    %d [label=\"v=%d\\nq=%.3f\"];\n",
+                        childId, child.getVisits(), child.getValue()));
             }
+            int childId = seen.get(child.getGame());
+            sb.append(String.format("    %d -> %d;\n", nodeId, childId));
+            if (firstVisit)
+                writeChildren(child, childId, sb, seen);
         }
     }
 }
