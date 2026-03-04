@@ -7,8 +7,20 @@ import net.davidrobles.mauler.tictactoe.TicTacToe;
 import java.io.File;
 
 /**
- * Plays a single TicTacToe move with UCT (10 000 simulations) and writes the
- * resulting search tree to {@code tree.dot} in the current working directory.
+ * Runs UCT (1 000 simulations) from a near-terminal TicTacToe position and
+ * writes the resulting search tree to {@code tree.dot} in the current working
+ * directory.
+ *
+ * <p>The starting position has the first two rows filled and row 2 empty:
+ * <pre>
+ *   X | O | X
+ *  ---+---+---
+ *   O | X | O
+ *  ---+---+---
+ *   _ | _ | _    ← X to move
+ * </pre>
+ * X has two immediate wins (diagonal 0-4-8 via cell 8, anti-diagonal 2-4-6
+ * via cell 6). UCT should discover both and prefer one of them.
  *
  * <p>Render the output with any Graphviz layout engine, e.g.:
  * <pre>
@@ -19,13 +31,19 @@ public class TTTGraphviz
 {
     public static void main(String[] args)
     {
-        UCT<TicTacToe> uct = new UCT<TicTacToe>(Math.sqrt(2), 10_000);
+        // Build the near-terminal position: makeMove(0) advances through cells
+        // 0-5 in order since each call picks the lowest-indexed empty cell.
+        TicTacToe game = new TicTacToe();
+        for (int i = 0; i < 6; i++)
+            game.makeMove(0);   // fills cells 0-5 alternating X/O
+
+        System.out.println(game);
+
+        UCT<TicTacToe> uct = new UCT<TicTacToe>(Math.sqrt(2), 1_000);
         uct.addObserver(new GraphvizMCTSObserver<>(new File("tree.dot")));
 
-        TicTacToe game = new TicTacToe();
         int move = uct.move(game);
-
-        System.out.printf("UCT chose move %d on the initial TicTacToe position.%n", move);
+        System.out.printf("UCT chose move index %d (cell %d).%n", move, move == 0 ? 6 : move == 1 ? 7 : 8);
         System.out.println("Search tree written to tree.dot");
     }
 }
