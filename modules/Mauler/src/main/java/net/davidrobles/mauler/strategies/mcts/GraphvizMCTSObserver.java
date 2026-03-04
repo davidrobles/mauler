@@ -58,7 +58,13 @@ public class GraphvizMCTSObserver<GAME extends Game<GAME>> implements MCTSObserv
     {
         StringBuilder sb = new StringBuilder();
         sb.append("digraph MCTS {\n");
-        sb.append("    node [shape=box fontname=Helvetica];\n");
+
+        // HTML labels manage their own visual shape; plain labels need a box.
+        String rootLabel = labelFn.apply(root);
+        if (rootLabel.startsWith("<"))
+            sb.append("    node [shape=none margin=0];\n");
+        else
+            sb.append("    node [shape=box fontname=Helvetica];\n");
 
         Map<GAME, Integer> seen = new HashMap<>();
         seen.put(root.getGame(), 0);

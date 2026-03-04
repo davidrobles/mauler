@@ -6,7 +6,6 @@ import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 
 import java.io.File;
-import java.util.function.Function;
 
 /**
  * Runs UCT (1 000 simulations) from a near-terminal TicTacToe position and
@@ -49,26 +48,54 @@ public class TTTGraphviz
         System.out.println("Search tree written to tree.dot");
     }
 
-    /** HTML label showing the board as a 3×3 table plus visit/value stats. */
+    /**
+     * Styled HTML label: 3×3 board with colored cells and a dark stats footer.
+     *
+     * <ul>
+     *   <li>X — deep red on rose background</li>
+     *   <li>O — deep blue on sky background</li>
+     *   <li>Empty — off-white</li>
+     *   <li>Warm gray grout shows through the cell gaps</li>
+     * </ul>
+     */
     private static String tttLabel(MCTSNode<TicTacToe> node)
     {
         TicTacToe g = node.getGame();
-        StringBuilder html = new StringBuilder("<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">");
+        StringBuilder html = new StringBuilder();
+
+        // Warm gray background bleeds through CELLSPACING gaps, acting as grout
+        html.append("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"3\" CELLPADDING=\"10\" BGCOLOR=\"#BDB5AC\">");
+
         for (int row = 0; row < TicTacToe.SIZE; row++)
         {
             html.append("<TR>");
             for (int col = 0; col < TicTacToe.SIZE; col++)
             {
                 TicTacToe.Cell cell = g.getCell(row, col);
-                String symbol;
-                if (cell == TicTacToe.Cell.CROSS)        symbol = "X";
-                else if (cell == TicTacToe.Cell.NOUGHT)  symbol = "O";
-                else                                      symbol = ".";
-                html.append("<TD WIDTH=\"20\">").append(symbol).append("</TD>");
+                if (cell == TicTacToe.Cell.CROSS)
+                    html.append("<TD BGCOLOR=\"#FDECEA\">")
+                        .append("<FONT FACE=\"Helvetica\" COLOR=\"#C0392B\" POINT-SIZE=\"22\"><B>X</B></FONT>")
+                        .append("</TD>");
+                else if (cell == TicTacToe.Cell.NOUGHT)
+                    html.append("<TD BGCOLOR=\"#EAF4FB\">")
+                        .append("<FONT FACE=\"Helvetica\" COLOR=\"#1A5276\" POINT-SIZE=\"22\"><B>O</B></FONT>")
+                        .append("</TD>");
+                else
+                    html.append("<TD BGCOLOR=\"#FAF9F7\">")
+                        .append("<FONT POINT-SIZE=\"22\"> </FONT>")
+                        .append("</TD>");
             }
             html.append("</TR>");
         }
-        html.append(String.format("<TR><TD COLSPAN=\"3\">v=%d q=%.3f</TD></TR>", node.getVisits(), node.getValue()));
+
+        // Stats footer: dark charcoal bar spanning all three columns
+        html.append("<TR>")
+            .append(String.format(
+                "<TD COLSPAN=\"3\" BGCOLOR=\"#2C3E50\" CELLPADDING=\"4\">" +
+                "<FONT FACE=\"Helvetica\" COLOR=\"#BDC3C7\" POINT-SIZE=\"9\">v = %d   q = %.3f</FONT></TD>",
+                node.getVisits(), node.getValue()))
+            .append("</TR>");
+
         html.append("</TABLE>>");
         return html.toString();
     }
