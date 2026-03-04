@@ -40,8 +40,12 @@ public class TTTGraphviz
 
         System.out.println(game);
 
+        // Capture the root player so q is always shown from their perspective.
+        int rootPlayer = game.getCurPlayer();
+
         UCT<TicTacToe> uct = new UCT<TicTacToe>(Math.sqrt(2), 1_000);
-        uct.addObserver(new GraphvizMCTSObserver<>(new File("tree.dot"), TTTGraphviz::tttLabel));
+        uct.addObserver(new GraphvizMCTSObserver<>(new File("tree.dot"),
+                node -> tttLabel(node, rootPlayer)));
 
         int move = uct.move(game);
         System.out.printf("UCT chose move index %d (cell %d).%n", move, move == 0 ? 6 : move == 1 ? 7 : 8);
@@ -58,6 +62,11 @@ public class TTTGraphviz
     /**
      * Styled HTML label: 3×3 board with colored cells and a dark stats footer.
      *
+     * <p>{@code q} is always shown from {@code rootPlayer}'s perspective: positive
+     * means good for the root player regardless of whose turn it is at this node.
+     * This avoids the confusing sign flip that the raw negamax value produces at
+     * every level of the tree.
+     *
      * <ul>
      *   <li>X — deep red on rose background; winning cells: white X on full red</li>
      *   <li>O — deep blue on sky background; winning cells: white O on full blue</li>
@@ -65,9 +74,14 @@ public class TTTGraphviz
      *   <li>Warm gray grout shows through the cell gaps</li>
      * </ul>
      */
-    private static String tttLabel(MCTSNode<TicTacToe> node)
+    private static String tttLabel(MCTSNode<TicTacToe> node, int rootPlayer)
     {
         TicTacToe g = node.getGame();
+
+        // q is stored in negamax style (from the to-move player's perspective).
+        // Negate it at nodes where the opponent is to move so the sign is always
+        // relative to rootPlayer: positive = good for rootPlayer.
+        double q = g.getCurPlayer() == rootPlayer ? node.getValue() : -node.getValue();
 
         // Identify which cells belong to a winning line (empty array = no winner)
         boolean[] winCell = new boolean[TicTacToe.CELLS];
@@ -128,8 +142,8 @@ public class TTTGraphviz
         html.append("<TR>")
             .append(String.format(
                 "<TD COLSPAN=\"3\" BGCOLOR=\"#2C3E50\" CELLPADDING=\"4\">" +
-                "<FONT FACE=\"Helvetica\" COLOR=\"#BDC3C7\" POINT-SIZE=\"9\">v = %d   q = %.3f</FONT></TD>",
-                node.getVisits(), node.getValue()))
+                "<FONT FACE=\"Helvetica\" COLOR=\"#BDC3C7\" POINT-SIZE=\"9\">v = %d   q = %+.3f</FONT></TD>",
+                node.getVisits(), q))
             .append("</TR>");
 
         html.append("</TABLE>>");
