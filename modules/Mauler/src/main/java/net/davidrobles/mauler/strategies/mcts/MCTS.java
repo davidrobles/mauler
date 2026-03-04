@@ -30,6 +30,12 @@ import java.util.List;
  *       use {@link #move(Game, int)} with a millisecond budget.</li>
  * </ul>
  *
+ * <p><b>Tree reuse:</b> after each move the subtree rooted at the chosen action is
+ * retained. On the next call the search tries to find the opponent's reply among
+ * that subtree's children (using {@link Object#equals} on the game state) and
+ * continues from there, carrying over all accumulated statistics. Games that do
+ * not implement {@code equals()} correctly will always start from a fresh tree.
+ *
  * @param <GAME> the game type
  */
 public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
@@ -41,6 +47,13 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     protected SelectionPolicy<GAME> selectionPolicy;
     protected Strategy<GAME> rolloutPolicy;
     private TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>(1.0, -1.0, 0.0);
+
+    /**
+     * Subtree rooted at the move we played last turn. On the next call to
+     * {@code move()}, we search its children for the state the opponent moved
+     * to, and reuse that grandchild as the new root if found.
+     */
+    private MCTSNode<GAME> persistentRoot = null;
 
     /**
      * Creates a time-based MCTS instance (use {@link #move(Game, int)}).
@@ -201,7 +214,39 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     }
 
     /**
+     * Attempts to reuse the subtree from the previous search.
+     *
+     * <p>After we played our last move, {@code persistentRoot} holds the child
+     * node for that move. The opponent has since replied with some move. We scan
+     * {@code persistentRoot}'s children for one whose game state equals the
+     * current input — that grandchild represents the position after both moves
+     * and carries the statistics accumulated during the previous search.
+     *
+     * <p>Falls back to a fresh root when:
+     * <ul>
+     *   <li>this is the first call ({@code persistentRoot == null})</li>
+     *   <li>{@code persistentRoot} was never visited/expanded during the last search</li>
+     *   <li>the game's {@code equals()} is not implemented (new game detected)</li>
+     * </ul>
+     */
+    private MCTSNode<GAME> findOrCreateRoot(GAME game)
+    {
+        if (persistentRoot != null)
+        {
+            for (MCTSNode<GAME> candidate : persistentRoot.getChildren())
+            {
+                if (candidate.getGame().equals(game))
+                    return candidate;
+            }
+        }
+        return new MCTSNode<>(game.copy());
+    }
+
+    /**
      * Runs {@code nSims} simulations from the current position and returns the best move.
+     *
+     * <p>Reuses the subtree from the previous search when possible; see
+     * {@link #findOrCreateRoot(Game)}.
      *
      * @throws IllegalStateException if this instance was configured for time-based search
      *         ({@code nSims=0}); use {@link #move(Game, int)} instead
@@ -214,16 +259,21 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
                     "This MCTS instance was configured for time-based search (nSims=0). " +
                     "Use move(game, timeoutMs) instead.");
 
-        MCTSNode<GAME> root = new MCTSNode<>(game.copy());
+        MCTSNode<GAME> root = findOrCreateRoot(game);
 
         for (int i = 0; i < nSims; i++)
             simulate(root);
 
-        return mostVisitedChild(root);
+        int bestMove = mostVisitedChild(root);
+        persistentRoot = root.getChild(bestMove);
+        return bestMove;
     }
 
     /**
      * Runs simulations within the time budget and returns the best move.
+     *
+     * <p>Reuses the subtree from the previous search when possible; see
+     * {@link #findOrCreateRoot(Game)}.
      *
      * <p>Time is checked once every {@value #TIME_CHECK_INTERVAL} simulations rather than
      * every simulation to avoid the overhead of frequent {@link System#currentTimeMillis()}
@@ -232,14 +282,16 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     @Override
     public int move(GAME game, int timeout)
     {
-        MCTSNode<GAME> root = new MCTSNode<>(game.copy());
+        MCTSNode<GAME> root = findOrCreateRoot(game);
         long timeDue = System.currentTimeMillis() + timeout;
         int sims = 0;
 
         while ((++sims & TIME_CHECK_INTERVAL - 1) != 0 || System.currentTimeMillis() < timeDue)
             simulate(root);
 
-        return mostVisitedChild(root);
+        int bestMove = mostVisitedChild(root);
+        persistentRoot = root.getChild(bestMove);
+        return bestMove;
     }
 
     // -------------------------------------------------------------------------
