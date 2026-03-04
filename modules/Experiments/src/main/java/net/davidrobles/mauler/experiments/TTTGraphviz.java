@@ -48,12 +48,19 @@ public class TTTGraphviz
         System.out.println("Search tree written to tree.dot");
     }
 
+    // All 8 winning lines as cell-index triples
+    private static final int[][] LINES = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8},   // rows
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8},   // columns
+        {0, 4, 8}, {2, 4, 6}               // diagonals
+    };
+
     /**
      * Styled HTML label: 3×3 board with colored cells and a dark stats footer.
      *
      * <ul>
-     *   <li>X — deep red on rose background</li>
-     *   <li>O — deep blue on sky background</li>
+     *   <li>X — deep red on rose background; winning cells: white X on full red</li>
+     *   <li>O — deep blue on sky background; winning cells: white O on full blue</li>
      *   <li>Empty — off-white</li>
      *   <li>Warm gray grout shows through the cell gaps</li>
      * </ul>
@@ -61,8 +68,24 @@ public class TTTGraphviz
     private static String tttLabel(MCTSNode<TicTacToe> node)
     {
         TicTacToe g = node.getGame();
-        StringBuilder html = new StringBuilder();
 
+        // Identify which cells belong to a winning line (empty array = no winner)
+        boolean[] winCell = new boolean[TicTacToe.CELLS];
+        if (g.isOver())
+        {
+            for (int[] line : LINES)
+            {
+                TicTacToe.Cell first = g.getCell(line[0]);
+                if (first != TicTacToe.Cell.EMPTY
+                        && g.getCell(line[1]) == first
+                        && g.getCell(line[2]) == first)
+                {
+                    winCell[line[0]] = winCell[line[1]] = winCell[line[2]] = true;
+                }
+            }
+        }
+
+        StringBuilder html = new StringBuilder();
         // Warm gray background bleeds through CELLSPACING gaps, acting as grout
         html.append("<<TABLE BORDER=\"0\" CELLBORDER=\"0\" CELLSPACING=\"3\" CELLPADDING=\"10\" BGCOLOR=\"#BDB5AC\">");
 
@@ -71,19 +94,32 @@ public class TTTGraphviz
             html.append("<TR>");
             for (int col = 0; col < TicTacToe.SIZE; col++)
             {
+                int idx = row * TicTacToe.SIZE + col;
                 TicTacToe.Cell cell = g.getCell(row, col);
+                boolean win = winCell[idx];
+
                 if (cell == TicTacToe.Cell.CROSS)
-                    html.append("<TD BGCOLOR=\"#FDECEA\">")
-                        .append("<FONT FACE=\"Helvetica\" COLOR=\"#C0392B\" POINT-SIZE=\"22\"><B>X</B></FONT>")
+                {
+                    String bg = win ? "#C0392B" : "#FDECEA";
+                    String fg = win ? "white"   : "#C0392B";
+                    html.append(String.format("<TD BGCOLOR=\"%s\">", bg))
+                        .append(String.format("<FONT FACE=\"Helvetica\" COLOR=\"%s\" POINT-SIZE=\"22\"><B>X</B></FONT>", fg))
                         .append("</TD>");
+                }
                 else if (cell == TicTacToe.Cell.NOUGHT)
-                    html.append("<TD BGCOLOR=\"#EAF4FB\">")
-                        .append("<FONT FACE=\"Helvetica\" COLOR=\"#1A5276\" POINT-SIZE=\"22\"><B>O</B></FONT>")
+                {
+                    String bg = win ? "#1A5276" : "#EAF4FB";
+                    String fg = win ? "white"   : "#1A5276";
+                    html.append(String.format("<TD BGCOLOR=\"%s\">", bg))
+                        .append(String.format("<FONT FACE=\"Helvetica\" COLOR=\"%s\" POINT-SIZE=\"22\"><B>O</B></FONT>", fg))
                         .append("</TD>");
+                }
                 else
+                {
                     html.append("<TD BGCOLOR=\"#FAF9F7\">")
                         .append("<FONT POINT-SIZE=\"22\"> </FONT>")
                         .append("</TD>");
+                }
             }
             html.append("</TR>");
         }
