@@ -7,6 +7,7 @@ import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Monte Carlo Tree Search (MCTS).
@@ -47,6 +48,8 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     protected SelectionPolicy<GAME> selectionPolicy;
     protected Strategy<GAME> rolloutPolicy;
     private TerminalEvaluator<GAME> utilFunc = new TerminalEvaluator<>(1.0, -1.0, 0.0);
+
+    private final List<MCTSObserver<GAME>> observers = new CopyOnWriteArrayList<>();
 
     /**
      * Subtree rooted at the move we played last turn. On the next call to
@@ -91,6 +94,18 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
     public void setUtilFunc(TerminalEvaluator<GAME> utilFunc)
     {
         this.utilFunc = utilFunc;
+    }
+
+    /** Registers an observer to be notified after each search completes. */
+    public void addObserver(MCTSObserver<GAME> observer)
+    {
+        observers.add(observer);
+    }
+
+    private void notifyObservers(MCTSNode<GAME> root)
+    {
+        for (MCTSObserver<GAME> observer : observers)
+            observer.searchFinished(root);
     }
 
     /** Returns a new MCTS with the same configuration, including the current utility function. */
@@ -266,6 +281,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 
         int bestMove = mostVisitedChild(root);
         persistentRoot = root.getChild(bestMove);
+        notifyObservers(root);
         return bestMove;
     }
 
@@ -291,6 +307,7 @@ public class MCTS<GAME extends Game<GAME>> implements Strategy<GAME>
 
         int bestMove = mostVisitedChild(root);
         persistentRoot = root.getChild(bestMove);
+        notifyObservers(root);
         return bestMove;
     }
 
