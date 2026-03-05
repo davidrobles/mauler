@@ -8,10 +8,8 @@ import java.util.Set;
  *
  * @author David Robles
  */
-public class MDPUtil
-{
-    public static <S, A> Set<S> getNextStates(MDP<S, A> mdp, S state)
-    {
+public class MDPUtil {
+    public static <S, A> Set<S> getNextStates(MDP<S, A> mdp, S state) {
         Set<S> nextStates = new HashSet<S>();
 
         for (A action : mdp.getActions(state))

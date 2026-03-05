@@ -1,27 +1,26 @@
 package net.davidrobles.mauler.havannah;
 
-import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.GameResult;
-
 import java.util.*;
+import net.davidrobles.mauler.core.GameResult;
+import net.davidrobles.mauler.core.ObservableGame;
 
-public class Havannah extends ObservableGame<Havannah>
-{
+public class Havannah extends ObservableGame<Havannah> {
     private int ply, size;
     private CellWrapper[] cells;
     public static final char BLACK_STONE = '\u25C9', WHITE_STONE = '\u25CE';
     private static Random rnd = new Random();
+
     @SuppressWarnings("unchecked")
     private Map<Set<Integer>, Short>[] connectionsMap = (Map<Set<Integer>, Short>[]) new HashMap[2];
+
     private int[][] adjs;
     private short[] bits;
     private HCell[][] board;
     private GameResult[] wins;
 
-    private Havannah() {  }
+    private Havannah() {}
 
-    public Havannah(int size)
-    {
+    public Havannah(int size) {
         this.size = size;
         HavannahUtil.initHavannah(size);
         cells = HavannahUtil.getCells(size);
@@ -32,49 +31,39 @@ public class Havannah extends ObservableGame<Havannah>
         wins = HavannahUtil.getWins(size);
     }
 
-    public int getBoardLength()
-    {
+    public int getBoardLength() {
         return size * 2 - 1;
     }
 
-    private void initConnectionsSets()
-    {
+    private void initConnectionsSets() {
         connectionsMap[0] = new HashMap<Set<Integer>, Short>();
         connectionsMap[1] = new HashMap<Set<Integer>, Short>();
     }
 
-    public int getSize()
-    {
+    public int getSize() {
         return size;
     }
 
-    private void randomizeBoard()
-    {
-        for (int i = 0; i < cells.length; i++)
-            cells[i].type = Cell.values()[rnd.nextInt(3)];
+    private void randomizeBoard() {
+        for (int i = 0; i < cells.length; i++) cells[i].type = Cell.values()[rnd.nextInt(3)];
     }
-   
-    private int emptyCells()
-    {
+
+    private int emptyCells() {
         return legalMoves().size();
     }
 
-    private List<Integer> legalMoves()
-    {
+    private List<Integer> legalMoves() {
         List<Integer> moves = new ArrayList<Integer>();
 
-        for (int i = 0; i < cells.length; i++)
-            if (cells[i].type == Cell.EMPTY)
-                moves.add(i);
+        for (int i = 0; i < cells.length; i++) if (cells[i].type == Cell.EMPTY) moves.add(i);
 
         return moves;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Current player: " + getCurPlayer() +  "\n");
+        builder.append("Current player: " + getCurPlayer() + "\n");
         builder.append("Black sets: " + connectionsMap[0].size() + "\n");
 
         for (Set<Integer> sets : connectionsMap[0].keySet())
@@ -99,22 +88,16 @@ public class Havannah extends ObservableGame<Havannah>
 
         builder.append("\n");
 
-        for (int row = 0; row < board.length; row++)
-        {
+        for (int row = 0; row < board.length; row++) {
             builder.append((char) ('a' + row) + " ");
 
-            for (int col = 0; col < board[row].length; col++)
-            {
+            for (int col = 0; col < board[row].length; col++) {
                 CellWrapper cell = cells[board[row][col].index];
 
-                if (board[row][col].type == Cell.ILLEGAL)
-                    builder.append("   ");
-                else if (cell.type == Cell.BLACK)
-                    builder.append(" " + BLACK_STONE + " ");
-                else if (cell.type == Cell.WHITE)
-                    builder.append(" " + WHITE_STONE + " ");
-                else if (cell.type == Cell.EMPTY)
-                    builder.append(" - ");
+                if (board[row][col].type == Cell.ILLEGAL) builder.append("   ");
+                else if (cell.type == Cell.BLACK) builder.append(" " + BLACK_STONE + " ");
+                else if (cell.type == Cell.WHITE) builder.append(" " + WHITE_STONE + " ");
+                else if (cell.type == Cell.EMPTY) builder.append(" - ");
             }
 
             builder.append("\n");
@@ -123,8 +106,7 @@ public class Havannah extends ObservableGame<Havannah>
         return builder.toString();
     }
 
-    public int getOppPlayer()
-    {
+    public int getOppPlayer() {
         return ply % 2 == 0 ? 1 : 0;
     }
 
@@ -133,8 +115,7 @@ public class Havannah extends ObservableGame<Havannah>
     ////////////////////
 
     @Override
-    public Havannah copy()
-    {
+    public Havannah copy() {
         Havannah newHavannah = new Havannah(size);
         newHavannah.ply = ply;
         newHavannah.size = size;
@@ -143,14 +124,12 @@ public class Havannah extends ObservableGame<Havannah>
         newHavannah.bits = bits;
         newHavannah.wins = wins;
         newHavannah.cells = new CellWrapper[cells.length];
-        for (int i = 0; i < cells.length; i++)
-            newHavannah.cells[i] = cells[i].copy();
+        for (int i = 0; i < cells.length; i++) newHavannah.cells[i] = cells[i].copy();
         for (int i = 0; i < connectionsMap.length; i++) {
             newHavannah.connectionsMap[i] = new HashMap<Set<Integer>, Short>();
             for (Map.Entry<Set<Integer>, Short> entry : connectionsMap[i].entrySet()) {
                 Set<Integer> newSet = new HashSet<Integer>(entry.getKey().size());
-                for (Integer integer : entry.getKey())
-                    newSet.add(integer);
+                for (Integer integer : entry.getKey()) newSet.add(integer);
                 newHavannah.connectionsMap[i].put(newSet, entry.getValue());
             }
         }
@@ -158,83 +137,67 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public int getCurPlayer()
-    {
+    public int getCurPlayer() {
         return ply % 2 == 0 ? 0 : 1;
     }
 
     @Override
-    public List<String> getMoves()
-    {
+    public List<String> getMoves() {
         List<String> moveStr = new ArrayList<>();
 
-        for (int i = 0; i < getNumMoves(); i++)
-            moveStr.add("testing");
+        for (int i = 0; i < getNumMoves(); i++) moveStr.add("testing");
 
         return List.copyOf(moveStr);
     }
 
     @Override
-    public int getNumMoves()
-    {
+    public int getNumMoves() {
         return emptyCells();
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Havannah";
     }
 
     @Override
-    public int getNumPlayers()
-    {
+    public int getNumPlayers() {
         return 2;
     }
 
     @Override
-    public Optional<GameResult[]> getOutcome()
-    {
+    public Optional<GameResult[]> getOutcome() {
         return Optional.empty(); // TODO: implement outcome detection
     }
 
     @Override
-    public boolean isOver()
-    {
-        if (checkWin())
-            return true;
+    public boolean isOver() {
+        if (checkWin()) return true;
 
         return emptyCells() == 0;
     }
 
-    private void setCell(int cellIndex, Cell type)
-    {
+    private void setCell(int cellIndex, Cell type) {
         cells[cellIndex].type = type;
     }
 
-    public boolean checkWin()
-    {
+    public boolean checkWin() {
         for (Map.Entry<Set<Integer>, Short> entry : connectionsMap[getOppPlayer()].entrySet())
-            if (wins[entry.getValue()] == GameResult.WIN)
-                return true;
+            if (wins[entry.getValue()] == GameResult.WIN) return true;
 
         return false;
     }
 
-    public static void printBitsets(short s)
-    {
+    public static void printBitsets(short s) {
         for (int i = 0; i < 12; i++)
-            if (((1 << i) & s) != 0)
-                System.out.print(1);
-            else
-                System.out.print(0);
+            if (((1 << i) & s) != 0) System.out.print(1);
+            else System.out.print(0);
 
         System.out.println();
     }
-    
+
     @Override
-    public void makeMove(int moveIndex)
-    {
+    public void makeMove(int moveIndex) {
         int cellIndex = legalMoves().get(moveIndex); // TODO: check that move is legal
         setCell(cellIndex, Cell.values()[getCurPlayer()]); // TODO: temp fix
         Set<Integer> singletonSet = new HashSet<Integer>();
@@ -242,14 +205,13 @@ public class Havannah extends ObservableGame<Havannah>
         short value = bits[cellIndex];
         int[][] adjs = HavannahUtil.getAdjacencies(size);
 
-        for (int adj : adjs[cellIndex])
-        {
-            for (Iterator<Map.Entry<Set<Integer>,Short>> iterator = connectionsMap[getCurPlayer()].entrySet().iterator(); iterator.hasNext(); )
-            {
+        for (int adj : adjs[cellIndex]) {
+            for (Iterator<Map.Entry<Set<Integer>, Short>> iterator =
+                            connectionsMap[getCurPlayer()].entrySet().iterator();
+                    iterator.hasNext(); ) {
                 Map.Entry<Set<Integer>, Short> integerSet = iterator.next();
 
-                if (integerSet.getKey().contains(adj))
-                {
+                if (integerSet.getKey().contains(adj)) {
                     singletonSet.addAll(integerSet.getKey());
                     value |= integerSet.getValue();
                     iterator.remove();
@@ -262,38 +224,32 @@ public class Havannah extends ObservableGame<Havannah>
     }
 
     @Override
-    public void reset()
-    {
+    public void reset() {
         ply = 0;
         initConnectionsSets();
         cells = HavannahUtil.getCells(size);
     }
 
-    public static int numCells(int sideSize)
-    {
+    public static int numCells(int sideSize) {
         return 3 * sideSize * sideSize - 3 * sideSize + 1;
     }
 
-    public Cell getCell(int row, int col)
-    {
+    public Cell getCell(int row, int col) {
         HCell[][] board = HavannahUtil.getBoard(size);
-        
-        if (board[row][col].type == Cell.ILLEGAL)
-            return Cell.ILLEGAL;
-        
+
+        if (board[row][col].type == Cell.ILLEGAL) return Cell.ILLEGAL;
+
         return cells[board[row][col].index].type;
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Havannah havannah = new Havannah(4);
         System.out.println(havannah);
 
-//        while (!havannah.isOver())
-//        {
-//            havannah.makeMove(rnd.nextInt(havannah.getNumMoves()));
-//            System.out.println(havannah);
-//        }
+        //        while (!havannah.isOver())
+        //        {
+        //            havannah.makeMove(rnd.nextInt(havannah.getNumMoves()));
+        //            System.out.println(havannah);
+        //        }
     }
 }
-

@@ -1,15 +1,13 @@
 package net.davidrobles.rl.algorithms;
 
+import java.util.*;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.RLEnv;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
-import java.util.*;
-
-public class FirstVisit<S, A> implements Learner
-{
+public class FirstVisit<S, A> implements Learner {
     // Lists all the states visited in the current episode
     private LinkedHashSet<S> visitedStates = new LinkedHashSet<S>();
 
@@ -29,8 +27,7 @@ public class FirstVisit<S, A> implements Learner
     private TabularVFunction<S> vFunction;
     private RLPolicy<S, A> policy;
 
-    public FirstVisit(RLEnv<S, A> env, RLPolicy<S, A> policy, int numEpisodes)
-    {
+    public FirstVisit(RLEnv<S, A> env, RLPolicy<S, A> policy, int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.numEpisodes = numEpisodes;
@@ -38,8 +35,5 @@ public class FirstVisit<S, A> implements Learner
     }
 
     @Override
-    public void learn()
-    {
-
-    }
+    public void learn() {}
 }

@@ -1,13 +1,12 @@
 package net.davidrobles.mauler.havannah;
 
+import java.awt.*;
+import javax.swing.*;
 import net.davidrobles.mauler.core.MatchControllerObserver;
 import net.davidrobles.mauler.core.MoveObserver;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class HavannahView extends JPanel implements MoveObserver, MatchControllerObserver<Havannah>
-{
+public class HavannahView extends JPanel
+        implements MoveObserver, MatchControllerObserver<Havannah> {
     private Havannah havannah;
 
     // SIZES
@@ -29,8 +28,7 @@ public class HavannahView extends JPanel implements MoveObserver, MatchControlle
     // FONTS
     private static final Font font = new Font("sansserif", Font.BOLD, 16);
 
-    public HavannahView(Havannah havannah)
-    {
+    public HavannahView(Havannah havannah) {
         this.havannah = havannah;
         this.panelWidth = havannah.getBoardLength() * CELL_SIZE + BOARD_X_OFFSET * 2 + 1;
         this.panelHeight = havannah.getBoardLength() * CELL_SIZE + BOARD_Y_OFFSET * 2 + 1;
@@ -41,18 +39,17 @@ public class HavannahView extends JPanel implements MoveObserver, MatchControlle
     }
 
     @Override
-    protected void paintComponent(Graphics gg)
-    {
+    protected void paintComponent(Graphics gg) {
         super.paintComponent(gg);
 
         Graphics2D g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // background
-//        g.setColor(BG_COLOR);
-//        g.fillRect(0, 0, panelWidth, panelHeight);
-//        g.setColor(BOARD_BG_COLOR);
-//        g.fillRect(BOARD_X_OFFSET, BOARD_Y_OFFSET, boardWidth, boardHeight);
+        //        g.setColor(BG_COLOR);
+        //        g.fillRect(0, 0, panelWidth, panelHeight);
+        //        g.setColor(BOARD_BG_COLOR);
+        //        g.fillRect(BOARD_X_OFFSET, BOARD_Y_OFFSET, boardWidth, boardHeight);
 
         g.setColor(Color.BLACK);
 
@@ -61,29 +58,28 @@ public class HavannahView extends JPanel implements MoveObserver, MatchControlle
         // TODO: draw letters
 
         // TODO: draw grid
-//        System.out.println(havannah);
+        //        System.out.println(havannah);
 
-        for (int row = 0; row < havannah.getBoardLength(); row++)
-        {
+        for (int row = 0; row < havannah.getBoardLength(); row++) {
             int startX = (int) (300 - (row * (30.0)));
             int startY = (int) (500 - (row * (17.0)));
 
-            for (int col = 0; col < havannah.getBoardLength(); col++)
-            {
+            for (int col = 0; col < havannah.getBoardLength(); col++) {
                 Cell cell = havannah.getCell(row, col);
 
-                if (cell != Cell.ILLEGAL)
-                {
+                if (cell != Cell.ILLEGAL) {
                     int x = (int) (startX + (col * 30.0));
                     int y = (int) (startY - (col * 17.0));
 
                     // draw hexagon
                     Color hexFillColor = Color.YELLOW;
 
-//                    if (havannah.getSelectedCell().row == row && havannah.getSelectedCell().col == col)
-//                        hexFillColor = Color.BLUE;
-//                    else if (havannah.getSelectedAdjs().contains(new HCell(row, col)))
-//                        hexFillColor = Color.RED;
+                    //                    if (havannah.getSelectedCell().row == row &&
+                    // havannah.getSelectedCell().col == col)
+                    //                        hexFillColor = Color.BLUE;
+                    //                    else if (havannah.getSelectedAdjs().contains(new
+                    // HCell(row, col)))
+                    //                        hexFillColor = Color.RED;
 
                     drawHexagon(x, y, hexFillColor, g);
 
@@ -92,23 +88,21 @@ public class HavannahView extends JPanel implements MoveObserver, MatchControlle
                     drawStone(x, y, havannah.getCell(row, col), color, g);
                 }
 
-//                if (row % 2 == 0) {
-//                    x = col * (CELL_SIZE + CELL_SIZE * 2);
-//                System.out.println("X: " + x);
-//                System.out.println("Y: " + y);
-//                }
-// else {
-////                    x = col * (CELL_SIZE + CELL_SIZE * 2);
-////                    y = row * (CELL_SIZE +  CELL_SIZE * 2);
-//                }
+                //                if (row % 2 == 0) {
+                //                    x = col * (CELL_SIZE + CELL_SIZE * 2);
+                //                System.out.println("X: " + x);
+                //                System.out.println("Y: " + y);
+                //                }
+                // else {
+                ////                    x = col * (CELL_SIZE + CELL_SIZE * 2);
+                ////                    y = row * (CELL_SIZE +  CELL_SIZE * 2);
+                //                }
             }
         }
     }
 
-    private void drawStone(int x, int y, Cell cell, Color color, Graphics2D g2d)
-    {
-        if (cell != Cell.EMPTY)
-        {
+    private void drawStone(int x, int y, Cell cell, Color color, Graphics2D g2d) {
+        if (cell != Cell.EMPTY) {
             g2d.setColor(color);
             g2d.fillOval(x - STONE_SIZE / 2, y - STONE_SIZE / 2, STONE_SIZE, STONE_SIZE);
             g2d.setColor(Color.BLACK);
@@ -116,28 +110,32 @@ public class HavannahView extends JPanel implements MoveObserver, MatchControlle
         }
     }
 
-    private void drawHexagon(int x, int y, Color color, Graphics2D g2d)
-    {
+    private void drawHexagon(int x, int y, Color color, Graphics2D g2d) {
         int[] xPoints = new int[6];
         int[] yPoints = new int[6];
 
-        for (int i = 0; i < 6; i++)
-        {
-            xPoints[i] = x + (int) (CELL_SIZE * Math.cos(Math.toRadians(i * 60))); // TODO: change cell size
+        for (int i = 0; i < 6; i++) {
+            xPoints[i] =
+                    x
+                            + (int)
+                                    (CELL_SIZE
+                                            * Math.cos(
+                                                    Math.toRadians(
+                                                            i * 60))); // TODO: change cell size
             yPoints[i] = y - (int) (CELL_SIZE * Math.sin(Math.toRadians(i * 60)));
         }
 
-//        g2d.drawPolygon(xPoints, yPoints, 6);
+        //        g2d.drawPolygon(xPoints, yPoints, 6);
         g2d.setColor(color);
         g2d.fillPolygon(xPoints, yPoints, 6);
         g2d.setColor(Color.BLACK);
         g2d.drawPolygon(xPoints, yPoints, 6);
-//        g2d.drawString();
-//        int zero = x + 50;
-//        int next = x + (int) (50 * Math.cos(Math.toRadians(60)));
-//        int partesita = (int) (CELL_SIZE * Math.sin(Math.toRadians(60)));
-//        System.out.println("parte: " + partesita);
-//        g2d.drawLine(x + 50, y, next, y);
+        //        g2d.drawString();
+        //        int zero = x + 50;
+        //        int next = x + (int) (50 * Math.cos(Math.toRadians(60)));
+        //        int partesita = (int) (CELL_SIZE * Math.sin(Math.toRadians(60)));
+        //        System.out.println("parte: " + partesita);
+        //        g2d.drawLine(x + 50, y, next, y);
     }
 
     @Override

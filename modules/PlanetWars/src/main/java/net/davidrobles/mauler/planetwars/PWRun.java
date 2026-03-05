@@ -8,8 +8,7 @@ public class PWRun {
 
     private static final Random rand = new Random();
 
-    private static void runGameModel(int games)
-    {
+    private static void runGameModel(int games) {
         List<PWBot> bots = new ArrayList<PWBot>();
         bots.add(new PWBotMC(1));
         bots.add(new PWBotTest(2));
@@ -18,7 +17,8 @@ public class PWRun {
 
         for (int i = 0; i < games; i++) {
             int mapIndex = rand.nextInt(100) + 1;
-            String gameStateString = PWAdapter.loadMapToString("PlanetWars/maps/map" + mapIndex + ".txt");
+            String gameStateString =
+                    PWAdapter.loadMapToString("PlanetWars/maps/map" + mapIndex + ".txt");
             PWGame game = new PWGame(gameStateString, bots);
 
             // Game loop
@@ -28,9 +28,9 @@ public class PWRun {
                 game.next();
             }
 
-            wins[winner] += 1; 
+            wins[winner] += 1;
 
-//            System.out.println("Winner: Strategy " + winner);
+            //            System.out.println("Winner: Strategy " + winner);
         }
 
         for (int i = 0; i < 3; i++) {
@@ -38,8 +38,7 @@ public class PWRun {
         }
     }
 
-    private static void runGameWithView(PWBot bot1, PWBot bot2)
-    {
+    private static void runGameWithView(PWBot bot1, PWBot bot2) {
         int sleepTime = 100;
 
         // Set the bots
@@ -49,7 +48,8 @@ public class PWRun {
 
         // Loads a game string from a random map
         int mapIndex = rand.nextInt(100) + 1;
-        String gameStateString = PWAdapter.loadMapToString("PlanetWars/resources/maps/map" + mapIndex + ".txt");
+        String gameStateString =
+                PWAdapter.loadMapToString("PlanetWars/resources/maps/map" + mapIndex + ".txt");
 
         // Create a new game
         PWGame game = new PWGame(gameStateString, bots);
@@ -80,9 +80,7 @@ public class PWRun {
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         runGameWithView(new PWBotHC(1), new PWBotWanstein(2));
     }
-
 }

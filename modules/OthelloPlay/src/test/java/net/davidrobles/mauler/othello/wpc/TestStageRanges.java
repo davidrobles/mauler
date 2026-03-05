@@ -5,67 +5,56 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class TestStageRanges
-{
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+public class TestStageRanges {
+    @Rule public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testValidateRanges1()
-    {
+    public void testValidateRanges1() {
         exception.expect(IllegalArgumentException.class);
-        WPCStages.validateRanges(new int[] { -1 });
+        WPCStages.validateRanges(new int[] {-1});
     }
 
     @Test
-    public void testValidateRange2()
-    {
+    public void testValidateRange2() {
         exception.expect(IllegalArgumentException.class);
-        WPCStages.validateRanges(new int[] { 0 });
+        WPCStages.validateRanges(new int[] {0});
     }
 
     @Test
-    public void testValidateRanges3()
-    {
-        WPCStages.validateRanges(new int[] { 1 });
+    public void testValidateRanges3() {
+        WPCStages.validateRanges(new int[] {1});
     }
 
     @Test
-    public void testValidateRanges5()
-    {
-        WPCStages.validateRanges(new int[] { 59 });
+    public void testValidateRanges5() {
+        WPCStages.validateRanges(new int[] {59});
     }
 
     @Test
-    public void testValidateRanges6()
-    {
-        WPCStages.validateRanges(new int[] { 60 });
+    public void testValidateRanges6() {
+        WPCStages.validateRanges(new int[] {60});
     }
 
     @Test
-    public void testValidateRanges7()
-    {
+    public void testValidateRanges7() {
         exception.expect(IllegalArgumentException.class);
-        WPCStages.validateRanges(new int[] { 61 });
+        WPCStages.validateRanges(new int[] {61});
     }
 
     @Test
-    public void testValidateRanges8()
-    {
-        WPCStages.validateRanges(new int[] { 2, 5 });
+    public void testValidateRanges8() {
+        WPCStages.validateRanges(new int[] {2, 5});
     }
 
     @Test
-    public void testValidateRanges9()
-    {
+    public void testValidateRanges9() {
         exception.expect(IllegalArgumentException.class);
-        WPCStages.validateRanges(new int[] { 5, 2 });
+        WPCStages.validateRanges(new int[] {5, 2});
     }
 
     @Test
-    public void testValidateRanges10()
-    {
+    public void testValidateRanges10() {
         exception.expect(IllegalArgumentException.class);
-        WPCStages.validateRanges(new int[] { });
+        WPCStages.validateRanges(new int[] {});
     }
 }

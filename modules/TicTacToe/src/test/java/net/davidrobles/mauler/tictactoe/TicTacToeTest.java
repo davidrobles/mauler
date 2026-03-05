@@ -1,13 +1,12 @@
 package net.davidrobles.mauler.tictactoe;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
 import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.GameTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Full test suite for {@link TicTacToe}.
@@ -16,6 +15,7 @@ import static org.junit.Assert.*;
  * testNumLegalMovesEqualsListMoves.
  *
  * <p>Board layout (cell indices, row-major):
+ *
  * <pre>
  *   0 | 1 | 2
  *  ---+---+---
@@ -24,14 +24,12 @@ import static org.junit.Assert.*;
  *   6 | 7 | 8
  * </pre>
  *
- * <p>Move semantics: {@code makeMove(i)} places on the {@code i}-th empty cell
- * (0-indexed, ascending cell order).
+ * <p>Move semantics: {@code makeMove(i)} places on the {@code i}-th empty cell (0-indexed,
+ * ascending cell order).
  */
-public class TicTacToeTest extends GameTest<TicTacToe>
-{
+public class TicTacToeTest extends GameTest<TicTacToe> {
     @Before
-    public void init()
-    {
+    public void init() {
         game = new TicTacToe();
     }
 
@@ -40,10 +38,8 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     /** Applies a sequence of move indices to {@code game}. */
-    private void play(int... moves)
-    {
-        for (int m : moves)
-            game.makeMove(m);
+    private void play(int... moves) {
+        for (int m : moves) game.makeMove(m);
     }
 
     /**
@@ -57,13 +53,13 @@ public class TicTacToeTest extends GameTest<TicTacToe>
      *  - | - | -
      * </pre>
      */
-    private void playXWinsTopRow()
-    {
-        play(0,   // X → cell 0;  empty: [1..8]
-             2,   // O → cell 3;  empty: [1,2,3,4,5,6,7,8]
-             0,   // X → cell 1;  empty: [1,2,4,5,6,7,8]
-             1,   // O → cell 4;  empty: [2,4,5,6,7,8]
-             0);  // X → cell 2  → X wins
+    private void playXWinsTopRow() {
+        play(
+                0, // X → cell 0;  empty: [1..8]
+                2, // O → cell 3;  empty: [1,2,3,4,5,6,7,8]
+                0, // X → cell 1;  empty: [1,2,4,5,6,7,8]
+                1, // O → cell 4;  empty: [2,4,5,6,7,8]
+                0); // X → cell 2  → X wins
     }
 
     /**
@@ -77,13 +73,13 @@ public class TicTacToeTest extends GameTest<TicTacToe>
      *  - | - | X
      * </pre>
      */
-    private void playXWinsDiagonal()
-    {
-        play(0,   // X → cell 0;  empty: [1..8]
-             0,   // O → cell 1;  empty: [2..8]
-             2,   // X → cell 4;  empty: [2,3,4,5,6,7,8]
-             0,   // O → cell 2;  empty: [2,3,5,6,7,8]
-             4);  // X → cell 8;  empty: [3,5,6,7,8]  → X wins
+    private void playXWinsDiagonal() {
+        play(
+                0, // X → cell 0;  empty: [1..8]
+                0, // O → cell 1;  empty: [2..8]
+                2, // X → cell 4;  empty: [2,3,4,5,6,7,8]
+                0, // O → cell 2;  empty: [2,3,5,6,7,8]
+                4); // X → cell 8;  empty: [3,5,6,7,8]  → X wins
     }
 
     /**
@@ -97,14 +93,14 @@ public class TicTacToeTest extends GameTest<TicTacToe>
      *  - | O | -
      * </pre>
      */
-    private void playOWinsCenterColumn()
-    {
-        play(0,   // X → cell 0;  empty: [1..8]
-             0,   // O → cell 1;  empty: [2..8]
-             0,   // X → cell 2;  empty: [3..8]
-             1,   // O → cell 4;  empty: [3,4,5,6,7,8]
-             0,   // X → cell 3;  empty: [3,5,6,7,8]
-             2);  // O → cell 7;  empty: [5,6,7,8]  → O wins
+    private void playOWinsCenterColumn() {
+        play(
+                0, // X → cell 0;  empty: [1..8]
+                0, // O → cell 1;  empty: [2..8]
+                0, // X → cell 2;  empty: [3..8]
+                1, // O → cell 4;  empty: [3,4,5,6,7,8]
+                0, // X → cell 3;  empty: [3,5,6,7,8]
+                2); // O → cell 7;  empty: [5,6,7,8]  → O wins
     }
 
     /**
@@ -118,20 +114,19 @@ public class TicTacToeTest extends GameTest<TicTacToe>
      *  O | X | O
      * </pre>
      *
-     * X: cells 0, 2, 4, 5, 7 — no winning line.
-     * O: cells 1, 3, 6, 8 — no winning line.
+     * X: cells 0, 2, 4, 5, 7 — no winning line. O: cells 1, 3, 6, 8 — no winning line.
      */
-    private void playDraw()
-    {
-        play(0,   // X → cell 0
-             0,   // O → cell 1
-             0,   // X → cell 2
-             0,   // O → cell 3
-             0,   // X → cell 4;  (verify: X=0,2,4 → 21, no win)
-             1,   // O → cell 6;  empty: [5,6,7,8]
-             0,   // X → cell 5;  empty: [5,7,8]
-             1,   // O → cell 8;  empty: [7,8]
-             0);  // X → cell 7;  empty: [7]  → board full, draw
+    private void playDraw() {
+        play(
+                0, // X → cell 0
+                0, // O → cell 1
+                0, // X → cell 2
+                0, // O → cell 3
+                0, // X → cell 4;  (verify: X=0,2,4 → 21, no win)
+                1, // O → cell 6;  empty: [5,6,7,8]
+                0, // X → cell 5;  empty: [5,7,8]
+                1, // O → cell 8;  empty: [7,8]
+                0); // X → cell 7;  empty: [7]  → board full, draw
     }
 
     // -------------------------------------------------------------------------
@@ -139,51 +134,43 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void initialBoardIsAllEmpty()
-    {
+    public void initialBoardIsAllEmpty() {
         for (int i = 0; i < TicTacToe.CELLS; i++)
             assertEquals(TicTacToe.Cell.EMPTY, game.getCell(i));
     }
 
     @Test
-    public void initialNumMovesIsNine()
-    {
+    public void initialNumMovesIsNine() {
         assertEquals(9, game.getNumMoves());
     }
 
     @Test
-    public void initialMovesListHasNineEntries()
-    {
+    public void initialMovesListHasNineEntries() {
         assertEquals(9, game.getMoves().size());
     }
 
     @Test
-    public void initialPlayerIsZero()
-    {
+    public void initialPlayerIsZero() {
         assertEquals(0, game.getCurPlayer());
     }
 
     @Test
-    public void initialGameIsNotOver()
-    {
+    public void initialGameIsNotOver() {
         assertFalse(game.isOver());
     }
 
     @Test
-    public void initialOutcomeIsAbsent()
-    {
+    public void initialOutcomeIsAbsent() {
         assertFalse(game.getOutcome().isPresent());
     }
 
     @Test
-    public void initialGetNumPlayersIsTwo()
-    {
+    public void initialGetNumPlayersIsTwo() {
         assertEquals(2, game.getNumPlayers());
     }
 
     @Test
-    public void getNameReturnsTicTacToe()
-    {
+    public void getNameReturnsTicTacToe() {
         assertEquals("Tic-tac-toe", game.getName());
     }
 
@@ -192,23 +179,21 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void initialMovesListContainsAllCellIndices()
-    {
+    public void initialMovesListContainsAllCellIndices() {
         List<String> moves = game.getMoves();
         for (int i = 0; i < TicTacToe.CELLS; i++)
-            assertTrue("expected cell " + i + " in initial moves", moves.contains(String.valueOf(i)));
+            assertTrue(
+                    "expected cell " + i + " in initial moves", moves.contains(String.valueOf(i)));
     }
 
     @Test
-    public void movesListExcludesOccupiedCell()
-    {
+    public void movesListExcludesOccupiedCell() {
         game.makeMove(0); // X occupies cell 0 (first empty = lowest index)
         assertFalse(game.getMoves().contains("0"));
     }
 
     @Test
-    public void movesListShrinksByOneEachMove()
-    {
+    public void movesListShrinksByOneEachMove() {
         int expected = TicTacToe.CELLS;
         while (!game.isOver()) {
             assertEquals(expected, game.getMoves().size());
@@ -222,8 +207,7 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void playerAlternatesAfterEachMove()
-    {
+    public void playerAlternatesAfterEachMove() {
         int expected = 0;
         while (!game.isOver()) {
             assertEquals(expected, game.getCurPlayer());
@@ -237,31 +221,27 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void makeMoveSetsCrossForPlayerZero()
-    {
+    public void makeMoveSetsCrossForPlayerZero() {
         game.makeMove(0); // X → cell 0
         assertEquals(TicTacToe.Cell.CROSS, game.getCell(0));
     }
 
     @Test
-    public void makeMoveSetNoughtForPlayerOne()
-    {
+    public void makeMoveSetNoughtForPlayerOne() {
         game.makeMove(0); // X → cell 0
         game.makeMove(0); // O → cell 1 (next empty)
         assertEquals(TicTacToe.Cell.NOUGHT, game.getCell(1));
     }
 
     @Test
-    public void unplayedCellRemainsEmpty()
-    {
+    public void unplayedCellRemainsEmpty() {
         game.makeMove(0); // X → cell 0
         for (int i = 1; i < TicTacToe.CELLS; i++)
             assertEquals(TicTacToe.Cell.EMPTY, game.getCell(i));
     }
 
     @Test
-    public void getCellRowColMatchesCellIndex()
-    {
+    public void getCellRowColMatchesCellIndex() {
         game.makeMove(0); // X at cell 0 = (0,0);  empty: [1..8]
         game.makeMove(7); // O at cell 8 = (2,2);  empty: [1..8], idx 7 → cell 8
 
@@ -271,12 +251,10 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     }
 
     @Test
-    public void getBoardMatchesGetCell()
-    {
+    public void getBoardMatchesGetCell() {
         game.makeMove(0); // place something so the board is not trivially empty
         TicTacToe.Cell[] board = game.getBoard();
-        for (int i = 0; i < TicTacToe.CELLS; i++)
-            assertEquals(game.getCell(i), board[i]);
+        for (int i = 0; i < TicTacToe.CELLS; i++) assertEquals(game.getCell(i), board[i]);
     }
 
     // -------------------------------------------------------------------------
@@ -284,41 +262,37 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void xWinsTopRow()
-    {
+    public void xWinsTopRow() {
         playXWinsTopRow();
 
         assertTrue(game.isOver());
         GameResult[] outcome = game.getOutcome().orElseThrow();
-        assertEquals(GameResult.WIN,  outcome[0]);
+        assertEquals(GameResult.WIN, outcome[0]);
         assertEquals(GameResult.LOSS, outcome[1]);
     }
 
     @Test
-    public void xWinsDiagonal()
-    {
+    public void xWinsDiagonal() {
         playXWinsDiagonal();
 
         assertTrue(game.isOver());
         GameResult[] outcome = game.getOutcome().orElseThrow();
-        assertEquals(GameResult.WIN,  outcome[0]);
+        assertEquals(GameResult.WIN, outcome[0]);
         assertEquals(GameResult.LOSS, outcome[1]);
     }
 
     @Test
-    public void oWinsCenterColumn()
-    {
+    public void oWinsCenterColumn() {
         playOWinsCenterColumn();
 
         assertTrue(game.isOver());
         GameResult[] outcome = game.getOutcome().orElseThrow();
         assertEquals(GameResult.LOSS, outcome[0]);
-        assertEquals(GameResult.WIN,  outcome[1]);
+        assertEquals(GameResult.WIN, outcome[1]);
     }
 
     @Test
-    public void draw()
-    {
+    public void draw() {
         playDraw();
 
         assertTrue(game.isOver());
@@ -332,24 +306,21 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void noMovesAfterWin()
-    {
+    public void noMovesAfterWin() {
         playXWinsTopRow();
         assertEquals(0, game.getNumMoves());
         assertEquals(0, game.getMoves().size());
     }
 
     @Test
-    public void noMovesAfterDraw()
-    {
+    public void noMovesAfterDraw() {
         playDraw();
         assertEquals(0, game.getNumMoves());
         assertEquals(0, game.getMoves().size());
     }
 
     @Test
-    public void outcomeAbsentDuringPlay()
-    {
+    public void outcomeAbsentDuringPlay() {
         // Verify outcome stays absent until the game is actually over
         for (int i = 0; i < 4; i++) {
             assertFalse(game.getOutcome().isPresent());
@@ -362,8 +333,7 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void resetRestoresInitialState()
-    {
+    public void resetRestoresInitialState() {
         playXWinsTopRow();
         assertTrue(game.isOver());
 
@@ -381,21 +351,19 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void copyIsIndependentFromOriginal()
-    {
-        game.makeMove(0);      // X at cell 0
+    public void copyIsIndependentFromOriginal() {
+        game.makeMove(0); // X at cell 0
         TicTacToe copy = game.copy();
-        copy.makeMove(0);      // O at cell 1 (on copy only)
+        copy.makeMove(0); // O at cell 1 (on copy only)
 
-        assertEquals(TicTacToe.Cell.CROSS,  game.getCell(0));
-        assertEquals(TicTacToe.Cell.EMPTY,  game.getCell(1)); // original unaffected
-        assertEquals(TicTacToe.Cell.CROSS,  copy.getCell(0));
+        assertEquals(TicTacToe.Cell.CROSS, game.getCell(0));
+        assertEquals(TicTacToe.Cell.EMPTY, game.getCell(1)); // original unaffected
+        assertEquals(TicTacToe.Cell.CROSS, copy.getCell(0));
         assertEquals(TicTacToe.Cell.NOUGHT, copy.getCell(1));
     }
 
     @Test
-    public void originalIsIndependentFromCopy()
-    {
+    public void originalIsIndependentFromCopy() {
         TicTacToe copy = game.copy();
         copy.makeMove(0); // X at cell 0 on copy
 
@@ -408,8 +376,7 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test
-    public void equalGamesHaveSameHashCode()
-    {
+    public void equalGamesHaveSameHashCode() {
         game.makeMove(0);
         TicTacToe other = game.copy();
         assertEquals(game, other);
@@ -417,8 +384,7 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     }
 
     @Test
-    public void differentGamesAreNotEqual()
-    {
+    public void differentGamesAreNotEqual() {
         TicTacToe other = new TicTacToe();
         game.makeMove(0);
         assertNotEquals(game, other);
@@ -429,20 +395,17 @@ public class TicTacToeTest extends GameTest<TicTacToe>
     // -------------------------------------------------------------------------
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveNegativeIndexThrows()
-    {
+    public void makeMoveNegativeIndexThrows() {
         game.makeMove(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveOutOfRangeThrows()
-    {
+    public void makeMoveOutOfRangeThrows() {
         game.makeMove(game.getNumMoves());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveWhenGameOverThrows()
-    {
+    public void makeMoveWhenGameOverThrows() {
         playXWinsTopRow();
         game.makeMove(0);
     }

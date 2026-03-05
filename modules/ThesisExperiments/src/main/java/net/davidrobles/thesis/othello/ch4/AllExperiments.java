@@ -1,5 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Strategy;
 import net.davidrobles.mauler.othello.Othello;
@@ -10,13 +12,8 @@ import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.mcts.UCTWithPrior;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AllExperiments
-{
-    static void allExperiments()
-    {
+public class AllExperiments {
+    static void allExperiments() {
         int nGames = 20;
         int timeout = 100;
         double c = 0.5;
@@ -47,13 +44,13 @@ public class AllExperiments
         players.add(new UCTWithPrior<Othello>(greedy, c, wpc, nInit));
         playerNames.add("UCT+NR+PK");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         allExperiments();
     }
 }

@@ -3,28 +3,29 @@ package net.davidrobles.mauler.othello;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OthelloUtil
-{
-    public static int[] SYMMETRY_MAP = new int[] {
-        0, 1, 2, 3, 3, 2, 1, 0,
-        1, 4, 5, 6, 6, 5, 4, 1,
-        2, 5, 7, 8, 8, 7, 5, 2,
-        3, 6, 8, 9, 9, 8, 6, 3,
-        3, 6, 8, 9, 9, 8, 6, 3,
-        2, 5, 7, 8, 8, 7, 5, 2,
-        1, 4, 5, 6, 6, 5, 4, 1,
-        0, 1, 2, 3, 3, 2, 1, 0,
-    };
+public class OthelloUtil {
+    public static int[] SYMMETRY_MAP =
+            new int[] {
+                0, 1, 2, 3, 3, 2, 1, 0,
+                1, 4, 5, 6, 6, 5, 4, 1,
+                2, 5, 7, 8, 8, 7, 5, 2,
+                3, 6, 8, 9, 9, 8, 6, 3,
+                3, 6, 8, 9, 9, 8, 6, 3,
+                2, 5, 7, 8, 8, 7, 5, 2,
+                1, 4, 5, 6, 6, 5, 4, 1,
+                0, 1, 2, 3, 3, 2, 1, 0,
+            };
 
-    public static long[] symBitboards = new long[] {
-            -9151314442816847743L, 4792111478498951490L, 2594215222373842980L, 1729382813125312536L, 18577348462920192L,
-            10205666933351424L, 6755684016199680L, 39582420959232L, 26543503441920L, 103481868288L };
+    public static long[] symBitboards =
+            new long[] {
+                -9151314442816847743L, 4792111478498951490L, 2594215222373842980L,
+                        1729382813125312536L, 18577348462920192L,
+                10205666933351424L, 6755684016199680L, 39582420959232L, 26543503441920L,
+                        103481868288L
+            };
 
-    /**
-     * This is a helper class used to create new bitboard based on given moves.
-     */
-    public enum Direction
-    {
+    /** This is a helper class used to create new bitboard based on given moves. */
+    public enum Direction {
         UP {
             @Override
             public long shift(long bitboard) {
@@ -37,13 +38,12 @@ public class OthelloUtil
                 return bitboard >> 7 & Othello.LEFT_MASK & Othello.DOWN_MASK;
             }
         },
-        RIGHT
-                {
-                    @Override
-                    public long shift(long bitboard) {
-                        return bitboard << 1 & Othello.LEFT_MASK;
-                    }
-                },
+        RIGHT {
+            @Override
+            public long shift(long bitboard) {
+                return bitboard << 1 & Othello.LEFT_MASK;
+            }
+        },
         DOWN_RIGHT {
             @Override
             public long shift(long bitboard) {

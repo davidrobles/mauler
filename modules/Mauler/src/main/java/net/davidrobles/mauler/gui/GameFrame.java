@@ -1,10 +1,9 @@
 package net.davidrobles.mauler.gui;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
-public class GameFrame extends JFrame
-{
+public class GameFrame extends JFrame {
     public GameFrame(JPanel panel, String title) {
         super("Minotauro - " + title);
         add(panel);
@@ -19,8 +18,8 @@ public class GameFrame extends JFrame
         // Determine the new location of the window
         int w = component.getSize().width;
         int h = component.getSize().height;
-        int x = (dim.width-w)/2;
-        int y = (dim.height-h)/2;
+        int x = (dim.width - w) / 2;
+        int y = (dim.height - h) / 2;
         // Move the window
         component.setLocation(x, y);
     }

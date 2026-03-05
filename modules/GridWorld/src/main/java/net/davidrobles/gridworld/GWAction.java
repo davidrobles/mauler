@@ -1,6 +1,8 @@
 package net.davidrobles.gridworld;
 
-public enum GWAction
-{
-    UP, DOWN, LEFT, RIGHT
+public enum GWAction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 }

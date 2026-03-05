@@ -29,5 +29,4 @@ public class PWOrder {
     public int getNumShips() {
         return numShips;
     }
-    
 }

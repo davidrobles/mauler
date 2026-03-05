@@ -1,20 +1,17 @@
 package net.davidrobles.thesis.othello.ch4;
 
-import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.core.util.SpeedTest;
-import net.davidrobles.mauler.othello.Othello;
-import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
-import net.davidrobles.mauler.strategies.Evaluator;
+import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import net.davidrobles.mauler.core.Strategy;
+import net.davidrobles.mauler.core.util.SpeedTest;
+import net.davidrobles.mauler.othello.Othello;
+import net.davidrobles.mauler.strategies.Evaluator;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 
-import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
-
-public class NTSSpeedTests
-{
-    static void RunAll()
-    {
+public class NTSSpeedTests {
+    static void RunAll() {
         Othello othello = new Othello();
         int timeoutInSecs = 10;
         double epsilon = 0.1;
@@ -26,9 +23,9 @@ public class NTSSpeedTests
         players.put("LOG-NTS", NTS_LOG);
         players.put("EVO-NTS", NTS_EVO);
 
-        for (Map.Entry<String, Evaluator<Othello>> entry : players.entrySet())
-        {
-            Strategy<Othello> player = new EpsilonGreedyStrategy<Othello>(entry.getValue(), epsilon);
+        for (Map.Entry<String, Evaluator<Othello>> entry : players.entrySet()) {
+            Strategy<Othello> player =
+                    new EpsilonGreedyStrategy<Othello>(entry.getValue(), epsilon);
             double ntsGames = SpeedTest.playerSpeed(othello, player, timeoutInSecs);
             System.out.println(entry.getValue());
             System.out.format("%s %.1f mauler per second.\n", entry.getKey(), ntsGames);
@@ -36,8 +33,7 @@ public class NTSSpeedTests
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         RunAll();
     }
 }

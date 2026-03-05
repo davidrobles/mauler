@@ -1,26 +1,20 @@
 package net.davidrobles.shogun.tictactoe;
 
+import java.util.List;
+import javax.swing.table.TableModel;
 import net.davidrobles.mauler.core.MatchController;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;
 import net.davidrobles.mauler.gui.MatchControllerTableView;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.tictactoe.TicTacToe;
 import net.davidrobles.util.DRUtil;
 
-import javax.swing.table.TableModel;
-import java.util.List;
-
-public class TicGUI
-{
-    public static void main(String[] args)
-    {
-        List<Strategy<TicTacToe>> players = List.of(
-                new RandomStrategy<>(),
-                new RandomStrategy<>()
-        );
+public class TicGUI {
+    public static void main(String[] args) {
+        List<Strategy<TicTacToe>> players = List.of(new RandomStrategy<>(), new RandomStrategy<>());
 
         TicTacToeView panel = new TicTacToeView(new TicTacToe());
         MatchController<TicTacToe> mc = new MatchController<>(TicTacToe::new, players, 50);
@@ -32,7 +26,8 @@ public class TicGUI
         mc.registerObserver(buttonsView);
         mc.registerObserver(sliderView);
         mc.registerObserver(panel);
-        BoardApp<TicTacToe> boardApp = new BoardApp<>(panel, mc, buttonsView, sliderView, mcTableView);
+        BoardApp<TicTacToe> boardApp =
+                new BoardApp<>(panel, mc, buttonsView, sliderView, mcTableView);
         DRUtil.centerJFrame(boardApp);
     }
 }

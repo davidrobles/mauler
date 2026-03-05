@@ -1,20 +1,20 @@
-//package dr.shogun.tictactoe;
+// package dr.shogun.tictactoe;
 //
-//import Game;
-//import GameResult;
-//import dr.mauler.core.players.RandomStrategy;
-//import dr.mauler.othello.Othello;
-//import TerminalEvaluator;
-//import MonteCarlo;
-//import MCTS;
-//import UCT;
-//import UCB1;
-//import AlphaBeta;
-//import TicTacToe;
+// import Game;
+// import GameResult;
+// import dr.mauler.core.players.RandomStrategy;
+// import dr.mauler.othello.Othello;
+// import TerminalEvaluator;
+// import MonteCarlo;
+// import MCTS;
+// import UCT;
+// import UCB1;
+// import AlphaBeta;
+// import TicTacToe;
 //
-//import java.util.*;
+// import java.util.*;
 //
-//public class MCFailFinder {
+// public class MCFailFinder {
 //
 //    private static boolean run() {
 //
@@ -94,7 +94,8 @@
 ////        System.out.println(othello);
 ////        double c = 0.2;
 ////        int nSims = 40000;
-////        MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c, new Random()), new RandomStrategy<Othello>(), nSims);
+////        MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c, new Random()), new
+// RandomStrategy<Othello>(), nSims);
 ////        mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, 0.0, 0.5));
 //////        mcts.setUtilFunc(new TerminalEvaluator<Othello>(1.0, -1.0, 0.0));
 ////        mcts.move(othello);
@@ -230,4 +231,4 @@
 //
 //        return outcomes;
 //    }
-//}
+// }

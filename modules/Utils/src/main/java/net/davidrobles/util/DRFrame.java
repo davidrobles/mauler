@@ -2,8 +2,7 @@ package net.davidrobles.util;
 
 import javax.swing.*;
 
-public class DRFrame extends JFrame
-{
+public class DRFrame extends JFrame {
     private JPanel panel;
 
     public DRFrame(JPanel panel) {
@@ -15,8 +14,7 @@ public class DRFrame extends JFrame
         this.panel = panel;
         add(panel);
         pack();
-//        DRUtil.centerComponent(this);
+        //        DRUtil.centerComponent(this);
         setVisible(true);
     }
-    
 }

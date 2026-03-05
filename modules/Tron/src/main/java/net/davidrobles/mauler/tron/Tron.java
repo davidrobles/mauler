@@ -1,18 +1,18 @@
-//package dr.games.tron;//package dr.games.tron;
+// package dr.games.tron;//package dr.games.tron;
 //
-//import ObservableGame;
-//import Game;
-//import GameResult;
+// import ObservableGame;
+// import Game;
+// import GameResult;
 //
-//import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Random;
+// import java.io.BufferedReader;
+// import java.io.FileReader;
+// import java.io.IOException;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Random;
 //
-//public class Tron extends ObservableGame implements Game<Tron>
-//{
+// public class Tron extends ObservableGame implements Game<Tron>
+// {
 //    private int plyCount = 0;
 //    private boolean[][] walls;
 ////    private List<TronMove> p1Moves = new ArrayList<TronMove>();
@@ -267,11 +267,14 @@
 //            players[1].crash();
 //        }
 //
-//        // if both players have one move, and that move is the same for both, remove the moves from
+//        // if both players have one move, and that move is the same for both, remove the moves
+// from
 //        // their lists and the game will be over when testing with isGameOver
 //        if (p1Moves.size() == 1 && p2Moves.size() == 1 &&
-//                ((((TronMove)p1Moves.get(0)).getFromX() == ((TronMove)p2Moves.get(0)).getFromX()) &&
-//                        (((TronMove)p1Moves.get(0)).getToX() == ((TronMove)p2Moves.get(0)).getToX())))
+//                ((((TronMove)p1Moves.get(0)).getFromX() == ((TronMove)p2Moves.get(0)).getFromX())
+// &&
+//                        (((TronMove)p1Moves.get(0)).getToX() ==
+// ((TronMove)p2Moves.get(0)).getToX())))
 //        {
 //            p1Moves.clear();
 //            p2Moves.clear();
@@ -392,7 +395,8 @@
 //        if (!isGameOver() && plyCount % 2 == 0) {
 //            notifyObservers();
 //            // if both players are in the same position, clear moves
-//            if (players[0].getX() == players[1].getX() && players[0].getY() == players[1].getY()) {
+//            if (players[0].getX() == players[1].getX() && players[0].getY() == players[1].getY())
+// {
 //                p1Moves.clear();
 //                p2Moves.clear();
 //            } else {
@@ -458,6 +462,6 @@
 ////        playGame();
 ////    }
 ////
-//}
+// }
 //
 //

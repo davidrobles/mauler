@@ -1,5 +1,11 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
@@ -14,39 +20,29 @@ import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 import net.davidrobles.util.DRMarkdown;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
-
-public class NTSComparisons
-{
+public class NTSComparisons {
     static NTupleSystem nts = NTUtil.load("best-1");
     static NTupleSystem gen = NTUtil.load("buenero-56");
     static NTupleSystem logistello = NTUtil.load("logistello11-130000-0.822");
     static WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
 
-    static void VsRandomAt1PlySearch()
-    {
+    static void VsRandomAt1PlySearch() {
         double epsilon = 0.0;
         int nGames = 1000;
         Othello othello = new Othello();
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedyStrategy<Othello>(logistello, epsilon));
-//        players.add(new EpsilonGreedyStrategy<Othello>(wpc, epsilon));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(wpc, epsilon));
         players.add(new UCT<Othello>(0.5, 500));
-//        players.add(new RandomStrategy<Othello>());
+        //        players.add(new RandomStrategy<Othello>());
 
         Series<Othello> series = new Series<>(Othello::new, nGames, players);
         series.setVerbose(true);
         series.run();
     }
 
-    static void At1PlySearch()
-    {
+    static void At1PlySearch() {
         double epsilon = 0.1;
         int nGames = 10000;
         Othello othello = new Othello();
@@ -60,8 +56,7 @@ public class NTSComparisons
         series.run();
     }
 
-    static void AtAlphaBeta()
-    {
+    static void AtAlphaBeta() {
         int timeout = 50;
         int nGames = 50;
         Othello othello = new Othello();
@@ -75,8 +70,7 @@ public class NTSComparisons
         series.run();
     }
 
-    static void RoundRobinAll()
-    {
+    static void RoundRobinAll() {
         int nGames = 5;
         int timeout = 250;
 
@@ -84,49 +78,49 @@ public class NTSComparisons
         List<String> playersNames = new ArrayList<String>();
 
         playersNames.add("DR-WPC");
-//        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
         players.add(new AlphaBeta<Othello>(WPC_SYM));
 
         playersNames.add("LOG-NTS");
-//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(NTS_LOG, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_LOG));
 
         playersNames.add("FIRST-NTS");
-//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_RND));
 
         playersNames.add("RS-NTS");
-//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RS, 0.1));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RS, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_RS));
 
         playersNames.add("EVO-NTS");
-//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_EVO, 0.1));
+        //        players.add(new EpsilonGreedyStrategy<Othello>(NTS_EVO, 0.1));
         players.add(new AlphaBeta<Othello>(NTS_EVO));
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
 
-    static void NTSInfo()
-    {
+    static void NTSInfo() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("Best 1", "best-1");
         map.put("Best 2", "best-2");
         map.put("Logistello", "logistello11-130000-0.822");
 
-        for (Map.Entry<String, String> entry : map.entrySet())
-        {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
             DRMarkdown.printH1(entry.getKey());
             NTupleSystem logistello = NTUtil.load(entry.getValue());
             System.out.print(logistello.getInfo());
-            double gamesPerSec = SpeedTest.playerSpeed(new Othello(), new EpsilonGreedyStrategy<Othello>(logistello, 0.1), 10);
+            double gamesPerSec =
+                    SpeedTest.playerSpeed(
+                            new Othello(), new EpsilonGreedyStrategy<Othello>(logistello, 0.1), 10);
             System.out.println("Games per second: " + gamesPerSec + "\n");
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         RoundRobinAll();
     }
 }

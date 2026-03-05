@@ -1,29 +1,27 @@
 package net.davidrobles.rl.algorithms;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
+import net.davidrobles.rl.RLEnv;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
-import net.davidrobles.rl.RLEnv;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TabularSARSA<S, A> implements Learner
-{
+public class TabularSARSA<S, A> implements Learner {
     private RLEnv<S, A> env;
     private RLPolicy<S, A> policy;
-    private double alpha;                       // learning rate
-    private double gamma;                       // discount factor
+    private double alpha; // learning rate
+    private double gamma; // discount factor
     private int numEpisodes;
     private int currentEpisode = 0;
     private TabularQFunction<S, A> table;
-    private List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<QFunctionObserver<S, A>>();
+    private List<QFunctionObserver<S, A>> qFunctionObservers =
+            new ArrayList<QFunctionObserver<S, A>>();
 
-    public TabularSARSA(RLEnv<S, A> env, RLPolicy<S, A> policy, double alpha,
-                      double gamma, int numEpisodes)
-    {
+    public TabularSARSA(
+            RLEnv<S, A> env, RLPolicy<S, A> policy, double alpha, double gamma, int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.alpha = alpha;
@@ -34,14 +32,12 @@ public class TabularSARSA<S, A> implements Learner
 
     A action;
 
-    public void episode()
-    {
+    public void episode() {
         System.out.println("Episode " + currentEpisode);
         env.reset();
         action = policy.getAction(env, table);
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty())
-        {
+        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
             try {
@@ -52,8 +48,7 @@ public class TabularSARSA<S, A> implements Learner
         }
     }
 
-    private void step()
-    {
+    private void step() {
         S state = env.getCurrentState();
         double reward = env.performAction(action);
         S nextState = env.getCurrentState();
@@ -67,28 +62,25 @@ public class TabularSARSA<S, A> implements Learner
             nextStateNextActionValue = table.getValue(nextState, nextAction);
         }
 
-        double updateValue = reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
+        double updateValue =
+                reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
         double newValue = table.getValue(state, action) + (alpha * updateValue);
         table.setValue(new QPair<S, A>(state, action), newValue);
         action = nextAction;
         notifyValueFunctionUpdate();
     }
 
-    public void notifyValueFunctionUpdate()
-    {
+    public void notifyValueFunctionUpdate() {
         for (QFunctionObserver<S, A> observer : qFunctionObservers)
             observer.qFunctionUpdated(table);
     }
 
     @Override
-    public void learn()
-    {
-        for ( ; currentEpisode < numEpisodes; currentEpisode++)
-            episode();
+    public void learn() {
+        for (; currentEpisode < numEpisodes; currentEpisode++) episode();
     }
 
-    public void addQFunctionObserver(QFunctionObserver<S, A> observer)
-    {
+    public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
     }
 }

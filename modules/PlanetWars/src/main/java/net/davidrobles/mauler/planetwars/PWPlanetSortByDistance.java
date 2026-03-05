@@ -19,12 +19,9 @@ public class PWPlanetSortByDistance implements Comparator<PWPlanet> {
     public int compare(PWPlanet p1, PWPlanet p2) {
         assert gameState != null && dstPlanet != null;
         if (gameState.distance(p1.getPlanetID(), dstPlanet.getPlanetID())
-                < gameState.distance(p2.getPlanetID(), dstPlanet.getPlanetID()))
-            return -1;
+                < gameState.distance(p2.getPlanetID(), dstPlanet.getPlanetID())) return -1;
         else if (gameState.distance(p1.getPlanetID(), dstPlanet.getPlanetID())
-                > gameState.distance(p2.getPlanetID(), dstPlanet.getPlanetID()))
-            return 1;
+                > gameState.distance(p2.getPlanetID(), dstPlanet.getPlanetID())) return 1;
         return 0;
     }
-
 }

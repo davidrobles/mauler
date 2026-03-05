@@ -1,53 +1,43 @@
 package net.davidrobles.mauler.othello.ef;
 
-import net.davidrobles.mauler.strategies.Evaluator;
-
 import java.util.Iterator;
 import java.util.TreeSet;
+import net.davidrobles.mauler.strategies.Evaluator;
 
-public class EvaluatorFitness<T extends Evaluator> implements Comparable<EvaluatorFitness<T>>
-{
+public class EvaluatorFitness<T extends Evaluator> implements Comparable<EvaluatorFitness<T>> {
     private double fitness;
     private T evalFunc;
 
-    public EvaluatorFitness(T evalFunc, double fitness)
-    {
+    public EvaluatorFitness(T evalFunc, double fitness) {
         this.evalFunc = evalFunc;
         this.fitness = fitness;
     }
 
-    public T getEvaluator()
-    {
+    public T getEvaluator() {
         return evalFunc;
     }
 
-    public double getFitness()
-    {
+    public double getFitness() {
         return fitness;
     }
 
-    public static <T extends Evaluator> void printTop(TreeSet<EvaluatorFitness<T>> set, int howMany)
-    {
+    public static <T extends Evaluator> void printTop(
+            TreeSet<EvaluatorFitness<T>> set, int howMany) {
         Iterator<EvaluatorFitness<T>> iter = set.iterator();
         System.out.println("Top evaluation functions so far: ");
 
-        for (int i = 0; i < howMany && iter.hasNext(); i++)
-            System.out.println(iter.next());
+        for (int i = 0; i < howMany && iter.hasNext(); i++) System.out.println(iter.next());
     }
-
 
     ////////////////
     // Comparable //
     ////////////////
 
     @Override
-    public int compareTo(EvaluatorFitness<T> other)
-    {
-        if (getFitness() > other.getFitness())
-            return -1;
+    public int compareTo(EvaluatorFitness<T> other) {
+        if (getFitness() > other.getFitness()) return -1;
 
-        if (getFitness() < other.getFitness())
-            return 1;
+        if (getFitness() < other.getFitness()) return 1;
 
         return 0;
     }
@@ -57,8 +47,7 @@ public class EvaluatorFitness<T extends Evaluator> implements Comparable<Evaluat
     ////////////
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Fitness: " + fitness;
     }
 }

@@ -1,7 +1,7 @@
 package net.davidrobles.mauler.planetwars;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class PWFrame extends JFrame {
 

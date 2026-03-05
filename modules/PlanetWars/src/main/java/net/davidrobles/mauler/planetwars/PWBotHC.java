@@ -2,8 +2,7 @@ package net.davidrobles.mauler.planetwars;
 
 import java.util.*;
 
-public class PWBotHC implements PWBot
-{
+public class PWBotHC implements PWBot {
     private int playerID;
     private int turns;
     private PWGameState gameState;
@@ -36,23 +35,27 @@ public class PWBotHC implements PWBot
     // Ship comparators //
     //////////////////////
 
-    private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_ASC = new PWPlanetSortByNumShips();
+    private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_ASC =
+            new PWPlanetSortByNumShips();
     private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_DESC =
-                                                            Collections.reverseOrder(PLANETS_SORT_BY_NUM_SHIPS_ASC);
-    private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_ASC = new PWPlanetSortByGrowthRate();
+            Collections.reverseOrder(PLANETS_SORT_BY_NUM_SHIPS_ASC);
+    private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_ASC =
+            new PWPlanetSortByGrowthRate();
     private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_DESC =
-                                                            Collections.reverseOrder(PLANETS_SORT_BY_GROWTH_RATE_ASC);
-    private static final PWPlanetSortByDistance PLANETS_SORT_DIST_TO_PLANET_ASC = new PWPlanetSortByDistance();
+            Collections.reverseOrder(PLANETS_SORT_BY_GROWTH_RATE_ASC);
+    private static final PWPlanetSortByDistance PLANETS_SORT_DIST_TO_PLANET_ASC =
+            new PWPlanetSortByDistance();
     private static final PWPlanetSortByDistanceToPoint PLANETS_SORT_BY_DIST_POINT_ASC =
-                                                                                new PWPlanetSortByDistanceToPoint();
+            new PWPlanetSortByDistanceToPoint();
 
     ///////////////////////
     // Fleet comparators //
     ///////////////////////
 
-    private static final Comparator<PWFleet> SORT_FLEETS_TURNS_REM_ASC = new PWFleetSortByTurnsRemaining();
+    private static final Comparator<PWFleet> SORT_FLEETS_TURNS_REM_ASC =
+            new PWFleetSortByTurnsRemaining();
     private static final Comparator<PWFleet> SORT_FLEETS_TURNS_REM_DESC =
-                                                                Collections.reverseOrder(SORT_FLEETS_TURNS_REM_ASC);
+            Collections.reverseOrder(SORT_FLEETS_TURNS_REM_ASC);
 
     // Utilities
     private Random rand = new Random();
@@ -84,8 +87,7 @@ public class PWBotHC implements PWBot
     }
 
     @Override
-    public List<PWOrder> getOrders(PWGameState gameState)
-    {
+    public List<PWOrder> getOrders(PWGameState gameState) {
         List<PWOrder> orders = new ArrayList<PWOrder>();
 
         // Load variables for caching
@@ -113,8 +115,8 @@ public class PWBotHC implements PWBot
             this.shipsAvailable.put(myPlanet, ships);
         }
 
-          //////////////////////////////////
-         // Protect the planets in danger //
+        //////////////////////////////////
+        // Protect the planets in danger //
         //////////////////////////////////
 
         // Identify them
@@ -133,23 +135,21 @@ public class PWBotHC implements PWBot
         for (Map.Entry<PWPlanet, Integer> entry : planetsInDanger.entrySet()) {
             List<PWOrder> protectionOrders = ordersToProtectPlanet(entry.getKey());
             validateOrders(protectionOrders);
-            if (!protectionOrders.isEmpty())
-                orders.addAll(protectionOrders);
+            if (!protectionOrders.isEmpty()) orders.addAll(protectionOrders);
         }
 
-
-          ////////////
-         // Expand //
+        ////////////
+        // Expand //
         ////////////
         orders.addAll(expandOrders());
 
-          ////////////
-         // Attack //
+        ////////////
+        // Attack //
         ////////////
         orders.addAll(attackOrders());
 
-          /////////////////
-         // Clear Cache //
+        /////////////////
+        // Clear Cache //
         /////////////////
         shipsAvailable.clear();
         planetsInDanger.clear();
@@ -161,8 +161,7 @@ public class PWBotHC implements PWBot
         return orders;
     }
 
-    public List<PWOrder> expandOrders()
-    {
+    public List<PWOrder> expandOrders() {
         List<PWOrder> orders = new ArrayList<PWOrder>();
 
         // Get not my planets sorted by distance to my start planet
@@ -189,16 +188,13 @@ public class PWBotHC implements PWBot
         for (Map.Entry<PWPlanet, Integer> entry : planetsToExpand.entrySet()) {
             List<PWOrder> expansionOrders = ordersToNeutralPlanet(entry.getKey());
             validateOrders(expansionOrders);
-            if (!expansionOrders.isEmpty())
-                orders.addAll(expansionOrders);
+            if (!expansionOrders.isEmpty()) orders.addAll(expansionOrders);
         }
 
         return orders;
     }
 
-
-    public List<PWOrder> attackOrders()
-    {
+    public List<PWOrder> attackOrders() {
         List<PWOrder> orders = new ArrayList<PWOrder>();
         Collections.sort(oppPlanets, PLANETS_SORT_BY_NUM_SHIPS_ASC);
 
@@ -224,8 +220,10 @@ public class PWBotHC implements PWBot
                 try {
                     throw new Exception();
                 } catch (Exception e) {
-                    System.err.println(shipsAvailable.get(myPlanet) + " > " + myPlanet.getNumShips());
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    System.err.println(
+                            shipsAvailable.get(myPlanet) + " > " + myPlanet.getNumShips());
+                    e.printStackTrace(); // To change body of catch statement use File |
+                    // Settings | File Templates.
                 }
             }
         }
@@ -234,8 +232,7 @@ public class PWBotHC implements PWBot
     /////////////////////
     // ULTIMATE METHOD //
     /////////////////////
-    public PWPlanet predictPlanetFuture(PWPlanet planet)
-    {
+    public PWPlanet predictPlanetFuture(PWPlanet planet) {
         List<PWFleet> upcomingFleets = new ArrayList<PWFleet>();
 
         // Identify the upcoming fleets
@@ -246,8 +243,7 @@ public class PWBotHC implements PWBot
         }
 
         // If there are no fleets going into the planet
-        if (upcomingFleets.isEmpty())
-            return planet;
+        if (upcomingFleets.isEmpty()) return planet;
 
         // Sort the fleets by their turns remaining (top to bottom)
         Collections.sort(upcomingFleets, SORT_FLEETS_TURNS_REM_DESC);
@@ -267,7 +263,7 @@ public class PWBotHC implements PWBot
             newGameState.doTimeStep();
         }
 
-        // Return future predicted planet 
+        // Return future predicted planet
         return newGameState.getPlanet(planet.getPlanetID());
     }
 
@@ -280,12 +276,12 @@ public class PWBotHC implements PWBot
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else if (order.getNumShips() > shipsOnPlanet) {
+            } else if (order.getNumShips() > shipsOnPlanet) {
                 try {
                     throw new Exception();
                 } catch (Exception e) {
-                    System.err.printf("Sending %d ships, but you can %d", order.getNumShips(), shipsOnPlanet);
+                    System.err.printf(
+                            "Sending %d ships, but you can %d", order.getNumShips(), shipsOnPlanet);
                     e.printStackTrace();
                 }
             }
@@ -298,8 +294,7 @@ public class PWBotHC implements PWBot
         shipsAvailable.put(planet, prev - shipsToReduce);
     }
 
-    private List<PWOrder> ordersToAttackPlanet(PWPlanet attackedPlanet)
-    {
+    private List<PWOrder> ordersToAttackPlanet(PWPlanet attackedPlanet) {
         // Sort my planets by their distance to the planet in danger
         PLANETS_SORT_DIST_TO_PLANET_ASC.setModel(gameState);
         PLANETS_SORT_DIST_TO_PLANET_ASC.setDstPlanet(attackedPlanet);
@@ -316,11 +311,12 @@ public class PWBotHC implements PWBot
                 if (shipsAvailable.get(myPlanet) >= shipsNeeded) {
                     shipsToSend = shipsNeeded;
                 } /*else {
-                    shipsToSend = shipsAvailable.get(myPlanet);
-                }*/
+                      shipsToSend = shipsAvailable.get(myPlanet);
+                  }*/
                 if (shipsToSend >= 1) {
                     shipsNeeded -= shipsToSend;
-                    assert shipsToSend <= shipsAvailable.get(myPlanet) : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
+                    assert shipsToSend <= shipsAvailable.get(myPlanet)
+                            : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
                     assert shipsToSend != 0 : "not zero! " + shipsToSend;
                     protectionOrders.add(new PWOrder(playerID, srcID, dstID, shipsToSend));
                     reduceShipsMap(myPlanet, shipsToSend);
@@ -335,9 +331,7 @@ public class PWBotHC implements PWBot
         return protectionOrders;
     }
 
-
-    private List<PWOrder> ordersToNeutralPlanet(PWPlanet neutralPlanet)
-    {
+    private List<PWOrder> ordersToNeutralPlanet(PWPlanet neutralPlanet) {
         // Minimium required orders to get a neutral planet
         List<PWOrder> expandOrders = new ArrayList<PWOrder>();
 
@@ -348,7 +342,7 @@ public class PWBotHC implements PWBot
 
         int shipsNeeded = planetsToExpand.get(neutralPlanet);
         assert shipsNeeded > 0;
-        
+
         for (PWPlanet myPlanet : myPlanets) {
             // As long as myPlanet is not in danger, and it has at least 1
             if (!planetsInDanger.containsKey(myPlanet) && shipsAvailable.get(myPlanet) >= 1) {
@@ -358,16 +352,17 @@ public class PWBotHC implements PWBot
                 if (shipsAvailable.get(myPlanet) >= shipsNeeded) {
                     shipsToSend = shipsNeeded;
                 } /*else {
-                    shipsToSend = shipsAvailable.get(myPlanet);
-                }*/
+                      shipsToSend = shipsAvailable.get(myPlanet);
+                  }*/
                 if (shipsToSend >= 1) {
                     shipsNeeded -= shipsToSend;
-                    assert shipsToSend <= shipsAvailable.get(myPlanet) : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
+                    assert shipsToSend <= shipsAvailable.get(myPlanet)
+                            : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
                     expandOrders.add(new PWOrder(playerID, srcID, dstID, shipsToSend));
                     reduceShipsMap(myPlanet, shipsToSend);
                 }
             }
-//            assert shipsNeeded >= 0;
+            //            assert shipsNeeded >= 0;
             if (shipsNeeded == 0) {
                 break;
             }
@@ -377,11 +372,10 @@ public class PWBotHC implements PWBot
     }
 
     // Send the needed ships to a planet in danger
-    private List<PWOrder> ordersToProtectPlanet(PWPlanet planetInDanger)
-    {
+    private List<PWOrder> ordersToProtectPlanet(PWPlanet planetInDanger) {
         // Minimum orders required to protect the planet in danger
         List<PWOrder> protectionOrders = new ArrayList<PWOrder>();
-        
+
         // Sort my planets by their distance to the planet in danger (ascending)
         PLANETS_SORT_DIST_TO_PLANET_ASC.setModel(gameState);
         PLANETS_SORT_DIST_TO_PLANET_ASC.setDstPlanet(planetInDanger);
@@ -398,11 +392,12 @@ public class PWBotHC implements PWBot
                 if (shipsAvailable.get(myPlanet) >= shipsNeeded) {
                     shipsToSend = shipsNeeded;
                 } /*else {
-                    shipsToSend = shipsAvailable.get(myPlanet);
-                } */
+                      shipsToSend = shipsAvailable.get(myPlanet);
+                  } */
                 if (shipsToSend >= 1) {
                     shipsNeeded -= shipsToSend;
-                    assert shipsToSend <= shipsAvailable.get(myPlanet) : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
+                    assert shipsToSend <= shipsAvailable.get(myPlanet)
+                            : shipsToSend + " <= " + shipsAvailable.get(myPlanet);
                     assert shipsToSend != 0 : "not zero! " + shipsToSend;
                     protectionOrders.add(new PWOrder(playerID, srcID, dstID, shipsToSend));
                     reduceShipsMap(myPlanet, shipsToSend);
@@ -418,18 +413,22 @@ public class PWBotHC implements PWBot
     }
 
     private Map sortMapByValueAsc(Map<PWPlanet, Integer> map) {
-        List<Map.Entry<PWPlanet, Integer>> list = new LinkedList<Map.Entry<PWPlanet, Integer>>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<PWPlanet, Integer>>() {
-            @Override
-            public int compare(Map.Entry<PWPlanet, Integer> entry1, Map.Entry<PWPlanet, Integer> entry2) {
-                if (entry1.getValue() < entry2.getValue())
-                    return -1;
-                else if (entry1.getValue() > entry2.getValue()) {
-                    return 1;
-                }
-                return 0;
-            }
-        });
+        List<Map.Entry<PWPlanet, Integer>> list =
+                new LinkedList<Map.Entry<PWPlanet, Integer>>(map.entrySet());
+        Collections.sort(
+                list,
+                new Comparator<Map.Entry<PWPlanet, Integer>>() {
+                    @Override
+                    public int compare(
+                            Map.Entry<PWPlanet, Integer> entry1,
+                            Map.Entry<PWPlanet, Integer> entry2) {
+                        if (entry1.getValue() < entry2.getValue()) return -1;
+                        else if (entry1.getValue() > entry2.getValue()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                });
         Map<PWPlanet, Integer> result = new LinkedHashMap<PWPlanet, Integer>();
         for (Map.Entry<PWPlanet, Integer> entry : result.entrySet()) {
             result.put(entry.getKey(), entry.getValue());
@@ -437,8 +436,7 @@ public class PWBotHC implements PWBot
         return result;
     }
 
-    private List<PWOrder> expand()
-    {
+    private List<PWOrder> expand() {
         List<PWOrder> orders = new ArrayList<PWOrder>();
 
         for (PWPlanet myPlanet : gameState.myPlanets(playerID)) {
@@ -455,13 +453,21 @@ public class PWBotHC implements PWBot
 
                     if (neighbor.getNumShips() < (myPlanet.getNumShips() - shipsAllocated - 2)) {
                         shipsToNeighbor = neighbor.getNumShips() + 1;
-                        orders.add(new PWOrder(playerID, myPlanet.getPlanetID(), neighbor.getPlanetID(),
-                                shipsToNeighbor));
+                        orders.add(
+                                new PWOrder(
+                                        playerID,
+                                        myPlanet.getPlanetID(),
+                                        neighbor.getPlanetID(),
+                                        shipsToNeighbor));
                         shipsAllocated += shipsToNeighbor;
                     } else if ((myPlanet.getNumShips() - shipsAllocated - 2) >= 10) {
                         shipsToNeighbor = (myPlanet.getNumShips() - shipsAllocated) - 1;
-                        orders.add(new PWOrder(playerID, myPlanet.getPlanetID(), neighbor.getPlanetID(),
-                                shipsToNeighbor));
+                        orders.add(
+                                new PWOrder(
+                                        playerID,
+                                        myPlanet.getPlanetID(),
+                                        neighbor.getPlanetID(),
+                                        shipsToNeighbor));
                         shipsAllocated += shipsToNeighbor;
                     }
                 }
@@ -487,5 +493,4 @@ public class PWBotHC implements PWBot
         }
         return upcomingBalance;
     }
-
 }

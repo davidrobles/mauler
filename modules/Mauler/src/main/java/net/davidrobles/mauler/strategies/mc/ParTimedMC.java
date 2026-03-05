@@ -1,21 +1,22 @@
-package net.davidrobles.mauler.strategies.mc;//package dr.dr.mauler.players.mc;
+package net.davidrobles.mauler.strategies.mc; // package dr.dr.mauler.players.mc;
 //
-//import dr.Game;
-//import dr.Strategy;
-//import dr.dr.mauler.players.UtilityFunction;
-//import DRUtil;
+// import dr.Game;
+// import dr.Strategy;
+// import dr.dr.mauler.players.UtilityFunction;
+// import DRUtil;
 //
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.List;
-//import java.util.Random;
-//import java.util.concurrent.*;
+// import java.util.ArrayList;
+// import java.util.Collection;
+// import java.util.List;
+// import java.util.Random;
+// import java.util.concurrent.*;
 //
-///**
+/// **
 // * A parallel implementation of a simple Monte-Carlo algorithm.
 // */
-//public class ParTimedMC<GAME extends Game<GAME>> extends AbstractMC<GAME> implements Strategy<GAME>
-//{
+// public class ParTimedMC<GAME extends Game<GAME>> extends AbstractMC<GAME> implements
+// Strategy<GAME>
+// {
 //    public ParTimedMC(UtilityFunction<GAME> utilFunc)
 //    {
 //        this(utilFunc, new Random());
@@ -125,4 +126,4 @@ package net.davidrobles.mauler.strategies.mc;//package dr.dr.mauler.players.mc;
 //            return outcomes;
 //        }
 //    }
-//}
+// }

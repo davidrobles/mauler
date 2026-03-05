@@ -5,7 +5,6 @@ package net.davidrobles.rl;
  *
  * @author David Robles
  */
-public interface Learner
-{
+public interface Learner {
     void learn();
 }

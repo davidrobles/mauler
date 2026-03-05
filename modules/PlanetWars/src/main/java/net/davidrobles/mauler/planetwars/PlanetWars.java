@@ -1,13 +1,13 @@
-package net.davidrobles.mauler.planetwars;// Contestants do not need to worry about anything in this file. This is just
+package net.davidrobles.mauler.planetwars; // Contestants do not need to worry about anything in
+// this file. This is just
 // helper code that does the boring stuff for you, so you can focus on the
 // interesting stuff. That being said, you're welcome to change anything in
 // this file if you know what you're doing.
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class PlanetWars
-{
+public class PlanetWars {
     // Constructs a PlanetWars object instance, given a string containing a
     // description of a game state.
     public PlanetWars(String gameStateString) {
@@ -143,11 +143,8 @@ public class PlanetWars
     //   * you can't move more ships than are currently on the source planet.
     //   * the ships will take a few turns to reach their destination. Travel
     //     is not instant. See the Distance() function for more info.
-    public void IssueOrder(int sourcePlanet,
-                           int destinationPlanet,
-                           int numShips) {
-        System.out.println("" + sourcePlanet + " " + destinationPlanet + " " +
-                numShips);
+    public void IssueOrder(int sourcePlanet, int destinationPlanet, int numShips) {
+        System.out.println("" + sourcePlanet + " " + destinationPlanet + " " + numShips);
         System.out.flush();
     }
 
@@ -162,8 +159,7 @@ public class PlanetWars
     //   * the ships will take a few turns to reach their destination. Travel
     //     is not instant. See the Distance() function for more info.
     public void IssueOrder(Planet source, Planet dest, int numShips) {
-        System.out.println("" + source.PlanetID() + " " + dest.PlanetID() +
-                " " + numShips);
+        System.out.println("" + source.PlanetID() + " " + dest.PlanetID() + " " + numShips);
         System.out.flush();
     }
 
@@ -258,11 +254,7 @@ public class PlanetWars
                 int owner = Integer.parseInt(tokens[3]);
                 int numShips = Integer.parseInt(tokens[4]);
                 int growthRate = Integer.parseInt(tokens[5]);
-                Planet p = new Planet(planetID++,
-                        owner,
-                        numShips,
-                        growthRate,
-                        x, y);
+                Planet p = new Planet(planetID++, owner, numShips, growthRate, x, y);
                 planets.add(p);
             } else if (tokens[0].equals("F")) {
                 if (tokens.length != 7) {
@@ -274,12 +266,14 @@ public class PlanetWars
                 int destination = Integer.parseInt(tokens[4]);
                 int totalTripLength = Integer.parseInt(tokens[5]);
                 int turnsRemaining = Integer.parseInt(tokens[6]);
-                Fleet f = new Fleet(owner,
-                        numShips,
-                        source,
-                        destination,
-                        totalTripLength,
-                        turnsRemaining);
+                Fleet f =
+                        new Fleet(
+                                owner,
+                                numShips,
+                                source,
+                                destination,
+                                totalTripLength,
+                                turnsRemaining);
                 fleets.add(f);
             } else {
                 return 0;

@@ -1,31 +1,30 @@
 package net.davidrobles.mauler.loa;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import javax.swing.table.TableModel;
 import net.davidrobles.mauler.core.MatchController;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;
 import net.davidrobles.mauler.gui.MatchControllerTableView;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.util.DRUtil;
 
-import javax.swing.table.TableModel;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class LOARun
-{
+public class LOARun {
     private static final Random RND = new Random();
 
-    private static void runGUI()
-    {
+    private static void runGUI() {
         LOA loa = new LOA();
-        List<Strategy<LOA>> players = new ArrayList<Strategy<LOA>>()
-        {{
-                add(new RandomStrategy<LOA>(RND));
-                add(new RandomStrategy<LOA>(RND));
-            }};
+        List<Strategy<LOA>> players =
+                new ArrayList<Strategy<LOA>>() {
+                    {
+                        add(new RandomStrategy<LOA>(RND));
+                        add(new RandomStrategy<LOA>(RND));
+                    }
+                };
 
         LOAView panel = new LOAView(loa);
         MatchController<LOA> mc = new MatchController<LOA>(LOA::new, players, 50);
@@ -41,8 +40,7 @@ public class LOARun
         DRUtil.centerJFrame(boardApp);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         runGUI();
     }
 }

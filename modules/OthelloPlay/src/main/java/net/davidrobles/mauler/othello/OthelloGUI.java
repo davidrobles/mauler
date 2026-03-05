@@ -1,59 +1,62 @@
 package net.davidrobles.mauler.othello;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import javax.swing.*;
+import javax.swing.table.TableModel;
 import net.davidrobles.mauler.core.MatchController;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.gui.BoardApp;
 import net.davidrobles.mauler.gui.MatchControllerButtonsView;
 import net.davidrobles.mauler.gui.MatchControllerSliderView;
 import net.davidrobles.mauler.gui.MatchControllerTableView;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.util.DRUtil;
 
-import javax.swing.*;
-import javax.swing.table.TableModel;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class OthelloGUI
-{
+public class OthelloGUI {
     private static final Random rng = new Random();
 
-    public static void runTest()
-    {
+    public static void runTest() {
         Othello othello = new Othello();
-//        long blackBB = -1089623802071814462L;
-//        long whiteBB = 1089623802054971449L;
-//        othello.setBoard(blackBB, whiteBB);
-        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>()
-        {{
-            add(new RandomStrategy<Othello>(rng));
-            add(new RandomStrategy<Othello>(rng));
-        }};
+        //        long blackBB = -1089623802071814462L;
+        //        long whiteBB = 1089623802054971449L;
+        //        othello.setBoard(blackBB, whiteBB);
+        List<Strategy<Othello>> players =
+                new ArrayList<Strategy<Othello>>() {
+                    {
+                        add(new RandomStrategy<Othello>(rng));
+                        add(new RandomStrategy<Othello>(rng));
+                    }
+                };
 
         OthelloView panel = new OthelloView(othello);
         MatchController<Othello> mc = new MatchController<Othello>(Othello::new, players, 50);
-        MatchControllerButtonsView<Othello> buttonsView = new MatchControllerButtonsView<Othello>(mc);
+        MatchControllerButtonsView<Othello> buttonsView =
+                new MatchControllerButtonsView<Othello>(mc);
         MatchControllerSliderView<Othello> sliderView = new MatchControllerSliderView<Othello>(mc);
         TableModel model = new OthelloTableModel(mc);
-        MatchControllerTableView<Othello> mcTableView = new MatchControllerTableView<Othello>(model, mc);
+        MatchControllerTableView<Othello> mcTableView =
+                new MatchControllerTableView<Othello>(model, mc);
         mc.registerObserver(mcTableView);
         mc.registerObserver(buttonsView);
         mc.registerObserver(sliderView);
         mc.registerObserver(panel);
-        BoardApp<Othello> boardApp = new BoardApp<Othello>(panel, mc, buttonsView, sliderView, mcTableView);
+        BoardApp<Othello> boardApp =
+                new BoardApp<Othello>(panel, mc, buttonsView, sliderView, mcTableView);
         DRUtil.centerJFrame(boardApp);
     }
 
-    public static void runBasic()
-    {
+    public static void runBasic() {
         Othello othello = new Othello();
 
-        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>()
-        {{
-            add(new RandomStrategy<Othello>(rng));
-            add(new RandomStrategy<Othello>(rng));
-        }};
+        List<Strategy<Othello>> players =
+                new ArrayList<Strategy<Othello>>() {
+                    {
+                        add(new RandomStrategy<Othello>(rng));
+                        add(new RandomStrategy<Othello>(rng));
+                    }
+                };
 
         OthelloView panel = new OthelloView(othello);
         MatchController<Othello> match = new MatchController<Othello>(Othello::new, players, 50);
@@ -63,8 +66,7 @@ public class OthelloGUI
         frame.pack();
         frame.setVisible(true);
 
-        while (!othello.isOver())
-        {
+        while (!othello.isOver()) {
             match.next();
             try {
                 Thread.sleep(1000);
@@ -72,12 +74,10 @@ public class OthelloGUI
                 e.printStackTrace();
             }
         }
-
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         runTest();
-//        runBasic();
+        //        runBasic();
     }
 }

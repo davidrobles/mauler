@@ -2,16 +2,15 @@ package net.davidrobles.mauler.planetwars;
 
 import java.util.*;
 
-public class MyBot3
-{
-    public static void DoTurn(PlanetWars pw)
-    {
+public class MyBot3 {
+    public static void DoTurn(PlanetWars pw) {
         // Sends the game state to the our experimental model
         List<PWOrder> orders = PWAdapter.getOrders(pw, 1);
 
         // Issues the orders to the real game engine
         for (PWOrder order : orders) {
-            pw.IssueOrder(order.getSourcePlanet(), order.getDestinationPlanet(), order.getNumShips());
+            pw.IssueOrder(
+                    order.getSourcePlanet(), order.getDestinationPlanet(), order.getNumShips());
         }
     }
 

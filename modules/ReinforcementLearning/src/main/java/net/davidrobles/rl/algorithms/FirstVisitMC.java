@@ -1,12 +1,12 @@
-package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
+package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //
-//import dr.rl.*;
-//import TabularVFunction;
+// import dr.rl.*;
+// import TabularVFunction;
 //
-//import java.util.*;
+// import java.util.*;
 //
-//public class FirstVisitMC<S, A> implements VValuesAlgorithm<S, A>
-//{
+// public class FirstVisitMC<S, A> implements VValuesAlgorithm<S, A>
+// {
 //    // Lists all the states visited in the current episode
 //    private LinkedHashSet<S> visitedStates = new LinkedHashSet<S>();
 //
@@ -153,4 +153,4 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //    public void addVFunctionObserver(VFunctionObserver observer) {
 //        observers.add(observer);
 //    }
-//}
+// }

@@ -92,8 +92,19 @@ public class PWPlanet {
 
     @Override
     public String toString() {
-        return "Planet {ID:" + planetID + ", Owner:" + owner + ", NumShips:" + numShips
-                + ", growthRate:" + growthRate + ", X:" + x + ", Y:" + y + "}"; 
+        return "Planet {ID:"
+                + planetID
+                + ", Owner:"
+                + owner
+                + ", NumShips:"
+                + numShips
+                + ", growthRate:"
+                + growthRate
+                + ", X:"
+                + x
+                + ", Y:"
+                + y
+                + "}";
     }
 
     @Override
@@ -112,5 +123,4 @@ public class PWPlanet {
     public int hashCode() {
         return planetID;
     }
-    
 }

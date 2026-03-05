@@ -1,30 +1,27 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
+import net.davidrobles.mauler.strategies.RandomStrategy;
+import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.greedy.GreedyStrategy;
-import net.davidrobles.mauler.strategies.TerminalEvaluator;
 import net.davidrobles.mauler.strategies.mcts.MCTS;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.mcts.selection.SelectionPolicy;
 import net.davidrobles.mauler.strategies.mcts.selection.UCB1;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static net.davidrobles.thesis.othello.ch4.OthelloVF.*;
-
-public class MCTS_WPC
-{
-    public static void evaluateUtilityFunctionsInMCTS()
-    {
+public class MCTS_WPC {
+    public static void evaluateUtilityFunctionsInMCTS() {
         Othello othello = new Othello();
         double c = 0.5;
         int nGames = 250;
@@ -46,24 +43,23 @@ public class MCTS_WPC
         players.add(mcts2);
         playersNames.add("u=[1,-1,0]");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playersNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
 
     // Evaluates MCTS algorithms with different C values
-    public static void MCTSDifferentCValues()
-    {
+    public static void MCTSDifferentCValues() {
         Othello othello = new Othello();
-        double[] cValues = { 0.3, 0.4, 0.5, 0.6, 0.7 };
+        double[] cValues = {0.3, 0.4, 0.5, 0.6, 0.7};
         int nGames = 250;
         int sims = 2500;
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playersNames = new ArrayList<String>();
 
-        for (int i = 0; i < cValues.length; i++)
-        {
+        for (int i = 0; i < cValues.length; i++) {
             SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(cValues[i]);
             RandomStrategy<Othello> randPlayer = new RandomStrategy<Othello>();
             MCTS<Othello> mcts = new MCTS<Othello>(treePolicy, randPlayer, sims);
@@ -71,19 +67,19 @@ public class MCTS_WPC
             playersNames.add("c=" + cValues[i]);
         }
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playersNames);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playersNames);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
 
     // This experiment will find out which epsilon value is better for the replacement of
     // the random player in the default policy
-    public static void MCTSvsMCTS_WPCEpsilonValues()
-    {
+    public static void MCTSvsMCTS_WPCEpsilonValues() {
         System.out.println("with evo");
         Othello othello = new Othello();
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        double[] epsilonValues = { 0.0, 0.1, 0.25, 0.5, 1.0};
+        double[] epsilonValues = {0.0, 0.1, 0.25, 0.5, 1.0};
         double c = 0.5;
         int nGames = 50;
         int timeout = 250;
@@ -92,28 +88,29 @@ public class MCTS_WPC
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playersNames = new ArrayList<String>();
 
-        for (int i = 0; i < epsilonValues.length; i++)
-        {
-            EpsilonGreedyStrategy<Othello> eGreedyWPC = new EpsilonGreedyStrategy<Othello>(NTS_EVO, epsilonValues[i]);
+        for (int i = 0; i < epsilonValues.length; i++) {
+            EpsilonGreedyStrategy<Othello> eGreedyWPC =
+                    new EpsilonGreedyStrategy<Othello>(NTS_EVO, epsilonValues[i]);
             MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c), eGreedyWPC);
             players.add(mcts);
             playersNames.add("e=" + epsilonValues[i]);
         }
 
-        RoundRobin<Othello> rr = new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
+        RoundRobin<Othello> rr =
+                new RoundRobin<>(Othello::new, nGames, players, playersNames, timeout);
         rr.run();
         System.out.println(rr.toLatexTable());
     }
 
-    public static void MCTS_vs_MCTS_WPC_Sims()
-    {
+    public static void MCTS_vs_MCTS_WPC_Sims() {
         int nSims = 3000;
         double c = 0.5;
         int nGames = 50;
         double epsilon = 0.0;
         SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c);
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        EpsilonGreedyStrategy<Othello> epsilonGreedy = new EpsilonGreedyStrategy<Othello>(wpc, epsilon);
+        EpsilonGreedyStrategy<Othello> epsilonGreedy =
+                new EpsilonGreedyStrategy<Othello>(wpc, epsilon);
         MCTS<Othello> stdMCTS = new MCTS<Othello>(treePolicy, new RandomStrategy<Othello>(), nSims);
         MCTS<Othello> wpcMCTS = new MCTS<Othello>(treePolicy, epsilonGreedy, nSims);
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
@@ -123,16 +120,18 @@ public class MCTS_WPC
         untimedSeries.run();
     }
 
-    public static void MCTS_vs_MCTS_WPC_Time()
-    {
+    public static void MCTS_vs_MCTS_WPC_Time() {
         double c = 0.5;
         int nGames = 100;
         int timeout = 1000;
         SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c);
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-//        MCTSTime<Othello> stdMCTS = new MCTSTime<Othello>(treePolicy, new RandomStrategy<Othello>());
-        MCTS<Othello> stdMCTS = new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 1.0));
-        MCTS<Othello> wpcMCTS = new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
+        //        MCTSTime<Othello> stdMCTS = new MCTSTime<Othello>(treePolicy, new
+        // RandomStrategy<Othello>());
+        MCTS<Othello> stdMCTS =
+                new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 1.0));
+        MCTS<Othello> wpcMCTS =
+                new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(stdMCTS);
         players.add(wpcMCTS);
@@ -141,13 +140,14 @@ public class MCTS_WPC
         timedSeries.run();
     }
 
-    public static void fuckingTest()
-    {
+    public static void fuckingTest() {
         double c = 0.5;
         SelectionPolicy<Othello> treePolicy = new UCB1<Othello>(c);
         WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-        MCTS<Othello> p1 = new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 1.0));
-        MCTS<Othello> p2 = new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
+        MCTS<Othello> p1 =
+                new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 1.0));
+        MCTS<Othello> p2 =
+                new MCTS<Othello>(treePolicy, new EpsilonGreedyStrategy<Othello>(wpc, 0.1));
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(p1);
         players.add(p2);
@@ -157,27 +157,23 @@ public class MCTS_WPC
         int wins = 0;
         int timeout = 50;
 
-        for (int i = 0; i < nGames; i++)
-        {
+        for (int i = 0; i < nGames; i++) {
             othello.reset();
             int starter = i % 2;
 
-            while (!othello.isOver())
-            {
+            while (!othello.isOver()) {
                 int curPlayer = (othello.getCurPlayer() + starter) % 2;
-//                int curPlayer = othello.getCurPlayer();
+                //                int curPlayer = othello.getCurPlayer();
                 othello.makeMove(players.get(curPlayer).move(othello, timeout));
             }
 
-            if (othello.getOutcome().orElseThrow()[starter] == GameResult.WIN)
-                wins++;
+            if (othello.getOutcome().orElseThrow()[starter] == GameResult.WIN) wins++;
         }
 
         System.out.println("Wins: " + wins);
     }
 
-    static void MCTSNonRandomGreedyVsMCTSNonRandomEpsilonGreedy()
-    {
+    static void MCTSNonRandomGreedyVsMCTSNonRandomEpsilonGreedy() {
         int nGames = 50;
         int timeout = 1000;
         double c = 0.5;

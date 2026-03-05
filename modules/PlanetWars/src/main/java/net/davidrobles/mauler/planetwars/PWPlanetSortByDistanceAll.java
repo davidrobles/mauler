@@ -11,8 +11,7 @@ public class PWPlanetSortByDistanceAll implements Comparator<PWPlanet> {
     }
 
     @Override
-    public int compare(PWPlanet p1, PWPlanet p2)
-    {
+    public int compare(PWPlanet p1, PWPlanet p2) {
         int p1Dist = 0;
 
         for (PWPlanet myPlanet : gameState.myPlanets(1)) {
@@ -29,11 +28,8 @@ public class PWPlanetSortByDistanceAll implements Comparator<PWPlanet> {
             p2Dist += dist;
         }
 
-        if (p1Dist < p2Dist)
-            return -1;
-        else if (p1Dist > p2Dist)
-            return 1;
+        if (p1Dist < p2Dist) return -1;
+        else if (p1Dist > p2Dist) return 1;
         return 0;
     }
-
 }

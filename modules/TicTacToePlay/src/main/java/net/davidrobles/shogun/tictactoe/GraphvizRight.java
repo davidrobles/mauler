@@ -1,19 +1,19 @@
-//package dr.shogun.tictactoe;
+// package dr.shogun.tictactoe;
 //
-//import Game;
-//import dr.mauler.core.players.RandomStrategy;
-//import Games;
-//import dr.mauler.othello.Othello;
-//import TerminalEvaluator;
-//import GraphvizMCTSObserver;
-//import MCTS;
-//import UCB1;
+// import Game;
+// import dr.mauler.core.players.RandomStrategy;
+// import Games;
+// import dr.mauler.othello.Othello;
+// import TerminalEvaluator;
+// import GraphvizMCTSObserver;
+// import MCTS;
+// import UCB1;
 //
-//import java.io.File;
-//import java.io.IOException;
-//import java.util.Random;
+// import java.io.File;
+// import java.io.IOException;
+// import java.util.Random;
 //
-//public class GraphvizRight {
+// public class GraphvizRight {
 //
 //    public static void main(String[] args) throws IOException {
 //        hello();
@@ -29,7 +29,8 @@
 //
 //        for (int i = 0; i < c.length; i++) {
 //            Othello game = othello.copy();
-//            MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c[i], new Random()), new RandomStrategy<Othello>(), nSims);
+//            MCTS<Othello> mcts = new MCTS<Othello>(new UCB1<Othello>(c[i], new Random()), new
+// RandomStrategy<Othello>(), nSims);
 //            String filename = "/Users/drobles/Dropbox/Temp/Graphviz/dr-" + c[i] + ".dot";
 //            File file = new File(filename);
 //            GraphvizMCTSObserver obs = new GraphvizMCTSObserver(file);
@@ -41,4 +42,4 @@
 ////            Process pr = rt.exec("twopi -Tpdf dot.dot -o dot.pdf");
 //        }
 //    }
-//}
+// }

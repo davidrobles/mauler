@@ -1,13 +1,12 @@
 package net.davidrobles.mauler.othello;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
 import net.davidrobles.mauler.core.GameResult;
 import net.davidrobles.mauler.core.GameTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Full test suite for {@link Othello}.
@@ -16,6 +15,7 @@ import static org.junit.Assert.*;
  * testNumLegalMovesEqualsListMoves.
  *
  * <p>Board layout (row-major, 0-indexed):
+ *
  * <pre>
  *    a  b  c  d  e  f  g  h
  * 1  0  1  2  3  4  5  6  7
@@ -27,14 +27,12 @@ import static org.junit.Assert.*;
  * ...
  * </pre>
  *
- * <p>Standard starting position: White at d4(27) and e5(36), Black at e4(28) and d5(35).
- * Black (player 0) moves first. Initial legal moves for Black: d3(19), c4(26), f5(37), e6(44).
+ * <p>Standard starting position: White at d4(27) and e5(36), Black at e4(28) and d5(35). Black
+ * (player 0) moves first. Initial legal moves for Black: d3(19), c4(26), f5(37), e6(44).
  */
-public class OthelloTest extends GameTest<Othello>
-{
+public class OthelloTest extends GameTest<Othello> {
     @Before
-    public void init()
-    {
+    public void init() {
         game = new Othello();
     }
 
@@ -43,47 +41,44 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void initialPlayerIsBlack()
-    {
+    public void initialPlayerIsBlack() {
         assertEquals(0, game.getCurPlayer());
     }
 
     @Test
-    public void initialDiscsPerPlayer()
-    {
+    public void initialDiscsPerPlayer() {
         assertEquals(2, game.getNumDiscs(0)); // black
         assertEquals(2, game.getNumDiscs(1)); // white
     }
 
     @Test
-    public void initialTotalDiscIsFour()
-    {
+    public void initialTotalDiscIsFour() {
         assertEquals(Othello.NUM_DISCS_START, game.getNumDiscs());
     }
 
     @Test
-    public void initialBoardHasStandardOthelloPosition()
-    {
+    public void initialBoardHasStandardOthelloPosition() {
         // d4=27:White, e4=28:Black, d5=35:Black, e5=36:White; all others empty
         for (int i = 0; i < Othello.NUM_SQUARES; i++) {
             if (i == 27 || i == 36)
-                assertEquals("expected White at cell " + i, Othello.Square.WHITE, game.getSquare(i));
+                assertEquals(
+                        "expected White at cell " + i, Othello.Square.WHITE, game.getSquare(i));
             else if (i == 28 || i == 35)
-                assertEquals("expected Black at cell " + i, Othello.Square.BLACK, game.getSquare(i));
+                assertEquals(
+                        "expected Black at cell " + i, Othello.Square.BLACK, game.getSquare(i));
             else
-                assertEquals("expected Empty at cell " + i, Othello.Square.EMPTY, game.getSquare(i));
+                assertEquals(
+                        "expected Empty at cell " + i, Othello.Square.EMPTY, game.getSquare(i));
         }
     }
 
     @Test
-    public void initialNumMovesIsFour()
-    {
+    public void initialNumMovesIsFour() {
         assertEquals(4, game.getNumMoves());
     }
 
     @Test
-    public void initialMovesAreStandardOpeningMoves()
-    {
+    public void initialMovesAreStandardOpeningMoves() {
         // Black's four opening moves in standard Othello
         List<String> moves = game.getMoves();
         assertTrue(moves.contains("d3")); // cell 19
@@ -94,26 +89,22 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void initialGameIsNotOver()
-    {
+    public void initialGameIsNotOver() {
         assertFalse(game.isOver());
     }
 
     @Test
-    public void initialOutcomeIsAbsent()
-    {
+    public void initialOutcomeIsAbsent() {
         assertFalse(game.getOutcome().isPresent());
     }
 
     @Test
-    public void getNumPlayersIsTwo()
-    {
+    public void getNumPlayersIsTwo() {
         assertEquals(2, game.getNumPlayers());
     }
 
     @Test
-    public void getNameIsOthello()
-    {
+    public void getNameIsOthello() {
         assertEquals("Othello", game.getName());
     }
 
@@ -122,16 +113,14 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void playerSwitchesAfterNormalMove()
-    {
+    public void playerSwitchesAfterNormalMove() {
         assertEquals(0, game.getCurPlayer());
         game.makeMove(0); // Black plays
         assertEquals(1, game.getCurPlayer());
     }
 
     @Test
-    public void playingD3FlipsWhiteDisc()
-    {
+    public void playingD3FlipsWhiteDisc() {
         // Black plays d3 (cell 19). White at d4 (cell 27) is sandwiched
         // between the new Black disc at d3 and the existing Black disc at d5 (cell 35).
         game.makeMove(0); // d3 = first move in ascending cell order
@@ -143,8 +132,7 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void discCountsUpdateAfterFlip()
-    {
+    public void discCountsUpdateAfterFlip() {
         // Black plays d3: places 1 disc, flips 1 White → Black
         game.makeMove(0); // d3
         assertEquals(4, game.getNumDiscs(0)); // Black: 2 + 1 placed + 1 flipped
@@ -152,8 +140,7 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void totalDiscsIncreaseByOneAfterNormalMove()
-    {
+    public void totalDiscsIncreaseByOneAfterNormalMove() {
         // Placing always adds exactly one disc; flips only convert, not add
         int before = game.getNumDiscs();
         game.makeMove(0);
@@ -161,8 +148,7 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void makeMoveByStringEquivalentToIndex()
-    {
+    public void makeMoveByStringEquivalentToIndex() {
         // makeMove("d3") should produce the same state as makeMove(0)
         Othello byIndex = new Othello();
         byIndex.makeMove(0);
@@ -177,8 +163,7 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void outcomeAbsentDuringPlay()
-    {
+    public void outcomeAbsentDuringPlay() {
         for (int i = 0; i < 10; i++) {
             assertFalse(game.getOutcome().isPresent());
             game.makeMove(0);
@@ -186,30 +171,26 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void noMovesWhenGameOver()
-    {
-        while (!game.isOver())
-            game.makeMove(0);
+    public void noMovesWhenGameOver() {
+        while (!game.isOver()) game.makeMove(0);
         assertEquals(0, game.getNumMoves());
         assertEquals(0, game.getMoves().size());
     }
 
     @Test
-    public void outcomeConsistentWithDiscCount()
-    {
-        while (!game.isOver())
-            game.makeMove(0);
+    public void outcomeConsistentWithDiscCount() {
+        while (!game.isOver()) game.makeMove(0);
 
         GameResult[] outcome = game.getOutcome().orElseThrow();
         int black = game.getNumDiscs(0);
         int white = game.getNumDiscs(1);
 
         if (black > white) {
-            assertEquals(GameResult.WIN,  outcome[0]);
+            assertEquals(GameResult.WIN, outcome[0]);
             assertEquals(GameResult.LOSS, outcome[1]);
         } else if (white > black) {
             assertEquals(GameResult.LOSS, outcome[0]);
-            assertEquals(GameResult.WIN,  outcome[1]);
+            assertEquals(GameResult.WIN, outcome[1]);
         } else {
             assertEquals(GameResult.DRAW, outcome[0]);
             assertEquals(GameResult.DRAW, outcome[1]);
@@ -221,8 +202,7 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void resetRestoresInitialState()
-    {
+    public void resetRestoresInitialState() {
         game.makeMove(0);
         game.makeMove(0);
         game.reset();
@@ -240,11 +220,10 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void copyIsIndependentFromOriginal()
-    {
-        game.makeMove(0);              // Black plays d3
+    public void copyIsIndependentFromOriginal() {
+        game.makeMove(0); // Black plays d3
         Othello copy = game.copy();
-        copy.makeMove(0);              // White plays on copy only
+        copy.makeMove(0); // White plays on copy only
 
         // Original: still White's turn, White has 1 disc
         assertEquals(1, game.getCurPlayer());
@@ -256,8 +235,7 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void originalIsIndependentFromCopy()
-    {
+    public void originalIsIndependentFromCopy() {
         Othello copy = game.copy();
         copy.makeMove(0);
 
@@ -272,8 +250,7 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void equalGamesHaveSameHashCode()
-    {
+    public void equalGamesHaveSameHashCode() {
         game.makeMove(0);
         Othello other = game.copy();
         assertEquals(game, other);
@@ -281,8 +258,7 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void differentGamesAreNotEqual()
-    {
+    public void differentGamesAreNotEqual() {
         Othello other = new Othello();
         game.makeMove(0);
         assertNotEquals(game, other);
@@ -293,8 +269,7 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test
-    public void getSquareRowColMatchesIndex()
-    {
+    public void getSquareRowColMatchesIndex() {
         game.makeMove(0); // change state so it is not trivially all-empty
         for (int row = 0; row < Othello.SIZE; row++)
             for (int col = 0; col < Othello.SIZE; col++)
@@ -302,12 +277,10 @@ public class OthelloTest extends GameTest<Othello>
     }
 
     @Test
-    public void getBoardMatchesGetSquare()
-    {
+    public void getBoardMatchesGetSquare() {
         game.makeMove(0);
         Othello.Square[] board = game.getBoard();
-        for (int i = 0; i < Othello.NUM_SQUARES; i++)
-            assertEquals(game.getSquare(i), board[i]);
+        for (int i = 0; i < Othello.NUM_SQUARES; i++) assertEquals(game.getSquare(i), board[i]);
     }
 
     // -------------------------------------------------------------------------
@@ -315,22 +288,18 @@ public class OthelloTest extends GameTest<Othello>
     // -------------------------------------------------------------------------
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveNegativeIndexThrows()
-    {
+    public void makeMoveNegativeIndexThrows() {
         game.makeMove(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveOutOfRangeThrows()
-    {
+    public void makeMoveOutOfRangeThrows() {
         game.makeMove(game.getNumMoves());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void makeMoveWhenGameOverThrows()
-    {
-        while (!game.isOver())
-            game.makeMove(0);
+    public void makeMoveWhenGameOverThrows() {
+        while (!game.isOver()) game.makeMove(0);
         game.makeMove(0);
     }
 }

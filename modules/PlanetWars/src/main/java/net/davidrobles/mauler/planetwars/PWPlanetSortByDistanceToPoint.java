@@ -2,8 +2,7 @@ package net.davidrobles.mauler.planetwars;
 
 import java.util.Comparator;
 
-public class PWPlanetSortByDistanceToPoint implements Comparator<PWPlanet>
-{
+public class PWPlanetSortByDistanceToPoint implements Comparator<PWPlanet> {
     private PWGameState gameState;
     private PWPoint point;
 
@@ -28,12 +27,9 @@ public class PWPlanetSortByDistanceToPoint implements Comparator<PWPlanet>
         yy = Math.pow(point.getY() - p2.getY(), 2);
 
         double distP2 = Math.sqrt(xx + yy);
-        
-        if (distP1 < distP2)
-            return -1;
-        else if (distP1 > distP2)
-            return 1;
+
+        if (distP1 < distP2) return -1;
+        else if (distP1 > distP2) return 1;
         return 0;
     }
-
 }

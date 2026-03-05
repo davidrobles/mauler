@@ -1,38 +1,28 @@
 package net.davidrobles.rl.policies;
 
+import java.util.Random;
+import net.davidrobles.rl.RLEnv;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
-import net.davidrobles.rl.RLEnv;
-
-import java.util.Random;
 
 /**
- * An Epsilon Greedy policy. Takes a greedy action with a '1 - epsilon' probability,
- * or random action otherwise.
+ * An Epsilon Greedy policy. Takes a greedy action with a '1 - epsilon' probability, or random
+ * action otherwise.
  *
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class EpsilonGreedy<S, A> implements RLPolicy<S, A>
-{
-    /**
-     * Probability of taking a random action.
-     */
+public class EpsilonGreedy<S, A> implements RLPolicy<S, A> {
+    /** Probability of taking a random action. */
     private double epsilon;
 
-    /**
-     * The random policy used to take the random actions (random value < epsilon).
-     */
+    /** The random policy used to take the random actions (random value < epsilon). */
     private RandomPolicy<S, A> randomPolicy;
 
-    /**
-     * The policy used to take greedy actions (random value >= epsilon).
-     */
+    /** The policy used to take greedy actions (random value >= epsilon). */
     private GreedyPolicy<S, A> greedyPolicy;
 
-    /**
-     * Random Number Generator.
-     */
+    /** Random Number Generator. */
     private final Random rng;
 
     /**
@@ -41,8 +31,7 @@ public class EpsilonGreedy<S, A> implements RLPolicy<S, A>
      * @param epsilon the probability of taking a random action
      * @param rng random number generator
      */
-    public EpsilonGreedy(double epsilon, Random rng)
-    {
+    public EpsilonGreedy(double epsilon, Random rng) {
         this.epsilon = epsilon;
         this.greedyPolicy = new GreedyPolicy<S, A>();
         this.randomPolicy = new RandomPolicy<S, A>(rng);
@@ -50,22 +39,18 @@ public class EpsilonGreedy<S, A> implements RLPolicy<S, A>
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, QFunction<S, A> qFunction)
-    {
+    public A getAction(RLEnv<S, A> env, QFunction<S, A> qFunction) {
         // explore
-        if (rng.nextDouble() < epsilon)
-            return randomPolicy.getAction(env, qFunction);
+        if (rng.nextDouble() < epsilon) return randomPolicy.getAction(env, qFunction);
 
         // exploit
         return greedyPolicy.getAction(env, qFunction);
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, VFunction<S> vFunction)
-    {
+    public A getAction(RLEnv<S, A> env, VFunction<S> vFunction) {
         // explore
-        if (rng.nextDouble() < epsilon)
-            return randomPolicy.getAction(env, vFunction);
+        if (rng.nextDouble() < epsilon) return randomPolicy.getAction(env, vFunction);
 
         // exploit
         return greedyPolicy.getAction(env, vFunction);

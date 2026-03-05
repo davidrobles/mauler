@@ -1,23 +1,20 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import java.util.*;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.TD0;
 import net.davidrobles.mauler.othello.ef.EvaluatorFitness;
-import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCType;
+import net.davidrobles.mauler.strategies.RandomStrategy;
+import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 
-import java.util.*;
-
-public class WPCLearning
-{
+public class WPCLearning {
     // this version of the algorithm is run against a particular player, in this
     // case the random player
-    static void learnWPCWithTD0()
-    {
+    static void learnWPCWithTD0() {
         // td0 settings
         WPCType type = WPCType.SYM;
         int episodes = 50000;
@@ -31,19 +28,19 @@ public class WPCLearning
         TreeSet<EvaluatorFitness<WPC>> set = new TreeSet<EvaluatorFitness<WPC>>();
 
         WPC wpc = new WPC(type);
-        TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 =
+                new TD0<Othello>(
+                        Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
         // players
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new EpsilonGreedyStrategy<Othello>(wpc, 0.0));
         players.add(new RandomStrategy<Othello>());
 
-        for (int episode = 0; episode <= episode; episode++)
-        {
+        for (int episode = 0; episode <= episode; episode++) {
             td0.iteration();
 
-            if (episode % interval == 0)
-            {
+            if (episode % interval == 0) {
                 Series<Othello> series = new Series<>(Othello::new, games, players);
                 series.setVerbose(false);
                 series.run();
@@ -58,8 +55,7 @@ public class WPCLearning
 
     // this version of the algorithm is run against a particular player, in this
     // case the random player
-    static void learnWPCWithTD0PlayingAgainstSelf()
-    {
+    static void learnWPCWithTD0PlayingAgainstSelf() {
         // td0 settings
         WPCType type = WPCType.SYM;
         int episodes = 50000;
@@ -71,14 +67,14 @@ public class WPCLearning
 
         WPC wpc = new WPC(type);
         WPC prevWPC = wpc.copy();
-        TD0<Othello> td0 = new TD0<Othello>(Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
+        TD0<Othello> td0 =
+                new TD0<Othello>(
+                        Othello::new, wpc, episodes, learningRate, discountFactor, epsilon);
 
-        for (int episode = 1; episode <= episode; episode++)
-        {
+        for (int episode = 1; episode <= episode; episode++) {
             td0.iteration();
 
-            if (episode % interval == 0)
-            {
+            if (episode % interval == 0) {
                 // players
                 List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
                 players.add(new EpsilonGreedyStrategy<Othello>(prevWPC, 0.1));
@@ -95,8 +91,7 @@ public class WPCLearning
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         learnWPCWithTD0();
     }
 }

@@ -1,7 +1,6 @@
 package net.davidrobles.mauler.planetwars;
 
-public class PWPoint
-{
+public class PWPoint {
     private int x;
     private int y;
 
@@ -25,5 +24,4 @@ public class PWPoint
     public void setY(int y) {
         this.y = y;
     }
-    
 }

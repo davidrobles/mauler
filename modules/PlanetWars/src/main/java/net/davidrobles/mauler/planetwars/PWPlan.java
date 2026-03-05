@@ -1,7 +1,3 @@
 package net.davidrobles.mauler.planetwars;
 
-public class PWPlan {
-
-
-
-}
+public class PWPlan {}

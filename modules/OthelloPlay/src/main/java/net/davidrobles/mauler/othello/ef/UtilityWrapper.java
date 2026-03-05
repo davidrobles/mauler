@@ -4,8 +4,7 @@ import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.Evaluator;
 import net.davidrobles.mauler.strategies.TerminalEvaluator;
 
-public class UtilityWrapper<GAME extends Game<GAME>> implements Evaluator<GAME>
-{
+public class UtilityWrapper<GAME extends Game<GAME>> implements Evaluator<GAME> {
     private Evaluator<GAME> evalFunc;
     private TerminalEvaluator<GAME> utilFunc;
 

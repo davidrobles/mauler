@@ -1,6 +1,5 @@
 package net.davidrobles.mauler.core;
 
-public interface MoveObserver
-{
+public interface MoveObserver {
     void moveUpdate();
 }

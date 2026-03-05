@@ -12,14 +12,13 @@ public class PWBotTest implements PWBot {
     }
 
     @Override
-    public List<PWOrder> getOrders(PWGameState gameState)
-    {
+    public List<PWOrder> getOrders(PWGameState gameState) {
         List<PWOrder> orders = new ArrayList<PWOrder>();
-        
+
         // (1) If we currently have a fleet in flight, just do nothing.
-//        if (gameState.myFleets(playerID).size() >= 1) {
-//            return orders;
-//        }
+        //        if (gameState.myFleets(playerID).size() >= 1) {
+        //            return orders;
+        //        }
 
         // (2) Find my strongest planet.
         PWPlanet source = null;
@@ -54,6 +53,4 @@ public class PWBotTest implements PWBot {
 
         return orders;
     }
-
 }
-

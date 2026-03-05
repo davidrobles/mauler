@@ -1,18 +1,14 @@
 package net.davidrobles.mauler.othello;
 
+import java.util.Random;
+import java.util.function.Supplier;
 import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.strategies.StrategiesUtil;
 
-import java.util.Random;
-import java.util.function.Supplier;
-
 // TODO: allow a termination condition
 
-/**
- * TD(0) algorithm with Linear Function Approximation using self-play.
- */
-public class TD0<GAME extends Game<GAME>>
-{
+/** TD(0) algorithm with Linear Function Approximation using self-play. */
+public class TD0<GAME extends Game<GAME>> {
     private int curEpisode;
 
     private GAME game;
@@ -27,15 +23,24 @@ public class TD0<GAME extends Game<GAME>>
     private boolean verbose = false;
     private Random rng;
 
-    public TD0(Supplier<GAME> gameFactory, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
-               double epsilon)
-    {
+    public TD0(
+            Supplier<GAME> gameFactory,
+            LinearEF<GAME> evalFunc,
+            int episodes,
+            double learningRate,
+            double discountFactor,
+            double epsilon) {
         this(gameFactory, evalFunc, episodes, learningRate, discountFactor, epsilon, new Random());
     }
 
-    public TD0(Supplier<GAME> gameFactory, LinearEF<GAME> evalFunc, int episodes, double learningRate, double discountFactor,
-               double epsilon, Random rng)
-    {
+    public TD0(
+            Supplier<GAME> gameFactory,
+            LinearEF<GAME> evalFunc,
+            int episodes,
+            double learningRate,
+            double discountFactor,
+            double epsilon,
+            Random rng) {
         this.game = gameFactory.get();
         this.evalFunc = evalFunc;
         this.episodes = episodes;
@@ -45,35 +50,28 @@ public class TD0<GAME extends Game<GAME>>
         this.rng = rng;
     }
 
-    public void setDecrementPeriod(int decrementPeriod)
-    {
+    public void setDecrementPeriod(int decrementPeriod) {
         this.decrementPeriod = decrementPeriod;
     }
 
-    public void setDecrementFactor(double decrementFactor)
-    {
+    public void setDecrementFactor(double decrementFactor) {
         this.decrementFactor = decrementFactor;
     }
 
-    public int getCurEpisode()
-    {
+    public int getCurEpisode() {
         return curEpisode;
     }
 
-    public int getNumEpisodes()
-    {
+    public int getNumEpisodes() {
         return episodes;
     }
 
-    public void setVerbose(boolean verbose)
-    {
+    public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
 
-    public void learn()
-    {
-        if (verbose)
-        {
+    public void learn() {
+        if (verbose) {
             System.out.printf("%15s:  %,d\n", "Num. episodes", episodes);
             System.out.printf("%15s:  %.3f\n", '\u03B1', learningRate);
             System.out.printf("%15s:  %.3f\n", '\u03B3', discountFactor);
@@ -82,44 +80,36 @@ public class TD0<GAME extends Game<GAME>>
             System.out.print("Episodes: ");
         }
 
-        while (curEpisode < episodes)
-            iteration();
+        while (curEpisode < episodes) iteration();
 
-        if (verbose)
-            System.out.println("\n");
+        if (verbose) System.out.println("\n");
     }
 
-    /**
-     * One iteration of the learning algorithm.
-     */
-    public void iteration()
-    {
+    /** One iteration of the learning algorithm. */
+    public void iteration() {
         simEpisode();
 
-        if (curEpisode % decrementPeriod == 0)
-        {
-            if (verbose)
-                System.out.printf("%,d ", curEpisode);
+        if (curEpisode % decrementPeriod == 0) {
+            if (verbose) System.out.printf("%,d ", curEpisode);
 
-//            learningRate *= decrementFactor;
+            //            learningRate *= decrementFactor;
         }
     }
 
     /**
-     * Simulates one episode. All the evaluation functions score
-     * the value from the point of view of the first player.
+     * Simulates one episode. All the evaluation functions score the value from the point of view of
+     * the first player.
      */
-    private void simEpisode()
-    {
+    private void simEpisode() {
         game.reset();
 
-        while (!game.isOver())
-        {
+        while (!game.isOver()) {
             GAME prevGame = game.copy();
             game.makeMove(StrategiesUtil.epsilonGreedyMove(game, evalFunc, epsilon, rng));
             double current = evalFunc.evaluate(prevGame, 0);
             double next = evalFunc.evaluate(game, 0);
-            double tdError = learningRate * (discountFactor * next - current) * (1 - current * current);
+            double tdError =
+                    learningRate * (discountFactor * next - current) * (1 - current * current);
             evalFunc.updateWeights(prevGame, tdError);
         }
 

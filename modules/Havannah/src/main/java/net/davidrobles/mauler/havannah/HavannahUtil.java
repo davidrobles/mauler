@@ -1,27 +1,24 @@
 package net.davidrobles.mauler.havannah;
 
+import java.util.*;
 import net.davidrobles.mauler.core.GameResult;
 
-import java.util.*;
-
-public class HavannahUtil
-{
+public class HavannahUtil {
     private static final int MIN = 4, MAX = 10;
     private static HCell[][] cells = new HCell[MAX - MIN][];
     private static HCell[][][] boards = new HCell[MAX - MIN][][]; // 4, 5, 6, 7, 8, 9, 10
+
     @SuppressWarnings("unchecked")
     private static int[][][] adjs = new int[MAX - MIN][][];
-    private static short[][] bits = new short[MAX - MIN][];
-    private static GameResult[][] wins = new GameResult[MAX - MIN][(int)(Math.pow(2, 12))];
 
-    public static void initHavannah(int size)
-    {
-        if (size < MIN && size > MAX)
-            throw new IllegalArgumentException();
+    private static short[][] bits = new short[MAX - MIN][];
+    private static GameResult[][] wins = new GameResult[MAX - MIN][(int) (Math.pow(2, 12))];
+
+    public static void initHavannah(int size) {
+        if (size < MIN && size > MAX) throw new IllegalArgumentException();
 
         // init board
-        if (boards[size - MIN] == null)
-        {
+        if (boards[size - MIN] == null) {
             initBoard(size);
             initLookupTable(size);
             initAdjs(size);
@@ -30,19 +27,15 @@ public class HavannahUtil
         }
     }
 
-    private static void initWins(int size)
-    {
+    private static void initWins(int size) {
         int index = size - MIN;
 
-        for (int i = 0; i < wins[index].length; i++)
-        {
+        for (int i = 0; i < wins[index].length; i++) {
             int count = 0;
 
             // corners
 
-            for (int j = 0; j < 6; j++)
-                if (((1 << j) & i) != 0)
-                    count++;
+            for (int j = 0; j < 6; j++) if (((1 << j) & i) != 0) count++;
 
             if (count > 1) {
                 wins[index][i] = GameResult.WIN;
@@ -53,9 +46,7 @@ public class HavannahUtil
 
             count = 0;
 
-            for (int j = 6; j < 12; j++)
-                if (((1 << j) & i) != 0)
-                    count++;
+            for (int j = 6; j < 12; j++) if (((1 << j) & i) != 0) count++;
 
             if (count > 2) {
                 wins[index][i] = GameResult.WIN;
@@ -63,18 +54,16 @@ public class HavannahUtil
             }
 
             // TODO: fix this
-//            wins[index][i] = GameResult.NA;
+            //            wins[index][i] = GameResult.NA;
         }
     }
 
-    private static void initBits(int size)
-    {
+    private static void initBits(int size) {
         int index = size - MIN;
         bits[index] = new short[cells[index].length];
 
         // fill with 0's
-        for (int i = 0; i < bits[index].length; i++)
-            bits[index][i] = 0;
+        for (int i = 0; i < bits[index].length; i++) bits[index][i] = 0;
 
         // 0
         bits[index][bits[index].length - 1] = 1;
@@ -100,12 +89,10 @@ public class HavannahUtil
             bits[index][board[row][size - 1 + row].index] = 1 << 7;
 
         // 8
-        for (int col = 1; col < size - 1; col++)
-            bits[index][board[0][col].index] = 1 << 8;
+        for (int col = 1; col < size - 1; col++) bits[index][board[0][col].index] = 1 << 8;
 
         // 9
-        for (int row = 1; row < size - 1; row++)
-            bits[index][board[row][0].index] = 1 << 9;
+        for (int row = 1; row < size - 1; row++) bits[index][board[row][0].index] = 1 << 9;
 
         // 10
         for (int row = 1; row < size - 1; row++)
@@ -116,8 +103,7 @@ public class HavannahUtil
             bits[index][board[board.length - 1][col].index] = 1 << 11;
     }
 
-    private static void initBoard(int size)
-    {
+    private static void initBoard(int size) {
         HCell[][] newBoard = new HCell[size * 2 - 1][size * 2 - 1];
 
         // empty
@@ -136,8 +122,7 @@ public class HavannahUtil
         boards[size - MIN] = newBoard;
     }
 
-    private static void initLookupTable(int size)
-    {
+    private static void initLookupTable(int size) {
         cells[size - MIN] = new HCell[getNumCells(size)];
         HCell[][] board = boards[size - MIN];
         int index = 0;
@@ -152,18 +137,15 @@ public class HavannahUtil
         }
     }
 
-    public static int getNumCells(int size)
-    {
+    public static int getNumCells(int size) {
         return (3 * size) * (size - 1) + 1; //        return (3 * size * size) - (3 * size) + 1;
     }
 
-    private static void initAdjs(int size)
-    {
+    private static void initAdjs(int size) {
         int index = size - MIN;
         adjs[index] = new int[cells[index].length][];
 
-        for (int i = 0; i < cells[index].length; i++)
-        {
+        for (int i = 0; i < cells[index].length; i++) {
             int row = cells[index][i].row;
             int col = cells[index][i].col;
             List<Integer> adjList = new ArrayList<Integer>();
@@ -186,7 +168,9 @@ public class HavannahUtil
                 adjList.add(board[row][col + 1].index);
 
             // Add to South Right
-            if (row < board.length - 1 && col < board[0].length - 1 && board[row + 1][col + 1].type != Cell.ILLEGAL)
+            if (row < board.length - 1
+                    && col < board[0].length - 1
+                    && board[row + 1][col + 1].type != Cell.ILLEGAL)
                 adjList.add(board[row + 1][col + 1].index);
 
             // Add to North Left
@@ -195,15 +179,13 @@ public class HavannahUtil
 
             int[] adjArray = new int[adjList.size()];
 
-            for (int j = 0; j < adjList.size(); j++)
-                adjArray[j] = adjList.get(j);
+            for (int j = 0; j < adjList.size(); j++) adjArray[j] = adjList.get(j);
 
             adjs[index][i] = adjArray;
         }
     }
 
-    public static CellWrapper[] getCells(int size)
-    {
+    public static CellWrapper[] getCells(int size) {
         CellWrapper[] cellsArray = new CellWrapper[getNumCells(size)];
 
         for (int i = 0; i < cellsArray.length; i++) {
@@ -214,23 +196,19 @@ public class HavannahUtil
         return cellsArray;
     }
 
-    public static short[] getBits(int size)
-    {
+    public static short[] getBits(int size) {
         return bits[size - MIN];
     }
 
-    public static int[][] getAdjacencies(int size)
-    {
+    public static int[][] getAdjacencies(int size) {
         return adjs[size - MIN];
     }
 
-    public static HCell[][] getBoard(int size)
-    {
+    public static HCell[][] getBoard(int size) {
         return boards[size - MIN];
     }
-    
-    public static GameResult[] getWins(int size)
-    {
+
+    public static GameResult[] getWins(int size) {
         return wins[size - MIN];
     }
 }

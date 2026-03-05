@@ -5,14 +5,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class TestWPCStages
-{
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+public class TestWPCStages {
+    @Rule public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testValidateNumStones()
-    {
+    public void testValidateNumStones() {
         WPCStages.validateNumStones(4);
         WPCStages.validateNumStones(40);
         WPCStages.validateNumStones(64);

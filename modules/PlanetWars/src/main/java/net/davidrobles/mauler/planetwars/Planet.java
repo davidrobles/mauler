@@ -2,12 +2,7 @@ package net.davidrobles.mauler.planetwars;
 
 public class Planet implements Cloneable {
     // Initializes a planet.
-    public Planet(int planetID,
-                  int owner,
-                  int numShips,
-                  int growthRate,
-                  double x,
-                  double y) {
+    public Planet(int planetID, int owner, int numShips, int growthRate, double x, double y) {
         this.planetID = planetID;
         this.owner = owner;
         this.numShips = numShips;

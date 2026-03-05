@@ -7,15 +7,16 @@ import java.util.Optional;
  * Core interface for two-player (and n-player) deterministic board games in the Mauler framework.
  *
  * <p>Games are self-referential generics — {@code GAME extends Game<GAME>} — so that methods like
- * {@link #copy()} returns the concrete type rather than the raw interface,
- * enabling type-safe use with {@link net.davidrobles.mauler.core.Strategy Strategy} and the
- * tournament infrastructure ({@code Match}, {@code Series}, {@code RoundRobin}).
+ * {@link #copy()} returns the concrete type rather than the raw interface, enabling type-safe use
+ * with {@link net.davidrobles.mauler.core.Strategy Strategy} and the tournament infrastructure
+ * ({@code Match}, {@code Series}, {@code RoundRobin}).
  *
  * <p>The move model is index-based: {@link #getNumMoves()} returns how many legal moves exist, and
- * {@link #makeMove(int)} accepts an index in {@code [0, getNumMoves())}. {@link #getMoves()} returns
- * the same moves as human-readable strings for logging and display purposes.
+ * {@link #makeMove(int)} accepts an index in {@code [0, getNumMoves())}. {@link #getMoves()}
+ * returns the same moves as human-readable strings for logging and display purposes.
  *
  * <p>Typical game loop:
+ *
  * <pre>{@code
  * while (!game.isOver()) {
  *     int move = strategy.move(game);   // 0 <= move < game.getNumMoves()
@@ -25,24 +26,22 @@ import java.util.Optional;
  * }</pre>
  *
  * <p>Implementations <strong>must</strong> override {@code equals(Object)} and {@code hashCode()}
- * based on the complete game state. The standard Java contract applies: objects that are
- * {@code equals} must have the same {@code hashCode}. This is required for correctness of
- * {@link #copy()} verification in tests and is a prerequisite for transposition tables in tree search.
+ * based on the complete game state. The standard Java contract applies: objects that are {@code
+ * equals} must have the same {@code hashCode}. This is required for correctness of {@link #copy()}
+ * verification in tests and is a prerequisite for transposition tables in tree search.
  *
  * @param <GAME> the concrete game type (self-referential generic)
- *
  * @see net.davidrobles.mauler.core.ObservableGame
  * @see net.davidrobles.mauler.core.GameResult
  * @see net.davidrobles.mauler.core.Strategy
  */
-public interface Game<GAME extends Game<GAME>>
-{
+public interface Game<GAME extends Game<GAME>> {
     /**
-     * Returns a deep copy of the current game state. The copy is fully independent —
-     * moves made on the copy do not affect the original, and vice versa.
+     * Returns a deep copy of the current game state. The copy is fully independent — moves made on
+     * the copy do not affect the original, and vice versa.
      *
-     * <p>Used extensively by strategies to simulate future positions without
-     * modifying the live game.
+     * <p>Used extensively by strategies to simulate future positions without modifying the live
+     * game.
      *
      * @return a deep copy of this game
      */
@@ -56,11 +55,11 @@ public interface Game<GAME extends Game<GAME>>
     int getCurPlayer();
 
     /**
-     * Returns the legal moves for the current player as human-readable strings,
-     * using a game-specific notation (e.g. {@code "e4"}, {@code "a1b2"}).
+     * Returns the legal moves for the current player as human-readable strings, using a
+     * game-specific notation (e.g. {@code "e4"}, {@code "a1b2"}).
      *
-     * <p>The list is parallel to the index space of {@link #makeMove(int)}: index {@code i}
-     * in this list corresponds to passing {@code i} to {@code makeMove}.
+     * <p>The list is parallel to the index space of {@link #makeMove(int)}: index {@code i} in this
+     * list corresponds to passing {@code i} to {@code makeMove}.
      *
      * <p>Returns an empty list when the game is over. The returned list is unmodifiable.
      *
@@ -69,16 +68,14 @@ public interface Game<GAME extends Game<GAME>>
     List<String> getMoves();
 
     /**
-     * Returns the number of legal moves available to the current player.
-     * Equivalent to {@code getMoves().size()} but may be faster since it avoids
-     * allocating the list.
+     * Returns the number of legal moves available to the current player. Equivalent to {@code
+     * getMoves().size()} but may be faster since it avoids allocating the list.
      *
      * <p>Returns {@code 0} when the game is over.
      *
      * @return the number of legal moves
      */
-    default int getNumMoves()
-    {
+    default int getNumMoves() {
         return getMoves().size();
     }
 
@@ -97,45 +94,42 @@ public interface Game<GAME extends Game<GAME>>
     int getNumPlayers();
 
     /**
-     * Returns the outcome for each player once the game is over, or an empty
-     * {@link Optional} if the game is still in progress.
+     * Returns the outcome for each player once the game is over, or an empty {@link Optional} if
+     * the game is still in progress.
      *
-     * <p>When present, the array length equals {@link #getNumPlayers()}, and
-     * {@code getOutcome().orElseThrow()[i]} gives the result for player {@code i}.
-     * Each entry is one of {@link GameResult#WIN}, {@link GameResult#LOSS}, or {@link GameResult#DRAW}.
+     * <p>When present, the array length equals {@link #getNumPlayers()}, and {@code
+     * getOutcome().orElseThrow()[i]} gives the result for player {@code i}. Each entry is one of
+     * {@link GameResult#WIN}, {@link GameResult#LOSS}, or {@link GameResult#DRAW}.
      *
-     * @return an {@code Optional} containing the outcome array when the game is over,
-     *         or {@link Optional#empty()} if the game is still in progress
+     * @return an {@code Optional} containing the outcome array when the game is over, or {@link
+     *     Optional#empty()} if the game is still in progress
      */
     Optional<GameResult[]> getOutcome();
 
     /**
-     * Returns {@code true} if the game has ended (no legal moves remain, or a terminal
-     * condition has been reached).
+     * Returns {@code true} if the game has ended (no legal moves remain, or a terminal condition
+     * has been reached).
      *
-     * <p>The default implementation delegates to {@link #getOutcome()}: returns {@code true}
-     * when an outcome is present. Implementations with a cheap terminal flag (e.g. a cached
-     * {@code gameOver} boolean) should override this for performance.
+     * <p>The default implementation delegates to {@link #getOutcome()}: returns {@code true} when
+     * an outcome is present. Implementations with a cheap terminal flag (e.g. a cached {@code
+     * gameOver} boolean) should override this for performance.
      *
      * @return {@code true} if the game is over
      */
-    default boolean isOver()
-    {
+    default boolean isOver() {
         return getOutcome().isPresent();
     }
 
     /**
-     * Applies the move at the given index for the current player, advancing the game state.
-     * The valid range is {@code [0, getNumMoves())}; implementations should throw
-     * {@link IllegalArgumentException} for out-of-range values.
+     * Applies the move at the given index for the current player, advancing the game state. The
+     * valid range is {@code [0, getNumMoves())}; implementations should throw {@link
+     * IllegalArgumentException} for out-of-range values.
      *
      * @param move the index of the move to apply
      * @throws IllegalArgumentException if {@code move} is out of range
      */
     void makeMove(int move);
 
-    /**
-     * Resets the game to its initial state, as if it were just constructed.
-     */
+    /** Resets the game to its initial state, as if it were just constructed. */
     void reset();
 }

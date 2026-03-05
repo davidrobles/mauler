@@ -1,7 +1,6 @@
 package net.davidrobles.mauler.havannah;
 
-public class CellWrapper
-{
+public class CellWrapper {
     private HCell cell;
     public Cell type;
 
@@ -9,15 +8,15 @@ public class CellWrapper
         this.cell = cell;
         this.type = type;
     }
-    
+
     public int getRow() {
         return cell.row;
     }
-    
+
     public int getCol() {
         return cell.col;
     }
-    
+
     public int getIndex() {
         return cell.index;
     }

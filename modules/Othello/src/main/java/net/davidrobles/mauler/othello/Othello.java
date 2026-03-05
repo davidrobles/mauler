@@ -1,13 +1,11 @@
 package net.davidrobles.mauler.othello;
 
-import net.davidrobles.mauler.core.ObservableGame;
-import net.davidrobles.mauler.core.GameResult;
-import net.davidrobles.mauler.core.util.SpeedTest;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import net.davidrobles.mauler.core.GameResult;
+import net.davidrobles.mauler.core.ObservableGame;
+import net.davidrobles.mauler.core.util.SpeedTest;
 
 public class Othello extends ObservableGame<Othello> {
 
@@ -62,9 +60,7 @@ public class Othello extends ObservableGame<Othello> {
     private int allCellsCount = 0;
     private int tmpCellsCount = 0;
 
-    /**
-     * Creates a new Othello game with the initial board.
-     */
+    /** Creates a new Othello game with the initial board. */
     public Othello() {
         reset();
     }
@@ -84,8 +80,8 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     /**
-     * Returns the square on the board represented by the
-     * given <code>squareIndex</code>.
+     * Returns the square on the board represented by the given <code>squareIndex</code>.
+     *
      * @param squareIndex the index of the square
      * @return the square
      */
@@ -103,8 +99,8 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     /**
-     * Returns the square on the board located in the
-     * given row and column
+     * Returns the square on the board located in the given row and column
+     *
      * @param row the row of the square
      * @param col the column of the square
      * @return the square
@@ -115,6 +111,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Returns the number of discs on the board for the given player.
+     *
      * @param player the player whose number of discs are counted
      * @return the number of discs
      */
@@ -124,6 +121,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * The number of discs on the board (both black and white).
+     *
      * @return number of discs on the board
      */
     public int getNumDiscs() {
@@ -131,9 +129,9 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     /**
-     * Returns the current board of the game as an array
-     * of squares. The order of the squares in the array
-     * starts from row by row.
+     * Returns the current board of the game as an array of squares. The order of the squares in the
+     * array starts from row by row.
+     *
      * @return the squares of the board
      */
     public Square[] getBoard() {
@@ -145,11 +143,10 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     /**
-     * Calculates the legal moves and saves them
-     * in the bitboard of legal moves <code>legalBB</code>.
+     * Calculates the legal moves and saves them in the bitboard of legal moves <code>legalBB</code>
+     * .
      */
-    private void calculateMoves()
-    {
+    private void calculateMoves() {
         legalBB = 0L;
         long potentialMoves;
         long curBoard = currentBoard();
@@ -159,8 +156,7 @@ public class Othello extends ObservableGame<Othello> {
         // UP
         potentialMoves = (curBoard >> SIZE) & DOWN_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves >> SIZE) & DOWN_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -169,8 +165,7 @@ public class Othello extends ObservableGame<Othello> {
         // DOWN
         potentialMoves = (curBoard << SIZE) & UP_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves << SIZE) & UP_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -179,8 +174,7 @@ public class Othello extends ObservableGame<Othello> {
         // LEFT
         potentialMoves = (curBoard >> 1L) & RIGHT_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves >> 1L) & RIGHT_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -189,8 +183,7 @@ public class Othello extends ObservableGame<Othello> {
         // RIGHT
         potentialMoves = (curBoard << 1L) & LEFT_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves << 1L) & LEFT_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -199,8 +192,7 @@ public class Othello extends ObservableGame<Othello> {
         // UP LEFT
         potentialMoves = (curBoard >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves >> (SIZE + 1L)) & RIGHT_MASK & DOWN_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -209,8 +201,7 @@ public class Othello extends ObservableGame<Othello> {
         // UP RIGHT
         potentialMoves = (curBoard >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves >> (SIZE - 1L)) & LEFT_MASK & DOWN_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -219,8 +210,7 @@ public class Othello extends ObservableGame<Othello> {
         // DOWN LEFT
         potentialMoves = (curBoard << (SIZE - 1L)) & RIGHT_MASK & UP_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves << (SIZE - 1L)) & RIGHT_MASK & UP_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -229,8 +219,7 @@ public class Othello extends ObservableGame<Othello> {
         // DOWN RIGHT
         potentialMoves = (curBoard << (SIZE + 1L)) & LEFT_MASK & UP_MASK & oppBoard;
 
-        while (potentialMoves != 0L)
-        {
+        while (potentialMoves != 0L) {
             long tmp = (potentialMoves << (SIZE + 1L)) & LEFT_MASK & UP_MASK;
             legalBB |= tmp & emptyBoard;
             potentialMoves = tmp & oppBoard;
@@ -240,9 +229,9 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     /**
-     * Returns an array of bitboard of the legal moves,
-     * where each bitboard has only one bit on, which is
-     * the index of the square on the board.
+     * Returns an array of bitboard of the legal moves, where each bitboard has only one bit on,
+     * which is the index of the square on the board.
+     *
      * @return an array of bitboards of legal moves
      */
     private long[] getBitMovesArray() {
@@ -252,8 +241,7 @@ public class Othello extends ObservableGame<Othello> {
         if (!movesArrayUpdated) {
             if (legalBB == PASS) {
                 movesArray[0] = PASS;
-            }
-            else {
+            } else {
                 for (int i = 0, count = 0; i < NUM_SQUARES; i++) {
                     if ((legalBB & (1L << i)) != 0L) {
                         movesArray[count++] = 1L << i;
@@ -267,6 +255,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Returns a bitboard of the empty squares.
+     *
      * @return a bitboard of the empty squares
      */
     private long emptyBoard() {
@@ -275,6 +264,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Returns a bitboard of the discs for the player in turn.
+     *
      * @return a bitboard of discs
      */
     private long currentBoard() {
@@ -283,6 +273,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Returns a bitboard of the discs for the player not in turn.
+     *
      * @return a bitboard of discs
      */
     private long opponentBoard() {
@@ -291,6 +282,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Sets the bitboard of discs for the player in turn.
+     *
      * @param bitboard the new bitboard of discs
      */
     private void setCurrentBoard(long bitboard) {
@@ -303,6 +295,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Sets the bitboard of discs for the player not in turn.
+     *
      * @param bitboard the new bitboard of discs
      */
     private void setOpponentBoard(long bitboard) {
@@ -315,6 +308,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Sets a new value for the given square.
+     *
      * @param squareIndex the index of the square
      * @param square the new value of the square
      */
@@ -329,6 +323,7 @@ public class Othello extends ObservableGame<Othello> {
 
     /**
      * Removes any disc from the given square.
+     *
      * @param squareIndex the index of the square
      */
     private void removeDisc(int squareIndex) {
@@ -369,7 +364,7 @@ public class Othello extends ObservableGame<Othello> {
     private String getColumnHeaders() {
         StringBuilder builder = new StringBuilder("   ");
         for (int col = 0; col < SIZE; col++) {
-            builder.append((" " + OthelloUtil.colToChar(col)  + " "));
+            builder.append((" " + OthelloUtil.colToChar(col) + " "));
         }
         builder.append("\n");
         return builder.toString();
@@ -378,11 +373,9 @@ public class Othello extends ObservableGame<Othello> {
     private char cellToChar(int cellIndex) {
         if ((blackBB & (1L << cellIndex)) != 0) {
             return BLACK_STONE;
-        }
-        else if ((whiteBB & (1L << cellIndex)) != 0) {
+        } else if ((whiteBB & (1L << cellIndex)) != 0) {
             return WHITE_STONE;
-        }
-        else if ((legalBB & (1L << cellIndex)) != 0) {
+        } else if ((legalBB & (1L << cellIndex)) != 0) {
             return 'x';
         }
         return '-';
@@ -443,8 +436,7 @@ public class Othello extends ObservableGame<Othello> {
         int nMoves = getNumMoves();
         if (nMoves == 1 && bitMovesArray[0] == PASS) {
             othelloMoves.add("PASS");
-        }
-        else {
+        } else {
             for (int i = 0; i < nMoves; i++) {
                 int cellIndex = Long.numberOfTrailingZeros(bitMovesArray[i]);
                 othelloMoves.add(OthelloUtil.cellToStr(cellIndex));
@@ -490,8 +482,7 @@ public class Othello extends ObservableGame<Othello> {
     }
 
     @Override
-    public void makeMove(int move)
-    {
+    public void makeMove(int move) {
         int nMoves = getNumMoves();
         long[] movesArray = getBitMovesArray();
 
@@ -501,8 +492,7 @@ public class Othello extends ObservableGame<Othello> {
 
         long theMove = movesArray[move];
 
-        if (theMove != PASS)
-        {
+        if (theMove != PASS) {
             long next; // potential moves
             long lastCell;
             long oppBoard = opponentBoard();
@@ -664,15 +654,12 @@ public class Othello extends ObservableGame<Othello> {
         current = (current + 1) % 2;
         calculateMoves();
 
-        if (Long.bitCount(legalBB) == 0)
-        {
+        if (Long.bitCount(legalBB) == 0) {
             current = (current + 1) % 2;
             calculateMoves();
 
-            if (Long.bitCount(legalBB) == 0)
-                gameOver = true;
-            else
-                legalBB = PASS;
+            if (Long.bitCount(legalBB) == 0) gameOver = true;
+            else legalBB = PASS;
 
             current = (current + 1) % 2;
         }
@@ -713,11 +700,11 @@ public class Othello extends ObservableGame<Othello> {
             return false;
         }
         Othello othello = (Othello) o;
-        return  blackBB == othello.blackBB &&
-                current == othello.current &&
-               gameOver == othello.gameOver &&
-                legalBB == othello.legalBB &&
-                whiteBB == othello.whiteBB;
+        return blackBB == othello.blackBB
+                && current == othello.current
+                && gameOver == othello.gameOver
+                && legalBB == othello.legalBB
+                && whiteBB == othello.whiteBB;
     }
 
     @Override
@@ -730,19 +717,20 @@ public class Othello extends ObservableGame<Othello> {
         return result;
     }
 
-
     /**
      * The three states in which a square of the Othello can be: black disc, white disc or empty.
      */
     public enum Square {
-
-        BLACK(0), WHITE(1), EMPTY(-1);
+        BLACK(0),
+        WHITE(1),
+        EMPTY(-1);
 
         /** The owner of the disc, -1 if the square is empty. */
         private int player;
 
         /**
          * Creates a new square.
+         *
          * @param player the player that owns the square
          */
         private Square(int player) {
@@ -751,6 +739,7 @@ public class Othello extends ObservableGame<Othello> {
 
         /**
          * Returns the player that owns the square. Returns -1 if empty.
+         *
          * @return the index of the player that owns the square
          */
         public int getPlayer() {

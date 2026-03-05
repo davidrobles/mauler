@@ -1,34 +1,38 @@
 package net.davidrobles.rl.algorithms;
 
-import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.policies.RLPolicy;
-import net.davidrobles.rl.valuefunctions.QFunctionObserver;
-import net.davidrobles.rl.valuefunctions.TabularQFunction;
-import net.davidrobles.rl.Learner;
-import net.davidrobles.rl.RLEnv;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.davidrobles.rl.Learner;
+import net.davidrobles.rl.QPair;
+import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.valuefunctions.QFunctionObserver;
+import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
-public class TabularSARSALambda<S, A> implements Learner
-{
+public class TabularSARSALambda<S, A> implements Learner {
     private RLEnv<S, A> env;
     private RLPolicy<S, A> policy;
-    private double alpha;                       // learning rate
-    private double gamma;                       // discount factor
+    private double alpha; // learning rate
+    private double gamma; // discount factor
     private int numEpisodes;
     private double lambda;
     private int currentEpisode = 0;
-    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();;
+    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();
+    ;
     private A action;
     private Map<QPair<S, A>, Double> traces = new HashMap<QPair<S, A>, Double>();
-    private List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<QFunctionObserver<S, A>>();
+    private List<QFunctionObserver<S, A>> qFunctionObservers =
+            new ArrayList<QFunctionObserver<S, A>>();
 
-    public TabularSARSALambda(RLEnv<S, A> env, RLPolicy<S, A> policy, double alpha,
-                              double gamma, double lambda, int numEpisodes)
-    {
+    public TabularSARSALambda(
+            RLEnv<S, A> env,
+            RLPolicy<S, A> policy,
+            double alpha,
+            double gamma,
+            double lambda,
+            int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.alpha = alpha;
@@ -38,29 +42,29 @@ public class TabularSARSALambda<S, A> implements Learner
     }
 
     @Override
-    public void learn()
-    {
-        for ( ; currentEpisode < numEpisodes; currentEpisode++)
-            episode();
+    public void learn() {
+        for (; currentEpisode < numEpisodes; currentEpisode++) episode();
     }
 
-    public void step()
-    {
+    public void step() {
         S state = env.getCurrentState();
         double reward = env.performAction(action);
         S nextState = env.getCurrentState();
         A nextAction = null;
 
         if (env.getPossibleActions(env.getCurrentState()).isEmpty()) {
-//            System.out.println("here");
-    //                    nextStateNextActionValue = 0;
+            //            System.out.println("here");
+            //                    nextStateNextActionValue = 0;
         } else {
             nextAction = policy.getAction(env, table);
-    //                    nextStateNextActionValue = qFunction.getValue(nextState, nextAction);
+            //                    nextStateNextActionValue = qFunction.getValue(nextState,
+            // nextAction);
         }
 
-        double tdError = reward + gamma * table.getValue(nextState, nextAction)
-                - table.getValue(state, action);
+        double tdError =
+                reward
+                        + gamma * table.getValue(nextState, nextAction)
+                        - table.getValue(state, action);
 
         QPair<S, A> newQPair = new QPair<S, A>(state, action);
 
@@ -78,26 +82,22 @@ public class TabularSARSALambda<S, A> implements Learner
         action = nextAction;
     }
 
-    public void episode()
-    {
+    public void episode() {
         System.out.println("Episode " + currentEpisode);
         env.reset();
         action = policy.getAction(env, table);
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty())
-        {
+        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
         }
     }
 
-    public void addQFunctionObserver(QFunctionObserver<S, A> observer)
-    {
+    public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
     }
 
-    public void notifyValueFunctionUpdate()
-    {
+    public void notifyValueFunctionUpdate() {
         for (QFunctionObserver<S, A> observer : qFunctionObservers)
             observer.qFunctionUpdated(table);
     }

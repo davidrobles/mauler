@@ -1,26 +1,23 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.davidrobles.mauler.core.Match;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
-import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.othello.Othello;
 import net.davidrobles.mauler.othello.ef.ntuples.NTUtil;
 import net.davidrobles.mauler.othello.ef.ntuples.NTupleSystem;
 import net.davidrobles.mauler.othello.ef.wpc.WPC;
 import net.davidrobles.mauler.othello.ef.wpc.WPCUtil;
+import net.davidrobles.mauler.strategies.RandomStrategy;
 import net.davidrobles.mauler.strategies.mc.MonteCarlo;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.minimax.AlphaBeta;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BasicTests
-{
-    static void testMatch()
-    {
+public class BasicTests {
+    static void testMatch() {
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         players.add(new RandomStrategy<Othello>());
         players.add(new RandomStrategy<Othello>());
@@ -29,8 +26,7 @@ public class BasicTests
         System.out.println(match);
     }
 
-    static void testSeriesWithRandomPlayers()
-    {
+    static void testSeriesWithRandomPlayers() {
         int nGames = 50000;
 
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
@@ -40,8 +36,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testSeriesRandomVsMCWithSims()
-    {
+    static void testSeriesRandomVsMCWithSims() {
         int nGames = 100;
         int nSims = 100;
 
@@ -52,8 +47,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testSeriesRandomVsMCWithTime()
-    {
+    static void testSeriesRandomVsMCWithTime() {
         int nGames = 100;
         int timeout = 20;
 
@@ -64,22 +58,21 @@ public class BasicTests
         series.run();
     }
 
-//    static void testSeriesRandomVsAlphaBetaWithMaxDepth()
-//    {
-//        int nGames = 10;
-//        int maxDepth = 7;
-//        WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
-//
-//        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
-//        players.add(new RandomStrategy<Othello>());
-//        players.add(new AlphaBeta<Othello>(wpc, maxDepth));
-//
-//        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
-//        series.run();
-//    }
+    //    static void testSeriesRandomVsAlphaBetaWithMaxDepth()
+    //    {
+    //        int nGames = 10;
+    //        int maxDepth = 7;
+    //        WPC wpc = new WPC(WPCUtil.load("dr-sym-6462"));
+    //
+    //        List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
+    //        players.add(new RandomStrategy<Othello>());
+    //        players.add(new AlphaBeta<Othello>(wpc, maxDepth));
+    //
+    //        Series<Othello> series = new Series<Othello>(new Othello(), nGames, players);
+    //        series.run();
+    //    }
 
-    static void testSeriesRandomVsAlphaBetaWithMaxDepth()
-    {
+    static void testSeriesRandomVsAlphaBetaWithMaxDepth() {
         int nGames = 10;
         int maxDepth = 6;
 
@@ -94,8 +87,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testSeriesRandomVsAlphaBetaWithTime()
-    {
+    static void testSeriesRandomVsAlphaBetaWithTime() {
         int nGames = 10;
         int timeout = 500;
 
@@ -110,8 +102,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testSeriesMCVsMCTSWithSims()
-    {
+    static void testSeriesMCVsMCTSWithSims() {
         int nGames = 100;
         int nSims = 200;
         double c = 0.5;
@@ -123,8 +114,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testSeriesMCVsMCTSWithTime()
-    {
+    static void testSeriesMCVsMCTSWithTime() {
         int nGames = 100;
         int timeout = 20;
         double c = 0.5;
@@ -135,8 +125,7 @@ public class BasicTests
         series.run();
     }
 
-    static void testRoundRobinWithSims()
-    {
+    static void testRoundRobinWithSims() {
         int nGames = 100;
         int nSims = 100;
         double c = 0.5;
@@ -156,12 +145,12 @@ public class BasicTests
         playerNames.add("UCT");
         playerNames.add("Alpha-Beta");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playerNames);
         roundRobin.run();
     }
 
-    static void testRoundRobinWithTime()
-    {
+    static void testRoundRobinWithTime() {
         int nGames = 20;
         int timeout = 100;
         double c = 0.5;
@@ -183,12 +172,12 @@ public class BasicTests
         playerNames.add("Alpha-Beta");
         players.add(new AlphaBeta<Othello>(wpc, 6));
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         testSeriesRandomVsAlphaBetaWithMaxDepth();
     }
 }

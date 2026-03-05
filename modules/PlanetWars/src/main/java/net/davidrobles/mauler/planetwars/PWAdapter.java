@@ -20,8 +20,7 @@ public class PWAdapter {
 
     // Interface to the real game
     // Don't modify
-    public static List<PWOrder> getOrders(PlanetWars pw, int botIndex)
-    {
+    public static List<PWOrder> getOrders(PlanetWars pw, int botIndex) {
         PWGameState gameState = new PWGameState(makeGameString(pw), bots);
         return bots.get(botIndex).getOrders(gameState);
     }
@@ -30,23 +29,41 @@ public class PWAdapter {
     // CODE TO PLAY IN THE REAL GAME //
     ///////////////////////////////////
 
-    private static String makeGameString(PlanetWars pw)
-    {
+    private static String makeGameString(PlanetWars pw) {
         StringBuilder s = new StringBuilder();
 
         for (Planet p : pw.Planets()) {
             // We can't use String.format here because in certain locales, the ,
             // and . get switched for X and Y (yet just appending them using the
             // default toString methods apparently doesn't switch them?)
-            s.append("P " + p.X() + " " + p.Y() + " " + PovSwitch(-1, p.Owner()) +
-                    " " + p.NumShips() + " " + p.GrowthRate() + "\n");
-
+            s.append(
+                    "P "
+                            + p.X()
+                            + " "
+                            + p.Y()
+                            + " "
+                            + PovSwitch(-1, p.Owner())
+                            + " "
+                            + p.NumShips()
+                            + " "
+                            + p.GrowthRate()
+                            + "\n");
         }
         for (Fleet f : pw.Fleets()) {
-            s.append("F " + PovSwitch(-1, f.Owner()) + " " + f.NumShips() + " " +
-                    f.SourcePlanet() + " " + f.DestinationPlanet() + " " +
-                    f.TotalTripLength() + " " + f.TurnsRemaining() + "\n");
-
+            s.append(
+                    "F "
+                            + PovSwitch(-1, f.Owner())
+                            + " "
+                            + f.NumShips()
+                            + " "
+                            + f.SourcePlanet()
+                            + " "
+                            + f.DestinationPlanet()
+                            + " "
+                            + f.TotalTripLength()
+                            + " "
+                            + f.TurnsRemaining()
+                            + "\n");
         }
         return s.toString();
     }
@@ -58,8 +75,7 @@ public class PWAdapter {
         return playerID;
     }
 
-    public static String loadMapToString(String mapFilename)
-    {
+    public static String loadMapToString(String mapFilename) {
         StringBuffer gameStateString = new StringBuffer();
         BufferedReader in;
 
@@ -70,10 +86,9 @@ public class PWAdapter {
                 gameStateString.append(line);
                 gameStateString.append("\n");
             }
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         return gameStateString.toString();
     }
-
-
 }

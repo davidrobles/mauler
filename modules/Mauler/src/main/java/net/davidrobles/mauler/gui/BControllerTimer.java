@@ -2,8 +2,7 @@ package net.davidrobles.mauler.gui;
 
 import javax.swing.*;
 
-public class BControllerTimer extends JLabel
-{
+public class BControllerTimer extends JLabel {
     public BControllerTimer() {
         super("5.75s");
     }

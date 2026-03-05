@@ -3,8 +3,7 @@ package net.davidrobles.rl;
 import java.util.Collection;
 import java.util.Map;
 
-public interface MDP<S, A>
-{
+public interface MDP<S, A> {
     // Returns the initial state of the MDP. It can be stochastic.
     S getStartState();
 

@@ -5,7 +5,8 @@ import java.util.*;
 public class PWBot23 implements PWBot {
 
     enum PWState {
-        EXPAND, GROW_MASTER
+        EXPAND,
+        GROW_MASTER
     }
 
     private int playerID;
@@ -31,10 +32,12 @@ public class PWBot23 implements PWBot {
     private PWPlanet masterPlanet;
 
     // Comparators
-    private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_ASC = new PWPlanetSortByNumShips();
+    private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_ASC =
+            new PWPlanetSortByNumShips();
     private static final Comparator<PWPlanet> PLANETS_SORT_BY_NUM_SHIPS_DESC =
             Collections.reverseOrder(PLANETS_SORT_BY_NUM_SHIPS_ASC);
-    private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_ASC = new PWPlanetSortByGrowthRate();
+    private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_ASC =
+            new PWPlanetSortByGrowthRate();
     private static final Comparator<PWPlanet> PLANETS_SORT_BY_GROWTH_RATE_DESC =
             Collections.reverseOrder(PLANETS_SORT_BY_GROWTH_RATE_ASC);
 
@@ -46,8 +49,7 @@ public class PWBot23 implements PWBot {
     }
 
     // Returns a mapping from a Planet ID to a list of possible moves
-    public Map<Integer, List<PWMiniMove>> planetAllMoves(PWGameState gs)
-    {
+    public Map<Integer, List<PWMiniMove>> planetAllMoves(PWGameState gs) {
         Map<Integer, List<PWMiniMove>> planetAllMoves = new HashMap<Integer, List<PWMiniMove>>();
 
         // for each of my planets get the neighbor planets
@@ -63,13 +65,12 @@ public class PWBot23 implements PWBot {
                 planetAllMoves.put(myPlanet.getPlanetID(), pMoves);
             }
         }
-        
+
         return planetAllMoves;
     }
 
     @Override
-    public List<PWOrder> getOrders(PWGameState gameState)
-    {
+    public List<PWOrder> getOrders(PWGameState gameState) {
         List<PWOrder> orders = new ArrayList<PWOrder>();
 
         // Load variables for caching
@@ -84,104 +85,106 @@ public class PWBot23 implements PWBot {
         // BOT START //
         ///////////////
 
-//        // Copy the game state
-//        PWGameState newPWGameState = new PWGameState(gameState);
-//
-//        // List used to add orders during the simulations. Must be cleared.
-//        List<PWOrder> playOrders = new ArrayList<PWOrder>();
-//
-//        // A mapping from a Planet ID to a list of possible moves
-//        Map<Integer, List<PWMiniMove>> planetAllMoves = planetAllMoves(newPWGameState);
-//
-//        // A mapping of the moves to the score
-//        Map<PWMiniMove, Double> moveResults = new HashMap<PWMiniMove, Double>();
-//
-//        // Run 100 simulations
-//        for (int i = 0; i < 100; i++)
-//        {
-//            // Mapping of the move performed for a given move
-//            Map<PWMiniMove, Integer> mv = new HashMap<PWMiniMove, Integer>();
-//
-//            // Make the first moves
-//            for (Map.Entry<Integer, List<PWMiniMove>> entry : planetAllMoves.entrySet()) {
-//                // Pick a random move from the available moves
-//                int ix = entry.getValue().size();
-//                int randomMoveIndex = rand.nextInt(ix);
-//                PWMiniMove randomMove = entry.getValue().get(randomMoveIndex);
-//                // Add the selected move to update the value later during backpropagation
-//                mv.put(randomMove, randomMoveIndex);
-//                // Add the order
-//                int srcPlanetID = randomMove.getSrcPlanet().getPlanetID();
-//                int dstPlanetID = randomMove.getDstPlanet().getPlanetID();
-//                int numShips = randomMove.getnShips();
-//                PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID, numShips);
-//                playOrders.add(order);
-//            }
-//
-//            // Make the first moves for each of my planets
-//            newPWGameState.makeMoves(playOrders);
-//            newPWGameState.doTimeStep();
-//
-//            // Clear orders for the next game state
-//            playOrders.clear();
-//
-//            int startTurns = newPWGameState.getTurns();
-//
-//            while (newPWGameState.Winner() < 0 && newPWGameState.getTurns() < (startTurns + 100))
-//            {
-//                Map<Integer, List<PWMiniMove>> pmoves = planetAllMoves(newPWGameState);
-//
-//                for (Map.Entry<Integer, List<PWMiniMove>> entry : pmoves.entrySet()) {
-//                    // Pick a random move from the available moves
-//                    int randomMoveIndex = rand.nextInt(entry.getValue().size());
-//                    PWMiniMove randomMove = entry.getValue().get(randomMoveIndex);
-//                    int srcPlanetID = randomMove.getSrcPlanet().getPlanetID();
-//                    int dstPlanetID = randomMove.getDstPlanet().getPlanetID();
-//                    int numShips = randomMove.getnShips();
-//                    PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID, numShips);
-//                    playOrders.add(order);
-//                }
-//
-//                // Make moves
-//                newPWGameState.makeMoves(playOrders);
-//                newPWGameState.doTimeStep();
-//
-//                // Clear orders for the next game state
-//                playOrders.clear();
-//            }
-//
-//            double total = evaluate(newPWGameState, playerID);
-//
-//            // Update the values
-//            for (PWMiniMove miniMove : mv.keySet()) {
-//                double prevValue = 0;
-//                if (moveResults.containsKey(miniMove)) {
-//                    prevValue = moveResults.get(miniMove);
-//                }
-//                moveResults.put(miniMove, prevValue + total);
-//            }
-//        }
-//
-//        // Add best orders for each planet
-//        for (Map.Entry<Integer, List<PWMiniMove>> entry : planetAllMoves.entrySet()) {
-//            double bestScore = Integer.MIN_VALUE;
-//            PWMiniMove bestMove = null;
-//            for (PWMiniMove move : entry.getValue()) {
-//                // TODO: temp fix
-//                if (moveResults.containsKey(move)) {
-//                    double score = moveResults.get(move);
-//                    if (score > bestScore) {
-//                        bestMove = move;
-//                        bestScore = score;
-//                    }
-//                }
-//            }
-//            int srcPlanetID = bestMove.getSrcPlanet().getPlanetID();
-//            int dstPlanetID = bestMove.getDstPlanet().getPlanetID();
-//            int numShips = bestMove.getnShips();
-//            PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID, numShips);
-//            orders.add(order);
-//        }
+        //        // Copy the game state
+        //        PWGameState newPWGameState = new PWGameState(gameState);
+        //
+        //        // List used to add orders during the simulations. Must be cleared.
+        //        List<PWOrder> playOrders = new ArrayList<PWOrder>();
+        //
+        //        // A mapping from a Planet ID to a list of possible moves
+        //        Map<Integer, List<PWMiniMove>> planetAllMoves = planetAllMoves(newPWGameState);
+        //
+        //        // A mapping of the moves to the score
+        //        Map<PWMiniMove, Double> moveResults = new HashMap<PWMiniMove, Double>();
+        //
+        //        // Run 100 simulations
+        //        for (int i = 0; i < 100; i++)
+        //        {
+        //            // Mapping of the move performed for a given move
+        //            Map<PWMiniMove, Integer> mv = new HashMap<PWMiniMove, Integer>();
+        //
+        //            // Make the first moves
+        //            for (Map.Entry<Integer, List<PWMiniMove>> entry : planetAllMoves.entrySet()) {
+        //                // Pick a random move from the available moves
+        //                int ix = entry.getValue().size();
+        //                int randomMoveIndex = rand.nextInt(ix);
+        //                PWMiniMove randomMove = entry.getValue().get(randomMoveIndex);
+        //                // Add the selected move to update the value later during backpropagation
+        //                mv.put(randomMove, randomMoveIndex);
+        //                // Add the order
+        //                int srcPlanetID = randomMove.getSrcPlanet().getPlanetID();
+        //                int dstPlanetID = randomMove.getDstPlanet().getPlanetID();
+        //                int numShips = randomMove.getnShips();
+        //                PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID, numShips);
+        //                playOrders.add(order);
+        //            }
+        //
+        //            // Make the first moves for each of my planets
+        //            newPWGameState.makeMoves(playOrders);
+        //            newPWGameState.doTimeStep();
+        //
+        //            // Clear orders for the next game state
+        //            playOrders.clear();
+        //
+        //            int startTurns = newPWGameState.getTurns();
+        //
+        //            while (newPWGameState.Winner() < 0 && newPWGameState.getTurns() < (startTurns
+        // + 100))
+        //            {
+        //                Map<Integer, List<PWMiniMove>> pmoves = planetAllMoves(newPWGameState);
+        //
+        //                for (Map.Entry<Integer, List<PWMiniMove>> entry : pmoves.entrySet()) {
+        //                    // Pick a random move from the available moves
+        //                    int randomMoveIndex = rand.nextInt(entry.getValue().size());
+        //                    PWMiniMove randomMove = entry.getValue().get(randomMoveIndex);
+        //                    int srcPlanetID = randomMove.getSrcPlanet().getPlanetID();
+        //                    int dstPlanetID = randomMove.getDstPlanet().getPlanetID();
+        //                    int numShips = randomMove.getnShips();
+        //                    PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID,
+        // numShips);
+        //                    playOrders.add(order);
+        //                }
+        //
+        //                // Make moves
+        //                newPWGameState.makeMoves(playOrders);
+        //                newPWGameState.doTimeStep();
+        //
+        //                // Clear orders for the next game state
+        //                playOrders.clear();
+        //            }
+        //
+        //            double total = evaluate(newPWGameState, playerID);
+        //
+        //            // Update the values
+        //            for (PWMiniMove miniMove : mv.keySet()) {
+        //                double prevValue = 0;
+        //                if (moveResults.containsKey(miniMove)) {
+        //                    prevValue = moveResults.get(miniMove);
+        //                }
+        //                moveResults.put(miniMove, prevValue + total);
+        //            }
+        //        }
+        //
+        //        // Add best orders for each planet
+        //        for (Map.Entry<Integer, List<PWMiniMove>> entry : planetAllMoves.entrySet()) {
+        //            double bestScore = Integer.MIN_VALUE;
+        //            PWMiniMove bestMove = null;
+        //            for (PWMiniMove move : entry.getValue()) {
+        //                // TODO: temp fix
+        //                if (moveResults.containsKey(move)) {
+        //                    double score = moveResults.get(move);
+        //                    if (score > bestScore) {
+        //                        bestMove = move;
+        //                        bestScore = score;
+        //                    }
+        //                }
+        //            }
+        //            int srcPlanetID = bestMove.getSrcPlanet().getPlanetID();
+        //            int dstPlanetID = bestMove.getDstPlanet().getPlanetID();
+        //            int numShips = bestMove.getnShips();
+        //            PWOrder order = new PWOrder(playerID, srcPlanetID, dstPlanetID, numShips);
+        //            orders.add(order);
+        //        }
 
         ////////////////
         // BOT END //
@@ -189,7 +192,7 @@ public class PWBot23 implements PWBot {
 
         turns++;
         return expand();
-//        return orders;
+        //        return orders;
     }
 
     ////////////////////
@@ -197,15 +200,14 @@ public class PWBot23 implements PWBot {
     ////////////////////
 
     double evaluate(PWGameState gameState, int playerIndex) {
-//        if (gameState.NumShips(1) > gameState.NumShips(2))
-//            return 1.0;
-//        else
-//            return -1.0;
+        //        if (gameState.NumShips(1) > gameState.NumShips(2))
+        //            return 1.0;
+        //        else
+        //            return -1.0;
         return gameState.NumShips(1) / (double) gameState.NumShips(2);
     }
 
-    private List<PWOrder> expand()
-    {
+    private List<PWOrder> expand() {
         List<PWOrder> orders = new ArrayList<PWOrder>();
 
         for (PWPlanet myPlanet : gameState.myPlanets(playerID)) {
@@ -222,13 +224,21 @@ public class PWBot23 implements PWBot {
 
                     if (neighbor.getNumShips() < (myPlanet.getNumShips() - shipsAllocated - 2)) {
                         shipsToNeighbor = neighbor.getNumShips() + 1;
-                        orders.add(new PWOrder(playerID, myPlanet.getPlanetID(), neighbor.getPlanetID(),
-                                shipsToNeighbor));
+                        orders.add(
+                                new PWOrder(
+                                        playerID,
+                                        myPlanet.getPlanetID(),
+                                        neighbor.getPlanetID(),
+                                        shipsToNeighbor));
                         shipsAllocated += shipsToNeighbor;
                     } else if ((myPlanet.getNumShips() - shipsAllocated - 2) >= 10) {
                         shipsToNeighbor = (myPlanet.getNumShips() - shipsAllocated) - 1;
-                        orders.add(new PWOrder(playerID, myPlanet.getPlanetID(), neighbor.getPlanetID(),
-                                shipsToNeighbor));
+                        orders.add(
+                                new PWOrder(
+                                        playerID,
+                                        myPlanet.getPlanetID(),
+                                        neighbor.getPlanetID(),
+                                        shipsToNeighbor));
                         shipsAllocated += shipsToNeighbor;
                     }
                 }
@@ -243,7 +253,12 @@ public class PWBot23 implements PWBot {
 
         for (PWPlanet myPlanet : myPlanets) {
             if (myPlanet.getNumShips() > 5) {
-                PWOrder order = new PWOrder(playerID, myPlanet.getPlanetID(), masterPlanet.getPlanetID(), myPlanet.getNumShips());
+                PWOrder order =
+                        new PWOrder(
+                                playerID,
+                                myPlanet.getPlanetID(),
+                                masterPlanet.getPlanetID(),
+                                myPlanet.getNumShips());
                 orders.add(order);
             }
         }
@@ -271,7 +286,6 @@ public class PWBot23 implements PWBot {
 
         this.masterPlanet = masterPlanet;
     }
-
 }
 
 class PWMiniMove {
@@ -306,8 +320,10 @@ class PWMiniMove {
         PWMiniMove that = (PWMiniMove) o;
 
         if (nShips != that.nShips) return false;
-        if (dstPlanet != null ? !dstPlanet.equals(that.dstPlanet) : that.dstPlanet != null) return false;
-        if (srcPlanet != null ? !srcPlanet.equals(that.srcPlanet) : that.srcPlanet != null) return false;
+        if (dstPlanet != null ? !dstPlanet.equals(that.dstPlanet) : that.dstPlanet != null)
+            return false;
+        if (srcPlanet != null ? !srcPlanet.equals(that.srcPlanet) : that.srcPlanet != null)
+            return false;
 
         return true;
     }

@@ -2,8 +2,7 @@ package net.davidrobles.gridworld;
 
 import java.util.Map;
 
-public class GWState
-{
+public class GWState {
     private int x;
     private int y;
     private Map<GWAction, Map<GWState, Double>> actionNextStatesMap;
@@ -51,9 +50,6 @@ public class GWState
 
     @Override
     public String toString() {
-        return "GWState{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "GWState{" + "x=" + x + ", y=" + y + '}';
     }
 }

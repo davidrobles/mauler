@@ -1,26 +1,22 @@
 package net.davidrobles.mauler.loa;
 
+import static org.junit.Assert.*;
+
 import net.davidrobles.mauler.core.GameTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class LOATest extends GameTest<LOA>
-{
+public class LOATest extends GameTest<LOA> {
     @Before
-    public void initialiase()
-    {
+    public void initialiase() {
         this.game = new LOA();
     }
 
     @Test
-    public void testInitialBoard()
-    {
+    public void testInitialBoard() {
         LOA.Cell[] expectedBoard = new LOA.Cell[64];
 
-        for (int i = 0; i < expectedBoard.length; i++)
-            expectedBoard[i] = LOA.Cell.EMPTY;
+        for (int i = 0; i < expectedBoard.length; i++) expectedBoard[i] = LOA.Cell.EMPTY;
 
         for (int black : new int[] {1, 2, 3, 4, 5, 6, 57, 58, 59, 60, 61, 62})
             expectedBoard[black] = LOA.Cell.BLACK;
@@ -30,6 +26,4 @@ public class LOATest extends GameTest<LOA>
 
         assertArrayEquals(expectedBoard, new LOA().getBoard());
     }
-
-
 }

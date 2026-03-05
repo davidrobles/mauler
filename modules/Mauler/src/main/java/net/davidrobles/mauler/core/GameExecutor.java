@@ -1,12 +1,12 @@
-package net.davidrobles.mauler.core;//
-//package shogun.core;
+package net.davidrobles.mauler.core; //
+// package shogun.core;
 //
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.concurrent.*;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.concurrent.*;
 //
-//public class GameExecutor<GAME extends Game<GAME>>
-//{
+// public class GameExecutor<GAME extends Game<GAME>>
+// {
 //    private GAME game;
 //    private List<PlayerTask<GAME>> playerTasks;
 //    private long timeout;
@@ -65,4 +65,4 @@ package net.davidrobles.mauler.core;//
 //
 //        executor.shutdown();
 //    }
-//}
+// }

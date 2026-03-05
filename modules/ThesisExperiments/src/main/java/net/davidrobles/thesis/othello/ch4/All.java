@@ -1,5 +1,7 @@
 package net.davidrobles.thesis.othello.ch4;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.davidrobles.mauler.core.RoundRobin;
 import net.davidrobles.mauler.core.Series;
 import net.davidrobles.mauler.core.Strategy;
@@ -12,13 +14,8 @@ import net.davidrobles.mauler.strategies.greedy.EpsilonGreedyStrategy;
 import net.davidrobles.mauler.strategies.mcts.UCT;
 import net.davidrobles.mauler.strategies.mcts.UCTWithPrior;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class All
-{
-    static void allExperiments()
-    {
+public class All {
+    static void allExperiments() {
         int nGames = 50;
         int timeout = 50;
         double c = 0.5;
@@ -35,29 +32,33 @@ public class All
         players.add(new UCT<Othello>(c));
         playerNames.add("UCT");
 
-//        // UCT + Non Random Default Policy
-//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c));
-//        playerNames.add("UCT+NR");
+        //        // UCT + Non Random Default Policy
+        //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(wpc, 0.1), c));
+        //        playerNames.add("UCT+NR");
 
-//        UCT + Non Random Default Policy
-//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.9), c));
-//        playerNames.add("UCT-0.9");
+        //        UCT + Non Random Default Policy
+        //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.9),
+        // c));
+        //        playerNames.add("UCT-0.9");
 
-//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.99), c));
-//        playerNames.add("UCT-0.99");
-//
-//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.999), c));
-//        playerNames.add("UCT-0.999");
-//
-//        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 1.0), c));
-//        playerNames.add("UCT-1.0");
+        //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.99),
+        // c));
+        //        playerNames.add("UCT-0.99");
+        //
+        //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 0.999),
+        // c));
+        //        playerNames.add("UCT-0.999");
+        //
+        //        players.add(new UCT<Othello>(new EpsilonGreedyStrategy<Othello>(heuristic, 1.0),
+        // c));
+        //        playerNames.add("UCT-1.0");
 
         // UCT + Prior Knowledge
-//        players.add(new UCTWithPrior<Othello>(c, logistello, 100));
-//        playerNames.add("UCT+100");
-//
-//        players.add(new UCTWithPrior<Othello>(c, logistello, 500));
-//        playerNames.add("UCT+500");
+        //        players.add(new UCTWithPrior<Othello>(c, logistello, 100));
+        //        playerNames.add("UCT+100");
+        //
+        //        players.add(new UCTWithPrior<Othello>(c, logistello, 500));
+        //        playerNames.add("UCT+500");
 
         players.add(new UCTWithPrior<Othello>(c, logistello, 1000));
         playerNames.add("UCT+1000+Log");
@@ -65,22 +66,22 @@ public class All
         players.add(new UCTWithPrior<Othello>(c, wpc, 1000));
         playerNames.add("UCT+1000+WPC");
 
-//
-//        players.add(new UCTWithPrior<Othello>(c, heuristic, 5000));
-//        playerNames.add("UCT+5000");
+        //
+        //        players.add(new UCTWithPrior<Othello>(c, heuristic, 5000));
+        //        playerNames.add("UCT+5000");
 
         // UCT + Non Random Default Policy + Prior Knowledge
-//        GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(logistello);
-//        players.add(new UCTWithPrior<Othello>(greedy, c, logistello, nInit));
-//        playerNames.add("UCT+NR+PK");
+        //        GreedyStrategy<Othello> greedy = new GreedyStrategy<Othello>(logistello);
+        //        players.add(new UCTWithPrior<Othello>(greedy, c, logistello, nInit));
+        //        playerNames.add("UCT+NR+PK");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, nGames, players, playerNames, timeout);
         roundRobin.run();
         System.out.println(roundRobin.toLatexTable());
     }
 
-    static void test()
-    {
+    static void test() {
         int nGames = 100;
         double c = 0.5;
         WPC heuristic = new WPC(WPCUtil.load("dr-sym-6462"));
@@ -92,35 +93,34 @@ public class All
         series.run();
     }
 
-    static void myDR()
-    {
+    static void myDR() {
         List<Strategy<Othello>> players = new ArrayList<Strategy<Othello>>();
         List<String> playerNames = new ArrayList<String>();
 
         // NTS-RS
-        players.add(new EpsilonGreedyStrategy<Othello>( OthelloVF.NTS_RS, 0.1));
+        players.add(new EpsilonGreedyStrategy<Othello>(OthelloVF.NTS_RS, 0.1));
         playerNames.add("NTS-RS");
 
         // WPC-SYM
-//        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
-//        playerNames.add("WPC-SYM");
+        //        players.add(new EpsilonGreedyStrategy<Othello>(WPC_SYM, 0.1));
+        //        playerNames.add("WPC-SYM");
 
-//        // NTS-RND
-//        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
-//        playerNames.add("NTS-RND");
+        //        // NTS-RND
+        //        players.add(new EpsilonGreedyStrategy<Othello>(NTS_RND, 0.1));
+        //        playerNames.add("NTS-RND");
 
-//        // NTS-LOG
+        //        // NTS-LOG
         players.add(new EpsilonGreedyStrategy<Othello>(OthelloVF.NTS_LOG, 0.1));
         playerNames.add("NTS-LOG");
 
-        RoundRobin<Othello> roundRobin = new RoundRobin<>(Othello::new, 10000, players, playerNames);
+        RoundRobin<Othello> roundRobin =
+                new RoundRobin<>(Othello::new, 10000, players, playerNames);
         roundRobin.run();
         System.out.println();
         System.out.println(roundRobin.toLatexTable());
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         myDR();
     }
 }

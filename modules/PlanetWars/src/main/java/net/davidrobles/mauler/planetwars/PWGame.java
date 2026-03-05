@@ -9,7 +9,7 @@ public class PWGame {
     private List<PWBot> bots = new ArrayList<PWBot>();
     private List<PWGameObserver> observers = new ArrayList<PWGameObserver>();
     private List<PWGameState> history = new ArrayList<PWGameState>();
-    
+
     public PWGame(String gameStateString, List<PWBot> bots) {
         gameState = new PWGameState(gameStateString, bots);
         this.bots = bots;
@@ -19,8 +19,7 @@ public class PWGame {
         return gameState;
     }
 
-    public void next()
-    {
+    public void next() {
         for (PWBot bot : bots) {
             List<PWOrder> orders = bot.getOrders(gameState);
             gameState.makeMoves(orders);
@@ -44,5 +43,4 @@ public class PWGame {
     public void registerView(PWGameObserver observer) {
         observers.add(observer);
     }
-    
 }

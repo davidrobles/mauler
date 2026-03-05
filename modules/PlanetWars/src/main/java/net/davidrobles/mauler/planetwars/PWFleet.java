@@ -9,8 +9,13 @@ public class PWFleet {
     private int totalTripLength;
     private int turnsRemaining;
 
-    public PWFleet(int owner, int numShips, int sourcePlanet, int destinationPlanet, int totalTripLength,
-                 int turnsRemaining) {
+    public PWFleet(
+            int owner,
+            int numShips,
+            int sourcePlanet,
+            int destinationPlanet,
+            int totalTripLength,
+            int turnsRemaining) {
         this.owner = owner;
         this.numShips = numShips;
         this.sourcePlanet = sourcePlanet;
@@ -74,5 +79,4 @@ public class PWFleet {
         numShips = 0;
         turnsRemaining = 0;
     }
-    
 }

@@ -1,13 +1,12 @@
 package net.davidrobles.mauler.breakthrough;
 
+import static org.junit.Assert.assertEquals;
+
 import net.davidrobles.mauler.core.GameTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
-public class BreakthroughTest extends GameTest<Breakthrough>
-{
+public class BreakthroughTest extends GameTest<Breakthrough> {
     @Before
     public void init() {
         this.game = new Breakthrough();
@@ -19,7 +18,5 @@ public class BreakthroughTest extends GameTest<Breakthrough>
     }
 
     @Test
-    public void testInitialBoard() {
-
-    }
+    public void testInitialBoard() {}
 }

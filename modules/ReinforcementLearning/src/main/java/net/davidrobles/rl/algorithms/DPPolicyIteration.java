@@ -1,17 +1,17 @@
-package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
+package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //
-//import MDP;
-//import RLPolicy;
-//import VFunctionObserver;
-//import dr.rl.VValuesAlgorithm;
-//import dr.rl.policies.LookupTablePolicy;
-//import TabularVFunction;
+// import MDP;
+// import RLPolicy;
+// import VFunctionObserver;
+// import dr.rl.VValuesAlgorithm;
+// import dr.rl.policies.LookupTablePolicy;
+// import TabularVFunction;
 //
-//import java.util.*;
+// import java.util.*;
 //
 //// Model-based policy iteration
-//public class DPPolicyIteration<S, A> implements VValuesAlgorithm<S, A>
-//{
+// public class DPPolicyIteration<S, A> implements VValuesAlgorithm<S, A>
+// {
 //    private MDP<S, A> mdp;
 //    private TabularVFunction<S> valueFunction;
 //    private LookupTablePolicy<S, A> policy;
@@ -50,7 +50,8 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //
 //                for (A action : mdp.getActions(state))
 //                {
-//                    double stateActionProbability = policy.getStateActionProbability(state, action);
+//                    double stateActionProbability = policy.getStateActionProbability(state,
+// action);
 //                    double tot = 0;
 //                    Map<S, Double> nextStatesProbs =
 //                            mdp.getTransitions(state, action);
@@ -121,7 +122,8 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //            List<A> actions = mdp.getActions(state);
 //            Collections.shuffle(actions);
 //            policy.setStateAction(state, actions.get(rng.nextInt(actions.size())));
-////            policy.setStateAction(state, GWAction.values()[RNG.nextInt(GWAction.values().length)]);
+////            policy.setStateAction(state,
+// GWAction.values()[RNG.nextInt(GWAction.values().length)]);
 //        }
 //
 //        while (!policyStable) {
@@ -139,4 +141,4 @@ package net.davidrobles.rl.algorithms;//package dr.rl.algorithms;
 //    public void addVFunctionObserver(VFunctionObserver<S> observer) {
 //        observers.add(observer);
 //    }
-//}
+// }
