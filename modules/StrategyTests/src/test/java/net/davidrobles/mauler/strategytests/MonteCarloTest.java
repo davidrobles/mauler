@@ -15,28 +15,42 @@ import static org.junit.Assert.assertTrue;
  *
  * <p>MonteCarlo is stochastic, so exact win counts cannot be asserted.
  * Instead these tests verify that the strategy wins significantly more often
- * than a random opponent — a threshold well below the true win rate, chosen
- * to be robust against natural variance while still catching regressions
- * (e.g., a broken implementation that always picks move 0).
+ * than a random opponent as both player 0 and player 1 — a threshold well
+ * below the true win rate, chosen to be robust against natural variance while
+ * still catching regressions.
  */
 public class MonteCarloTest
 {
-    private static final int N_GAMES    = 1_000;
-    private static final int N_SIMS     = 100;
+    private static final int    N_GAMES      = 1_000;
+    private static final int    N_SIMS       = 100;
     private static final double MIN_WIN_RATE = 0.75;
 
-    @Test
-    public void monteCarlo_winsOverwhelmingly_vsRandom()
+    private static void assertWinsOverwhelmingly(int player)
     {
+        MonteCarlo<TicTacToe> mc = new MonteCarlo<>(N_SIMS);
         Series<TicTacToe> series = new Series<>(TicTacToe::new, N_GAMES,
-                List.of(new MonteCarlo<>(N_SIMS), new RandomStrategy<>()));
+                player == 0
+                        ? List.of(mc, new RandomStrategy<>())
+                        : List.of(new RandomStrategy<>(), mc));
         series.setVerbose(false);
         series.run();
 
-        double winRate = series.getWinsAvg(0);
+        double winRate = series.getWinsAvg(player);
         assertTrue(
-                String.format("MonteCarlo(%d) win rate %.1f%% is below the %.0f%% threshold",
-                        N_SIMS, winRate * 100, MIN_WIN_RATE * 100),
+                String.format("MonteCarlo(%d) win rate as player %d: %.1f%% < %.0f%% threshold",
+                        N_SIMS, player, winRate * 100, MIN_WIN_RATE * 100),
                 winRate >= MIN_WIN_RATE);
+    }
+
+    @Test
+    public void monteCarlo_winsOverwhelmingly_vsRandom_asFirstPlayer()
+    {
+        assertWinsOverwhelmingly(0);
+    }
+
+    @Test
+    public void monteCarlo_winsOverwhelmingly_vsRandom_asSecondPlayer()
+    {
+        assertWinsOverwhelmingly(1);
     }
 }

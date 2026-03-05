@@ -15,31 +15,40 @@ import static org.junit.Assert.assertTrue;
  *
  * <p>UCT is stochastic, so exact win counts cannot be asserted. The threshold
  * is conservative — well below the true win rate — to avoid flakiness while
- * still catching regressions (e.g. a broken implementation that always picks
- * move 0 would win ~50% vs random, well below the threshold).
- *
- * <p>Note: UCT vs MonteCarlo comparisons are not included here because both
- * strategies reach near-perfect play on TicTacToe with reasonable simulation
- * counts, making the head-to-head result essentially a coin flip on this game.
+ * still catching regressions. Tests are run as both player 0 and player 1.
  */
 public class UCTTest
 {
-    private static final int    N_GAMES          = 1_000;
-    private static final int    UCT_SIMS         = 1_000;
-    private static final double MIN_WIN_RATE     = 0.85;
+    private static final int    N_GAMES      = 1_000;
+    private static final int    UCT_SIMS     = 1_000;
+    private static final double MIN_WIN_RATE = 0.85;
 
-    @Test
-    public void uct_winsOverwhelmingly_vsRandom()
+    private static void assertWinsOverwhelmingly(int player)
     {
+        UCT<TicTacToe> uct = new UCT<>(Math.sqrt(2), UCT_SIMS);
         Series<TicTacToe> series = new Series<>(TicTacToe::new, N_GAMES,
-                List.of(new UCT<>(Math.sqrt(2), UCT_SIMS), new RandomStrategy<>()));
+                player == 0
+                        ? List.of(uct, new RandomStrategy<>())
+                        : List.of(new RandomStrategy<>(), uct));
         series.setVerbose(false);
         series.run();
 
-        double winRate = series.getWinsAvg(0);
+        double winRate = series.getWinsAvg(player);
         assertTrue(
-                String.format("UCT(%d) win rate %.1f%% is below the %.0f%% threshold",
-                        UCT_SIMS, winRate * 100, MIN_WIN_RATE * 100),
+                String.format("UCT(%d) win rate as player %d: %.1f%% < %.0f%% threshold",
+                        UCT_SIMS, player, winRate * 100, MIN_WIN_RATE * 100),
                 winRate >= MIN_WIN_RATE);
+    }
+
+    @Test
+    public void uct_winsOverwhelmingly_vsRandom_asFirstPlayer()
+    {
+        assertWinsOverwhelmingly(0);
+    }
+
+    @Test
+    public void uct_winsOverwhelmingly_vsRandom_asSecondPlayer()
+    {
+        assertWinsOverwhelmingly(1);
     }
 }
