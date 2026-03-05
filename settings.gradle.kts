@@ -20,7 +20,8 @@ include(
     ":HavannahPlay",
     ":Tron",
     ":ThesisExperiments",
-    ":Experiments"
+    ":Experiments",
+    ":StrategyTests"
 )
 
 project(":Mauler").projectDir = file("modules/Mauler")
@@ -43,4 +44,5 @@ project(":HavannahPlay").projectDir = file("modules/HavannahPlay")
 project(":Tron").projectDir = file("modules/Tron")
 project(":ThesisExperiments").projectDir = file("modules/ThesisExperiments")
 project(":Experiments").projectDir = file("modules/Experiments")
+project(":StrategyTests").projectDir = file("modules/StrategyTests")
 
