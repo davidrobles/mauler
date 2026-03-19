@@ -12,7 +12,7 @@ subprojects {
 
     configure<JavaPluginExtension> {
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(11))
+            languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 
@@ -23,7 +23,7 @@ subprojects {
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
             // AOSP style: 4-space indentation (matches existing codebase)
-            googleJavaFormat("1.15.0").aosp()
+            googleJavaFormat("1.22.0").aosp()
         }
     }
 }
