@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git
+
+Never add a `Co-Authored-By: Claude` trailer to commit messages.
+
 ## Project Overview
 
 **Mauler** (Multi-Algorithm Learning Evaluation Research) — a Java game framework for implementing board games and testing AI algorithms against them.
