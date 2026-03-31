@@ -56,8 +56,7 @@ public class GridWorldEnv implements Environment<GWState, GWAction> {
         return currentState;
     }
 
-    @Override
-    public boolean isTerminal() {
+    private boolean isTerminal() {
         return mdp.isTerminal(currentState);
     }
 }
