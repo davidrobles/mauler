@@ -299,6 +299,8 @@ public class Connect4 implements Game<Connect4> {
 
         if (player1 != connect4.player1) return false;
         if (player2 != connect4.player2) return false;
+        if (current != connect4.current) return false;
+        if (gameOver != connect4.gameOver) return false;
 
         return true;
     }
@@ -307,6 +309,8 @@ public class Connect4 implements Game<Connect4> {
     public int hashCode() {
         int result = (int) (player1 ^ (player1 >>> 32));
         result = 31 * result + (int) (player2 ^ (player2 >>> 32));
+        result = 31 * result + current;
+        result = 31 * result + (gameOver ? 1 : 0);
         return result;
     }
 
