@@ -10,7 +10,7 @@ public class GreedyPolicy<S, A> implements RLPolicy<S, A> {
     public A getAction(Environment<S, A> env, QFunction<S, A> qFunc) {
         A bestAction = null;
         double bestValue = Double.NEGATIVE_INFINITY;
-        List<A> actions = env.getPossibleActions(env.getCurrentState());
+        List<A> actions = env.getActions(env.getCurrentState());
 
         for (A action : actions) {
             double value = qFunc.getValue(env.getCurrentState(), action);
@@ -28,7 +28,7 @@ public class GreedyPolicy<S, A> implements RLPolicy<S, A> {
     public A getAction(Environment<S, A> env, VFunction<S> vFunc) {
         A bestAction = null;
         double bestValue = Double.NEGATIVE_INFINITY;
-        List<A> actions = env.getPossibleActions(env.getCurrentState());
+        List<A> actions = env.getActions(env.getCurrentState());
 
         for (A action : actions) {
             double value = vFunc.getValue(env.getCurrentState());

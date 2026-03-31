@@ -34,7 +34,7 @@ public class GridWorldEnv implements Environment<GWState, GWAction> {
     }
 
     @Override
-    public List<GWAction> getPossibleActions(GWState state) {
+    public List<GWAction> getActions(GWState state) {
         return mdp.getActions(state);
     }
 

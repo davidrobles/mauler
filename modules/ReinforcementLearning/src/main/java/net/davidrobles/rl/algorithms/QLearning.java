@@ -35,7 +35,7 @@ public class QLearning<S, A> implements Learner {
         System.out.println("Episode " + currentEpisode);
         env.reset();
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        while (!env.getActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
         }
@@ -59,7 +59,7 @@ public class QLearning<S, A> implements Learner {
         if (result.done) {
             nextStateNextActionValue = 0;
         } else {
-            for (A nextAction : env.getPossibleActions(result.nextState)) {
+            for (A nextAction : env.getActions(result.nextState)) {
                 double tempValue = table.getValue(result.nextState, nextAction);
 
                 if (tempValue > nextStateNextActionValue) nextStateNextActionValue = tempValue;

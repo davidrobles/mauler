@@ -17,7 +17,7 @@ public interface Environment<S, A> {
      * Returns a list of the possible actions that the agent can take in the given state. Can return
      * the empty list if we are in a terminal state.
      */
-    List<A> getPossibleActions(S state);
+    List<A> getActions(S state);
 
     /**
      * Applies {@code action} to the environment, advances the internal state, and returns a {@link

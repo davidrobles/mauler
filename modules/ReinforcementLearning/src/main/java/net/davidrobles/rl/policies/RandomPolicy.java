@@ -20,7 +20,7 @@ public class RandomPolicy<S, A> implements RLPolicy<S, A> {
     }
 
     public A getRandomAction(Environment<S, A> env) {
-        List<A> actions = env.getPossibleActions(env.getCurrentState());
+        List<A> actions = env.getActions(env.getCurrentState());
         return actions.get(rng.nextInt(actions.size()));
     }
 

@@ -43,7 +43,7 @@ public class TabularTDLambda<S, A> implements Learner {
         System.out.println("Episode " + currentEpisode);
         env.reset();
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        while (!env.getActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
         }

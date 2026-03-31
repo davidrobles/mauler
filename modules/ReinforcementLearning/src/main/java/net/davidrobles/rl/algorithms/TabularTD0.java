@@ -46,7 +46,7 @@ public class TabularTD0<S, A> implements Learner {
         System.out.println("Episode " + curEp);
         env.reset();
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        while (!env.getActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
         }

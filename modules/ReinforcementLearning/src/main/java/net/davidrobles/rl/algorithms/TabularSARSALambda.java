@@ -82,7 +82,7 @@ public class TabularSARSALambda<S, A> implements Learner {
         env.reset();
         action = policy.getAction(env, table);
 
-        while (!env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        while (!env.getActions(env.getCurrentState()).isEmpty()) {
             step();
             notifyValueFunctionUpdate();
         }

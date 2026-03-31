@@ -76,7 +76,7 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //            System.out.println("Episode " + i);
 //
 //            // Generate an episode using the policy
-//            while (!environment.getPossibleActions(environment.getCurrentState()).isEmpty())
+//            while (!environment.getActions(environment.getCurrentState()).isEmpty())
 ////            while (!environment.isTerminal(environment.getCurrentState()))
 //            {
 //                A action = policy.getAction(environment.getCurrentState());
