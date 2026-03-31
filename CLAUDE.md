@@ -43,7 +43,7 @@ Performance benchmarks are run via `main()` methods using `SpeedTest.gameSpeed()
 
 All games implement the `Game<GAME>` interface (`modules/Mauler/src/main/java/net/davidrobles/mauler/core/Game.java`):
 - Key methods: `copy()`, `getCurPlayer()`, `getMoves()`, `getNumMoves()`, `makeMove(int)`, `isOver()`, `getOutcome()`, `reset()`
-- Concrete games extend `AbstractGame` which adds `MoveObservable` support
+- Concrete games extend `ObservableGame` which adds `MoveObservable` support
 - Move model is index-based: `[0, getNumMoves())`; must override `equals()`/`hashCode()` on full state
 
 All AI strategies implement `Strategy<GAME>` (`modules/Mauler/src/main/java/net/davidrobles/mauler/core/Strategy.java`):
@@ -88,6 +88,6 @@ modules/
 
 1. Create a new module under `modules/` with `src/main/java/` and `src/test/java/` directories; add a `build.gradle.kts`.
 2. Register it in `settings.gradle.kts`.
-3. Implement the `Game<YourGame>` interface, extending `AbstractGame` for observer support.
+3. Extend `ObservableGame<YourGame>` and call `notifyMoveObservers()` at the end of `makeMove()`.
 4. Use bitboard primitives for performance-critical state representation.
 5. Add a test class extending `GameTest<YourGame>` from the Mauler module (via `testFixtures` dependency).
