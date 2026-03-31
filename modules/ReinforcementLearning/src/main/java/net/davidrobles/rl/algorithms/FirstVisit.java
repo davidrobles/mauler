@@ -1,8 +1,8 @@
 package net.davidrobles.rl.algorithms;
 
 import java.util.*;
-import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;

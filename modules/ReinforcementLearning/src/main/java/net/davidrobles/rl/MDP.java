@@ -37,8 +37,8 @@ public interface MDP<S, A> {
     Map<S, Double> getTransitions(S state, A action);
 
     /**
-     * Returns the reward R(s, a, s') for transitioning from {@code state} to {@code nextState}
-     * via {@code action}.
+     * Returns the reward R(s, a, s') for transitioning from {@code state} to {@code nextState} via
+     * {@code action}.
      */
     double getReward(S state, A action, S nextState);
 
