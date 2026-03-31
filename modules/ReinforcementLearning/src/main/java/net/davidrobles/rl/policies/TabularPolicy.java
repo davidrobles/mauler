@@ -1,8 +1,8 @@
 package net.davidrobles.rl.policies;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
 
@@ -18,13 +18,13 @@ public class TabularPolicy<S, A> implements RLPolicy<S, A>, StochasticPolicy<S, 
     }
 
     @Override
-    public A getAction(Environment<S, A> env, QFunction<S, A> qf) {
-        return map.get(env.getCurrentState());
+    public A getAction(S state, List<A> actions, QFunction<S, A> qf) {
+        return map.get(state);
     }
 
     @Override
-    public A getAction(Environment<S, A> env, VFunction<S> vf) {
-        return map.get(env.getCurrentState());
+    public A getAction(S state, List<A> actions, VFunction<S> vf) {
+        return map.get(state);
     }
 
     @Override

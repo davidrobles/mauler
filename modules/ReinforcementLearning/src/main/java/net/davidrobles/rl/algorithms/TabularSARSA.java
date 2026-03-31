@@ -2,82 +2,62 @@ package net.davidrobles.rl.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.davidrobles.rl.Environment;
-import net.davidrobles.rl.Learner;
+import net.davidrobles.rl.Agent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
-public class TabularSARSA<S, A> implements Learner {
-    private Environment<S, A> env;
+public class TabularSARSA<S, A> implements Agent<S, A> {
     private RLPolicy<S, A> policy;
-    private double alpha; // learning rate
-    private double gamma; // discount factor
-    private int numEpisodes;
-    private int currentEpisode = 0;
-    private TabularQFunction<S, A> table;
+    private double alpha;
+    private double gamma;
+    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();
+    // Pre-selected next action so that selectAction and update share the same (S, A, R, S', A').
+    private A nextAction = null;
     private List<QFunctionObserver<S, A>> qFunctionObservers =
             new ArrayList<QFunctionObserver<S, A>>();
 
-    public TabularSARSA(
-            Environment<S, A> env, RLPolicy<S, A> policy, double alpha, double gamma, int numEpisodes) {
-        this.env = env;
+    public TabularSARSA(RLPolicy<S, A> policy, double alpha, double gamma) {
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
-        this.numEpisodes = numEpisodes;
-        this.table = new TabularQFunction<S, A>();
     }
 
-    A action;
-
-    public void episode() {
-        System.out.println("Episode " + currentEpisode);
-        env.reset();
-        action = policy.getAction(env, table);
-
-        while (!env.getActions(env.getCurrentState()).isEmpty()) {
-            step();
-            notifyValueFunctionUpdate();
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    @Override
+    public A selectAction(S state, List<A> actions) {
+        // If update() pre-selected the next action, use it (SARSA on-policy coupling).
+        if (nextAction != null) {
+            A a = nextAction;
+            nextAction = null;
+            return a;
         }
+        return policy.getAction(state, actions, table);
     }
 
-    private void step() {
-        S state = env.getCurrentState();
-        StepResult<S> result = env.step(action);
-        A nextAction = null;
-        double nextStateNextActionValue;
+    @Override
+    public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
+        double nextQ;
 
-        if (result.done) {
-            nextStateNextActionValue = 0;
+        if (result.done || nextActions.isEmpty()) {
+            nextQ = 0.0;
+            nextAction = null;
         } else {
-            nextAction = policy.getAction(env, table);
-            nextStateNextActionValue = table.getValue(result.nextState, nextAction);
+            nextAction = policy.getAction(result.nextState, nextActions, table);
+            nextQ = table.getValue(result.nextState, nextAction);
         }
 
-        double updateValue =
-                result.reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
-        double newValue = table.getValue(state, action) + (alpha * updateValue);
+        double newValue =
+                table.getValue(state, action)
+                        + alpha * (result.reward + gamma * nextQ - table.getValue(state, action));
         table.setValue(new QPair<S, A>(state, action), newValue);
-        action = nextAction;
         notifyValueFunctionUpdate();
     }
 
     public void notifyValueFunctionUpdate() {
         for (QFunctionObserver<S, A> observer : qFunctionObservers)
             observer.qFunctionUpdated(table);
-    }
-
-    @Override
-    public void learn() {
-        for (; currentEpisode < numEpisodes; currentEpisode++) episode();
     }
 
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
