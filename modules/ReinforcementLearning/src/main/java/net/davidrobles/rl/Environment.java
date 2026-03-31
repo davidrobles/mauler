@@ -26,8 +26,8 @@ public interface Environment<S, A> {
      */
     double performAction(A action);
 
-    /** Resets the current state to the start state. */
-    void reset();
+    /** Resets the environment to the start state and returns it. */
+    S reset();
 
     /** Has the environment entered a terminal state? This means there are no successors */
     boolean isTerminal();

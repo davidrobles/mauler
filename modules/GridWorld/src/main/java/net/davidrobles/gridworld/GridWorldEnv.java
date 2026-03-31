@@ -50,8 +50,9 @@ public class GridWorldEnv implements Environment<GWState, GWAction> {
     }
 
     @Override
-    public void reset() {
+    public GWState reset() {
         currentState = mdp.getStartState();
+        return currentState;
     }
 
     @Override
