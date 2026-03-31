@@ -3,10 +3,10 @@ package net.davidrobles.mauler.connect4;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import net.davidrobles.mauler.core.Game;
 import net.davidrobles.mauler.core.GameResult;
+import net.davidrobles.mauler.core.ObservableGame;
 
-public class Connect4 implements Game<Connect4> {
+public class Connect4 extends ObservableGame<Connect4> {
     public enum Cell {
         P1,
         P2,
@@ -255,6 +255,7 @@ public class Connect4 implements Game<Connect4> {
         }
 
         current = (current + 1) % 2;
+        notifyMoveObservers();
     }
 
     @Override
