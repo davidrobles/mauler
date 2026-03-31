@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
@@ -48,22 +49,16 @@ public class TabularSARSALambda<S, A> implements Learner {
 
     public void step() {
         S state = env.getCurrentState();
-        double reward = env.performAction(action);
-        S nextState = env.getCurrentState();
+        StepResult<S> result = env.step(action);
         A nextAction = null;
 
-        if (env.getPossibleActions(env.getCurrentState()).isEmpty()) {
-            //            System.out.println("here");
-            //                    nextStateNextActionValue = 0;
-        } else {
+        if (!result.done) {
             nextAction = policy.getAction(env, table);
-            //                    nextStateNextActionValue = qFunction.getValue(nextState,
-            // nextAction);
         }
 
         double tdError =
-                reward
-                        + gamma * table.getValue(nextState, nextAction)
+                result.reward
+                        + gamma * table.getValue(result.nextState, nextAction)
                         - table.getValue(state, action);
 
         QPair<S, A> newQPair = new QPair<S, A>(state, action);

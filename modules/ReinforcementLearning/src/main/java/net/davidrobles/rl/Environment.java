@@ -20,11 +20,10 @@ public interface Environment<S, A> {
     List<A> getPossibleActions(S state);
 
     /**
-     * Performs an action on the environment that changes its internal state.
-     *
-     * @return the reward.
+     * Applies {@code action} to the environment, advances the internal state, and returns a {@link
+     * StepResult} containing the next state, the reward signal, and whether the episode has ended.
      */
-    double performAction(A action);
+    StepResult<S> step(A action);
 
     /** Resets the environment to the start state and returns it. */
     S reset();

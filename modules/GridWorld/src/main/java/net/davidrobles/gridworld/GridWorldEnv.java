@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import net.davidrobles.rl.MDPObserver;
 import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.MDPObserver;
+import net.davidrobles.rl.StepResult;
 
 public class GridWorldEnv implements Environment<GWState, GWAction> {
     private GridWorldMDP mdp;
@@ -38,15 +39,15 @@ public class GridWorldEnv implements Environment<GWState, GWAction> {
     }
 
     @Override
-    public double performAction(GWAction action) {
+    public StepResult<GWState> step(GWAction action) {
         if (!mdp.getActions(currentState).contains(action))
             throw new IllegalArgumentException("Invalid action!");
 
         Map<GWState, Double> stateDoubleMap = currentState.getActionNextStatesMap().get(action);
         currentState = stateDoubleMap.keySet().iterator().next();
         notifyCurrentStateChange();
-        //        return reward(currentState);
-        return -1;
+        double reward = mdp.getReward(currentState, action, currentState);
+        return new StepResult<>(currentState, reward, isTerminal());
     }
 
     @Override

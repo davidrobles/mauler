@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.Learner;
+import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
@@ -49,11 +50,13 @@ public class TabularTDLambda<S, A> implements Learner {
     }
 
     public void step() {
-        A action = policy.getAction(env, table);
         S currentState = env.getCurrentState();
-        double reward = env.performAction(action);
-        S nextState = env.getCurrentState();
-        double tdError = reward + gamma * table.getValue(nextState) - table.getValue(currentState);
+        A action = policy.getAction(env, table);
+        StepResult<S> result = env.step(action);
+        double tdError =
+                result.reward
+                        + gamma * table.getValue(result.nextState)
+                        - table.getValue(currentState);
 
         if (traces.containsKey(currentState))
             traces.put(currentState, traces.get(currentState) + 1);

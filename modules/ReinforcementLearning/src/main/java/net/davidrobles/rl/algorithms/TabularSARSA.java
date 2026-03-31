@@ -2,9 +2,10 @@ package net.davidrobles.rl.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
@@ -50,20 +51,19 @@ public class TabularSARSA<S, A> implements Learner {
 
     private void step() {
         S state = env.getCurrentState();
-        double reward = env.performAction(action);
-        S nextState = env.getCurrentState();
+        StepResult<S> result = env.step(action);
         A nextAction = null;
         double nextStateNextActionValue;
 
-        if (env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        if (result.done) {
             nextStateNextActionValue = 0;
         } else {
             nextAction = policy.getAction(env, table);
-            nextStateNextActionValue = table.getValue(nextState, nextAction);
+            nextStateNextActionValue = table.getValue(result.nextState, nextAction);
         }
 
         double updateValue =
-                reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
+                result.reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
         double newValue = table.getValue(state, action) + (alpha * updateValue);
         table.setValue(new QPair<S, A>(state, action), newValue);
         action = nextAction;

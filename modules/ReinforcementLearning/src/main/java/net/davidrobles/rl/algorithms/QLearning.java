@@ -2,9 +2,10 @@ package net.davidrobles.rl.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
@@ -52,22 +53,21 @@ public class QLearning<S, A> implements Learner {
     private void step() {
         S state = env.getCurrentState();
         A action = policy.getAction(env, table);
-        double reward = env.performAction(action);
-        S nextState = env.getCurrentState();
+        StepResult<S> result = env.step(action);
         double nextStateNextActionValue = Double.NEGATIVE_INFINITY;
 
-        if (env.getPossibleActions(env.getCurrentState()).isEmpty()) {
+        if (result.done) {
             nextStateNextActionValue = 0;
         } else {
-            for (A nextAction : env.getPossibleActions(nextState)) {
-                double tempValue = table.getValue(nextState, nextAction);
+            for (A nextAction : env.getPossibleActions(result.nextState)) {
+                double tempValue = table.getValue(result.nextState, nextAction);
 
                 if (tempValue > nextStateNextActionValue) nextStateNextActionValue = tempValue;
             }
         }
 
         double updateValue =
-                reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
+                result.reward + (gamma * nextStateNextActionValue) - table.getValue(state, action);
         double newValue = table.getValue(state, action) + (alpha * updateValue);
         table.setValue(new QPair<S, A>(state, action), newValue);
         notifyQFunctionUpdate();

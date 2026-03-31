@@ -81,7 +81,7 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //            {
 //                A action = policy.getAction(environment.getCurrentState());
 ////                MDPState prevState = dr.mdp.getCurrentState();
-//                double reward = environment.performAction(action);
+//                double reward = environment.step(action);
 //                visitedStates.add(environment.getCurrentState());
 //                rewards.add(reward);
 //                if (!stateFirstOcc.containsKey(environment.getCurrentState())) {

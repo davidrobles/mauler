@@ -2,8 +2,9 @@ package net.davidrobles.rl.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.Environment;
+import net.davidrobles.rl.Learner;
+import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
@@ -52,15 +53,14 @@ public class TabularTD0<S, A> implements Learner {
     }
 
     public void step() {
-        A action = policy.getAction(env, table);
         S currentState = env.getCurrentState();
-        double reward = env.performAction(action);
-        S nextState = env.getCurrentState();
+        A action = policy.getAction(env, table);
+        StepResult<S> result = env.step(action);
         double newValue =
                 table.getValue(currentState)
                         + (alpha
-                                * (reward
-                                        + (gamma * table.getValue(nextState))
+                                * (result.reward
+                                        + (gamma * table.getValue(result.nextState))
                                         - table.getValue(currentState)));
         table.setValue(currentState, newValue);
     }
