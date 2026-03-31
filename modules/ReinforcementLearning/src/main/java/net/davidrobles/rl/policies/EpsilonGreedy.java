@@ -1,7 +1,7 @@
 package net.davidrobles.rl.policies;
 
 import java.util.Random;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
 
@@ -39,7 +39,7 @@ public class EpsilonGreedy<S, A> implements RLPolicy<S, A> {
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, QFunction<S, A> qFunction) {
+    public A getAction(Environment<S, A> env, QFunction<S, A> qFunction) {
         // explore
         if (rng.nextDouble() < epsilon) return randomPolicy.getAction(env, qFunction);
 
@@ -48,7 +48,7 @@ public class EpsilonGreedy<S, A> implements RLPolicy<S, A> {
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, VFunction<S> vFunction) {
+    public A getAction(Environment<S, A> env, VFunction<S> vFunction) {
         // explore
         if (rng.nextDouble() < epsilon) return randomPolicy.getAction(env, vFunction);
 

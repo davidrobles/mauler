@@ -2,7 +2,7 @@ package net.davidrobles.rl.policies;
 
 import java.util.List;
 import java.util.Random;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
 
@@ -19,18 +19,18 @@ public class RandomPolicy<S, A> implements RLPolicy<S, A> {
         this.rng = rng;
     }
 
-    public A getRandomAction(RLEnv<S, A> env) {
+    public A getRandomAction(Environment<S, A> env) {
         List<A> actions = env.getPossibleActions(env.getCurrentState());
         return actions.get(rng.nextInt(actions.size()));
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, QFunction<S, A> saqFunction) {
+    public A getAction(Environment<S, A> env, QFunction<S, A> saqFunction) {
         return getRandomAction(env);
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, VFunction<S> svFunction) {
+    public A getAction(Environment<S, A> env, VFunction<S> svFunction) {
         return getRandomAction(env);
     }
 }

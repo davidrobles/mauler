@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class TabularSARSALambda<S, A> implements Learner {
-    private RLEnv<S, A> env;
+    private Environment<S, A> env;
     private RLPolicy<S, A> policy;
     private double alpha; // learning rate
     private double gamma; // discount factor
@@ -27,7 +27,7 @@ public class TabularSARSALambda<S, A> implements Learner {
             new ArrayList<QFunctionObserver<S, A>>();
 
     public TabularSARSALambda(
-            RLEnv<S, A> env,
+            Environment<S, A> env,
             RLPolicy<S, A> policy,
             double alpha,
             double gamma,

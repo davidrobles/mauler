@@ -2,7 +2,7 @@ package net.davidrobles.rl.algorithms;
 
 import java.util.*;
 import net.davidrobles.rl.Learner;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
@@ -20,14 +20,14 @@ public class FirstVisit<S, A> implements Learner {
     // Maps a state to the step of its first visit
     private Map<S, Integer> stateFirstOcc = new HashMap<S, Integer>();
 
-    private RLEnv<S, A> env;
+    private Environment<S, A> env;
     private int numEpisodes;
     private int currentStep = 0;
     private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
     private TabularVFunction<S> vFunction;
     private RLPolicy<S, A> policy;
 
-    public FirstVisit(RLEnv<S, A> env, RLPolicy<S, A> policy, int numEpisodes) {
+    public FirstVisit(Environment<S, A> env, RLPolicy<S, A> policy, int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.numEpisodes = numEpisodes;

@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * <p>This interface represents the full model of the environment and is used by model-based
  * algorithms such as {@code ValueIteration} and {@code PolicyIteration}. Model-free algorithms
- * (Q-learning, SARSA, TD) interact with the environment through {@link RLEnv} instead.
+ * (Q-learning, SARSA, TD) interact with the environment through {@link Environment} instead.
  *
  * @param <S> the state type
  * @param <A> the action type

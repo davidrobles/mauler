@@ -1,13 +1,13 @@
 package net.davidrobles.rl.policies;
 
 import java.util.List;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
 
 public class GreedyPolicy<S, A> implements RLPolicy<S, A> {
     @Override
-    public A getAction(RLEnv<S, A> env, QFunction<S, A> qFunc) {
+    public A getAction(Environment<S, A> env, QFunction<S, A> qFunc) {
         A bestAction = null;
         double bestValue = Double.NEGATIVE_INFINITY;
         List<A> actions = env.getPossibleActions(env.getCurrentState());
@@ -25,7 +25,7 @@ public class GreedyPolicy<S, A> implements RLPolicy<S, A> {
     }
 
     @Override
-    public A getAction(RLEnv<S, A> env, VFunction<S> vFunc) {
+    public A getAction(Environment<S, A> env, VFunction<S> vFunc) {
         A bestAction = null;
         double bestValue = Double.NEGATIVE_INFINITY;
         List<A> actions = env.getPossibleActions(env.getCurrentState());

@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import net.davidrobles.rl.MDPObserver;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 
-public class GridWorldEnv implements RLEnv<GWState, GWAction> {
+public class GridWorldEnv implements Environment<GWState, GWAction> {
     private GridWorldMDP mdp;
     private GWState currentState;
     private Random rng;

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.QPair;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class QLearning<S, A> implements Learner {
-    private RLEnv<S, A> env;
+    private Environment<S, A> env;
     private RLPolicy<S, A> policy;
     private double alpha; // learning rate
     private double gamma; // discount factor
@@ -22,7 +22,7 @@ public class QLearning<S, A> implements Learner {
             new ArrayList<QFunctionObserver<S, A>>();
 
     public QLearning(
-            RLEnv<S, A> env, RLPolicy<S, A> policy, double alpha, double gamma, int numEpisodes) {
+            Environment<S, A> env, RLPolicy<S, A> policy, double alpha, double gamma, int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.alpha = alpha;

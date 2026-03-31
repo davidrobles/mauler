@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.davidrobles.rl.Learner;
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.policies.RLPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 public class TabularTDLambda<S, A> implements Learner {
-    private RLEnv<S, A> env;
+    private Environment<S, A> env;
     private RLPolicy<S, A> policy;
     private double alpha;
     private double gamma;
@@ -23,7 +23,7 @@ public class TabularTDLambda<S, A> implements Learner {
     private List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<VFunctionObserver<S>>();
 
     public TabularTDLambda(
-            RLEnv<S, A> env,
+            Environment<S, A> env,
             RLPolicy<S, A> policy,
             double alpha,
             double gamma,

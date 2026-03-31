@@ -1,6 +1,6 @@
 package net.davidrobles.rl.policies;
 
-import net.davidrobles.rl.RLEnv;
+import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.valuefunctions.QFunction;
 import net.davidrobles.rl.valuefunctions.VFunction;
 
@@ -11,7 +11,7 @@ import net.davidrobles.rl.valuefunctions.VFunction;
  * @param <A> the type of the actions
  */
 public interface RLPolicy<S, A> {
-    A getAction(RLEnv<S, A> env, QFunction<S, A> qFunc);
+    A getAction(Environment<S, A> env, QFunction<S, A> qFunc);
 
-    A getAction(RLEnv<S, A> env, VFunction<S> vFunc);
+    A getAction(Environment<S, A> env, VFunction<S> vFunc);
 }

@@ -19,7 +19,7 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //    // Maps a state to the step of its first visit
 //    private Map<S, Integer> stateFirstOcc = new HashMap<S, Integer>();
 //
-//    private RLEnv<S, A> environment;
+//    private Environment<S, A> environment;
 //    private int numEpisodes;
 //    private int currentStep = 0;
 //    private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
@@ -27,7 +27,7 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //    private TabularVFunction<S> vFunction;
 //    private RLPolicy<S, A> policy;
 //
-//    public FirstVisitMC(RLEnv<S, A> environment, RLPolicy<S, A> policy, int numEpisodes) {
+//    public FirstVisitMC(Environment<S, A> environment, RLPolicy<S, A> policy, int numEpisodes) {
 //        this.environment = environment;
 //        this.policy = policy;
 //        this.numEpisodes = numEpisodes;

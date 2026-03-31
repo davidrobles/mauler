@@ -9,7 +9,7 @@ import java.util.List;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public interface RLEnv<S, A> {
+public interface Environment<S, A> {
     /** Returns the current state in the environment. */
     S getCurrentState();
 
@@ -24,7 +24,7 @@ public interface RLEnv<S, A> {
      *
      * @return the reward.
      */
-    double performAction(A Action);
+    double performAction(A action);
 
     /** Resets the current state to the start state. */
     void reset();
