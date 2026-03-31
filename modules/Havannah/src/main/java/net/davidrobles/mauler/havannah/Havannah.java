@@ -167,7 +167,17 @@ public class Havannah extends ObservableGame<Havannah> {
 
     @Override
     public Optional<GameResult[]> getOutcome() {
-        return Optional.empty(); // TODO: implement outcome detection
+        if (!isOver()) return Optional.empty();
+        GameResult[] results = new GameResult[2];
+        if (checkWin()) {
+            int winner = getOppPlayer();
+            results[winner] = GameResult.WIN;
+            results[winner ^ 1] = GameResult.LOSS;
+        } else {
+            results[0] = GameResult.DRAW;
+            results[1] = GameResult.DRAW;
+        }
+        return Optional.of(results);
     }
 
     @Override

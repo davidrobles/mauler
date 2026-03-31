@@ -157,7 +157,11 @@ public class Breakthrough extends ObservableGame<Breakthrough> {
 
     @Override
     public Optional<GameResult[]> getOutcome() {
-        return Optional.empty(); // TODO: implement outcome detection
+        if (!isOver()) return Optional.empty();
+        GameResult[] results = new GameResult[2];
+        results[current] = GameResult.LOSS;
+        results[(current + 1) % 2] = GameResult.WIN;
+        return Optional.of(results);
     }
 
     @Override

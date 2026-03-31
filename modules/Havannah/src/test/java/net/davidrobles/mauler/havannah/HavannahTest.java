@@ -1,20 +1,23 @@
-package net.davidrobles.mauler.breakthrough;
+package net.davidrobles.mauler.havannah;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
 import net.davidrobles.mauler.core.GameResult;
-import net.davidrobles.mauler.core.GameTest;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BreakthroughTest extends GameTest<Breakthrough> {
+public class HavannahTest {
+    private Havannah game;
+    private Random rnd = new Random();
+
     @Before
     public void init() {
-        this.game = new Breakthrough();
+        game = new Havannah(4);
     }
 
     @Test
-    public void testNumberOfPlayers() throws Exception {
+    public void testNumberOfPlayers() {
         assertEquals(2, game.getNumPlayers());
     }
 
@@ -23,7 +26,7 @@ public class BreakthroughTest extends GameTest<Breakthrough> {
         assertFalse(game.getOutcome().isPresent());
     }
 
-    @Test(timeout = 100)
+    @Test(timeout = 2000)
     public void testOutcomeConsistentWithIsOver() {
         while (!game.isOver()) {
             assertFalse(game.getOutcome().isPresent());
@@ -32,12 +35,15 @@ public class BreakthroughTest extends GameTest<Breakthrough> {
         assertTrue(game.getOutcome().isPresent());
     }
 
-    @Test(timeout = 100)
-    public void testLoserIsPlayerWithNoMoves() {
+    @Test(timeout = 2000)
+    public void testOutcomeHasValidResult() {
         while (!game.isOver()) game.makeMove(rnd.nextInt(game.getNumMoves()));
-        int loser = game.getCurPlayer();
         GameResult[] outcome = game.getOutcome().get();
-        assertEquals(GameResult.LOSS, outcome[loser]);
-        assertEquals(GameResult.WIN, outcome[(loser + 1) % 2]);
+        assertEquals(2, outcome.length);
+        boolean winLoss =
+                (outcome[0] == GameResult.WIN && outcome[1] == GameResult.LOSS)
+                        || (outcome[0] == GameResult.LOSS && outcome[1] == GameResult.WIN);
+        boolean draw = outcome[0] == GameResult.DRAW && outcome[1] == GameResult.DRAW;
+        assertTrue(winLoss || draw);
     }
 }
