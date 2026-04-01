@@ -3,7 +3,6 @@ package net.davidrobles.rl.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 import net.davidrobles.rl.Agent;
-import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
@@ -58,7 +57,7 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
         double newValue =
                 table.getValue(state, action)
                         + alpha * (result.reward + gamma * nextQ - table.getValue(state, action));
-        table.setValue(new QPair<>(state, action), newValue);
+        table.setValue(state, action, newValue);
         notifyQFunctionUpdate();
     }
 
