@@ -8,6 +8,16 @@ import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
+/**
+ * On-policy tabular SARSA (Rummery &amp; Niranjan, 1994).
+ *
+ * <p>The update target uses the action actually taken in the next state (S, A, R, S', A'), making
+ * this an on-policy algorithm. The next action is pre-selected during {@link #update} and reused in
+ * the following {@link #selectAction} call to maintain the coupling.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class TabularSARSA<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;

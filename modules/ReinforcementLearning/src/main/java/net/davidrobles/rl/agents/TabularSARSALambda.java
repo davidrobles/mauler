@@ -11,6 +11,15 @@ import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
+/**
+ * On-policy tabular SARSA(λ) with accumulating eligibility traces.
+ *
+ * <p>Extends SARSA with eligibility traces that assign credit to recently visited state-action
+ * pairs. Setting λ=0 recovers one-step SARSA; λ=1 approximates Monte Carlo updates.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class TabularSARSALambda<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;

@@ -8,6 +8,16 @@ import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
+/**
+ * Off-policy tabular Q-Learning (Watkins, 1989).
+ *
+ * <p>The update target is the greedy (max) action value over the next state, making this an
+ * off-policy algorithm: the behavior policy used for exploration can differ from the implicit
+ * greedy target policy.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class QLearning<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;

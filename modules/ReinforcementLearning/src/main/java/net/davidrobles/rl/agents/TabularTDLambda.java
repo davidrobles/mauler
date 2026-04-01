@@ -10,6 +10,15 @@ import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
+/**
+ * Tabular TD(λ) for on-policy state value prediction with eligibility traces.
+ *
+ * <p>Extends TD(0) with accumulating eligibility traces that spread credit across recently visited
+ * states. Setting λ=0 recovers TD(0); λ=1 approximates Monte Carlo updates.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class TabularTDLambda<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;

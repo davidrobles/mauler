@@ -8,6 +8,15 @@ import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
+/**
+ * Tabular TD(0) for on-policy state value prediction.
+ *
+ * <p>Estimates the value function V^π for a fixed policy π using one-step temporal-difference
+ * updates. Action selection is fully delegated to the provided policy.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class TabularTD0<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
@@ -35,13 +44,9 @@ public class TabularTD0<S, A> implements Agent<S, A> {
 
     @Override
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
-        double newValue =
-                table.getValue(state)
-                        + alpha
-                                * (result.reward
-                                        + gamma * table.getValue(result.nextState)
-                                        - table.getValue(state));
-        table.setValue(state, newValue);
+        double currentV = table.getValue(state);
+        double nextV = result.done ? 0.0 : table.getValue(result.nextState);
+        table.setValue(state, currentV + alpha * (result.reward + gamma * nextV - currentV));
         notifyValueFunctionUpdate();
     }
 
