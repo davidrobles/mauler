@@ -1,8 +1,8 @@
 package net.davidrobles.rl.planning;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import net.davidrobles.rl.MDP;
 import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.policies.TabularPolicy;
@@ -14,7 +14,7 @@ public class ValueIteration<S, A> implements Planner<S, A> {
     private TabularVFunction<S> table = new TabularVFunction<S>();
     private double theta; // A small positive number used as a termination condition
     private double gamma; // Discount factor
-    private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
+    private final Set<VFunctionObserver<S>> observers = new LinkedHashSet<>();
 
     public ValueIteration(MDP<S, A> mdp, double theta, double gamma) {
         this.mdp = mdp;

@@ -1,1 +1,3 @@
-// No additional dependencies
+dependencies {
+    testImplementation(libs.junit)
+}

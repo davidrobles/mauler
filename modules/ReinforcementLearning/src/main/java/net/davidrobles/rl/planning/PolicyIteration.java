@@ -14,7 +14,7 @@ public class PolicyIteration<S, A> implements Planner<S, A> {
     private boolean policyStable = false;
     private double theta; // A small positive number used as a termination condition
     private double gamma; // Discount factor
-    private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
+    private final Set<VFunctionObserver<S>> observers = new LinkedHashSet<>();
     private TabularPolicy<S, A> policy;
 
     public PolicyIteration(MDP<S, A> mdp, double theta, double gamma) {
