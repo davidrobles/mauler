@@ -31,13 +31,13 @@ public class GWRun {
     }
 
     private static void valueIteration() {
-        double alpha = 0.1;
+        double theta = 0.1;
         double gamma = 0.99;
         GridWorldMDP mdp = new GridWorldMDP(25, 25, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
         GWVView view = new GWVView(mdp, 20, 20, env);
         new DRFrame(view);
-        ValueIteration<GWState, GWAction> learner = new ValueIteration<>(mdp, alpha, gamma);
+        ValueIteration<GWState, GWAction> learner = new ValueIteration<>(mdp, theta, gamma);
         learner.addVFunctionObserver(view);
         learner.solve();
     }
@@ -48,11 +48,11 @@ public class GWRun {
         int numEpisodes = 5000;
         GridWorldMDP mdp = new GridWorldMDP(20, 20, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
-        TabularVFunction<GWState> vTable = new TabularVFunction<>();
+        TabularVFunction<GWState> vTable = new TabularVFunction<>(alpha);
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWVView view = new GWVView(mdp, 20, 20, env);
         new DRFrame(view, "TD(0)");
-        TabularTD0<GWState, GWAction> agent = new TabularTD0<>(vTable, policy, alpha, gamma);
+        TabularTD0<GWState, GWAction> agent = new TabularTD0<>(vTable, policy, gamma);
         agent.addVFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -64,12 +64,12 @@ public class GWRun {
         int numEpisodes = 1000;
         GridWorldMDP mdp = new GridWorldMDP(20, 20, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
-        TabularVFunction<GWState> vTable = new TabularVFunction<>();
+        TabularVFunction<GWState> vTable = new TabularVFunction<>(alpha);
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWVView view = new GWVView(mdp, 20, 20, env);
         new DRFrame(view, "TD(λ)");
         TabularTDLambda<GWState, GWAction> agent =
-                new TabularTDLambda<>(vTable, policy, alpha, gamma, lambda);
+                new TabularTDLambda<>(vTable, policy, gamma, lambda);
         agent.addVFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -80,12 +80,12 @@ public class GWRun {
         int numEpisodes = 100;
         GridWorldMDP mdp = new GridWorldMDP(20, 20, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
-        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>();
+        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>(alpha);
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "SARSA");
-        TabularSARSA<GWState, GWAction> agent = new TabularSARSA<>(qTable, policy, alpha, gamma);
+        TabularSARSA<GWState, GWAction> agent = new TabularSARSA<>(qTable, policy, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -96,13 +96,12 @@ public class GWRun {
         int numEpisodes = 300;
         GridWorldMDP mdp = new GridWorldMDP(25, 25, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
-        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>();
+        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>(alpha);
         EpsilonGreedy<GWState, GWAction> policy = new EpsilonGreedy<>(qTable, 0.1, RNG);
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "Q-Learning");
-        TabularQLearning<GWState, GWAction> agent =
-                new TabularQLearning<>(qTable, policy, alpha, gamma);
+        TabularQLearning<GWState, GWAction> agent = new TabularQLearning<>(qTable, policy, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -114,13 +113,13 @@ public class GWRun {
         int numEpisodes = 100;
         GridWorldMDP mdp = new GridWorldMDP(20, 20, RNG);
         GridWorldEnv env = new GridWorldEnv(mdp, RNG);
-        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>();
+        TabularQFunction<GWState, GWAction> qTable = new TabularQFunction<>(alpha);
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "SARSA(λ)");
         TabularSARSALambda<GWState, GWAction> agent =
-                new TabularSARSALambda<>(qTable, policy, alpha, gamma, lambda);
+                new TabularSARSALambda<>(qTable, policy, gamma, lambda);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }

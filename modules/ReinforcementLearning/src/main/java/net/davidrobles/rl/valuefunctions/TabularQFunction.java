@@ -4,23 +4,31 @@ import java.util.HashMap;
 import java.util.Map;
 import net.davidrobles.rl.QPair;
 
-/** Tabular (lookup table) implementation of a state-action value function. */
-public class TabularQFunction<S, A> implements MutableQFunction<S, A> {
+/** Tabular (lookup table) implementation of a trainable state-action value function. */
+public class TabularQFunction<S, A> implements TrainableQFunction<S, A> {
+    private final double alpha;
     private Map<QPair<S, A>, Double> actionValues = new HashMap<>();
+
+    /**
+     * @param alpha learning rate in (0, 1]
+     */
+    public TabularQFunction(double alpha) {
+        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+        this.alpha = alpha;
+    }
 
     @Override
     public double getValue(S state, A action) {
-        return getValue(new QPair<>(state, action));
+        return actionValues.getOrDefault(new QPair<>(state, action), 0.0);
     }
 
-    private double getValue(QPair<S, A> qPair) {
-        return actionValues.containsKey(qPair) ? actionValues.get(qPair) : 0;
+    @Override
+    public void update(S state, A action, double tdTarget) {
+        double current = getValue(state, action);
+        setValue(state, action, current + alpha * (tdTarget - current));
     }
 
-    private void setValue(QPair<S, A> qPair, double value) {
-        actionValues.put(qPair, value);
-    }
-
+    /** Directly sets Q(state, action) — for use by planning algorithms and tests. */
     public void setValue(S state, A action, double value) {
         actionValues.put(new QPair<>(state, action), value);
     }

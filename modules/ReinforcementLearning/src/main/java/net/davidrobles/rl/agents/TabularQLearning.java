@@ -7,8 +7,8 @@ import java.util.Set;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
-import net.davidrobles.rl.valuefunctions.MutableQFunction;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
+import net.davidrobles.rl.valuefunctions.TrainableQFunction;
 
 /**
  * Off-policy tabular Q-Learning (Watkins, 1989).
@@ -22,24 +22,20 @@ import net.davidrobles.rl.valuefunctions.QFunctionObserver;
  */
 public class TabularQLearning<S, A> implements ObservableQAgent<S, A> {
     private final Policy<S, A> policy;
-    private final double alpha;
     private final double gamma;
-    private final MutableQFunction<S, A> table;
+    private final TrainableQFunction<S, A> table;
     private final Set<QFunctionObserver<S, A>> qFunctionObservers = new LinkedHashSet<>();
 
     /**
-     * @param table the Q-function to update (shared with the behavior policy)
+     * @param table the Q-function to update (shared with the behavior policy); owns the learning
+     *     rate
      * @param policy the behavior policy used for action selection
-     * @param alpha learning rate
      * @param gamma discount factor
      */
-    public TabularQLearning(
-            MutableQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
-        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+    public TabularQLearning(TrainableQFunction<S, A> table, Policy<S, A> policy, double gamma) {
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         this.table = Objects.requireNonNull(table, "table must not be null");
         this.policy = Objects.requireNonNull(policy, "policy must not be null");
-        this.alpha = alpha;
         this.gamma = gamma;
     }
 
@@ -60,9 +56,7 @@ public class TabularQLearning<S, A> implements ObservableQAgent<S, A> {
             }
         }
 
-        double currentQ = table.getValue(state, action);
-        table.setValue(
-                state, action, currentQ + alpha * (result.reward + gamma * maxNextQ - currentQ));
+        table.update(state, action, result.reward + gamma * maxNextQ);
         notifyQFunctionUpdate();
     }
 

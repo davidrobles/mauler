@@ -9,7 +9,7 @@ import java.util.Set;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
-import net.davidrobles.rl.valuefunctions.MutableVFunction;
+import net.davidrobles.rl.valuefunctions.TrainableVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 /**
@@ -23,33 +23,26 @@ import net.davidrobles.rl.valuefunctions.VFunctionObserver;
  */
 public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
     private final Policy<S, A> policy;
-    private final double alpha;
     private final double gamma;
     private final double lambda;
-    private final MutableVFunction<S> table;
+    private final TrainableVFunction<S> table;
     private final Map<S, Double> traces = new HashMap<>();
     private final Set<VFunctionObserver<S>> valueFuncObservers = new LinkedHashSet<>();
 
     /**
-     * @param table the V-function to evaluate and update (shared with the caller)
+     * @param table the V-function to evaluate and update (shared with the caller); owns the
+     *     learning rate
      * @param policy the behavior policy used for action selection
-     * @param alpha learning rate
      * @param gamma discount factor
      * @param lambda eligibility-trace decay rate (0 = TD(0), 1 = Monte Carlo)
      */
     public TabularTDLambda(
-            MutableVFunction<S> table,
-            Policy<S, A> policy,
-            double alpha,
-            double gamma,
-            double lambda) {
-        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+            TrainableVFunction<S> table, Policy<S, A> policy, double gamma, double lambda) {
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         if (lambda < 0 || lambda > 1)
             throw new IllegalArgumentException("lambda must be in [0, 1]");
         this.table = Objects.requireNonNull(table, "table must not be null");
         this.policy = Objects.requireNonNull(policy, "policy must not be null");
-        this.alpha = alpha;
         this.gamma = gamma;
         this.lambda = lambda;
     }
@@ -61,16 +54,15 @@ public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
 
     @Override
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
-        double tdError =
-                result.reward + gamma * table.getValue(result.nextState) - table.getValue(state);
+        double nextV = result.done ? 0.0 : table.getValue(result.nextState);
+        double tdError = result.reward + gamma * nextV - table.getValue(state);
 
         // Accumulating trace: e(s) += 1
         traces.merge(state, 1.0, Double::sum);
 
         for (Map.Entry<S, Double> entry : traces.entrySet()) {
-            table.setValue(
-                    entry.getKey(),
-                    table.getValue(entry.getKey()) + alpha * tdError * entry.getValue());
+            S s = entry.getKey();
+            table.update(s, table.getValue(s) + tdError * entry.getValue());
             entry.setValue(gamma * lambda * entry.getValue());
         }
 
@@ -78,6 +70,7 @@ public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
         notifyValueFunctionUpdate();
     }
 
+    @Override
     public void addVFunctionObserver(VFunctionObserver<S> observer) {
         valueFuncObservers.add(observer);
     }

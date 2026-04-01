@@ -7,8 +7,8 @@ import java.util.Set;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
-import net.davidrobles.rl.valuefunctions.MutableQFunction;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
+import net.davidrobles.rl.valuefunctions.TrainableQFunction;
 
 /**
  * On-policy tabular SARSA (Rummery &amp; Niranjan, 1994).
@@ -22,26 +22,22 @@ import net.davidrobles.rl.valuefunctions.QFunctionObserver;
  */
 public class TabularSARSA<S, A> implements ObservableQAgent<S, A> {
     private final Policy<S, A> policy;
-    private final double alpha;
     private final double gamma;
-    private final MutableQFunction<S, A> table;
+    private final TrainableQFunction<S, A> table;
     // Pre-selected next action to maintain the on-policy (S, A, R, S', A') SARSA coupling.
     private A nextAction = null;
     private final Set<QFunctionObserver<S, A>> qFunctionObservers = new LinkedHashSet<>();
 
     /**
-     * @param table the Q-function to update (shared with the behavior policy)
+     * @param table the Q-function to update (shared with the behavior policy); owns the learning
+     *     rate
      * @param policy the behavior policy used for action selection
-     * @param alpha learning rate
      * @param gamma discount factor
      */
-    public TabularSARSA(
-            MutableQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
-        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+    public TabularSARSA(TrainableQFunction<S, A> table, Policy<S, A> policy, double gamma) {
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         this.table = Objects.requireNonNull(table, "table must not be null");
         this.policy = Objects.requireNonNull(policy, "policy must not be null");
-        this.alpha = alpha;
         this.gamma = gamma;
     }
 
@@ -68,12 +64,11 @@ public class TabularSARSA<S, A> implements ObservableQAgent<S, A> {
             nextQ = table.getValue(result.nextState, nextAction);
         }
 
-        double currentQ = table.getValue(state, action);
-        table.setValue(
-                state, action, currentQ + alpha * (result.reward + gamma * nextQ - currentQ));
+        table.update(state, action, result.reward + gamma * nextQ);
         notifyQFunctionUpdate();
     }
 
+    @Override
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
     }
