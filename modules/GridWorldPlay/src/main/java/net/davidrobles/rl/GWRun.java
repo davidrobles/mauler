@@ -27,7 +27,7 @@ public class GWRun {
         new DRFrame(view);
         PolicyIteration<GWState, GWAction> learner = new PolicyIteration<>(mdp, theta, gamma);
         learner.addVFunctionObserver(view);
-        learner.learn();
+        learner.solve();
     }
 
     private static void valueIteration() {
@@ -39,7 +39,7 @@ public class GWRun {
         new DRFrame(view);
         ValueIteration<GWState, GWAction> learner = new ValueIteration<>(mdp, alpha, gamma);
         learner.addVFunctionObserver(view);
-        learner.learn();
+        learner.solve();
     }
 
     private static void tabularTD0() {

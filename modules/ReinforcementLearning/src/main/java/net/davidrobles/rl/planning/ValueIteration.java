@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import net.davidrobles.rl.MDP;
+import net.davidrobles.rl.policies.Policy;
+import net.davidrobles.rl.policies.TabularPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
-public class ValueIteration<S, A> {
+public class ValueIteration<S, A> implements Planner<S, A> {
     private MDP<S, A> mdp;
     private TabularVFunction<S> table = new TabularVFunction<S>();
     private double theta; // A small positive number used as a termination condition
@@ -28,7 +30,8 @@ public class ValueIteration<S, A> {
         observers.add(observer);
     }
 
-    public void learn() {
+    @Override
+    public Policy<S, A> solve() {
         double delta;
 
         System.out.println("Value Iteration started...");
@@ -64,5 +67,27 @@ public class ValueIteration<S, A> {
         } while (delta > theta);
 
         System.out.println("DP Value Iteration finished.");
+
+        // Extract greedy policy via one-step lookahead
+        TabularPolicy<S, A> policy = new TabularPolicy<>();
+        for (S state : mdp.getStates()) {
+            A bestAction = null;
+            double bestValue = Double.NEGATIVE_INFINITY;
+            for (A action : mdp.getActions(state)) {
+                double tot = 0;
+                for (Map.Entry<S, Double> e : mdp.getTransitions(state, action).entrySet()) {
+                    tot +=
+                            e.getValue()
+                                    * (mdp.getReward(state, action, e.getKey())
+                                            + gamma * table.getValue(e.getKey()));
+                }
+                if (tot > bestValue) {
+                    bestValue = tot;
+                    bestAction = action;
+                }
+            }
+            if (bestAction != null) policy.setAction(state, bestAction);
+        }
+        return policy;
     }
 }

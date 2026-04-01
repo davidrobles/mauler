@@ -1,14 +1,14 @@
 package net.davidrobles.rl.planning;
 
 import java.util.*;
-import net.davidrobles.rl.Learner;
 import net.davidrobles.rl.MDP;
 import net.davidrobles.rl.MDPUtil;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.policies.TabularPolicy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
-public class PolicyIteration<S, A> implements Learner {
+public class PolicyIteration<S, A> implements Planner<S, A> {
     private MDP<S, A> mdp;
     private TabularVFunction<S> table = new TabularVFunction<S>();
     private boolean policyStable = false;
@@ -93,30 +93,27 @@ public class PolicyIteration<S, A> implements Learner {
         }
     }
 
-    private Random rng = new Random();
+    private final Random rng = new Random();
 
     @Override
-    public void learn() {
-        //        policy = new TabularPolicy<S, A>();
-        //
-        //        // initialize the policy arbitrarily
-        //        for (S state : mdp.getStates())
-        //        {
-        //            List<A> actions = mdp.getActions(state);
-        //
-        //            if (!actions.isEmpty())
-        //            {
-        //                Collections.shuffle(actions);
-        //                policy.setAction(state, actions.get(rng.nextInt(actions.size())));
-        //            }
-        //        }
-        //
-        //        while (!policyStable)
-        //        {
-        //            policyEvaluation();
-        //            policyImprovement();
-        //        }
-        //
-        //        System.out.println("Policy iteration finished.");
+    public Policy<S, A> solve() {
+        policy = new TabularPolicy<>();
+
+        // Initialize the policy arbitrarily
+        for (S state : mdp.getStates()) {
+            List<A> actions = new ArrayList<>(mdp.getActions(state));
+            if (!actions.isEmpty()) {
+                Collections.shuffle(actions);
+                policy.setAction(state, actions.get(rng.nextInt(actions.size())));
+            }
+        }
+
+        while (!policyStable) {
+            policyEvaluation();
+            policyImprovement();
+        }
+
+        System.out.println("Policy iteration finished.");
+        return policy;
     }
 }
