@@ -56,15 +56,15 @@ public class SARSA<S, A> implements ObservableQAgent<S, A> {
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
         double nextQ;
 
-        if (result.done || nextActions.isEmpty()) {
+        if (result.done() || nextActions.isEmpty()) {
             nextQ = 0.0;
             nextAction = null;
         } else {
-            nextAction = policy.selectAction(result.nextState, nextActions);
-            nextQ = table.getValue(result.nextState, nextAction);
+            nextAction = policy.selectAction(result.nextState(), nextActions);
+            nextQ = table.getValue(result.nextState(), nextAction);
         }
 
-        table.update(state, action, result.reward + gamma * nextQ);
+        table.update(state, action, result.reward() + gamma * nextQ);
         notifyQFunctionUpdate();
     }
 

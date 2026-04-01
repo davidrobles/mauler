@@ -64,15 +64,15 @@ public class SARSALambda<S, A> implements ObservableQAgent<S, A> {
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
         double nextQ;
 
-        if (result.done || nextActions.isEmpty()) {
+        if (result.done() || nextActions.isEmpty()) {
             nextQ = 0.0;
             nextAction = null;
         } else {
-            nextAction = policy.selectAction(result.nextState, nextActions);
-            nextQ = table.getValue(result.nextState, nextAction);
+            nextAction = policy.selectAction(result.nextState(), nextActions);
+            nextQ = table.getValue(result.nextState(), nextAction);
         }
 
-        double tdError = result.reward + gamma * nextQ - table.getValue(state, action);
+        double tdError = result.reward() + gamma * nextQ - table.getValue(state, action);
 
         // Accumulating trace: e(s,a) += 1
         traces.merge(new QPair<>(state, action), 1.0, Double::sum);
@@ -84,7 +84,7 @@ public class SARSALambda<S, A> implements ObservableQAgent<S, A> {
             entry.setValue(gamma * lambda * entry.getValue());
         }
 
-        if (result.done) traces.clear();
+        if (result.done()) traces.clear();
         notifyQFunctionUpdate();
     }
 

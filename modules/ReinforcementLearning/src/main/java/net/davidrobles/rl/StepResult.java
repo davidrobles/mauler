@@ -6,21 +6,9 @@ package net.davidrobles.rl;
  * <p>Mirrors the {@code (observation, reward, terminated)} tuple from OpenAI Gym's {@code step()}
  * convention.
  *
+ * @param nextState the state reached after the action was applied
+ * @param reward the reward signal received for this transition
+ * @param done {@code true} if {@code nextState} is a terminal state (episode over)
  * @param <S> the state (observation) type
  */
-public class StepResult<S> {
-    /** The state reached after the action was applied. */
-    public final S nextState;
-
-    /** The reward signal received for this transition. */
-    public final double reward;
-
-    /** {@code true} if {@code nextState} is a terminal state (episode over). */
-    public final boolean done;
-
-    public StepResult(S nextState, double reward, boolean done) {
-        this.nextState = nextState;
-        this.reward = reward;
-        this.done = done;
-    }
-}
+public record StepResult<S>(S nextState, double reward, boolean done) {}

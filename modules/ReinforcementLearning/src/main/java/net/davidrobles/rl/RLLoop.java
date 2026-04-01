@@ -42,12 +42,14 @@ public class RLLoop {
                 A action = agent.selectAction(state, actions);
                 StepResult<S> result = env.step(action);
                 List<A> nextActions =
-                        result.done ? Collections.emptyList() : env.getActions(result.nextState);
+                        result.done()
+                                ? Collections.emptyList()
+                                : env.getActions(result.nextState());
                 agent.update(state, action, result, nextActions);
                 policy.onStep(++totalSteps);
 
-                if (result.done) break;
-                state = result.nextState;
+                if (result.done()) break;
+                state = result.nextState();
                 actions = nextActions;
             }
 

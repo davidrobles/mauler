@@ -46,8 +46,8 @@ public class TD0<S, A> implements Evaluator<S, A>, ObservableVAgent<S, A> {
 
     @Override
     public void observe(S state, StepResult<S> result) {
-        double nextV = result.done ? 0.0 : table.getValue(result.nextState);
-        table.update(state, result.reward + gamma * nextV);
+        double nextV = result.done() ? 0.0 : table.getValue(result.nextState());
+        table.update(state, result.reward() + gamma * nextV);
         notifyValueFunctionUpdate();
     }
 

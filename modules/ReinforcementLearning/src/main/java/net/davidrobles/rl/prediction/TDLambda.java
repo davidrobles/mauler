@@ -54,8 +54,8 @@ public class TDLambda<S, A> implements Evaluator<S, A>, ObservableVAgent<S, A> {
 
     @Override
     public void observe(S state, StepResult<S> result) {
-        double nextV = result.done ? 0.0 : table.getValue(result.nextState);
-        double tdError = result.reward + gamma * nextV - table.getValue(state);
+        double nextV = result.done() ? 0.0 : table.getValue(result.nextState());
+        double tdError = result.reward() + gamma * nextV - table.getValue(state);
 
         // Accumulating trace: e(s) += 1
         traces.merge(state, 1.0, Double::sum);
@@ -66,7 +66,7 @@ public class TDLambda<S, A> implements Evaluator<S, A>, ObservableVAgent<S, A> {
             entry.setValue(gamma * lambda * entry.getValue());
         }
 
-        if (result.done) traces.clear();
+        if (result.done()) traces.clear();
         notifyValueFunctionUpdate();
     }
 

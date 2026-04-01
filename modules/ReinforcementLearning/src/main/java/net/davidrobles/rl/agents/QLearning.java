@@ -48,15 +48,15 @@ public class QLearning<S, A> implements ObservableQAgent<S, A> {
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
         double maxNextQ = 0.0;
 
-        if (!result.done && !nextActions.isEmpty()) {
+        if (!result.done() && !nextActions.isEmpty()) {
             maxNextQ = Double.NEGATIVE_INFINITY;
             for (A nextAction : nextActions) {
-                double v = table.getValue(result.nextState, nextAction);
+                double v = table.getValue(result.nextState(), nextAction);
                 if (v > maxNextQ) maxNextQ = v;
             }
         }
 
-        table.update(state, action, result.reward + gamma * maxNextQ);
+        table.update(state, action, result.reward() + gamma * maxNextQ);
         notifyQFunctionUpdate();
     }
 
