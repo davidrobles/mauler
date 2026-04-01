@@ -2,7 +2,7 @@ package net.davidrobles.rl.agents;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.davidrobles.rl.Agent;
+import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
@@ -17,7 +17,7 @@ import net.davidrobles.rl.valuefunctions.VFunctionObserver;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class TabularTD0<S, A> implements Agent<S, A> {
+public class TabularTD0<S, A> implements ObservableVAgent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;

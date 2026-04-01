@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.davidrobles.rl.Agent;
+import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
@@ -20,7 +20,7 @@ import net.davidrobles.rl.valuefunctions.TabularQFunction;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class TabularSARSALambda<S, A> implements Agent<S, A> {
+public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
