@@ -4,11 +4,11 @@ import java.util.Random;
 import net.davidrobles.gridworld.view.GWVView;
 import net.davidrobles.gridworld.view.GWViewQValues;
 import net.davidrobles.rl.RLLoop;
-import net.davidrobles.rl.agents.TabularQLearning;
-import net.davidrobles.rl.agents.TabularSARSA;
-import net.davidrobles.rl.agents.TabularSARSALambda;
-import net.davidrobles.rl.agents.TabularTD0;
-import net.davidrobles.rl.agents.TabularTDLambda;
+import net.davidrobles.rl.agents.QLearning;
+import net.davidrobles.rl.agents.SARSA;
+import net.davidrobles.rl.agents.SARSALambda;
+import net.davidrobles.rl.agents.TD0;
+import net.davidrobles.rl.agents.TDLambda;
 import net.davidrobles.rl.policies.EpsilonGreedy;
 import net.davidrobles.rl.policies.RandomPolicy;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
@@ -28,7 +28,7 @@ public class GWRun {
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWVView view = new GWVView(mdp, 10, 10, env);
         new DRFrame(view, "TD(0)");
-        TabularTD0<GWState, GWAction> agent = new TabularTD0<>(vTable, policy, gamma);
+        TD0<GWState, GWAction> agent = new TD0<>(vTable, policy, gamma);
         agent.addVFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -44,8 +44,7 @@ public class GWRun {
         RandomPolicy<GWState, GWAction> policy = new RandomPolicy<>(RNG);
         GWVView view = new GWVView(mdp, 20, 20, env);
         new DRFrame(view, "TD(λ)");
-        TabularTDLambda<GWState, GWAction> agent =
-                new TabularTDLambda<>(vTable, policy, gamma, lambda);
+        TDLambda<GWState, GWAction> agent = new TDLambda<>(vTable, policy, gamma, lambda);
         agent.addVFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -61,7 +60,7 @@ public class GWRun {
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "SARSA");
-        TabularSARSA<GWState, GWAction> agent = new TabularSARSA<>(qTable, policy, gamma);
+        SARSA<GWState, GWAction> agent = new SARSA<>(qTable, policy, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -77,7 +76,7 @@ public class GWRun {
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "Q-Learning");
-        TabularQLearning<GWState, GWAction> agent = new TabularQLearning<>(qTable, policy, gamma);
+        QLearning<GWState, GWAction> agent = new QLearning<>(qTable, policy, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
@@ -94,8 +93,7 @@ public class GWRun {
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "SARSA(λ)");
-        TabularSARSALambda<GWState, GWAction> agent =
-                new TabularSARSALambda<>(qTable, policy, gamma, lambda);
+        SARSALambda<GWState, GWAction> agent = new SARSALambda<>(qTable, policy, gamma, lambda);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }
