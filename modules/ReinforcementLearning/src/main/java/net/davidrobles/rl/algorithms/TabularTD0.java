@@ -51,6 +51,6 @@ public class TabularTD0<S, A> implements Agent<S, A> {
 
     private void notifyValueFunctionUpdate() {
         for (VFunctionObserver<S> observer : valueFuncObservers)
-            observer.valueFunctionChanged(table);
+            observer.valueFunctionUpdated(table);
     }
 }

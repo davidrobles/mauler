@@ -21,7 +21,7 @@ public class ValueIteration<S, A> {
     }
 
     public void notifyValueFunctionUpdate() {
-        for (VFunctionObserver<S> observer : observers) observer.valueFunctionChanged(table);
+        for (VFunctionObserver<S> observer : observers) observer.valueFunctionUpdated(table);
     }
 
     public void addVFunctionObserver(VFunctionObserver<S> observer) {

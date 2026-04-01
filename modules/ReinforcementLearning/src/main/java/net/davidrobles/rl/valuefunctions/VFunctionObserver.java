@@ -6,5 +6,5 @@ public interface VFunctionObserver<S> {
      *
      * @param vFunction the new state value function
      */
-    void valueFunctionChanged(VFunction<S> vFunction);
+    void valueFunctionUpdated(VFunction<S> vFunction);
 }

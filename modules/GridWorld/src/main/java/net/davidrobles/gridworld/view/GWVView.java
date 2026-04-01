@@ -60,7 +60,7 @@ public class GWVView extends GridWorldView implements VFunctionObserver<GWState>
     }
 
     @Override
-    public void valueFunctionChanged(VFunction<GWState> vFunction) {
+    public void valueFunctionUpdated(VFunction<GWState> vFunction) {
         this.vFunction = vFunction;
         repaint();
     }
