@@ -11,6 +11,7 @@ import net.davidrobles.rl.agents.*;
 import net.davidrobles.rl.planning.*;
 import net.davidrobles.rl.policies.EpsilonGreedy;
 import net.davidrobles.rl.policies.RandomPolicy;
+import net.davidrobles.rl.prediction.*;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.util.DRFrame;
