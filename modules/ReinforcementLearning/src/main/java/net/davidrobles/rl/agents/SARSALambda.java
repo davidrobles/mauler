@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import net.davidrobles.rl.ObservableQAgent;
-import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
+import net.davidrobles.rl.valuefunctions.QPair;
 import net.davidrobles.rl.valuefunctions.TrainableQFunction;
 
 /**

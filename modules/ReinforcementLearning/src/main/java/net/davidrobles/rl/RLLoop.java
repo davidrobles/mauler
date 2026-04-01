@@ -19,18 +19,24 @@ import net.davidrobles.rl.policies.Policy;
  * </ol>
  */
 public class RLLoop {
+    private RLLoop() {}
+
     /**
      * Runs {@code numEpisodes} full episodes of interaction between {@code env} and {@code agent}.
      *
      * @param env the environment
      * @param agent the agent to train
      * @param policy the policy driving action selection (receives lifecycle callbacks)
-     * @param numEpisodes number of episodes to run
+     * @param numEpisodes number of episodes to run; must be non-negative
      * @param <S> state type
      * @param <A> action type
+     * @throws IllegalArgumentException if {@code numEpisodes} is negative
      */
     public static <S, A> void run(
             Environment<S, A> env, Agent<S, A> agent, Policy<S, A> policy, int numEpisodes) {
+        if (numEpisodes < 0)
+            throw new IllegalArgumentException(
+                    "numEpisodes must be non-negative, got: " + numEpisodes);
         int totalSteps = 0;
 
         for (int ep = 0; ep < numEpisodes; ep++) {

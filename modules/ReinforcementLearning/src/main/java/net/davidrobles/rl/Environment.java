@@ -3,19 +3,27 @@ package net.davidrobles.rl;
 import java.util.List;
 
 /**
- * A Reinforcement Learning environment. Usually an implementation of this interface will use an
- * {@link MDP}, but it can be used internally only.
+ * A Reinforcement Learning environment.
+ *
+ * <p>Wraps the transition dynamics and reward function exposed to an agent. Implementations
+ * typically delegate to an {@link MDP}, but the interface can also represent simulators or
+ * real-world systems where the full MDP model is not available.
  *
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
 public interface Environment<S, A> {
-    /** Returns the current state in the environment. */
+    /** Returns the current state of the environment. */
     S getCurrentState();
 
     /**
-     * Returns a list of the possible actions that the agent can take in the given state. Can return
-     * the empty list if we are in a terminal state.
+     * Returns the actions available to the agent in the given state.
+     *
+     * <p>Returns an empty list when {@code state} is a terminal state (episode over). Callers
+     * should treat an empty result the same as {@link StepResult#done()} being {@code true}.
+     *
+     * @param state the state to query
+     * @return an unmodifiable list of legal actions; empty iff {@code state} is terminal
      */
     List<A> getActions(S state);
 

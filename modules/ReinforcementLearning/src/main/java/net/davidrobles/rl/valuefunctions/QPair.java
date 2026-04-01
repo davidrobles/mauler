@@ -1,4 +1,4 @@
-package net.davidrobles.rl;
+package net.davidrobles.rl.valuefunctions;
 
 /**
  * A state-action pair, used as a key in tabular Q-function lookups.
