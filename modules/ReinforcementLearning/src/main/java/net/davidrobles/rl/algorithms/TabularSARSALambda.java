@@ -12,18 +12,30 @@ import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class TabularSARSALambda<S, A> implements Agent<S, A> {
-    private RLPolicy<S, A> policy;
-    private double alpha;
-    private double gamma;
-    private double lambda;
-    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();
+    private final RLPolicy<S, A> policy;
+    private final double alpha;
+    private final double gamma;
+    private final double lambda;
+    private final TabularQFunction<S, A> table;
     // Pre-selected next action for SARSA on-policy coupling.
     private A nextAction = null;
-    private Map<QPair<S, A>, Double> traces = new HashMap<QPair<S, A>, Double>();
-    private List<QFunctionObserver<S, A>> qFunctionObservers =
-            new ArrayList<QFunctionObserver<S, A>>();
+    private final Map<QPair<S, A>, Double> traces = new HashMap<>();
+    private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
 
-    public TabularSARSALambda(RLPolicy<S, A> policy, double alpha, double gamma, double lambda) {
+    /**
+     * @param table the Q-function to update (shared with the behavior policy)
+     * @param policy the behavior policy used for action selection
+     * @param alpha learning rate
+     * @param gamma discount factor
+     * @param lambda eligibility-trace decay rate (0 = SARSA(0), 1 = Monte Carlo)
+     */
+    public TabularSARSALambda(
+            TabularQFunction<S, A> table,
+            RLPolicy<S, A> policy,
+            double alpha,
+            double gamma,
+            double lambda) {
+        this.table = table;
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
@@ -37,7 +49,7 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
             nextAction = null;
             return a;
         }
-        return policy.getAction(state, actions, table);
+        return policy.selectAction(state, actions);
     }
 
     @Override
@@ -48,14 +60,14 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
             nextQ = 0.0;
             nextAction = null;
         } else {
-            nextAction = policy.getAction(result.nextState, nextActions, table);
+            nextAction = policy.selectAction(result.nextState, nextActions);
             nextQ = table.getValue(result.nextState, nextAction);
         }
 
         double tdError = result.reward + gamma * nextQ - table.getValue(state, action);
 
         // Accumulating trace: e(s,a) += 1
-        QPair<S, A> sa = new QPair<S, A>(state, action);
+        QPair<S, A> sa = new QPair<>(state, action);
         traces.merge(sa, 1.0, Double::sum);
 
         for (Map.Entry<QPair<S, A>, Double> entry : traces.entrySet()) {
@@ -66,14 +78,14 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
         }
 
         if (result.done) traces.clear();
-        notifyValueFunctionUpdate();
+        notifyQFunctionUpdate();
     }
 
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
     }
 
-    public void notifyValueFunctionUpdate() {
+    private void notifyQFunctionUpdate() {
         for (QFunctionObserver<S, A> observer : qFunctionObservers)
             observer.qFunctionUpdated(table);
     }

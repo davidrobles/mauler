@@ -9,13 +9,21 @@ import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 public class TabularTD0<S, A> implements Agent<S, A> {
-    private RLPolicy<S, A> policy;
-    private double alpha;
-    private double gamma;
-    private TabularVFunction<S> table = new TabularVFunction<S>();
-    private List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<VFunctionObserver<S>>();
+    private final RLPolicy<S, A> policy;
+    private final double alpha;
+    private final double gamma;
+    private final TabularVFunction<S> table;
+    private final List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<>();
 
-    public TabularTD0(RLPolicy<S, A> policy, double alpha, double gamma) {
+    /**
+     * @param table the V-function to evaluate and update (shared with the caller)
+     * @param policy the behavior policy used for action selection
+     * @param alpha learning rate
+     * @param gamma discount factor
+     */
+    public TabularTD0(
+            TabularVFunction<S> table, RLPolicy<S, A> policy, double alpha, double gamma) {
+        this.table = table;
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
@@ -23,7 +31,7 @@ public class TabularTD0<S, A> implements Agent<S, A> {
 
     @Override
     public A selectAction(S state, List<A> actions) {
-        return policy.getAction(state, actions, table);
+        return policy.selectAction(state, actions);
     }
 
     @Override
@@ -38,12 +46,12 @@ public class TabularTD0<S, A> implements Agent<S, A> {
         notifyValueFunctionUpdate();
     }
 
-    public void notifyValueFunctionUpdate() {
-        for (VFunctionObserver<S> observer : valueFuncObservers)
-            observer.valueFunctionChanged(table);
-    }
-
     public void addVFunctionObserver(VFunctionObserver<S> observer) {
         valueFuncObservers.add(observer);
+    }
+
+    private void notifyValueFunctionUpdate() {
+        for (VFunctionObserver<S> observer : valueFuncObservers)
+            observer.valueFunctionChanged(table);
     }
 }

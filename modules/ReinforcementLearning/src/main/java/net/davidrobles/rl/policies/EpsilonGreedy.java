@@ -3,50 +3,57 @@ package net.davidrobles.rl.policies;
 import java.util.List;
 import java.util.Random;
 import net.davidrobles.rl.valuefunctions.QFunction;
-import net.davidrobles.rl.valuefunctions.VFunction;
 
 /**
- * An Epsilon Greedy policy. Takes a greedy action with a '1 - epsilon' probability, or random
- * action otherwise.
+ * ε-greedy policy: takes a random action with probability ε, otherwise the greedy action (highest
+ * Q-value).
+ *
+ * <p>The Q-function is bound at construction and shared with the learning algorithm, so the policy
+ * always exploits the latest estimates. Epsilon can be updated over time by overriding {@link
+ * #update(int)} or by calling {@link #setEpsilon(double)} directly.
  *
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
 public class EpsilonGreedy<S, A> implements RLPolicy<S, A> {
-    /** Probability of taking a random action. */
     private double epsilon;
-
-    /** The random policy used to take the random actions (random value < epsilon). */
-    private RandomPolicy<S, A> randomPolicy;
-
-    /** The policy used to take greedy actions (random value >= epsilon). */
-    private GreedyPolicy<S, A> greedyPolicy;
-
-    /** Random Number Generator. */
+    private final QFunction<S, A> qFunc;
     private final Random rng;
 
     /**
-     * Constructs an epsilon greedy policy with the specified epsilon value.
-     *
-     * @param epsilon the probability of taking a random action
+     * @param qFunc the Q-function used for greedy action selection
+     * @param epsilon probability of taking a random action (0 = fully greedy, 1 = fully random)
      * @param rng random number generator
      */
-    public EpsilonGreedy(double epsilon, Random rng) {
+    public EpsilonGreedy(QFunction<S, A> qFunc, double epsilon, Random rng) {
+        this.qFunc = qFunc;
         this.epsilon = epsilon;
-        this.greedyPolicy = new GreedyPolicy<S, A>();
-        this.randomPolicy = new RandomPolicy<S, A>(rng);
         this.rng = rng;
     }
 
     @Override
-    public A getAction(S state, List<A> actions, QFunction<S, A> qFunction) {
-        if (rng.nextDouble() < epsilon) return randomPolicy.getAction(state, actions, qFunction);
-        return greedyPolicy.getAction(state, actions, qFunction);
+    public A selectAction(S state, List<A> actions) {
+        if (rng.nextDouble() < epsilon) {
+            return actions.get(rng.nextInt(actions.size()));
+        }
+
+        A bestAction = null;
+        double bestValue = Double.NEGATIVE_INFINITY;
+        for (A action : actions) {
+            double value = qFunc.getValue(state, action);
+            if (value > bestValue) {
+                bestAction = action;
+                bestValue = value;
+            }
+        }
+        return bestAction;
     }
 
-    @Override
-    public A getAction(S state, List<A> actions, VFunction<S> vFunction) {
-        if (rng.nextDouble() < epsilon) return randomPolicy.getAction(state, actions, vFunction);
-        return greedyPolicy.getAction(state, actions, vFunction);
+    public double getEpsilon() {
+        return epsilon;
+    }
+
+    public void setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
     }
 }

@@ -10,16 +10,23 @@ import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class TabularSARSA<S, A> implements Agent<S, A> {
-    private RLPolicy<S, A> policy;
-    private double alpha;
-    private double gamma;
-    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();
-    // Pre-selected next action so that selectAction and update share the same (S, A, R, S', A').
+    private final RLPolicy<S, A> policy;
+    private final double alpha;
+    private final double gamma;
+    private final TabularQFunction<S, A> table;
+    // Pre-selected next action to maintain the on-policy (S, A, R, S', A') SARSA coupling.
     private A nextAction = null;
-    private List<QFunctionObserver<S, A>> qFunctionObservers =
-            new ArrayList<QFunctionObserver<S, A>>();
+    private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
 
-    public TabularSARSA(RLPolicy<S, A> policy, double alpha, double gamma) {
+    /**
+     * @param table the Q-function to update (shared with the behavior policy)
+     * @param policy the behavior policy used for action selection
+     * @param alpha learning rate
+     * @param gamma discount factor
+     */
+    public TabularSARSA(
+            TabularQFunction<S, A> table, RLPolicy<S, A> policy, double alpha, double gamma) {
+        this.table = table;
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
@@ -27,13 +34,13 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
 
     @Override
     public A selectAction(S state, List<A> actions) {
-        // If update() pre-selected the next action, use it (SARSA on-policy coupling).
+        // Use the action pre-selected by update() to honour the SARSA (S,A,R,S',A') coupling.
         if (nextAction != null) {
             A a = nextAction;
             nextAction = null;
             return a;
         }
-        return policy.getAction(state, actions, table);
+        return policy.selectAction(state, actions);
     }
 
     @Override
@@ -44,23 +51,23 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
             nextQ = 0.0;
             nextAction = null;
         } else {
-            nextAction = policy.getAction(result.nextState, nextActions, table);
+            nextAction = policy.selectAction(result.nextState, nextActions);
             nextQ = table.getValue(result.nextState, nextAction);
         }
 
         double newValue =
                 table.getValue(state, action)
                         + alpha * (result.reward + gamma * nextQ - table.getValue(state, action));
-        table.setValue(new QPair<S, A>(state, action), newValue);
-        notifyValueFunctionUpdate();
-    }
-
-    public void notifyValueFunctionUpdate() {
-        for (QFunctionObserver<S, A> observer : qFunctionObservers)
-            observer.qFunctionUpdated(table);
+        table.setValue(new QPair<>(state, action), newValue);
+        notifyQFunctionUpdate();
     }
 
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
+    }
+
+    private void notifyQFunctionUpdate() {
+        for (QFunctionObserver<S, A> observer : qFunctionObservers)
+            observer.qFunctionUpdated(table);
     }
 }

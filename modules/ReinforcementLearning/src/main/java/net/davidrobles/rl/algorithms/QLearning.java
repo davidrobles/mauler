@@ -10,14 +10,21 @@ import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class QLearning<S, A> implements Agent<S, A> {
-    private RLPolicy<S, A> policy;
-    private double alpha;
-    private double gamma;
-    private TabularQFunction<S, A> table = new TabularQFunction<S, A>();
-    private List<QFunctionObserver<S, A>> qFunctionObservers =
-            new ArrayList<QFunctionObserver<S, A>>();
+    private final RLPolicy<S, A> policy;
+    private final double alpha;
+    private final double gamma;
+    private final TabularQFunction<S, A> table;
+    private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
 
-    public QLearning(RLPolicy<S, A> policy, double alpha, double gamma) {
+    /**
+     * @param table the Q-function to update (shared with the behavior policy)
+     * @param policy the behavior policy used for action selection
+     * @param alpha learning rate
+     * @param gamma discount factor
+     */
+    public QLearning(
+            TabularQFunction<S, A> table, RLPolicy<S, A> policy, double alpha, double gamma) {
+        this.table = table;
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
@@ -25,7 +32,7 @@ public class QLearning<S, A> implements Agent<S, A> {
 
     @Override
     public A selectAction(S state, List<A> actions) {
-        return policy.getAction(state, actions, table);
+        return policy.selectAction(state, actions);
     }
 
     @Override
@@ -46,16 +53,16 @@ public class QLearning<S, A> implements Agent<S, A> {
                                 * (result.reward
                                         + gamma * maxNextQ
                                         - table.getValue(state, action));
-        table.setValue(new QPair<S, A>(state, action), newValue);
+        table.setValue(new QPair<>(state, action), newValue);
         notifyQFunctionUpdate();
-    }
-
-    public void notifyQFunctionUpdate() {
-        for (QFunctionObserver<S, A> observer : qFunctionObservers)
-            observer.qFunctionUpdated(table);
     }
 
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
+    }
+
+    private void notifyQFunctionUpdate() {
+        for (QFunctionObserver<S, A> observer : qFunctionObservers)
+            observer.qFunctionUpdated(table);
     }
 }

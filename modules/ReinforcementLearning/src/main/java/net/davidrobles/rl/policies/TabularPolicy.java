@@ -3,11 +3,18 @@ package net.davidrobles.rl.policies;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.davidrobles.rl.valuefunctions.QFunction;
-import net.davidrobles.rl.valuefunctions.VFunction;
 
+/**
+ * A deterministic tabular policy that stores an explicit state → action mapping.
+ *
+ * <p>Used by model-based algorithms (policy iteration) which compute an optimal policy and store it
+ * as a lookup table.
+ *
+ * @param <S> the type of the states
+ * @param <A> the type of the actions
+ */
 public class TabularPolicy<S, A> implements RLPolicy<S, A>, StochasticPolicy<S, A> {
-    private Map<S, A> map = new HashMap<S, A>();
+    private final Map<S, A> map = new HashMap<>();
 
     public A getAction(S state) {
         return map.get(state);
@@ -18,17 +25,12 @@ public class TabularPolicy<S, A> implements RLPolicy<S, A>, StochasticPolicy<S, 
     }
 
     @Override
-    public A getAction(S state, List<A> actions, QFunction<S, A> qf) {
+    public A selectAction(S state, List<A> actions) {
         return map.get(state);
     }
 
     @Override
-    public A getAction(S state, List<A> actions, VFunction<S> vf) {
-        return map.get(state);
-    }
-
-    @Override
-    public double getProbability(S state, A action) {
-        return map.get(state).equals(action) ? 1.0 : 0.0;
+    public double logProbability(S state, A action, List<A> actions) {
+        return map.get(state).equals(action) ? 0.0 : Double.NEGATIVE_INFINITY;
     }
 }

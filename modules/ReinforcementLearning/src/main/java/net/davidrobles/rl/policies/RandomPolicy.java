@@ -2,16 +2,16 @@ package net.davidrobles.rl.policies;
 
 import java.util.List;
 import java.util.Random;
-import net.davidrobles.rl.valuefunctions.QFunction;
-import net.davidrobles.rl.valuefunctions.VFunction;
 
 /**
- * Uniform random policy.
+ * Uniform random policy. Selects each available action with equal probability.
+ *
+ * <p>Implements {@link StochasticPolicy}: log π(a|s) = −log(|actions|).
  *
  * @param <S> the type of the state
  * @param <A> the type of the action
  */
-public class RandomPolicy<S, A> implements RLPolicy<S, A> {
+public class RandomPolicy<S, A> implements StochasticPolicy<S, A> {
     private final Random rng;
 
     public RandomPolicy(Random rng) {
@@ -19,12 +19,12 @@ public class RandomPolicy<S, A> implements RLPolicy<S, A> {
     }
 
     @Override
-    public A getAction(S state, List<A> actions, QFunction<S, A> qFunc) {
+    public A selectAction(S state, List<A> actions) {
         return actions.get(rng.nextInt(actions.size()));
     }
 
     @Override
-    public A getAction(S state, List<A> actions, VFunction<S> vFunc) {
-        return actions.get(rng.nextInt(actions.size()));
+    public double logProbability(S state, A action, List<A> actions) {
+        return -Math.log(actions.size());
     }
 }
