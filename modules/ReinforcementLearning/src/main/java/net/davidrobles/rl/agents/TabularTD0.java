@@ -5,7 +5,7 @@ import java.util.List;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
-import net.davidrobles.rl.valuefunctions.TabularVFunction;
+import net.davidrobles.rl.valuefunctions.MutableVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 /**
@@ -21,7 +21,7 @@ public class TabularTD0<S, A> implements ObservableVAgent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
-    private final TabularVFunction<S> table;
+    private final MutableVFunction<S> table;
     private final List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<>();
 
     /**
@@ -30,7 +30,7 @@ public class TabularTD0<S, A> implements ObservableVAgent<S, A> {
      * @param alpha learning rate
      * @param gamma discount factor
      */
-    public TabularTD0(TabularVFunction<S> table, Policy<S, A> policy, double alpha, double gamma) {
+    public TabularTD0(MutableVFunction<S> table, Policy<S, A> policy, double alpha, double gamma) {
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;

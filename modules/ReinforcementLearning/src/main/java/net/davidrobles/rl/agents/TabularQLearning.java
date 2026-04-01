@@ -5,8 +5,8 @@ import java.util.List;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
+import net.davidrobles.rl.valuefunctions.MutableQFunction;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
-import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 /**
  * Off-policy tabular Q-Learning (Watkins, 1989).
@@ -18,11 +18,11 @@ import net.davidrobles.rl.valuefunctions.TabularQFunction;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class QLearning<S, A> implements ObservableQAgent<S, A> {
+public class TabularQLearning<S, A> implements ObservableQAgent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
-    private final TabularQFunction<S, A> table;
+    private final MutableQFunction<S, A> table;
     private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
 
     /**
@@ -31,8 +31,8 @@ public class QLearning<S, A> implements ObservableQAgent<S, A> {
      * @param alpha learning rate
      * @param gamma discount factor
      */
-    public QLearning(
-            TabularQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
+    public TabularQLearning(
+            MutableQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
         if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         this.table = table;
@@ -64,6 +64,7 @@ public class QLearning<S, A> implements ObservableQAgent<S, A> {
         notifyQFunctionUpdate();
     }
 
+    @Override
     public void addQFunctionObserver(QFunctionObserver<S, A> observer) {
         qFunctionObservers.add(observer);
     }

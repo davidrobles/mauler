@@ -5,7 +5,7 @@ import java.util.Map;
 import net.davidrobles.rl.QPair;
 
 /** Tabular (lookup table) implementation of a state-action value function. */
-public class TabularQFunction<S, A> implements QFunction<S, A> {
+public class TabularQFunction<S, A> implements MutableQFunction<S, A> {
     private Map<QPair<S, A>, Double> actionValues = new HashMap<>();
 
     @Override
@@ -17,7 +17,7 @@ public class TabularQFunction<S, A> implements QFunction<S, A> {
         return actionValues.containsKey(qPair) ? actionValues.get(qPair) : 0;
     }
 
-    public void setValue(QPair<S, A> qPair, double value) {
+    private void setValue(QPair<S, A> qPair, double value) {
         actionValues.put(qPair, value);
     }
 

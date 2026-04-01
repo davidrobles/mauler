@@ -7,7 +7,7 @@ import java.util.Map;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
-import net.davidrobles.rl.valuefunctions.TabularVFunction;
+import net.davidrobles.rl.valuefunctions.MutableVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 /**
@@ -24,7 +24,7 @@ public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
     private final double alpha;
     private final double gamma;
     private final double lambda;
-    private final TabularVFunction<S> table;
+    private final MutableVFunction<S> table;
     private final Map<S, Double> traces = new HashMap<>();
     private final List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
      * @param lambda eligibility-trace decay rate (0 = TD(0), 1 = Monte Carlo)
      */
     public TabularTDLambda(
-            TabularVFunction<S> table,
+            MutableVFunction<S> table,
             Policy<S, A> policy,
             double alpha,
             double gamma,

@@ -4,7 +4,7 @@ import java.util.Random;
 import net.davidrobles.gridworld.view.GWVView;
 import net.davidrobles.gridworld.view.GWViewQValues;
 import net.davidrobles.rl.RLLoop;
-import net.davidrobles.rl.agents.QLearning;
+import net.davidrobles.rl.agents.TabularQLearning;
 import net.davidrobles.rl.agents.TabularSARSA;
 import net.davidrobles.rl.agents.TabularSARSALambda;
 import net.davidrobles.rl.agents.TabularTD0;
@@ -77,7 +77,8 @@ public class GWRun {
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "Q-Learning");
-        QLearning<GWState, GWAction> agent = new QLearning<>(qTable, policy, alpha, gamma);
+        TabularQLearning<GWState, GWAction> agent =
+                new TabularQLearning<>(qTable, policy, alpha, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }

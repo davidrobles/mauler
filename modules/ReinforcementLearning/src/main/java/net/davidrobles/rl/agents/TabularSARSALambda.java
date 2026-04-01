@@ -8,8 +8,8 @@ import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
+import net.davidrobles.rl.valuefunctions.MutableQFunction;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
-import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 /**
  * On-policy tabular SARSA(λ) with accumulating eligibility traces.
@@ -25,7 +25,7 @@ public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
     private final double alpha;
     private final double gamma;
     private final double lambda;
-    private final TabularQFunction<S, A> table;
+    private final MutableQFunction<S, A> table;
     // Pre-selected next action for SARSA on-policy coupling.
     private A nextAction = null;
     private final Map<QPair<S, A>, Double> traces = new HashMap<>();
@@ -39,7 +39,7 @@ public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
      * @param lambda eligibility-trace decay rate (0 = SARSA(0), 1 = Monte Carlo)
      */
     public TabularSARSALambda(
-            TabularQFunction<S, A> table,
+            MutableQFunction<S, A> table,
             Policy<S, A> policy,
             double alpha,
             double gamma,
@@ -86,7 +86,8 @@ public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
         for (Map.Entry<QPair<S, A>, Double> entry : traces.entrySet()) {
             QPair<S, A> key = entry.getKey();
             table.setValue(
-                    key,
+                    key.state(),
+                    key.action(),
                     table.getValue(key.state(), key.action()) + alpha * tdError * entry.getValue());
             entry.setValue(gamma * lambda * entry.getValue());
         }

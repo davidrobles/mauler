@@ -101,7 +101,8 @@ public class GWRun {
         GWViewQValues view = new GWViewQValues(mdp, 20, 20, env);
         view.setGridEnabled(true);
         new DRFrame(view, "Q-Learning");
-        QLearning<GWState, GWAction> agent = new QLearning<>(qTable, policy, alpha, gamma);
+        TabularQLearning<GWState, GWAction> agent =
+                new TabularQLearning<>(qTable, policy, alpha, gamma);
         agent.addQFunctionObserver(view);
         RLLoop.run(env, agent, policy, numEpisodes);
     }

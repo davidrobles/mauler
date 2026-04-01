@@ -5,8 +5,8 @@ import java.util.List;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
+import net.davidrobles.rl.valuefunctions.MutableQFunction;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
-import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 /**
  * On-policy tabular SARSA (Rummery &amp; Niranjan, 1994).
@@ -22,7 +22,7 @@ public class TabularSARSA<S, A> implements ObservableQAgent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
-    private final TabularQFunction<S, A> table;
+    private final MutableQFunction<S, A> table;
     // Pre-selected next action to maintain the on-policy (S, A, R, S', A') SARSA coupling.
     private A nextAction = null;
     private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
@@ -34,7 +34,7 @@ public class TabularSARSA<S, A> implements ObservableQAgent<S, A> {
      * @param gamma discount factor
      */
     public TabularSARSA(
-            TabularQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
+            MutableQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
         if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         this.table = table;

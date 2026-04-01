@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @param <S> the type of the states
  */
-public class TabularVFunction<S> implements VFunction<S> {
+public class TabularVFunction<S> implements MutableVFunction<S> {
     private Map<S, Double> stateValues = new HashMap<S, Double>();
 
     @Override
