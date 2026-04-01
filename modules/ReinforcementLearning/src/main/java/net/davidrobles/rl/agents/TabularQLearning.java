@@ -1,8 +1,9 @@
 package net.davidrobles.rl.agents;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
@@ -24,7 +25,7 @@ public class TabularQLearning<S, A> implements ObservableQAgent<S, A> {
     private final double alpha;
     private final double gamma;
     private final MutableQFunction<S, A> table;
-    private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
+    private final Set<QFunctionObserver<S, A>> qFunctionObservers = new LinkedHashSet<>();
 
     /**
      * @param table the Q-function to update (shared with the behavior policy)

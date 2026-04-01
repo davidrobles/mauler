@@ -1,10 +1,11 @@
 package net.davidrobles.rl.agents;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
@@ -27,7 +28,7 @@ public class TabularTDLambda<S, A> implements ObservableVAgent<S, A> {
     private final double lambda;
     private final MutableVFunction<S> table;
     private final Map<S, Double> traces = new HashMap<>();
-    private final List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<>();
+    private final Set<VFunctionObserver<S>> valueFuncObservers = new LinkedHashSet<>();
 
     /**
      * @param table the V-function to evaluate and update (shared with the caller)

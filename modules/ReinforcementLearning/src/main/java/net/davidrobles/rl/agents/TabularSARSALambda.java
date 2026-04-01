@@ -1,10 +1,11 @@
 package net.davidrobles.rl.agents;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
@@ -30,7 +31,7 @@ public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
     // Pre-selected next action for SARSA on-policy coupling.
     private A nextAction = null;
     private final Map<QPair<S, A>, Double> traces = new HashMap<>();
-    private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
+    private final Set<QFunctionObserver<S, A>> qFunctionObservers = new LinkedHashSet<>();
 
     /**
      * @param table the Q-function to update (shared with the behavior policy)

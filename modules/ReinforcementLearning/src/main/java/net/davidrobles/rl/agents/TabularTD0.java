@@ -1,8 +1,9 @@
 package net.davidrobles.rl.agents;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
@@ -23,7 +24,7 @@ public class TabularTD0<S, A> implements ObservableVAgent<S, A> {
     private final double alpha;
     private final double gamma;
     private final MutableVFunction<S> table;
-    private final List<VFunctionObserver<S>> valueFuncObservers = new ArrayList<>();
+    private final Set<VFunctionObserver<S>> valueFuncObservers = new LinkedHashSet<>();
 
     /**
      * @param table the V-function to evaluate and update (shared with the caller)
