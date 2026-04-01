@@ -74,8 +74,7 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
             QPair<S, A> key = entry.getKey();
             table.setValue(
                     key,
-                    table.getValue(key.getState(), key.getAction())
-                            + alpha * tdError * entry.getValue());
+                    table.getValue(key.state(), key.action()) + alpha * tdError * entry.getValue());
             entry.setValue(gamma * lambda * entry.getValue());
         }
 
