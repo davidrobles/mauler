@@ -1,4 +1,4 @@
-package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
+package net.davidrobles.rl.planning; // package dr.rl.algorithms;
 //
 // import dr.rl.*;
 // import TabularVFunction;

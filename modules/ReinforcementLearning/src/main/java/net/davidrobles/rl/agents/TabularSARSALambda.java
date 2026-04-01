@@ -1,20 +1,25 @@
-package net.davidrobles.rl.algorithms;
+package net.davidrobles.rl.agents;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.davidrobles.rl.Agent;
+import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
-public class TabularSARSA<S, A> implements Agent<S, A> {
+public class TabularSARSALambda<S, A> implements Agent<S, A> {
     private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
+    private final double lambda;
     private final TabularQFunction<S, A> table;
-    // Pre-selected next action to maintain the on-policy (S, A, R, S', A') SARSA coupling.
+    // Pre-selected next action for SARSA on-policy coupling.
     private A nextAction = null;
+    private final Map<QPair<S, A>, Double> traces = new HashMap<>();
     private final List<QFunctionObserver<S, A>> qFunctionObservers = new ArrayList<>();
 
     /**
@@ -22,18 +27,23 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
      * @param policy the behavior policy used for action selection
      * @param alpha learning rate
      * @param gamma discount factor
+     * @param lambda eligibility-trace decay rate (0 = SARSA(0), 1 = Monte Carlo)
      */
-    public TabularSARSA(
-            TabularQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
+    public TabularSARSALambda(
+            TabularQFunction<S, A> table,
+            Policy<S, A> policy,
+            double alpha,
+            double gamma,
+            double lambda) {
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;
         this.gamma = gamma;
+        this.lambda = lambda;
     }
 
     @Override
     public A selectAction(S state, List<A> actions) {
-        // Use the action pre-selected by update() to honour the SARSA (S,A,R,S',A') coupling.
         if (nextAction != null) {
             A a = nextAction;
             nextAction = null;
@@ -54,10 +64,21 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
             nextQ = table.getValue(result.nextState, nextAction);
         }
 
-        double newValue =
-                table.getValue(state, action)
-                        + alpha * (result.reward + gamma * nextQ - table.getValue(state, action));
-        table.setValue(state, action, newValue);
+        double tdError = result.reward + gamma * nextQ - table.getValue(state, action);
+
+        // Accumulating trace: e(s,a) += 1
+        QPair<S, A> sa = new QPair<>(state, action);
+        traces.merge(sa, 1.0, Double::sum);
+
+        for (Map.Entry<QPair<S, A>, Double> entry : traces.entrySet()) {
+            QPair<S, A> key = entry.getKey();
+            table.setValue(
+                    key,
+                    table.getValue(key.state(), key.action()) + alpha * tdError * entry.getValue());
+            entry.setValue(gamma * lambda * entry.getValue());
+        }
+
+        if (result.done) traces.clear();
         notifyQFunctionUpdate();
     }
 

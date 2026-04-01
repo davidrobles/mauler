@@ -1,4 +1,4 @@
-package net.davidrobles.rl.algorithms;
+package net.davidrobles.rl.planning;
 
 import java.util.ArrayList;
 import java.util.List;
