@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import net.davidrobles.rl.Agent;
 import net.davidrobles.rl.StepResult;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 public class TabularTDLambda<S, A> implements Agent<S, A> {
-    private final RLPolicy<S, A> policy;
+    private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
     private final double lambda;
@@ -28,7 +28,7 @@ public class TabularTDLambda<S, A> implements Agent<S, A> {
      */
     public TabularTDLambda(
             TabularVFunction<S> table,
-            RLPolicy<S, A> policy,
+            Policy<S, A> policy,
             double alpha,
             double gamma,
             double lambda) {

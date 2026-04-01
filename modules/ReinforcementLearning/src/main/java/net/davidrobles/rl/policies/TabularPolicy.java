@@ -13,7 +13,7 @@ import java.util.Map;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class TabularPolicy<S, A> implements RLPolicy<S, A>, StochasticPolicy<S, A> {
+public class TabularPolicy<S, A> implements Policy<S, A>, StochasticPolicy<S, A> {
     private final Map<S, A> map = new HashMap<>();
 
     public A getAction(S state) {

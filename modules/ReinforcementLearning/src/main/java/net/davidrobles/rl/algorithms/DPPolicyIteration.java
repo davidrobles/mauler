@@ -1,7 +1,7 @@
 package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //
 // import MDP;
-// import RLPolicy;
+// import Policy;
 // import VFunctionObserver;
 // import dr.rl.VValuesAlgorithm;
 // import dr.rl.policies.LookupTablePolicy;
@@ -111,7 +111,7 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //    }
 //
 //    @Override
-//    public RLPolicy<S, A> run()
+//    public Policy<S, A> run()
 //    {
 //        valueFunction = new TabularVFunction<S>();
 ////        MDPUtil.initializeVFunction(mdp, valueFunction);

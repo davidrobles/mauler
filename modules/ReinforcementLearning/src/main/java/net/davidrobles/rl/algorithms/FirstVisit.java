@@ -3,7 +3,7 @@ package net.davidrobles.rl.algorithms;
 import java.util.*;
 import net.davidrobles.rl.Environment;
 import net.davidrobles.rl.Learner;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
@@ -25,9 +25,9 @@ public class FirstVisit<S, A> implements Learner {
     private int currentStep = 0;
     private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
     private TabularVFunction<S> vFunction;
-    private RLPolicy<S, A> policy;
+    private Policy<S, A> policy;
 
-    public FirstVisit(Environment<S, A> env, RLPolicy<S, A> policy, int numEpisodes) {
+    public FirstVisit(Environment<S, A> env, Policy<S, A> policy, int numEpisodes) {
         this.env = env;
         this.policy = policy;
         this.numEpisodes = numEpisodes;

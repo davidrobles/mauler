@@ -15,7 +15,7 @@ import java.util.List;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public interface RLPolicy<S, A> {
+public interface Policy<S, A> {
     /**
      * Selects an action for the given state.
      *

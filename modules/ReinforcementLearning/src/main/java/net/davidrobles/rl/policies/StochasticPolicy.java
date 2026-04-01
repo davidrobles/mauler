@@ -11,7 +11,7 @@ import java.util.List;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public interface StochasticPolicy<S, A> extends RLPolicy<S, A> {
+public interface StochasticPolicy<S, A> extends Policy<S, A> {
     /**
      * Returns the natural log of the probability of selecting {@code action} in {@code state}.
      *

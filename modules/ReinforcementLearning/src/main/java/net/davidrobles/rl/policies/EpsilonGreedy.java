@@ -15,7 +15,7 @@ import net.davidrobles.rl.valuefunctions.QFunction;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class EpsilonGreedy<S, A> implements RLPolicy<S, A> {
+public class EpsilonGreedy<S, A> implements Policy<S, A> {
     private double epsilon;
     private final QFunction<S, A> qFunc;
     private final Random rng;

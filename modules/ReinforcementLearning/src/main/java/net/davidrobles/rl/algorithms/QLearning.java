@@ -5,12 +5,12 @@ import java.util.List;
 import net.davidrobles.rl.Agent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class QLearning<S, A> implements Agent<S, A> {
-    private final RLPolicy<S, A> policy;
+    private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
     private final TabularQFunction<S, A> table;
@@ -23,7 +23,7 @@ public class QLearning<S, A> implements Agent<S, A> {
      * @param gamma discount factor
      */
     public QLearning(
-            TabularQFunction<S, A> table, RLPolicy<S, A> policy, double alpha, double gamma) {
+            TabularQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;

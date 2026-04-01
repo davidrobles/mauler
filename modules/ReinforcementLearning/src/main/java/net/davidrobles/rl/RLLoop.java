@@ -2,7 +2,7 @@ package net.davidrobles.rl;
 
 import java.util.Collections;
 import java.util.List;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 
 /**
  * Drives the standard RL episode loop: reset, select action, step, update — repeat.
@@ -13,7 +13,7 @@ import net.davidrobles.rl.policies.RLPolicy;
 public class RLLoop {
     /**
      * Runs {@code numEpisodes} full episodes of interaction between {@code env} and {@code agent}.
-     * After each step the policy's {@link RLPolicy#update(int)} is called with the running total of
+     * After each step the policy's {@link Policy#update(int)} is called with the running total of
      * steps, allowing decay schedules (e.g. ε-annealing) to react to training progress.
      *
      * @param env the environment
@@ -24,7 +24,7 @@ public class RLLoop {
      * @param <A> action type
      */
     public static <S, A> void run(
-            Environment<S, A> env, Agent<S, A> agent, RLPolicy<S, A> policy, int numEpisodes) {
+            Environment<S, A> env, Agent<S, A> agent, Policy<S, A> policy, int numEpisodes) {
         int totalSteps = 0;
 
         for (int ep = 0; ep < numEpisodes; ep++) {

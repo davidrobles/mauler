@@ -25,9 +25,9 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //    private List<VFunctionObserver<S>> observers = new ArrayList<VFunctionObserver<S>>();
 //
 //    private TabularVFunction<S> vFunction;
-//    private RLPolicy<S, A> policy;
+//    private Policy<S, A> policy;
 //
-//    public FirstVisitMC(Environment<S, A> environment, RLPolicy<S, A> policy, int numEpisodes) {
+//    public FirstVisitMC(Environment<S, A> environment, Policy<S, A> policy, int numEpisodes) {
 //        this.environment = environment;
 //        this.policy = policy;
 //        this.numEpisodes = numEpisodes;
@@ -61,12 +61,12 @@ package net.davidrobles.rl.algorithms; // package dr.rl.algorithms;
 //    }
 //
 //    @Override
-//    public RLPolicy<S, A> run()
+//    public Policy<S, A> run()
 //    {
 ////        TabularVFunction newValueFunction = new TabularVFunction();
 ////        MDPUtil.initializeVFunction(mdp, newValueFunction);
-////        RLPolicy policy = new RandomPolicy(mdp);
-////        RLPolicy policy = new VEpsilonGreedy(mdp, 0.01, newValueFunction);
+////        Policy policy = new RandomPolicy(mdp);
+////        Policy policy = new VEpsilonGreedy(mdp, 0.01, newValueFunction);
 ////        addVFunctionObserver((VEpsilonGreedy)policy);
 //
 //        // Run n episodes

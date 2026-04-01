@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import net.davidrobles.rl.Agent;
 import net.davidrobles.rl.StepResult;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.TabularVFunction;
 import net.davidrobles.rl.valuefunctions.VFunctionObserver;
 
 public class TabularTD0<S, A> implements Agent<S, A> {
-    private final RLPolicy<S, A> policy;
+    private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
     private final TabularVFunction<S> table;
@@ -21,8 +21,7 @@ public class TabularTD0<S, A> implements Agent<S, A> {
      * @param alpha learning rate
      * @param gamma discount factor
      */
-    public TabularTD0(
-            TabularVFunction<S> table, RLPolicy<S, A> policy, double alpha, double gamma) {
+    public TabularTD0(TabularVFunction<S> table, Policy<S, A> policy, double alpha, double gamma) {
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;

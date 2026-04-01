@@ -13,7 +13,7 @@ import net.davidrobles.rl.valuefunctions.QFunction;
  * @param <S> the type of the states
  * @param <A> the type of the actions
  */
-public class GreedyPolicy<S, A> implements RLPolicy<S, A> {
+public class GreedyPolicy<S, A> implements Policy<S, A> {
     private final QFunction<S, A> qFunc;
 
     public GreedyPolicy(QFunction<S, A> qFunc) {

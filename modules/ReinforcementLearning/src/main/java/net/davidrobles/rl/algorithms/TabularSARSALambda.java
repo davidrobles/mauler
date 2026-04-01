@@ -7,12 +7,12 @@ import java.util.Map;
 import net.davidrobles.rl.Agent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
-import net.davidrobles.rl.policies.RLPolicy;
+import net.davidrobles.rl.policies.Policy;
 import net.davidrobles.rl.valuefunctions.QFunctionObserver;
 import net.davidrobles.rl.valuefunctions.TabularQFunction;
 
 public class TabularSARSALambda<S, A> implements Agent<S, A> {
-    private final RLPolicy<S, A> policy;
+    private final Policy<S, A> policy;
     private final double alpha;
     private final double gamma;
     private final double lambda;
@@ -31,7 +31,7 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
      */
     public TabularSARSALambda(
             TabularQFunction<S, A> table,
-            RLPolicy<S, A> policy,
+            Policy<S, A> policy,
             double alpha,
             double gamma,
             double lambda) {
