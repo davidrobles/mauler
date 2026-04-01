@@ -38,7 +38,7 @@ public class QLearning<S, A> implements Agent<S, A> {
     public void update(S state, A action, StepResult<S> result, List<A> nextActions) {
         double maxNextQ = 0.0;
 
-        if (!nextActions.isEmpty()) {
+        if (!result.done && !nextActions.isEmpty()) {
             maxNextQ = Double.NEGATIVE_INFINITY;
             for (A nextAction : nextActions) {
                 double v = table.getValue(result.nextState, nextAction);
@@ -46,13 +46,9 @@ public class QLearning<S, A> implements Agent<S, A> {
             }
         }
 
-        double newValue =
-                table.getValue(state, action)
-                        + alpha
-                                * (result.reward
-                                        + gamma * maxNextQ
-                                        - table.getValue(state, action));
-        table.setValue(state, action, newValue);
+        double currentQ = table.getValue(state, action);
+        table.setValue(
+                state, action, currentQ + alpha * (result.reward + gamma * maxNextQ - currentQ));
         notifyQFunctionUpdate();
     }
 

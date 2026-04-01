@@ -54,10 +54,9 @@ public class TabularSARSA<S, A> implements Agent<S, A> {
             nextQ = table.getValue(result.nextState, nextAction);
         }
 
-        double newValue =
-                table.getValue(state, action)
-                        + alpha * (result.reward + gamma * nextQ - table.getValue(state, action));
-        table.setValue(state, action, newValue);
+        double currentQ = table.getValue(state, action);
+        table.setValue(
+                state, action, currentQ + alpha * (result.reward + gamma * nextQ - currentQ));
         notifyQFunctionUpdate();
     }
 
