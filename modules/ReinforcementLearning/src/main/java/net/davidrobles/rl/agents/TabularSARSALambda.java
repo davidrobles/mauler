@@ -35,6 +35,10 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
             double alpha,
             double gamma,
             double lambda) {
+        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+        if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
+        if (lambda < 0 || lambda > 1)
+            throw new IllegalArgumentException("lambda must be in [0, 1]");
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;

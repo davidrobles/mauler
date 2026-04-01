@@ -23,6 +23,8 @@ public class QLearning<S, A> implements Agent<S, A> {
      */
     public QLearning(
             TabularQFunction<S, A> table, Policy<S, A> policy, double alpha, double gamma) {
+        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+        if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         this.table = table;
         this.policy = policy;
         this.alpha = alpha;
