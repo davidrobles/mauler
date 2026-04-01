@@ -2,6 +2,7 @@ package net.davidrobles.rl.agents;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import net.davidrobles.rl.ObservableVAgent;
 import net.davidrobles.rl.StepResult;
 import net.davidrobles.rl.policies.Policy;
@@ -31,8 +32,10 @@ public class TabularTD0<S, A> implements ObservableVAgent<S, A> {
      * @param gamma discount factor
      */
     public TabularTD0(MutableVFunction<S> table, Policy<S, A> policy, double alpha, double gamma) {
-        this.table = table;
-        this.policy = policy;
+        if (alpha <= 0 || alpha > 1) throw new IllegalArgumentException("alpha must be in (0, 1]");
+        if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
+        this.table = Objects.requireNonNull(table, "table must not be null");
+        this.policy = Objects.requireNonNull(policy, "policy must not be null");
         this.alpha = alpha;
         this.gamma = gamma;
     }

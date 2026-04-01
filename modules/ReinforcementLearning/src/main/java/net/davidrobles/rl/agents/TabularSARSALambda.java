@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import net.davidrobles.rl.ObservableQAgent;
 import net.davidrobles.rl.QPair;
 import net.davidrobles.rl.StepResult;
@@ -48,8 +49,8 @@ public class TabularSARSALambda<S, A> implements ObservableQAgent<S, A> {
         if (gamma < 0 || gamma > 1) throw new IllegalArgumentException("gamma must be in [0, 1]");
         if (lambda < 0 || lambda > 1)
             throw new IllegalArgumentException("lambda must be in [0, 1]");
-        this.table = table;
-        this.policy = policy;
+        this.table = Objects.requireNonNull(table, "table must not be null");
+        this.policy = Objects.requireNonNull(policy, "policy must not be null");
         this.alpha = alpha;
         this.gamma = gamma;
         this.lambda = lambda;
