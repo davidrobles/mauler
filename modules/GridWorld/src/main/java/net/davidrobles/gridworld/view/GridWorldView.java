@@ -8,10 +8,8 @@ import javax.swing.*;
 import net.davidrobles.gridworld.GWState;
 import net.davidrobles.gridworld.GridWorldEnv;
 import net.davidrobles.gridworld.GridWorldMDP;
-import net.davidrobles.rl.MDPObserver;
 
-public abstract class GridWorldView extends JPanel
-        implements MDPObserver, MouseMotionListener, MouseListener { // TODO: remove this
+public abstract class GridWorldView extends JPanel implements MouseMotionListener, MouseListener {
     protected GridWorldMDP gw;
     protected GridWorldEnv env;
     protected int cellWidth = 25;
@@ -178,11 +176,6 @@ public abstract class GridWorldView extends JPanel
         int y = s.getY();
         g.setColor(c);
         g.fillOval(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-    }
-
-    @Override
-    public void currentStateChanged() {
-        repaint();
     }
 
     @Override
