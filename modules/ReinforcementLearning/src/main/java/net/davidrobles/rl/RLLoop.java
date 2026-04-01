@@ -9,16 +9,22 @@ import net.davidrobles.rl.policies.Policy;
  *
  * <p>Keeps the loop logic out of individual {@link Agent} implementations so each algorithm only
  * needs to define its update rule.
+ *
+ * <p>Policy lifecycle calls per episode:
+ *
+ * <ol>
+ *   <li>{@link Policy#reset()} — start of episode
+ *   <li>{@link Policy#onStep(int)} — after every step
+ *   <li>{@link Policy#onEpisodeEnd(int)} — end of episode
+ * </ol>
  */
 public class RLLoop {
     /**
      * Runs {@code numEpisodes} full episodes of interaction between {@code env} and {@code agent}.
-     * After each step the policy's {@link Policy#update(int)} is called with the running total of
-     * steps, allowing decay schedules (e.g. ε-annealing) to react to training progress.
      *
      * @param env the environment
      * @param agent the agent to train
-     * @param policy the policy driving action selection (called for schedule updates)
+     * @param policy the policy driving action selection (receives lifecycle callbacks)
      * @param numEpisodes number of episodes to run
      * @param <S> state type
      * @param <A> action type
@@ -28,6 +34,7 @@ public class RLLoop {
         int totalSteps = 0;
 
         for (int ep = 0; ep < numEpisodes; ep++) {
+            policy.reset();
             S state = env.reset();
             List<A> actions = env.getActions(state);
 
@@ -37,12 +44,14 @@ public class RLLoop {
                 List<A> nextActions =
                         result.done ? Collections.emptyList() : env.getActions(result.nextState);
                 agent.update(state, action, result, nextActions);
-                policy.update(++totalSteps);
+                policy.onStep(++totalSteps);
 
                 if (result.done) break;
                 state = result.nextState;
                 actions = nextActions;
             }
+
+            policy.onEpisodeEnd(ep);
         }
     }
 }
