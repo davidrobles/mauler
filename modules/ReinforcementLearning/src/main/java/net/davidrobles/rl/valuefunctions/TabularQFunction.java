@@ -13,8 +13,7 @@ public class TabularQFunction<S, A> implements QFunction<S, A> {
         return getValue(new QPair<S, A>(state, action));
     }
 
-    @Override
-    public double getValue(QPair qPair) {
+    private double getValue(QPair qPair) {
         return actionValues.containsKey(qPair) ? actionValues.get(qPair) : 0;
     }
 

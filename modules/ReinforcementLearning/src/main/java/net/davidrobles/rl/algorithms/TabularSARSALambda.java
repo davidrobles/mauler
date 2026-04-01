@@ -71,9 +71,11 @@ public class TabularSARSALambda<S, A> implements Agent<S, A> {
         traces.merge(sa, 1.0, Double::sum);
 
         for (Map.Entry<QPair<S, A>, Double> entry : traces.entrySet()) {
+            QPair<S, A> key = entry.getKey();
             table.setValue(
-                    entry.getKey(),
-                    table.getValue(entry.getKey()) + alpha * tdError * entry.getValue());
+                    key,
+                    table.getValue(key.getState(), key.getAction())
+                            + alpha * tdError * entry.getValue());
             entry.setValue(gamma * lambda * entry.getValue());
         }
 
